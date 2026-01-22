@@ -112,34 +112,43 @@ export default function Sourcing() {
               </p>
               
               <div className="space-y-5 relative">
-                <div className="flex items-center justify-between text-sm">
+                {/* VIP PACK 1 */}
+                <div className="flex items-center justify-between text-[11px] md:text-xs">
                   <span className="text-slate-200 font-black uppercase">Pack 1</span>
-                  <div className="flex items-center gap-3 text-cyan-200/70 font-medium">
-                    <span className="text-cyan-400 font-bold">Visitamos 2</span>
-                    <ArrowRight size={14} />
-                    <span>Info Fast</span>
-                    <ArrowRight size={14} />
-                    <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-3 py-1 rounded">Final 1</span>
+                  <div className="flex items-center gap-1.5 md:gap-2 text-cyan-200/70 font-medium">
+                    <span className="text-cyan-400 font-bold">Buscamos 2</span>
+                    <ArrowRight size={12} />
+                    <span>Visitamos 2</span>
+                    <ArrowRight size={12} />
+                    <span className="text-[10px]">Info Fast (eliges 1)</span>
+                    <ArrowRight size={12} />
+                    <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-2 py-0.5 rounded">Auditamos 1</span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between text-sm border-t border-cyan-500/20 pt-4">
+                {/* VIP PACK 2 */}
+                <div className="flex items-center justify-between text-[11px] md:text-xs border-t border-cyan-500/20 pt-4">
                   <span className="text-slate-200 font-black uppercase">Pack 2</span>
-                  <div className="flex items-center gap-3 text-cyan-200/70 font-medium">
-                    <span className="text-cyan-400 font-bold">Visitamos 3</span>
-                    <ArrowRight size={14} />
-                    <span>Info Fast</span>
-                    <ArrowRight size={14} />
-                    <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-3 py-1 rounded">Final 2</span>
+                  <div className="flex items-center gap-1.5 md:gap-2 text-cyan-200/70 font-medium">
+                    <span className="text-cyan-400 font-bold">Buscamos 3</span>
+                    <ArrowRight size={12} />
+                    <span>Visitamos 3</span>
+                    <ArrowRight size={12} />
+                    <span className="text-[10px]">Info Fast (eliges 2)</span>
+                    <ArrowRight size={12} />
+                    <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-2 py-0.5 rounded">Auditamos 2</span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between text-sm border-t border-cyan-500/20 pt-4">
+                {/* VIP PACK 3 */}
+                <div className="flex items-center justify-between text-[11px] md:text-xs border-t border-cyan-500/20 pt-4">
                   <span className="text-slate-200 font-black uppercase">Pack 3</span>
-                  <div className="flex items-center gap-3 text-cyan-200/70 font-medium">
-                    <span className="text-cyan-400 font-bold">Visitamos 5</span>
-                    <ArrowRight size={14} />
-                    <span>Info Fast</span>
-                    <ArrowRight size={14} />
-                    <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-3 py-1 rounded">Final 3</span>
+                  <div className="flex items-center gap-1.5 md:gap-2 text-cyan-200/70 font-medium">
+                    <span className="text-cyan-400 font-bold">Buscamos 5</span>
+                    <ArrowRight size={12} />
+                    <span>Visitamos 5</span>
+                    <ArrowRight size={12} />
+                    <span className="text-[10px]">Info Fast (eliges 3)</span>
+                    <ArrowRight size={12} />
+                    <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-2 py-0.5 rounded">Auditamos 3</span>
                   </div>
                 </div>
               </div>
