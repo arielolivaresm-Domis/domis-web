@@ -30,7 +30,7 @@ export default function Sourcing() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
           
-          {/* OPCIÓN 1: NORMAL */}
+          {/* OPCIÓN 1: NORMAL - PRE-SELECCIÓN DIGITAL */}
           <div className="bg-slate-900/50 border border-white/10 p-8 md:p-10 rounded-2xl hover:border-slate-600 transition-all group relative flex flex-col">
             <div className="flex items-center gap-5 mb-8">
               <div className="p-4 bg-slate-800 rounded-xl group-hover:bg-slate-700 transition-colors">
@@ -50,42 +50,69 @@ export default function Sourcing() {
               <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-6 text-center border-b border-slate-800 pb-2">
                 Protocolo de Filtrado
               </p>
-              <div className="space-y-5">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-300 font-black uppercase">Pack 1</span>
-                  <div className="flex items-center gap-3 text-slate-500 font-medium">
-                    <span>Buscamos 2</span>
-                    <ArrowRight size={14} />
-                    <span>Eliges 1</span>
-                    <ArrowRight size={14} />
-                    <span className="text-white font-bold bg-slate-800 px-3 py-1 rounded border border-slate-700">Visita 1</span>
+              <div className="space-y-6">
+                {/* PACK 1 NORMAL */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-300 font-black uppercase">Pack 1</span>
+                    <div className="flex items-center gap-2 text-slate-500 font-medium text-[11px] md:text-xs">
+                      <span>Buscamos 2</span>
+                      <ArrowRight size={12} />
+                      <span>Eliges 1</span>
+                      <ArrowRight size={12} />
+                      <span className="text-white font-bold bg-slate-800 px-2 py-1 rounded border border-slate-700">Auditamos 1</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center border-t border-slate-800/50 pt-2">
+                    <span className="text-cyan-400 text-xs font-bold uppercase tracking-tight">Inversión Sourcing: $60.000</span>
+                    <span className="text-[10px] text-slate-500 font-mono">(1 × $60.000)</span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between text-sm border-t border-white/5 pt-4">
-                  <span className="text-slate-300 font-black uppercase">Pack 2</span>
-                  <div className="flex items-center gap-3 text-slate-500 font-medium">
-                    <span>Buscamos 3</span>
-                    <ArrowRight size={14} />
-                    <span>Eliges 2</span>
-                    <ArrowRight size={14} />
-                    <span className="text-white font-bold bg-slate-800 px-3 py-1 rounded border border-slate-700">Visitas 2</span>
+
+                {/* PACK 2 NORMAL */}
+                <div className="flex flex-col gap-2 border-t border-white/5 pt-4">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-300 font-black uppercase">Pack 2</span>
+                    <div className="flex items-center gap-2 text-slate-500 font-medium text-[11px] md:text-xs">
+                      <span>Buscamos 3</span>
+                      <ArrowRight size={12} />
+                      <span>Eliges 2</span>
+                      <ArrowRight size={12} />
+                      <span className="text-white font-bold bg-slate-800 px-2 py-1 rounded border border-slate-700">Auditamos 2</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center border-t border-slate-800/50 pt-2">
+                    <span className="text-cyan-400 text-xs font-bold uppercase tracking-tight">Inversión Sourcing: $120.000</span>
+                    <span className="text-[10px] text-slate-500 font-mono">(2 × $60.000)</span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between text-sm border-t border-white/5 pt-4">
-                  <span className="text-slate-300 font-black uppercase">Pack 3</span>
-                  <div className="flex items-center gap-3 text-slate-500 font-medium">
-                    <span>Buscamos 5</span>
-                    <ArrowRight size={14} />
-                    <span>Eliges 3</span>
-                    <ArrowRight size={14} />
-                    <span className="text-white font-bold bg-slate-800 px-3 py-1 rounded border border-slate-700">Visitas 3</span>
+
+                {/* PACK 3 NORMAL */}
+                <div className="flex flex-col gap-2 border-t border-white/5 pt-4">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-300 font-black uppercase">Pack 3</span>
+                    <div className="flex items-center gap-2 text-slate-500 font-medium text-[11px] md:text-xs">
+                      <span>Buscamos 5</span>
+                      <ArrowRight size={12} />
+                      <span>Eliges 3</span>
+                      <ArrowRight size={12} />
+                      <span className="text-white font-bold bg-slate-800 px-2 py-1 rounded border border-slate-700">Auditamos 3</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center border-t border-slate-800/50 pt-2">
+                    <span className="text-cyan-400 text-xs font-bold uppercase tracking-tight">Inversión Sourcing: $180.000</span>
+                    <span className="text-[10px] text-slate-500 font-mono">(3 × $60.000)</span>
                   </div>
                 </div>
               </div>
             </div>
+
+            <button className="w-full bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest transition-all mt-4">
+              Seleccionar Pack
+            </button>
           </div>
 
-          {/* OPCIÓN 2: VIP */}
+          {/* OPCIÓN 2: VIP - AUDITORÍA TOTAL ADELANTADA */}
           <div className="bg-gradient-to-b from-slate-900 to-slate-950 border border-cyan-500/50 p-8 md:p-10 rounded-2xl relative overflow-hidden group hover:shadow-[0_0_50px_rgba(34,211,238,0.15)] transition-all flex flex-col">
             <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[10px] font-black px-4 py-1.5 rounded-bl-xl uppercase tracking-widest">
               Recomendado
@@ -111,44 +138,58 @@ export default function Sourcing() {
                 <Zap size={14} className="text-yellow-400" /> Seguridad Total
               </p>
               
-              <div className="space-y-5 relative">
+              <div className="space-y-6 relative">
                 {/* VIP PACK 1 */}
-                <div className="flex items-center justify-between text-[11px] md:text-xs">
-                  <span className="text-slate-200 font-black uppercase">Pack 1</span>
-                  <div className="flex items-center gap-1.5 md:gap-2 text-cyan-200/70 font-medium">
-                    <span className="text-cyan-400 font-bold">Buscamos 2</span>
-                    <ArrowRight size={12} />
-                    <span>Visitamos 2</span>
-                    <ArrowRight size={12} />
-                    <span className="text-[10px]">Info Fast (eliges 1)</span>
-                    <ArrowRight size={12} />
-                    <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-2 py-0.5 rounded">Auditamos 1</span>
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-200 font-black uppercase text-xs">Pack 1</span>
+                    <div className="flex items-center gap-1.5 text-cyan-200/70 font-medium text-[10px] md:text-[11px]">
+                      <span className="text-cyan-400">Buscamos 2</span>
+                      <ArrowRight size={10} />
+                      <span>Visitamos 2</span>
+                      <ArrowRight size={10} />
+                      <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-2 py-0.5 rounded">Auditamos 1</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center border-t border-cyan-500/20 pt-2">
+                    <span className="text-cyan-400 text-xs font-bold uppercase tracking-tight">Inversión Sourcing: $100.000</span>
+                    <span className="text-[10px] text-cyan-500/50 font-mono">(2 × $50.000)</span>
                   </div>
                 </div>
+
                 {/* VIP PACK 2 */}
-                <div className="flex items-center justify-between text-[11px] md:text-xs border-t border-cyan-500/20 pt-4">
-                  <span className="text-slate-200 font-black uppercase">Pack 2</span>
-                  <div className="flex items-center gap-1.5 md:gap-2 text-cyan-200/70 font-medium">
-                    <span className="text-cyan-400 font-bold">Buscamos 3</span>
-                    <ArrowRight size={12} />
-                    <span>Visitamos 3</span>
-                    <ArrowRight size={12} />
-                    <span className="text-[10px]">Info Fast (eliges 2)</span>
-                    <ArrowRight size={12} />
-                    <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-2 py-0.5 rounded">Auditamos 2</span>
+                <div className="flex flex-col gap-2 border-t border-cyan-500/20 pt-4">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-200 font-black uppercase text-xs">Pack 2</span>
+                    <div className="flex items-center gap-1.5 text-cyan-200/70 font-medium text-[10px] md:text-[11px]">
+                      <span className="text-cyan-400">Buscamos 3</span>
+                      <ArrowRight size={10} />
+                      <span>Visitamos 3</span>
+                      <ArrowRight size={10} />
+                      <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-2 py-0.5 rounded">Auditamos 2</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center border-t border-cyan-500/20 pt-2">
+                    <span className="text-cyan-400 text-xs font-bold uppercase tracking-tight">Inversión Sourcing: $150.000</span>
+                    <span className="text-[10px] text-cyan-500/50 font-mono">(3 × $50.000)</span>
                   </div>
                 </div>
+
                 {/* VIP PACK 3 */}
-                <div className="flex items-center justify-between text-[11px] md:text-xs border-t border-cyan-500/20 pt-4">
-                  <span className="text-slate-200 font-black uppercase">Pack 3</span>
-                  <div className="flex items-center gap-1.5 md:gap-2 text-cyan-200/70 font-medium">
-                    <span className="text-cyan-400 font-bold">Buscamos 5</span>
-                    <ArrowRight size={12} />
-                    <span>Visitamos 5</span>
-                    <ArrowRight size={12} />
-                    <span className="text-[10px]">Info Fast (eliges 3)</span>
-                    <ArrowRight size={12} />
-                    <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-2 py-0.5 rounded">Auditamos 3</span>
+                <div className="flex flex-col gap-2 border-t border-cyan-500/20 pt-4">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-200 font-black uppercase text-xs">Pack 3</span>
+                    <div className="flex items-center gap-1.5 text-cyan-200/70 font-medium text-[10px] md:text-[11px]">
+                      <span className="text-cyan-400">Buscamos 5</span>
+                      <ArrowRight size={10} />
+                      <span>Visitamos 5</span>
+                      <ArrowRight size={10} />
+                      <span className="text-white font-bold bg-cyan-900/50 border border-cyan-500/30 px-2 py-0.5 rounded">Auditamos 3</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center border-t border-cyan-500/20 pt-2">
+                    <span className="text-cyan-400 text-xs font-bold uppercase tracking-tight">Inversión Sourcing: $250.000</span>
+                    <span className="text-[10px] text-cyan-500/50 font-mono">(5 × $50.000)</span>
                   </div>
                 </div>
               </div>
