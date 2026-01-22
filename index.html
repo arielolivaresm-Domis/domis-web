@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PCF-15™ Protected</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuRh3WMF2EA835ieLjc-5JMqAz2l6bYTI&libraries=places,geometry&language=es" async defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #0F172A; /* Slate 900 */
+        color: #F8FAFC;
+      }
+      /* Print styles override */
+      @media print {
+        body { background: white; color: black; }
+        .no-print { display: none !important; }
+        .print-only { display: block !important; }
+        .card { border: 1px solid #ccc; box-shadow: none; break-inside: avoid; }
+        input, select, textarea { border: 1px solid #ccc; background: white !important; color: black !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>
