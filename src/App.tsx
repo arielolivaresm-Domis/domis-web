@@ -2,6 +2,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Problem from './components/Problem';
 import PhasesTabs from './components/PhasesTabs';
+import BenefitFlyer from './components/BenefitFlyer';
 import Footer from './components/Footer';
 import { TabsProvider } from './context/TabsContext';
 
@@ -25,7 +26,7 @@ function App() {
           <Hero />
           <Problem />
           <PhasesTabs />
-          <InvestmentPhase2 />
+          <BenefitFlyer />
         </main>
 
         <Footer />
