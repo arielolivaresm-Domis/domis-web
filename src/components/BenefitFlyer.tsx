@@ -42,7 +42,7 @@ const BenefitFlyer = () => {
                 <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6 space-y-4">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-3xl">2️⃣</span>
-                    <h3 className="text-xl font-black text-white uppercase">Al firmar</h3>
+                    <h3 className="text-xl font-black text-white uppercase">Al firmar promesa de compraventa</h3>
                   </div>
                   <div className="text-2xl font-mono text-cyan-400 font-black">15% del ahorro</div>
                   <p className="text-sm text-slate-400">Calculado sobre la baja de precio lograda.</p>
