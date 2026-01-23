@@ -2,6 +2,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Problem from './components/Problem';
 import PhasesTabs from './components/PhasesTabs';
+import InvestmentPhase2 from './components/InvestmentPhase2';
 import Footer from './components/Footer';
 import { TabsProvider } from './context/TabsContext';
 
@@ -25,6 +26,7 @@ function App() {
           <Hero />
           <Problem />
           <PhasesTabs />
+          <InvestmentPhase2 />
         </main>
 
         <Footer />
