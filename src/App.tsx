@@ -6,10 +6,6 @@ import BenefitFlyer from './components/BenefitFlyer';
 import Footer from './components/Footer';
 import { TabsProvider } from './context/TabsContext';
 
-/**
- * ARCHIVO MAESTRO: App.tsx
- * Proyecto: DOMIS™ PROPERTY AUDIT
- */
 function App() {
   return (
     <TabsProvider>
