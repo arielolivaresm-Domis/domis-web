@@ -12,22 +12,21 @@ export default function PhasesTabs() {
   const { activeTab, setActiveTab } = useTabs();
   const [isSticky, setIsSticky] = useState(false);
 
-  // Detector de scroll para activar la navegación persistente
+  // Motor de precisión para el efecto Sticky y Shrink (Achicado)
   useEffect(() => {
     const handleScroll = () => {
-      // Se activa al pasar los 500px y se mantiene SIEMPRE visible hacia abajo
-      setIsSticky(window.scrollY > 500);
+      // Se activa al pasar los 600px de scroll
+      setIsSticky(window.scrollY > 600);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Navegación de precisión con offset para no tapar el contenido
   const handleTabChange = (id: 'fase1' | 'fase2' | 'fase3') => {
     setActiveTab(id);
     const element = document.getElementById('proceso');
     if (element) {
-      const offset = 140; 
+      const offset = isSticky ? 100 : 140; 
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -41,9 +40,24 @@ export default function PhasesTabs() {
   };
 
   const tabs = [
-    { id: 'fase1' as const, label: 'Fase 1', subtitle: 'Auditoría', icon: '🔍' },
-    { id: 'fase2' as const, label: 'Fase 2', subtitle: 'Negociación', icon: '💼' },
-    { id: 'fase3' as const, label: 'Fase 3', subtitle: 'Remodelación', icon: '🏗️' },
+    { 
+      id: 'fase1' as const, 
+      label: 'Fase 1', 
+      subtitle: 'Auditoría',
+      icon: '🔍'
+    },
+    { 
+      id: 'fase2' as const, 
+      label: 'Fase 2', 
+      subtitle: 'Negociación',
+      icon: '💼'
+    },
+    { 
+      id: 'fase3' as const, 
+      label: 'Fase 3', 
+      subtitle: 'Remodelación',
+      icon: '🏗️'
+    },
   ];
 
   return (
@@ -52,7 +66,6 @@ export default function PhasesTabs() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        {/* HEADER DE SECCIÓN */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
             <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">
@@ -67,36 +80,38 @@ export default function PhasesTabs() {
           </p>
         </div>
 
-        {/* NAVEGACIÓN GLOBAL PERSISTENTE (Fixed) */}
+        {/* NAVEGACIÓN GLOBAL PERSISTENTE: Se achica a scale-75 para no tapar el FinalCTA */}
         <div className={`transition-all duration-500 z-[100] ${
           isSticky 
-            ? 'fixed top-[80px] left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 scale-90' 
-            : 'relative w-full max-w-4xl mx-auto scale-100'
+            ? 'fixed top-0 left-0 w-full py-2 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800 shadow-2xl scale-100' 
+            : 'relative w-full max-w-4xl mx-auto py-4 scale-100'
         }`}>
-          <div className={`flex flex-col md:flex-row gap-4 py-4 transition-all ${
-            isSticky ? 'bg-slate-950/90 backdrop-blur-md rounded-2xl border border-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.7)] px-4' : ''
+          <div className={`flex flex-col md:flex-row gap-2 md:gap-4 mx-auto transition-all px-4 ${
+            isSticky ? 'max-w-5xl' : 'max-w-4xl'
           }`}>
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
-                className={`flex-1 p-6 rounded-xl border-2 transition-all duration-300 relative ${
+                className={`flex-1 transition-all duration-300 relative rounded-xl border ${
+                  isSticky ? 'p-3' : 'p-6'
+                } ${
                   activeTab === tab.id
                     ? 'bg-cyan-500/10 border-cyan-500 shadow-lg shadow-cyan-500/20'
                     : 'bg-slate-900/50 border-slate-800 hover:border-slate-700'
                 }`}
               >
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-3xl">{tab.icon}</span>
-                  <div className="text-center">
-                    <div className={`text-xs font-bold uppercase tracking-widest mb-1 ${
-                      activeTab === tab.id ? 'text-cyan-400' : 'text-slate-500'
-                    }`}>
+                <div className={`flex items-center justify-center gap-3 ${isSticky ? 'flex-row' : 'flex-col'}`}>
+                  <span className={`${isSticky ? 'text-xl' : 'text-3xl'}`}>{tab.icon}</span>
+                  <div className={`${isSticky ? 'text-left' : 'text-center'}`}>
+                    <div className={`font-bold uppercase tracking-widest ${
+                      isSticky ? 'text-[8px]' : 'text-xs mb-1'
+                    } ${activeTab === tab.id ? 'text-cyan-400' : 'text-slate-500'}`}>
                       {tab.label}
                     </div>
-                    <div className={`text-lg font-black uppercase ${
-                      activeTab === tab.id ? 'text-white' : 'text-slate-400'
-                    }`}>
+                    <div className={`font-black uppercase ${
+                      isSticky ? 'text-xs' : 'text-lg'
+                    } ${activeTab === tab.id ? 'text-white' : 'text-slate-400'}`}>
                       {tab.subtitle}
                     </div>
                   </div>
@@ -109,7 +124,7 @@ export default function PhasesTabs() {
           </div>
         </div>
 
-        {/* CONTENIDO DINÁMICO */}
+        {/* CONTENIDO DE TABS */}
         <div className="mt-8">
           {activeTab === 'fase1' && (
             <div className="space-y-16 animate-fadeIn">
