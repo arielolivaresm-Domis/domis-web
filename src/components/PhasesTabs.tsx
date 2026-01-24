@@ -1,8 +1,19 @@
+import React, { useState, useEffect } from 'react';
 import { Search, ShieldCheck, Gavel, Hammer, ArrowRight, MessageCircle } from 'lucide-react';
 import { useTabs } from '../context/TabsContext';
 
 const PhasesTabs = () => {
   const { activeTab, setActiveTab } = useTabs();
+  const [isSticky, setIsSticky] = useState(false);
+
+  // Lógica para detectar el scroll y achicar las pestañas
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 800);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const phases = [
     {
@@ -71,25 +82,29 @@ const PhasesTabs = () => {
           <p className="text-slate-400 font-light">Tres etapas diseñadas para proteger y multiplicar tu capital inmobiliario.</p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {phases.map((phase) => (
-            <button
-              key={phase.id}
-              onClick={() => setActiveTab(phase.id)}
-              className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-widest transition-all border ${
-                activeTab === phase.id
-                  ? 'bg-cyan-500 border-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(34,211,238,0.3)] scale-105'
-                  : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
-              }`}
-            >
-              <span className="opacity-50">{phase.number}</span>
-              {phase.icon}
-              {phase.title}
-            </button>
-          ))}
+        {/* CONTENEDOR DE PESTAÑAS STICKY */}
+        <div className={`sticky top-20 z-50 transition-all duration-500 ${isSticky ? 'scale-90 opacity-90' : 'scale-100 opacity-100'}`}>
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {phases.map((phase) => (
+              <button
+                key={phase.id}
+                onClick={() => setActiveTab(phase.id)}
+                className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-widest transition-all border ${
+                  activeTab === phase.id
+                    ? 'bg-cyan-500 border-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(34,211,238,0.3)]'
+                    : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
+                }`}
+              >
+                <span className="opacity-50">{phase.number}</span>
+                {phase.icon}
+                {phase.title}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-sm relative overflow-hidden min-h-[500px]">
+        {/* Contenido de la Pestaña Activa */}
+        <div className="bg-slate-900/50 border border-slate-800 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-sm relative overflow-hidden min-h-[600px]">
           {phases.map((phase) => (
             <div
               key={phase.id}
