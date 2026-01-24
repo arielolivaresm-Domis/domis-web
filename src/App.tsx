@@ -7,8 +7,8 @@ import Footer from './components/Footer';
 import { TabsProvider, useTabs } from './context/TabsContext';
 
 /**
- * AppContent: Maneja la visibilidad dinámica.
- * Consume el estado activeTab del TabsProvider.
+ * AppContent: Componente interno que permite acceder al contexto de las pestañas.
+ * Controla que la sección de inversión solo sea visible en la Fase 2.
  */
 const AppContent = () => {
   const { activeTab } = useTabs();
@@ -29,7 +29,7 @@ const AppContent = () => {
         <PhasesTabs />
         
         {/* LÓGICA DE CONTROL: 
-            BenefitFlyer SOLO aparece si activeTab es exactamente 'fase2' */}
+            BenefitFlyer solo se renderiza si la pestaña activa tiene el ID 'fase2' */}
         {activeTab === 'fase2' && (
           <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
             <BenefitFlyer />
@@ -42,9 +42,6 @@ const AppContent = () => {
   );
 };
 
-/**
- * ARCHIVO MAESTRO: App.tsx
- */
 function App() {
   return (
     <TabsProvider>

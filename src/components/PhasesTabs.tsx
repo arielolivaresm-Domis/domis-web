@@ -36,10 +36,10 @@ const PhasesTabs = () => {
           {phases.map((phase) => (
             <button
               key={phase.id}
-              onClick={() => setActiveTab(phase.id)} // Ahora TypeScript reconoce el tipo correcto
+              onClick={() => setActiveTab(phase.id)} 
               className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase text-[10px] transition-all border ${
                 activeTab === phase.id
-                  ? 'bg-cyan-500 border-cyan-400 text-slate-950'
+                  ? 'bg-cyan-500 border-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(34,211,238,0.3)]'
                   : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
               }`}
             >
@@ -53,6 +53,9 @@ const PhasesTabs = () => {
             <h3 className="text-3xl font-black text-white uppercase tracking-tighter">
               {phases.find(p => p.id === activeTab)?.title}
             </h3>
+            <p className="text-slate-400 text-sm font-light">
+              Haz clic abajo para activar esta etapa con nuestro equipo técnico.
+            </p>
             <div className="flex justify-center">
               <a 
                 href={`https://wa.me/569XXXXXXXX?text=${encodeURIComponent(phases.find(p => p.id === activeTab)?.msg || '')}`}
