@@ -1,24 +1,12 @@
-import React, { useState, useEffect } from 'react';
 import { Search, ShieldCheck, Gavel, Hammer, ArrowRight, MessageCircle } from 'lucide-react';
 import { useTabs } from '../context/TabsContext';
 
 const PhasesTabs = () => {
   const { activeTab, setActiveTab } = useTabs();
-  const [isSticky, setIsSticky] = useState(false);
-
-  // NUEVO: Lógica de scroll para que las pestañas se achiquen al bajar
-  useEffect(() => {
-    const handleScroll = () => {
-      // Se activa el modo "achicado" después de 500px de scroll
-      setIsSticky(window.scrollY > 500);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const phases = [
     {
-      id: 'fase1' as const, // Agregado 'as const' para validar el ID ante Vercel
+      id: 'fase1' as const,
       number: '01',
       title: 'Scanner Técnico',
       icon: <Search size={20} />,
@@ -36,7 +24,7 @@ const PhasesTabs = () => {
       }
     },
     {
-      id: 'fase2' as const, // Agregado 'as const' para validar el ID ante Vercel
+      id: 'fase2' as const,
       number: '02',
       title: 'Plan Maestro',
       icon: <Gavel size={20} />,
@@ -54,7 +42,7 @@ const PhasesTabs = () => {
       }
     },
     {
-      id: 'fase3' as const, // Agregado 'as const' para validar el ID ante Vercel
+      id: 'fase3' as const,
       number: '03',
       title: 'Gestión de Obra',
       icon: <Hammer size={20} />,
@@ -74,7 +62,7 @@ const PhasesTabs = () => {
   ];
 
   return (
-    <section id="phases" className="py-24 bg-slate-950 px-6 relative">
+    <section className="py-24 bg-slate-950 px-6 relative">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4 tracking-tighter">
@@ -83,33 +71,27 @@ const PhasesTabs = () => {
           <p className="text-slate-400 font-light">Tres etapas diseñadas para proteger y multiplicar tu capital inmobiliario.</p>
         </div>
 
-        {/* CONTENEDOR DE PESTAÑAS: Se vuelve sticky y se achica al bajar */}
-        <div className={`transition-all duration-500 z-50 py-4 ${
-          isSticky 
-            ? 'sticky top-[70px] bg-slate-950/80 backdrop-blur-md px-6 rounded-full border border-slate-800 shadow-2xl scale-90' 
-            : 'relative scale-100'
-        }`}>
-          <div className="flex flex-wrap justify-center gap-4">
-            {phases.map((phase) => (
-              <button
-                key={phase.id}
-                onClick={() => setActiveTab(phase.id)}
-                className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-widest transition-all border ${
-                  activeTab === phase.id
-                    ? 'bg-cyan-500 border-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(34,211,238,0.3)] scale-105'
-                    : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
-                }`}
-              >
-                <span className="opacity-50">{phase.number}</span>
-                {phase.icon}
-                {phase.title}
-              </button>
-            ))}
-          </div>
+        {/* Selectores de Pestañas */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {phases.map((phase) => (
+            <button
+              key={phase.id}
+              onClick={() => setActiveTab(phase.id)}
+              className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-widest transition-all border ${
+                activeTab === phase.id
+                  ? 'bg-cyan-500 border-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(34,211,238,0.3)] scale-105'
+                  : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
+              }`}
+            >
+              <span className="opacity-50">{phase.number}</span>
+              {phase.icon}
+              {phase.title}
+            </button>
+          ))}
         </div>
 
-        {/* Contenido de la Pestaña Activa: Tu diseño original intacto */}
-        <div className="mt-12 bg-slate-900/50 border border-slate-800 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-sm relative overflow-hidden">
+        {/* Contenido de la Pestaña Activa */}
+        <div className="bg-slate-900/50 border border-slate-800 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-sm relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-5">
             {phases.find(p => p.id === activeTab)?.icon}
           </div>
