@@ -12,10 +12,9 @@ export default function PhasesTabs() {
   const { activeTab, setActiveTab } = useTabs();
   const [isSticky, setIsSticky] = useState(false);
 
-  // Lógica técnica para que las pestañas se achiquen al bajar
+  // Motor de detección de scroll para el efecto de achicado
   useEffect(() => {
     const handleScroll = () => {
-      // Se activa el modo "achicado" después de 600px de scroll
       setIsSticky(window.scrollY > 600);
     };
     window.addEventListener('scroll', handleScroll);
@@ -23,29 +22,15 @@ export default function PhasesTabs() {
   }, []);
 
   const tabs = [
-    { 
-      id: 'fase1' as const, 
-      label: 'Fase 1', 
-      subtitle: 'Auditoría',
-      icon: '🔍'
-    },
-    { 
-      id: 'fase2' as const, 
-      label: 'Fase 2', 
-      subtitle: 'Negociación',
-      icon: '💼'
-    },
-    { 
-      id: 'fase3' as const, 
-      label: 'Fase 3', 
-      subtitle: 'Remodelación',
-      icon: '🏗️'
-    },
+    { id: 'fase1' as const, label: 'Fase 1', subtitle: 'Auditoría', icon: '🔍' },
+    { id: 'fase2' as const, label: 'Fase 2', subtitle: 'Negociación', icon: '💼' },
+    { id: 'fase3' as const, label: 'Fase 3', subtitle: 'Remodelación', icon: '🏗️' },
   ];
 
   return (
-    <section className="py-20 bg-slate-950 relative overflow-hidden" id="proceso">
-      {/* FONDO TÉCNICO */}
+    /* Quitamos overflow-hidden para que el sticky funcione */
+    <section className="py-20 bg-slate-950 relative" id="proceso">
+      
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -57,18 +42,20 @@ export default function PhasesTabs() {
               El Protocolo DOMIS™
             </span>
           </div>
-          
           <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
             Cómo <span className="text-cyan-400">Funciona</span>
           </h2>
-          
           <p className="text-slate-400 text-base max-w-2xl mx-auto">
             Ecosistema técnico integrado en 3 etapas críticas.
           </p>
         </div>
 
-        {/* TABS NAVEGACIÓN - Con efecto Sticky y Reducción */}
-        <div className={`transition-all duration-500 z-50 py-4 ${isSticky ? 'sticky top-20 scale-90 opacity-95 bg-slate-950/80 backdrop-blur-md rounded-2xl border border-slate-900 shadow-2xl' : 'relative scale-100'}`}>
+        {/* TABS NAVEGACIÓN: Ahora con Sticky real y Z-Index maestro */}
+        <div className={`transition-all duration-500 z-[100] py-4 ${
+          isSticky 
+          ? 'sticky top-[80px] scale-90 bg-slate-950/90 backdrop-blur-md rounded-2xl border border-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.5)]' 
+          : 'relative scale-100'
+        }`}>
           <div className="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto px-4">
             {tabs.map((tab) => (
               <button
@@ -107,83 +94,27 @@ export default function PhasesTabs() {
         <div className="mt-8">
           {activeTab === 'fase1' && (
             <div className="space-y-16 animate-fadeIn">
-              <div className="text-center max-w-3xl mx-auto mb-12">
-                <h3 className="text-3xl font-black text-white mb-4 uppercase">
-                  Detección de <span className="text-cyan-400">Riesgo</span>
-                </h3>
-                <p className="text-slate-400 leading-relaxed">
-                  Inspección física rigurosa de la propiedad para identificar 
-                  vicios ocultos y normativa.
-                </p>
-              </div>
               <div id="auditoria"><AuditPacks /></div>
               <div id="sourcing" className="pt-16"><Sourcing /></div>
-              <div id="calculator" className="pt-16"><div className="max-w-5xl mx-auto"><Calculator /></div></div>
-              <div className="text-center pt-8">
-                <a 
-                  href="https://wa.me/56982348089?text=Hola, quiero solicitar una auditoría técnica DOMIS™"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-10 py-4 rounded-xl font-black uppercase tracking-wider transition-all shadow-lg shadow-cyan-500/30 hover:scale-105"
-                >
-                  Solicitar Fase 1
-                </a>
-              </div>
+              <div id="calculator" className="pt-16"><Calculator /></div>
             </div>
           )}
 
           {activeTab === 'fase2' && (
             <div className="space-y-16 animate-fadeIn">
-              <div className="text-center max-w-3xl mx-auto mb-12">
-                <h3 className="text-3xl font-black text-white mb-4 uppercase">
-                  Estrategia de <span className="text-cyan-400">Valor</span>
-                </h3>
-                <p className="text-slate-400 leading-relaxed">
-                  Usamos los hallazgos técnicos para fundamentar una rebaja 
-                  en el precio de compra.
-                </p>
-              </div>
               <div><BenefitFlyer /></div>
               <div className="pt-8"><Deliverable /></div>
               <div className="pt-8"><Phase2 /></div>
-              <div className="text-center pt-8">
-                <a 
-                  href="https://wa.me/56982348089?text=Hola, quiero contratar Fase 1 + Fase 2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-10 py-4 rounded-xl font-black uppercase tracking-wider transition-all shadow-lg shadow-cyan-500/30 hover:scale-105"
-                >
-                  Activar Fase 1 + 2
-                </a>
-              </div>
             </div>
           )}
 
           {activeTab === 'fase3' && (
             <div className="space-y-16 animate-fadeIn">
-              <div className="text-center max-w-3xl mx-auto mb-12">
-                <h3 className="text-3xl font-black text-white mb-4 uppercase">
-                  Ejecución <span className="text-cyan-400">Técnica</span>
-                </h3>
-                <p className="text-slate-400 leading-relaxed">
-                  Una vez que las llaves son tuyas, ejecutamos el plan de 
-                  remodelación diseñado en la auditoría.
-                </p>
-              </div>
               <div><Phase3 /></div>
-              <div className="text-center pt-8">
-                <a 
-                  href="https://wa.me/56982348089?text=Hola, quiero información sobre DOMIS Upgrade"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-10 py-4 rounded-xl font-black uppercase tracking-wider transition-all shadow-lg shadow-cyan-500/30 hover:scale-105"
-                >
-                  Conocer Domis Upgrade
-                </a>
-              </div>
             </div>
           )}
         </div>
+
       </div>
     </section>
   );
