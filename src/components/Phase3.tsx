@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function Phase3() {
   const features = [
     {
@@ -26,7 +24,7 @@ export default function Phase3() {
             alt="Supervisión técnica con DOMIS Property-Audit" 
             className="w-full h-full object-cover grayscale-[0.2] contrast-110"
           />
-          {/* Overlay gradiente lateral para que el texto a la izquierda sea 100% legible */}
+          {/* Overlay gradiente lateral para legibilidad */}
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent"></div>
         </div>
 
@@ -38,7 +36,7 @@ export default function Phase3() {
 
           <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter mb-8 leading-[0.9]">
             TRANSFORMACIÓN <br />
-            <span className="text-cyan-400 text-glow italic">DOMIS UPGRADE</span>
+            <span className="text-cyan-400 text-glow italic text-[1.2em]">DOMIS UPGRADE</span>
           </h2>
 
           <p className="text-slate-200 text-lg leading-relaxed mb-12 max-w-xl font-medium drop-shadow-md">
