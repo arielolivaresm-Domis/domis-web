@@ -17,7 +17,7 @@ export default function FinalCTA() {
 
           {/* CONTENIDO DE CONVERSIÓN */}
           <div className="relative z-10 p-8 md:p-20 w-full">
-            <div className="max-w-2xl">
+            <div className="max-w-2xl text-left">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-8">
                 <span className="text-[10px] md:text-xs font-mono text-cyan-400 uppercase tracking-[0.3em] font-black">
                   Tu tranquilidad es nuestra métrica
@@ -40,20 +40,13 @@ export default function FinalCTA() {
                   href="https://wa.me/56982348089?text=Hola%20Ariel,%20necesito%20una%20auditoría%20para%20mi%20próxima%20propiedad."
                   target="_blank"
                   rel="noreferrer"
-                  className="group relative px-8 py-5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black uppercase rounded-2xl transition-all duration-300 text-center shadow-[0_0_30px_rgba(34,211,238,0.4)]"
+                  className="group relative px-10 py-5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black uppercase rounded-2xl transition-all duration-300 text-center shadow-[0_0_30px_rgba(34,211,238,0.4)]"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-3">
                     Agendar Auditoría Ahora
                     <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
                   </span>
                 </a>
-                
-                <div className="flex items-center gap-4 px-6 py-4 bg-slate-900/50 backdrop-blur-md border border-slate-700 rounded-2xl">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-slate-300 font-mono text-xs uppercase tracking-widest">
-                    Disponibilidad Inmediata
-                  </span>
-                </div>
               </div>
             </div>
           </div>
