@@ -2,24 +2,25 @@ import { Hammer, Paintbrush, Ruler } from 'lucide-react';
 
 /**
  * COMPONENTE FASE 3: DOMIS UPGRADE
- * Mantiene la estructura original del usuario e integra la imagen de fondo.
+ * Ajuste de visibilidad: Se aumenta la opacidad para que la imagen sea claramente visible.
  */
 export default function Phase3() {
   return (
-    <section className="py-20 border-t border-slate-800 relative overflow-hidden">
+    <section className="py-20 border-t border-slate-800 relative overflow-hidden bg-slate-950">
       
-      {/* CAPA TÉCNICA DE IMAGEN DE FONDO */}
+      {/* CAPA DE IMAGEN: Aumentamos opacidad al 70% y suavizamos el overlay */}
       <div className="absolute inset-0 z-0">
         <img 
           src="/DOMIS_phase3_remodel.webp" 
-          alt="Transformación Domis Upgrade" 
-          className="w-full h-full object-cover opacity-40 grayscale-[0.4]"
+          alt="Remodelación Domis Upgrade" 
+          className="w-full h-full object-cover opacity-70" 
         />
-        {/* Overlay para garantizar que el texto ámbar y blanco resalte */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/80 to-slate-950"></div>
+        {/* Overlay más sutil: solo oscurecemos los bordes para el texto */}
+        <div className="absolute inset-0 bg-slate-950/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950"></div>
       </div>
 
-      {/* CONTENIDO ORIGINAL (Z-10 para estar sobre la imagen) */}
+      {/* CONTENIDO ORIGINAL (Mantenido 100% igual) */}
       <div className="relative z-10 container mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-block px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-bold mb-6 uppercase tracking-widest">
@@ -28,7 +29,7 @@ export default function Phase3() {
           <h2 className="text-4xl font-bold text-white mb-6">
             Domis <span className="text-amber-500">Upgrade</span>
           </h2>
-          <p className="text-slate-400">
+          <p className="text-slate-200 font-medium drop-shadow-lg">
             Una vez que las llaves son tuyas, ejecutamos el plan de remodelación diseñado en la auditoría
             para maximizar tu plusvalía desde el primer día.
           </p>
@@ -54,13 +55,13 @@ export default function Phase3() {
           ].map((step, i) => (
             <div
               key={i}
-              className="p-8 bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl group hover:border-amber-500/30 transition-all"
+              className="p-8 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl group hover:border-amber-500/50 transition-all"
             >
               <div className="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-500 mb-6 group-hover:scale-110 transition-transform">
                 {step.icon}
               </div>
               <h4 className="text-xl font-bold text-white mb-3">{step.title}</h4>
-              <p className="text-slate-400 text-sm leading-relaxed">{step.desc}</p>
+              <p className="text-slate-300 text-sm leading-relaxed">{step.desc}</p>
             </div>
           ))}
         </div>
