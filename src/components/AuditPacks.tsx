@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-export default function AuditPacks() {
+/**
+ * COMPONENTE FASE 1: AUDITORÍA (AuditPacks)
+ * Mantiene diseño y contenido original íntegro.
+ * Se agrega la prop 'onNext' para la conexión técnica con el sistema de fases.
+ */
+export default function AuditPacks({ onNext }: { onNext: () => void }) {
   const [activePack, setActivePack] = useState<'individual' | 'dupla' | 'inversionista' | null>(null);
 
   const packs = [
@@ -78,14 +83,17 @@ export default function AuditPacks() {
                   <span className="text-3xl font-black text-white">{p.price}</span>
                   <span className="text-slate-500 text-xs font-mono">/ m²</span>
                 </div>
-                <a 
-                  href={`https://wa.me/56982348089?text=Hola,%20quiero%20información%20sobre%20el%20${encodeURIComponent(p.title)}`} 
-                  target="_blank" 
-                  rel="noreferrer" 
+                {/* Botón que abre WhatsApp y además activa el paso a la siguiente fase */}
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onNext(); // Mueve la pestaña a Fase 2
+                    window.open(`https://wa.me/56982348089?text=Hola,%20quiero%20información%20sobre%20el%20${encodeURIComponent(p.title)}`, '_blank');
+                  }}
                   className="block w-full py-3 font-black uppercase rounded-xl transition-all mt-4 text-sm bg-cyan-500 text-slate-950 hover:bg-cyan-400"
                 >
                   Seleccionar Pack
-                </a>
+                </button>
               </div>
             </div>
           </div>
