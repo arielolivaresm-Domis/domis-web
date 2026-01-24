@@ -34,14 +34,13 @@ export default function AuditPacks() {
   ];
 
   return (
-    <div id="audit-packs-content" className="animate-fadeIn">
-      {/* Título de sección interno para la pestaña */}
+    <div className="py-12 animate-fadeIn">
       <div className="text-center mb-16">
         <h3 className="text-3xl font-black text-white uppercase italic tracking-tighter">
           Selección de <span className="text-cyan-400">Protocolo de Auditoría</span>
         </h3>
-        <p className="text-slate-500 font-mono text-xs uppercase tracking-widest mt-2">
-          Valores netos por m² construidos
+        <p className="text-slate-500 font-mono text-xs uppercase tracking-widest mt-2 italic">
+          Mínimo técnico de 100 m² por propiedad.
         </p>
       </div>
 
