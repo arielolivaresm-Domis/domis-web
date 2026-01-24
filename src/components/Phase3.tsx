@@ -2,8 +2,8 @@ import { Hammer, Paintbrush, Ruler } from 'lucide-react';
 
 /**
  * COMPONENTE FASE 3: DOMIS UPGRADE
- * Limpieza de Brillo: Se elimina la opacidad de la imagen y se aclaran las tarjetas
- * para evitar el efecto "opaco" y resaltar la escena técnica del iPad.
+ * Ajuste de Transparencia: Se reduce la opacidad y el desenfoque de los módulos
+ * para un efecto de cristal ultraligero que maximiza la vista de la imagen de fondo.
  */
 export default function Phase3() {
   return (
@@ -35,7 +35,7 @@ export default function Phase3() {
           </p>
         </div>
 
-        {/* MÓDULOS TIPO CRISTAL (Glassmorphism real) */}
+        {/* MÓDULOS TIPO CRISTAL ULTRATRANSPARENTE */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {[
             {
@@ -56,8 +56,8 @@ export default function Phase3() {
           ].map((step, i) => (
             <div
               key={i}
-              // bg-white/5 crea un efecto de cristal limpio, no oscuro
-              className="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl group hover:bg-amber-500/10 hover:border-amber-500/50 transition-all duration-500"
+              // Se ajusta a bg-white/5 y backdrop-blur-sm para mayor transparencia
+              className="p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl group hover:bg-amber-500/10 hover:border-amber-500/50 transition-all duration-500"
             >
               <div className="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center text-amber-500 mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 {step.icon}
