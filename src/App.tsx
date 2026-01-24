@@ -7,7 +7,8 @@ import Footer from './components/Footer';
 import { TabsProvider, useTabs } from './context/TabsContext';
 
 /**
- * COMPONENTE DE CONTENIDO: Maneja la visibilidad dinámica
+ * AppContent: Maneja la visibilidad dinámica.
+ * Consume el estado activeTab del TabsProvider.
  */
 const AppContent = () => {
   const { activeTab } = useTabs();
@@ -27,9 +28,10 @@ const AppContent = () => {
         <Problem />
         <PhasesTabs />
         
-        {/* LÓGICA DE CONTROL: Solo aparece si la pestaña activa es la Fase 2 */}
+        {/* LÓGICA DE CONTROL: 
+            BenefitFlyer SOLO aparece si activeTab es exactamente 'fase2' */}
         {activeTab === 'fase2' && (
-          <div className="animate-in fade-in slide-in-from-bottom-10 duration-700">
+          <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
             <BenefitFlyer />
           </div>
         )}
