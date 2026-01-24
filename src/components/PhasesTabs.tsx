@@ -1,8 +1,19 @@
+import { useState, useEffect } from 'react';
 import { Search, ShieldCheck, Gavel, Hammer, ArrowRight, MessageCircle } from 'lucide-react';
 import { useTabs } from '../context/TabsContext';
 
 const PhasesTabs = () => {
   const { activeTab, setActiveTab } = useTabs();
+  const [isSticky, setIsSticky] = useState(false);
+
+  // Lógica para que las pestañas se achiquen al bajar el scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 500);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const phases = [
     {
@@ -62,36 +73,38 @@ const PhasesTabs = () => {
   ];
 
   return (
-    <section className="py-24 bg-slate-950 px-6 relative">
+    <section id="phases" className="py-24 bg-slate-950 px-6 relative">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4 tracking-tighter">
             El Sistema <span className="text-cyan-500 text-glow">DOMIS™</span>
           </h2>
-          <p className="text-slate-400 font-light">Tres etapas diseñadas para proteger y multiplicar tu capital inmobiliario.</p>
+          <p className="text-slate-400 font-light italic">Etapas diseñadas para proteger tu capital inmobiliario.</p>
         </div>
 
-        {/* Selectores de Pestañas */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {phases.map((phase) => (
-            <button
-              key={phase.id}
-              onClick={() => setActiveTab(phase.id)}
-              className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-widest transition-all border ${
-                activeTab === phase.id
-                  ? 'bg-cyan-500 border-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(34,211,238,0.3)] scale-105'
-                  : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
-              }`}
-            >
-              <span className="opacity-50">{phase.number}</span>
-              {phase.icon}
-              {phase.title}
-            </button>
-          ))}
+        {/* CONTENEDOR DE PESTAÑAS STICKY */}
+        <div className={`transition-all duration-500 z-50 py-4 ${isSticky ? 'sticky top-20 scale-90 bg-slate-950/80 backdrop-blur-md rounded-full border border-slate-800 px-4' : 'relative scale-100'}`}>
+          <div className="flex flex-wrap justify-center gap-4">
+            {phases.map((phase) => (
+              <button
+                key={phase.id}
+                onClick={() => setActiveTab(phase.id)}
+                className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all border ${
+                  activeTab === phase.id
+                    ? 'bg-cyan-500 border-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(34,211,238,0.3)]'
+                    : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
+                }`}
+              >
+                <span className="opacity-50">{phase.number}</span>
+                {phase.icon}
+                {phase.title}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Contenido de la Pestaña Activa */}
-        <div className="bg-slate-900/50 border border-slate-800 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-sm relative overflow-hidden">
+        <div className="mt-12 bg-slate-900/50 border border-slate-800 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-sm relative overflow-hidden min-h-[550px]">
           <div className="absolute top-0 right-0 p-8 opacity-5">
             {phases.find(p => p.id === activeTab)?.icon}
           </div>
