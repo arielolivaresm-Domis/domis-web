@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Search, ShieldCheck, Gavel, Hammer, ArrowRight, MessageCircle } from 'lucide-react';
+import AuditPacks from './AuditPacks';
+import Sourcing from './Sourcing';
+import Calculator from './Calculator';
+import BenefitFlyer from './BenefitFlyer';
+import Deliverable from './Deliverable';
+import Phase2 from './Phase2';
+import Phase3 from './Phase3';
 import { useTabs } from '../context/TabsContext';
 
-const PhasesTabs = () => {
+export default function PhasesTabs() {
   const { activeTab, setActiveTab } = useTabs();
   const [isSticky, setIsSticky] = useState(false);
 
-  // Lógica para que las pestañas se achiquen al bajar el scroll
+  // Lógica para que las pestañas se achiquen al bajar
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 500);
@@ -15,151 +21,98 @@ const PhasesTabs = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const phases = [
-    {
-      id: 'fase1' as const,
-      number: '01',
-      title: 'Scanner Técnico',
-      icon: <Search size={20} />,
-      content: {
-        subtitle: 'Auditoría Profunda y Sourcing',
-        description: 'No compres a ciegas. Realizamos un peritaje completo de la propiedad para detectar vicios ocultos y evaluar el entorno real.',
-        items: [
-          'Scanner de Vicios Ocultos (Humedad, Eléctrico, Estructural)',
-          'Certificado de Valor Real (Radio 3km)',
-          'Análisis de Plusvalía y Entorno',
-          'Sourcing: Buscamos la propiedad técnica por ti'
-        ],
-        cta: 'Solicitar Auditoría',
-        message: 'Hola DOMIS™, quiero solicitar una auditoría técnica Fase 1. Ya tengo una propiedad vista / necesito que busquen por mí.'
-      }
-    },
-    {
-      id: 'fase2' as const,
-      number: '02',
-      title: 'Plan Maestro',
-      icon: <Gavel size={20} />,
-      content: {
-        subtitle: 'Negociación Basada en Datos',
-        description: 'Usamos los hallazgos técnicos para bajar el precio. No pedimos rebajas, exigimos descuentos basados en ingeniería.',
-        items: [
-          'Entrega del Plan Maestro de Negociación',
-          'Estrategia de Cierre Técnica',
-          'Ahorro Garantizado: ROI de hasta 900%',
-          'Beneficio: 60% de reembolso de tu Fase 1'
-        ],
-        cta: 'Activar Negociación',
-        message: 'Hola, ya tengo el diagnóstico técnico de la Fase 1 y quiero pasar a la Fase 2. Necesito el Plan Maestro para bajar el precio de venta.'
-      }
-    },
-    {
-      id: 'fase3' as const,
-      number: '03',
-      title: 'Gestión de Obra',
-      icon: <Hammer size={20} />,
-      content: {
-        subtitle: 'Remodelación y Valorización',
-        description: 'Transformamos tu nueva propiedad. Como Constructores Civiles, gestionamos la ejecución para maximizar tu inversión.',
-        items: [
-          'Presupuesto de Remodelación con descuento F2',
-          'Supervisión Técnica de Obra',
-          'Arquitectura e Interiorismo Estratégico',
-          'Entrega de Llave en Mano'
-        ],
-        cta: 'Cotizar Remodelación',
-        message: 'Hola DOMIS™, ya cerramos la compra y quiero avanzar con la Fase 3 de Remodelación y Gestión de Obra.'
-      }
-    }
+  const tabs = [
+    { id: 'fase1' as const, label: 'Fase 1', subtitle: 'Auditoría', icon: '🔍' },
+    { id: 'fase2' as const, label: 'Fase 2', subtitle: 'Negociación', icon: '💼' },
+    { id: 'fase3' as const, label: 'Fase 3', subtitle: 'Remodelación', icon: '🏗️' },
   ];
 
   return (
-    <section id="phases" className="py-24 bg-slate-950 px-6 relative">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4 tracking-tighter">
-            El Sistema <span className="text-cyan-500 text-glow">DOMIS™</span>
+    <section className="py-20 bg-slate-950 relative overflow-hidden" id="proceso">
+      <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
+            <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">El Protocolo DOMIS™</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
+            Cómo <span className="text-cyan-400">Funciona</span>
           </h2>
-          <p className="text-slate-400 font-light italic">Etapas diseñadas para proteger tu capital inmobiliario.</p>
+          <p className="text-slate-400 text-base max-w-2xl mx-auto">Ecosistema técnico integrado en 3 etapas críticas.</p>
         </div>
 
-        {/* CONTENEDOR DE PESTAÑAS STICKY */}
-        <div className={`transition-all duration-500 z-50 py-4 ${isSticky ? 'sticky top-20 scale-90 bg-slate-950/80 backdrop-blur-md rounded-full border border-slate-800 px-4' : 'relative scale-100'}`}>
-          <div className="flex flex-wrap justify-center gap-4">
-            {phases.map((phase) => (
+        {/* NAVEGACIÓN STICKY (Se achica al bajar) */}
+        <div className={`transition-all duration-500 z-50 ${isSticky ? 'sticky top-20 scale-90' : 'relative scale-100'}`}>
+          <div className="flex flex-col md:flex-row gap-4 mb-12 max-w-4xl mx-auto">
+            {tabs.map((tab) => (
               <button
-                key={phase.id}
-                onClick={() => setActiveTab(phase.id)}
-                className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all border ${
-                  activeTab === phase.id
-                    ? 'bg-cyan-500 border-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(34,211,238,0.3)]'
-                    : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-1 p-6 rounded-xl border-2 transition-all duration-300 relative ${
+                  activeTab === tab.id
+                    ? 'bg-cyan-500/10 border-cyan-500 shadow-lg shadow-cyan-500/20'
+                    : 'bg-slate-900/50 border-slate-800 hover:border-slate-700'
                 }`}
               >
-                <span className="opacity-50">{phase.number}</span>
-                {phase.icon}
-                {phase.title}
+                <div className="flex flex-col items-center gap-2">
+                  <span className="text-3xl">{tab.icon}</span>
+                  <div className="text-center">
+                    <div className={`text-xs font-bold uppercase tracking-widest mb-1 ${activeTab === tab.id ? 'text-cyan-400' : 'text-slate-500'}`}>{tab.label}</div>
+                    <div className={`text-lg font-black uppercase ${activeTab === tab.id ? 'text-white' : 'text-slate-400'}`}>{tab.subtitle}</div>
+                  </div>
+                </div>
+                {activeTab === tab.id && <div className="absolute bottom-0 left-0 right-0 h-1 bg-cyan-500 rounded-t-full animate-pulse"></div>}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Contenido de la Pestaña Activa */}
-        <div className="mt-12 bg-slate-900/50 border border-slate-800 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-sm relative overflow-hidden min-h-[550px]">
-          <div className="absolute top-0 right-0 p-8 opacity-5">
-            {phases.find(p => p.id === activeTab)?.icon}
-          </div>
-
-          {phases.map((phase) => (
-            <div
-              key={phase.id}
-              className={`transition-all duration-500 ${activeTab === phase.id ? 'opacity-100 translate-y-0 relative' : 'hidden opacity-0 translate-y-10 absolute'}`}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div className="space-y-6">
-                  <div className="flex items-center gap-4 text-cyan-500">
-                    <span className="text-5xl font-black opacity-20">{phase.number}</span>
-                    <div className="h-px flex-1 bg-cyan-500/20"></div>
-                  </div>
-                  <h3 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight leading-none">
-                    {phase.content.subtitle}
-                  </h3>
-                  <p className="text-slate-400 text-lg leading-relaxed font-light">
-                    {phase.content.description}
-                  </p>
-                  
-                  <ul className="space-y-4 pt-4">
-                    {phase.content.items.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-slate-300">
-                        <ShieldCheck className="text-cyan-500 shrink-0 mt-1" size={18} />
-                        <span className="text-sm">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="bg-slate-950/50 border border-slate-800 p-8 rounded-3xl flex flex-col items-center justify-center text-center space-y-6">
-                  <div className="p-6 bg-cyan-500/10 rounded-full text-cyan-400">
-                    {phase.icon}
-                  </div>
-                  <p className="text-slate-400 text-sm">¿Listo para comenzar la {phase.title}?</p>
-                  <a
-                    href={`https://wa.me/569XXXXXXXX?text=${encodeURIComponent(phase.content.message)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-3 bg-white text-slate-950 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-[1.02] transition-all group"
-                  >
-                    <MessageCircle size={18} />
-                    {phase.content.cta}
-                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </div>
+        <div className="mt-8">
+          {activeTab === 'fase1' && (
+            <div className="space-y-16 animate-fadeIn">
+              <div className="text-center max-w-3xl mx-auto mb-12">
+                <h3 className="text-3xl font-black text-white mb-4 uppercase">Detección de <span className="text-cyan-400">Riesgo</span></h3>
+                <p className="text-slate-400 leading-relaxed">Inspección física rigurosa de la propiedad para identificar vicios ocultos y normativa.</p>
+              </div>
+              <AuditPacks />
+              <Sourcing />
+              <div className="max-w-5xl mx-auto pt-16"><Calculator /></div>
+              <div className="text-center pt-8">
+                <a href="https://wa.me/56982348089" target="_blank" rel="noopener noreferrer" className="inline-block bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-10 py-4 rounded-xl font-black uppercase tracking-wider transition-all shadow-lg shadow-cyan-500/30 hover:scale-105">Solicitar Fase 1</a>
               </div>
             </div>
-          ))}
+          )}
+
+          {activeTab === 'fase2' && (
+            <div className="space-y-16 animate-fadeIn">
+              <div className="text-center max-w-3xl mx-auto mb-12">
+                <h3 className="text-3xl font-black text-white mb-4 uppercase">Estrategia de <span className="text-cyan-400">Valor</span></h3>
+                <p className="text-slate-400 leading-relaxed">Usamos los hallazgos técnicos para fundamentar una rebaja en el precio de compra.</p>
+              </div>
+              <BenefitFlyer />
+              <Deliverable />
+              <Phase2 />
+              <div className="text-center pt-8">
+                <a href="https://wa.me/56982348089" target="_blank" rel="noopener noreferrer" className="inline-block bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-10 py-4 rounded-xl font-black uppercase tracking-wider transition-all shadow-lg shadow-cyan-500/30 hover:scale-105">Activar Fase 1 + 2</a>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'fase3' && (
+            <div className="space-y-16 animate-fadeIn">
+              <div className="text-center max-w-3xl mx-auto mb-12">
+                <h3 className="text-3xl font-black text-white mb-4 uppercase">Ejecución <span className="text-cyan-400">Técnica</span></h3>
+                <p className="text-slate-400 leading-relaxed">Una vez que las llaves son tuyas, ejecutamos el plan de remodelación diseñado en la auditoría.</p>
+              </div>
+              <Phase3 />
+              <div className="text-center pt-8">
+                <a href="https://wa.me/56982348089" target="_blank" rel="noopener noreferrer" className="inline-block bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-10 py-4 rounded-xl font-black uppercase tracking-wider transition-all shadow-lg shadow-cyan-500/30 hover:scale-105">Conocer Domis Upgrade</a>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>
   );
-};
-
-export default PhasesTabs;
+}
