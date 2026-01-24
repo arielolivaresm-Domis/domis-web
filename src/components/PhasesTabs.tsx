@@ -1,4 +1,3 @@
-import { useState, useEffect, useRef } from 'react';
 import AuditPacks from './AuditPacks';
 import Sourcing from './Sourcing';
 import Calculator from './Calculator';
@@ -10,29 +9,16 @@ import { useTabs } from '../context/TabsContext';
 
 export default function PhasesTabs() {
   const { activeTab, setActiveTab } = useTabs();
-  const [isShrunk, setIsShrunk] = useState(false);
-  const triggerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (triggerRef.current) {
-        const rect = triggerRef.current.getBoundingClientRect();
-        setIsShrunk(rect.top <= 80);
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleTabChange = (id: 'fase1' | 'fase2' | 'fase3') => {
     setActiveTab(id);
     
-    // Timer para asegurar que el contenido cargue antes de scrollear
+    // Scroll de precisión al ancla de contenido
     setTimeout(() => {
       const element = document.getElementById('fase-anchor');
       if (element) {
         const isMobile = window.innerWidth < 768;
-        const yOffset = isMobile ? -80 : -140; 
+        const yOffset = isMobile ? -80 : -100; 
         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
@@ -66,6 +52,7 @@ export default function PhasesTabs() {
     <section className="py-24 bg-slate-950 relative" id="proceso">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
+        {/* HEADER DE SECCIÓN */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
             <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Protocolo DOMIS™</span>
@@ -73,9 +60,10 @@ export default function PhasesTabs() {
           <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
             Cómo <span className="text-cyan-400">Funciona</span>
           </h2>
+          <p className="text-slate-400 italic text-center">Ecosistema técnico integrado en 3 etapas críticas.</p>
         </div>
 
-        {/* RESUMEN DEL PROTOCOLO (Módulos 1, 2 y 3) - SIEMPRE VISIBLES */}
+        {/* RESUMEN DEL PROTOCOLO (Módulos 1, 2 y 3) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           <div className="engineering-frame p-8 bg-slate-950 border border-slate-800 rounded-xl relative overflow-hidden">
             <div className="animate-scan"></div>
@@ -97,38 +85,10 @@ export default function PhasesTabs() {
           </div>
         </div>
 
-        <div ref={triggerRef} id="fase-anchor" className="h-1 w-full absolute pointer-events-none" style={{ top: '800px' }}></div>
+        {/* ANCLA PARA EL SCROLL */}
+        <div id="fase-anchor" className="scroll-mt-24"></div>
 
-        {/* NAVEGACIÓN: Se oculta en móvil como pediste (hidden) */}
-        <nav className={`hidden md:block sticky top-20 z-[100] transition-all duration-700 ease-in-out mb-16 ${isShrunk ? 'scale-90' : 'scale-100'}`}>
-          <div className={`flex flex-col md:flex-row gap-3 max-w-4xl mx-auto p-2 rounded-2xl transition-all duration-700 ${isShrunk ? 'bg-slate-950/90 backdrop-blur-xl border border-slate-800 shadow-2xl' : ''}`}>
-            {[
-              { id: 'fase1', label: 'Fase 1', sub: 'Auditoría', icon: '🔍' },
-              { id: 'fase2', label: 'Fase 2', sub: 'Negociación', icon: '💼' },
-              { id: 'fase3', label: 'Fase 3', sub: 'Remodelación', icon: '🏗️' }
-            ].map((t) => (
-              <button
-                key={t.id}
-                onClick={() => handleTabChange(t.id as any)}
-                className={`flex-1 p-6 rounded-xl border-2 transition-all duration-300 relative ${
-                  activeTab === t.id
-                    ? 'border-cyan-500 bg-cyan-500/10 shadow-lg shadow-cyan-500/20'
-                    : 'border-slate-800 bg-slate-900/50 hover:border-slate-700'
-                }`}
-              >
-                <div className={`flex items-center justify-center gap-3 ${isShrunk ? 'flex-row' : 'flex-col'}`}>
-                  <span className={isShrunk ? 'text-xl' : 'text-3xl'}>{t.icon}</span>
-                  <div className={isShrunk ? 'text-left' : 'text-center'}>
-                    <div className={`font-bold uppercase tracking-widest ${isShrunk ? 'text-[8px]' : 'text-xs'} ${activeTab === t.id ? 'text-cyan-400' : 'text-slate-500'}`}>{t.label}</div>
-                    <div className={`font-black uppercase ${isShrunk ? 'text-xs' : 'text-lg'} ${activeTab === t.id ? 'text-white' : 'text-slate-400'}`}>{t.sub}</div>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-        </nav>
-
-        {/* CONTENIDOS DETALLADOS */}
+        {/* CONTENIDOS DETALLADOS POR FASE */}
         <div className="mt-8">
           {activeTab === 'fase1' && (
             <div className="space-y-24 animate-fadeIn text-center">
@@ -155,6 +115,7 @@ export default function PhasesTabs() {
             </div>
           )}
         </div>
+
       </div>
     </section>
   );
