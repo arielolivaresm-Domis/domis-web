@@ -17,7 +17,7 @@ export default function PhasesTabs() {
     const handleScroll = () => {
       if (triggerRef.current) {
         const rect = triggerRef.current.getBoundingClientRect();
-        // El efecto se activa cuando el componente llega al tope del viewport
+        // Se activa el modo compacto cuando el componente llega al tope
         setIsShrunk(rect.top <= 80);
       }
     };
@@ -29,9 +29,10 @@ export default function PhasesTabs() {
     setActiveTab(id);
     const element = document.getElementById('proceso');
     if (element) {
-      const yOffset = -120;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      // Ajuste de salto para que no quede tapado por la barra en móvil
+      const offset = 120;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
     }
   };
 
@@ -79,23 +80,32 @@ export default function PhasesTabs() {
 
         <div ref={triggerRef} className="h-1 w-full absolute top-[300px] pointer-events-none"></div>
 
+        {/* NAVEGACIÓN: py-2 en móvil para reducir el espacio vertical que mencionaste */}
         <nav className={`sticky top-20 z-[100] transition-all duration-500 ease-in-out mb-16 ${isShrunk ? 'scale-95' : 'scale-100'}`}>
-          <div className={`flex flex-col md:flex-row gap-3 max-w-4xl mx-auto p-2 rounded-2xl transition-all duration-500 ${isShrunk ? 'bg-slate-950/90 backdrop-blur-xl border border-slate-800 shadow-2xl' : ''}`}>
+          <div className={`flex flex-col md:flex-row gap-2 md:gap-4 max-w-4xl mx-auto p-2 rounded-2xl transition-all duration-500 ${isShrunk ? 'bg-slate-950/90 backdrop-blur-xl border border-slate-800 shadow-2xl' : ''}`}>
             {tabs.map((t) => (
               <button
                 key={t.id}
                 onClick={() => handleTabChange(t.id)}
-                className={`flex-1 p-4 md:p-6 rounded-xl border-2 transition-all duration-300 relative ${
-                  activeTab === t.id
+                className={`
+                  flex-1 transition-all duration-300 relative rounded-xl border-2
+                  /* TAMAÑOS MÓVILES REDUCIDOS: px-3 py-2 en lugar de p-6 */
+                  px-3 py-2 md:p-6
+                  ${activeTab === t.id
                     ? 'border-cyan-500 bg-cyan-500/10 shadow-lg shadow-cyan-500/20'
-                    : 'border-slate-800 bg-slate-900/50 hover:border-slate-700'
-                }`}
+                    : 'border-slate-800 bg-slate-900/50 hover:border-slate-700'}
+                `}
               >
-                <div className={`flex items-center justify-center gap-3 ${isShrunk ? 'flex-row' : 'flex-col'}`}>
-                  <span className={isShrunk ? 'text-xl md:text-2xl' : 'text-3xl'}>{t.icon}</span>
+                <div className={`flex items-center justify-center gap-2 md:gap-3 ${isShrunk ? 'flex-row' : 'flex-col'}`}>
+                  {/* Iconos más pequeños en móvil para no saturar la pantalla */}
+                  <span className={`${isShrunk ? 'text-lg md:text-2xl' : 'text-xl md:text-3xl'}`}>{t.icon}</span>
                   <div className={isShrunk ? 'text-left' : 'text-center'}>
-                    <div className={`font-bold uppercase tracking-widest ${isShrunk ? 'text-[8px]' : 'text-xs'} ${activeTab === t.id ? 'text-cyan-400' : 'text-slate-500'}`}>{t.label}</div>
-                    <div className={`font-black uppercase ${isShrunk ? 'text-xs md:text-sm' : 'text-lg'} ${activeTab === t.id ? 'text-white' : 'text-slate-400'}`}>{t.sub}</div>
+                    <div className={`font-bold uppercase tracking-widest ${isShrunk ? 'text-[7px] md:text-xs' : 'text-[9px] md:text-xs'} ${activeTab === t.id ? 'text-cyan-400' : 'text-slate-500'}`}>
+                      {t.label}
+                    </div>
+                    <div className={`font-black uppercase ${isShrunk ? 'text-[10px] md:text-sm' : 'text-xs md:text-lg'} ${activeTab === t.id ? 'text-white' : 'text-slate-400'}`}>
+                      {t.sub}
+                    </div>
                   </div>
                 </div>
               </button>
@@ -103,6 +113,7 @@ export default function PhasesTabs() {
           </div>
         </nav>
 
+        {/* CONTENIDOS POR FASE */}
         <div className="mt-8">
           {activeTab === 'fase1' && (
             <div className="space-y-24 animate-fadeIn text-center">
