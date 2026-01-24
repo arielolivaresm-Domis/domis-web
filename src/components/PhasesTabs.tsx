@@ -12,26 +12,29 @@ export default function PhasesTabs() {
   const { activeTab, setActiveTab } = useTabs();
   const [isSticky, setIsSticky] = useState(false);
 
-  // 1. MOTOR DE PERSISTENCIA: Activa el modo compacto al bajar
+  // Sistema de detección de scroll para el efecto "Shrink" (Encogimiento)
   useEffect(() => {
     const handleScroll = () => {
-      // Se activa después de pasar el Hero y el Problema
+      // Se activa con delicadeza al pasar los 600px de scroll
       setIsSticky(window.scrollY > 600);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 2. NAVEGACIÓN DE PRECISIÓN: Vuelve al inicio de la fase seleccionada
+  // Función de posicionamiento automático de alta precisión
   const handleTabChange = (id: 'fase1' | 'fase2' | 'fase3') => {
     setActiveTab(id);
     const element = document.getElementById('proceso');
     if (element) {
-      // Offset de 160px para que los botones flotantes no tapen el contenido
-      const yOffset = -160; 
+      // Calculamos el offset para que la barra achicada no tape el título
+      const yOffset = -120; 
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -43,6 +46,7 @@ export default function PhasesTabs() {
 
   return (
     <section className="py-20 bg-slate-950 relative" id="proceso">
+      {/* FONDO TÉCNICO */}
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -59,37 +63,38 @@ export default function PhasesTabs() {
           </h2>
         </div>
 
-        {/* NAVEGACIÓN PERSISTENTE (Sticky): Se achica y se queda en top-20 para no tapar el FinalCTA */}
-        <div className={`transition-all duration-500 z-[100] ${
+        {/* NAVEGACIÓN PERSISTENTE GLOBAL (Fixed + Shrink) */}
+        {/* z-[200] garantiza que funcione sobre el FinalCTA */}
+        <div className={`transition-all duration-700 ease-in-out ${
           isSticky 
-            ? 'fixed top-20 left-0 w-full py-3 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800 shadow-2xl' 
-            : 'relative w-full max-w-4xl mx-auto py-6'
+            ? 'fixed top-0 left-0 w-full z-[200] py-3 bg-slate-950/95 backdrop-blur-xl border-b border-slate-800 shadow-[0_15px_50px_rgba(0,0,0,0.9)]' 
+            : 'relative w-full max-w-4xl mx-auto py-8 z-20'
         }`}>
-          <div className={`flex flex-col md:flex-row gap-3 md:gap-4 mx-auto transition-all px-4 ${
+          <div className={`flex flex-col md:flex-row gap-3 md:gap-4 mx-auto transition-all duration-700 px-4 ${
             isSticky ? 'max-w-5xl' : 'max-w-4xl'
           }`}>
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
-                className={`flex-1 transition-all duration-300 relative rounded-xl border-2 ${
-                  isSticky ? 'p-3' : 'p-6'
+                className={`flex-1 transition-all duration-500 relative rounded-xl border-2 ${
+                  isSticky ? 'p-2 md:p-3' : 'p-6'
                 } ${
                   activeTab === tab.id
                     ? 'bg-cyan-500/10 border-cyan-500 shadow-lg shadow-cyan-500/20'
                     : 'bg-slate-900/50 border-slate-800 hover:border-slate-700'
                 }`}
               >
-                <div className={`flex items-center justify-center gap-3 ${isSticky ? 'flex-row' : 'flex-col'}`}>
-                  <span className={`${isSticky ? 'text-xl' : 'text-3xl'}`}>{tab.icon}</span>
+                <div className={`flex items-center justify-center gap-2 md:gap-3 transition-all duration-500 ${isSticky ? 'flex-row' : 'flex-col'}`}>
+                  <span className={`transition-all duration-500 ${isSticky ? 'text-xl' : 'text-3xl'}`}>{tab.icon}</span>
                   <div className={`${isSticky ? 'text-left' : 'text-center'}`}>
-                    <div className={`font-bold uppercase tracking-widest ${
-                      isSticky ? 'text-[8px]' : 'text-xs mb-1'
+                    <div className={`font-bold uppercase tracking-widest transition-all duration-500 ${
+                      isSticky ? 'text-[7px]' : 'text-xs mb-1'
                     } ${activeTab === tab.id ? 'text-cyan-400' : 'text-slate-500'}`}>
                       {tab.label}
                     </div>
-                    <div className={`font-black uppercase ${
-                      isSticky ? 'text-xs' : 'text-lg'
+                    <div className={`font-black uppercase transition-all duration-500 ${
+                      isSticky ? 'text-[10px] md:text-xs' : 'text-lg'
                     } ${activeTab === tab.id ? 'text-white' : 'text-slate-400'}`}>
                       {tab.subtitle}
                     </div>
