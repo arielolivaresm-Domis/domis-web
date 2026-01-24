@@ -34,41 +34,17 @@ export default function AuditPacks() {
   ];
 
   return (
-    <section id="auditoria" className="scroll-mt-24">
-      
-      {/* HEADER: EL ERROR MÁS CARO (DISEÑO FASE 2) */}
-      <div className="relative rounded-[2rem] overflow-hidden mb-16 border-2 border-slate-800 shadow-2xl min-h-[450px] flex items-center justify-center bg-slate-900">
-        <div className="absolute inset-0">
-          <img 
-            src="/DOMIS_error_mas_comun.webp" 
-            alt="Auditoría Inmobiliaria" 
-            className="w-full h-full object-cover opacity-60 grayscale-[0.2] contrast-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/30"></div>
-        </div>
-
-        <div className="relative z-10 p-8 md:p-16 text-center max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-red-500/10 border border-red-500/30 rounded-full mb-8">
-            <span className="text-[10px] md:text-xs font-mono text-red-500 uppercase tracking-[0.3em] font-black">
-              Alerta de Riesgo Inmobiliario
-            </span>
-          </div>
-          
-          <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-6 leading-tight">
-            90% EL ERROR <span className="text-red-500">MÁS CARO</span><br className="hidden md:block" />
-            ES NO AUDITAR
-          </h2>
-          
-          <p className="text-slate-200 text-lg md:text-xl leading-relaxed font-semibold drop-shadow-lg mb-4">
-            Si ya tienes la propiedad, nosotros la auditamos para detectar fallas que <span className="text-white font-black underline decoration-red-500 underline-offset-4">tú terminarás pagando</span>.
-          </p>
-          <p className="text-cyan-400 font-mono text-sm uppercase tracking-widest font-bold">
-            Mínimo técnico de 100 m² por propiedad.
-          </p>
-        </div>
+    <div id="audit-packs-content" className="animate-fadeIn">
+      {/* Título de sección interno para la pestaña */}
+      <div className="text-center mb-16">
+        <h3 className="text-3xl font-black text-white uppercase italic tracking-tighter">
+          Selección de <span className="text-cyan-400">Protocolo de Auditoría</span>
+        </h3>
+        <p className="text-slate-500 font-mono text-xs uppercase tracking-widest mt-2">
+          Valores netos por m² construidos
+        </p>
       </div>
 
-      {/* GRID DE PACKS (ESTRUCTURA DE TU CÓDIGO CON MI DISEÑO) */}
       <div className="grid lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
         {packs.map((p) => (
           <div 
@@ -86,7 +62,7 @@ export default function AuditPacks() {
                   <span className="text-3xl">{p.icon}</span>
                 </div>
                 <div className="text-right">
-                  <h3 className="text-xl font-black text-white uppercase italic tracking-tighter">{p.title}</h3>
+                  <h4 className="text-xl font-black text-white uppercase italic tracking-tighter">{p.title}</h4>
                   <p className={`text-${p.color === 'slate' ? 'slate-400' : p.color + '-400'} font-mono text-[10px] uppercase tracking-widest font-bold`}>
                     {p.tag}
                   </p>
@@ -98,7 +74,7 @@ export default function AuditPacks() {
               </p>
 
               <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 text-center mt-auto">
-                <span className="block text-slate-400 text-[10px] uppercase tracking-widest mb-1">Valor por m² (Neto)</span>
+                <span className="block text-slate-400 text-[10px] uppercase tracking-widest mb-1">Inversión por m² (Neto)</span>
                 <div className="flex items-baseline justify-center gap-1 mb-2">
                   <span className="text-3xl font-black text-white">{p.price}</span>
                   <span className="text-slate-500 text-xs font-mono">/ m²</span>
@@ -118,12 +94,6 @@ export default function AuditPacks() {
           </div>
         ))}
       </div>
-      
-      <div className="mt-12 text-center">
-        <p className="text-slate-500 text-xs font-mono uppercase tracking-widest">
-          * Valores + IVA. Mínimo técnico aplicable por unidad auditada.
-        </p>
-      </div>
-    </section>
+    </div>
   );
 }
