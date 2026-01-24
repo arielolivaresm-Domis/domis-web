@@ -4,7 +4,6 @@ export default function Problem() {
   return (
     <section id="problema" className="py-24 bg-slate-950 px-6">
       <div className="max-w-7xl mx-auto">
-        {/* HEADER DE IMPACTO CON LA IMAGEN OPTIMIZADA */}
         <div className="relative rounded-[2rem] overflow-hidden border-2 border-slate-800 shadow-2xl min-h-[500px] flex items-center justify-center bg-slate-900">
           <div className="absolute inset-0">
             <img 

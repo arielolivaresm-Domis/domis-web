@@ -50,7 +50,7 @@ export default function AuditPacks() {
             key={p.id}
             className={`relative p-8 rounded-3xl border-2 cursor-pointer transition-all duration-500 flex flex-col ${
               activePack === p.id 
-                ? `bg-slate-900 border-${p.color === 'slate' ? 'slate-400' : p.color + '-500'} shadow-2xl scale-[1.02]` 
+                ? `bg-slate-900 border-cyan-500 shadow-2xl scale-[1.02]` 
                 : 'bg-slate-950 border-slate-800 hover:border-slate-700'
             }`}
             onClick={() => setActivePack(p.id as any)}
@@ -62,7 +62,7 @@ export default function AuditPacks() {
                 </div>
                 <div className="text-right">
                   <h4 className="text-xl font-black text-white uppercase italic tracking-tighter">{p.title}</h4>
-                  <p className={`text-${p.color === 'slate' ? 'slate-400' : p.color + '-400'} font-mono text-[10px] uppercase tracking-widest font-bold`}>
+                  <p className="text-cyan-400 font-mono text-[10px] uppercase tracking-widest font-bold">
                     {p.tag}
                   </p>
                 </div>
@@ -82,9 +82,7 @@ export default function AuditPacks() {
                   href={`https://wa.me/56982348089?text=Hola,%20quiero%20información%20sobre%20el%20${encodeURIComponent(p.title)}`} 
                   target="_blank" 
                   rel="noreferrer" 
-                  className={`block w-full py-3 font-black uppercase rounded-xl transition-all mt-4 text-sm ${
-                    p.id === 'inversionista' ? 'bg-red-500 text-white hover:bg-red-400' : 'bg-cyan-500 text-slate-950 hover:bg-cyan-400'
-                  }`}
+                  className="block w-full py-3 font-black uppercase rounded-xl transition-all mt-4 text-sm bg-cyan-500 text-slate-950 hover:bg-cyan-400"
                 >
                   Seleccionar Pack
                 </a>
