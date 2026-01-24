@@ -2,7 +2,8 @@ import { Hammer, Paintbrush, Ruler } from 'lucide-react';
 
 /**
  * COMPONENTE FASE 3: DOMIS UPGRADE
- * Ajuste de Transparencia: Módulos al 50% de opacidad para resaltar la imagen de fondo.
+ * Ajuste de Transparencia Extrema: Módulos al 20% de opacidad (80% transparentes)
+ * para máxima visibilidad de la imagen de fondo.
  */
 export default function Phase3() {
   return (
@@ -34,7 +35,7 @@ export default function Phase3() {
           </p>
         </div>
 
-        {/* GRID DE MÓDULOS CON 50% DE TRANSPARENCIA */}
+        {/* GRID DE MÓDULOS CON 20% DE OPACIDAD (80% TRANSPARENTES) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {[
             {
@@ -55,8 +56,8 @@ export default function Phase3() {
           ].map((step, i) => (
             <div
               key={i}
-              // bg-slate-900/50 aplica el 50% de transparencia solicitado
-              className="p-6 bg-slate-900/50 backdrop-blur-md border border-slate-700/30 rounded-2xl group hover:border-amber-500/50 transition-all"
+              // bg-slate-900/20 para ese efecto de cristal casi transparente
+              className="p-6 bg-slate-900/20 backdrop-blur-md border border-slate-700/20 rounded-2xl group hover:border-amber-500/40 transition-all"
             >
               <div className="w-10 h-10 bg-amber-500/10 rounded-lg flex items-center justify-center text-amber-500 mb-4 group-hover:scale-110 transition-transform">
                 {step.icon}
