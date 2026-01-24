@@ -7,16 +7,13 @@ import Footer from './components/Footer';
 import { TabsProvider, useTabs } from './context/TabsContext';
 
 /**
- * AppContent: Componente interno que permite acceder al contexto de las pestañas.
- * Controla que la sección de inversión solo sea visible en la Fase 2.
+ * AppContent: Escucha el estado para mostrar u ocultar el flyer.
  */
 const AppContent = () => {
   const { activeTab } = useTabs();
 
   return (
     <div className="min-h-screen bg-slate-950 relative font-sans scroll-smooth">
-      
-      {/* SISTEMA DE TRIPLE ESCANEO DOMIS™ */}
       <div className="laser-line laser-master-independent"></div>
       <div className="laser-line laser-follow-1"></div>
       <div className="laser-line laser-follow-2"></div>
@@ -28,13 +25,8 @@ const AppContent = () => {
         <Problem />
         <PhasesTabs />
         
-        {/* LÓGICA DE CONTROL: 
-            BenefitFlyer solo se renderiza si la pestaña activa tiene el ID 'fase2' */}
-        {activeTab === 'fase2' && (
-          <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <BenefitFlyer />
-          </div>
-        )}
+        {/* LÓGICA DE CONTROL: Solo se renderiza en la Fase 2 */}
+        {activeTab === 'fase2' && <BenefitFlyer />}
       </main>
 
       <Footer />
