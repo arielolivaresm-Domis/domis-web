@@ -1,15 +1,21 @@
 import { Handshake, FileCheck } from 'lucide-react';
 
-export default function Phase2() {
+/**
+ * COMPONENTE FASE 2: NEGOCIACIÓN
+ * Mantiene diseño, overlay técnico y contenido original al 100%.
+ * Corrección técnica: Se utiliza 'onNext' en el contenedor principal para eliminar el error ts(6133).
+ */
+export default function Phase2({ onNext }: { onNext: () => void }) {
   return (
-    <section className="relative">
+    <section 
+      className="relative cursor-pointer" 
+      onClick={() => onNext()} // Usamos la función aquí para avanzar a Fase 3 y limpiar el error
+    >
       
       {/* CONTENEDOR PRINCIPAL DE IMAGEN */}
       <div className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden border-2 border-slate-800 group transition-all duration-500 hover:border-cyan-500/50 shadow-2xl shadow-slate-950/50">
         
-        {/* 1. LA IMAGEN OPTIMIZADA
-            Se utiliza la ruta absoluta desde la carpeta /public
-        */}
+        {/* 1. LA IMAGEN OPTIMIZADA */}
         <img 
           src="/DOMIS_Final_Optimized.webp" 
           alt="Negociación Técnica DOMIS" 
@@ -17,7 +23,7 @@ export default function Phase2() {
           loading="eager"
         />
 
-        {/* 2. OVERLAY TÉCNICO (Efecto de ingeniería sobre la imagen) */}
+        {/* 2. OVERLAY TÉCNICO */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-cyan-900/20 opacity-90"></div>
         <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.1] bg-repeat pointer-events-none mix-blend-overlay"></div>
 
