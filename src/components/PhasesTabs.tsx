@@ -12,23 +12,23 @@ export default function PhasesTabs() {
   const { activeTab, setActiveTab } = useTabs();
   const [isSticky, setIsSticky] = useState(false);
 
-  // 1. MOTOR DE PERSISTENCIA Y ACHICADO
+  // 1. MOTOR DE PERSISTENCIA: Detecta el scroll para activar la barra flotante
   useEffect(() => {
     const handleScroll = () => {
-      // Se activa el modo compacto al pasar los 500px
+      // Se activa al pasar los 500px de scroll
       setIsSticky(window.scrollY > 500);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 2. FUNCIÓN DE NAVEGACIÓN DE PRECISIÓN
+  // 2. FUNCIÓN DE NIVELACIÓN: Al hacer clic, vuelve al inicio de la sección
   const handleTabChange = (id: 'fase1' | 'fase2' | 'fase3') => {
     setActiveTab(id);
     const element = document.getElementById('proceso');
     if (element) {
-      // Ajuste de altura para que la barra no tape el título
-      const yOffset = -140; 
+      // Offset de 120px para que la barra achicada no tape el título
+      const yOffset = -120; 
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       
       window.scrollTo({ top: y, behavior: 'smooth' });
@@ -57,16 +57,13 @@ export default function PhasesTabs() {
           <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
             Cómo <span className="text-cyan-400">Funciona</span>
           </h2>
-          <p className="text-slate-400 text-base max-w-2xl mx-auto">
-            Ecosistema técnico integrado en 3 etapas críticas.
-          </p>
         </div>
 
-        {/* 3. NAVEGACIÓN GLOBAL PERSISTENTE (Fixed) */}
-        {/* Se vuelve compacta y flota sobre toda la web, incluso en FinalCTA */}
+        {/* NAVEGACIÓN PERSISTENTE Y COMPACTA (Fixed) */}
+        {/* Se mantiene visible en TODA la web, incluido el FinalCTA */}
         <div className={`transition-all duration-500 z-[100] ${
           isSticky 
-            ? 'fixed top-0 left-0 w-full py-4 bg-slate-950/95 backdrop-blur-md border-b border-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.8)]' 
+            ? 'fixed top-0 left-0 w-full py-3 bg-slate-950/95 backdrop-blur-xl border-b border-slate-800 shadow-[0_15px_40px_rgba(0,0,0,0.8)]' 
             : 'relative w-full max-w-4xl mx-auto py-6'
         }`}>
           <div className={`flex flex-col md:flex-row gap-3 md:gap-4 mx-auto transition-all px-4 ${
@@ -107,13 +104,13 @@ export default function PhasesTabs() {
           </div>
         </div>
 
-        {/* CONTENIDO DE FASES */}
+        {/* CONTENIDO DINÁMICO CON ESPACIADO PARA LA BARRA FIXED */}
         <div className={`transition-all duration-500 ${isSticky ? 'mt-32' : 'mt-8'}`}>
           {activeTab === 'fase1' && (
             <div className="space-y-16 animate-fadeIn">
-              <div id="auditoria"><AuditPacks /></div>
-              <div id="sourcing" className="pt-16"><Sourcing /></div>
-              <div id="calculator" className="pt-16 max-w-5xl mx-auto"><Calculator /></div>
+              <AuditPacks />
+              <div className="pt-16"><Sourcing /></div>
+              <div className="pt-16 max-w-5xl mx-auto"><Calculator /></div>
             </div>
           )}
 
