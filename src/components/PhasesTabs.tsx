@@ -10,27 +10,25 @@ import { useTabs } from '../context/TabsContext';
 
 export default function PhasesTabs() {
   const { activeTab, setActiveTab } = useTabs();
-  const [isSticky, setIsSticky] = useState(false);
+  const [isShrunk, setIsShrunk] = useState(false);
 
-  // 1. SENSOR DE MOVIMIENTO: Activa la barra flotante y el achicado
+  // Sistema de detección de scroll para el efecto "Shrink"
   useEffect(() => {
     const handleScroll = () => {
-      // Se activa al pasar los 500px de scroll
-      setIsSticky(window.scrollY > 500);
+      // Se achica con delicadeza al pasar los 400px de la sección
+      setIsShrunk(window.scrollY > 400);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 2. FUNCIÓN DE NIVELACIÓN: Cambia de fase y sube al inicio de la sección
+  // Navegación de precisión: Cambia de fase y sube al inicio del Protocolo
   const handleTabChange = (id: 'fase1' | 'fase2' | 'fase3') => {
     setActiveTab(id);
     const element = document.getElementById('proceso');
     if (element) {
-      // Offset de 120px para no tapar el título con la barra achicada
-      const yOffset = -120; 
+      const yOffset = -140; 
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
@@ -43,54 +41,45 @@ export default function PhasesTabs() {
 
   return (
     <section className="py-20 bg-slate-950 relative" id="proceso">
-      <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
-
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        {/* HEADER DE SECCIÓN */}
+        {/* TÍTULO DE SECCIÓN */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
-            <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">
-              El Protocolo DOMIS™
-            </span>
+            <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Protocolo DOMIS™</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
             Cómo <span className="text-cyan-400">Funciona</span>
           </h2>
         </div>
 
-        {/* 3. NAVEGACIÓN GLOBAL PERSISTENTE: Fixed + Suavizado */}
-        <div className={`transition-all duration-700 ease-in-out ${
-          isSticky 
-            ? 'fixed top-0 left-0 w-full z-[999] py-3 bg-slate-950/95 backdrop-blur-xl border-b border-slate-800 shadow-2xl scale-95 origin-top' 
-            : 'relative w-full max-w-4xl mx-auto py-6 z-20 scale-100'
+        {/* BARRA DE NAVEGACIÓN STICKY: Se queda pegada y se achica con delicadeza */}
+        {/* top-20 para que no se esconda detrás del Header de la web */}
+        <div className={`sticky top-20 z-[999] transition-all duration-700 ease-in-out mb-12 ${
+          isShrunk ? 'scale-90 opacity-100' : 'scale-100'
         }`}>
-          <div className={`flex flex-col md:flex-row gap-3 md:gap-4 mx-auto transition-all duration-500 px-4 ${
-            isSticky ? 'max-w-5xl' : 'max-w-4xl'
+          <div className={`flex flex-col md:flex-row gap-3 md:gap-4 max-w-4xl mx-auto p-2 rounded-2xl transition-all duration-700 ${
+            isShrunk ? 'bg-slate-950/90 backdrop-blur-xl border border-slate-800 shadow-2xl' : ''
           }`}>
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
-                className={`flex-1 transition-all duration-500 relative rounded-xl border-2 ${
-                  isSticky ? 'p-3' : 'p-6'
+                className={`flex-1 transition-all duration-500 relative rounded-xl border-2 cursor-pointer pointer-events-auto ${
+                  isShrunk ? 'p-3' : 'p-6'
                 } ${
                   activeTab === tab.id
                     ? 'bg-cyan-500/10 border-cyan-500 shadow-lg shadow-cyan-500/20'
                     : 'bg-slate-900/50 border-slate-800 hover:border-slate-700'
                 }`}
               >
-                <div className={`flex items-center justify-center gap-3 transition-all duration-500 ${isSticky ? 'flex-row' : 'flex-col'}`}>
-                  <span className={`transition-all duration-500 ${isSticky ? 'text-xl' : 'text-3xl'}`}>{tab.icon}</span>
-                  <div className={`${isSticky ? 'text-left' : 'text-center'}`}>
-                    <div className={`font-bold uppercase tracking-widest transition-all duration-500 ${
-                      isSticky ? 'text-[7px]' : 'text-xs mb-1'
-                    } ${activeTab === tab.id ? 'text-cyan-400' : 'text-slate-500'}`}>
+                <div className={`flex items-center justify-center gap-3 transition-all duration-500 ${isShrunk ? 'flex-row' : 'flex-col'}`}>
+                  <span className={`transition-all duration-500 ${isShrunk ? 'text-xl' : 'text-3xl'}`}>{tab.icon}</span>
+                  <div className={`${isShrunk ? 'text-left' : 'text-center'}`}>
+                    <div className={`font-bold uppercase tracking-widest transition-all duration-500 ${isShrunk ? 'text-[8px]' : 'text-xs mb-1'} ${activeTab === tab.id ? 'text-cyan-400' : 'text-slate-500'}`}>
                       {tab.label}
                     </div>
-                    <div className={`font-black uppercase transition-all duration-500 ${
-                      isSticky ? 'text-[10px] md:text-xs' : 'text-lg'
-                    } ${activeTab === tab.id ? 'text-white' : 'text-slate-400'}`}>
+                    <div className={`font-black uppercase transition-all duration-500 ${isShrunk ? 'text-xs' : 'text-lg'} ${activeTab === tab.id ? 'text-white' : 'text-slate-400'}`}>
                       {tab.subtitle}
                     </div>
                   </div>
@@ -103,8 +92,8 @@ export default function PhasesTabs() {
           </div>
         </div>
 
-        {/* CONTENIDO DINÁMICO */}
-        <div className={`transition-all duration-500 ${isSticky ? 'mt-40' : 'mt-8'}`}>
+        {/* CONTENIDO DE FASES: Siempre renderiza algo para evitar que la página se vea vacía */}
+        <div className="mt-8 min-h-[600px]">
           {activeTab === 'fase1' && (
             <div className="space-y-16 animate-fadeIn">
               <AuditPacks />
