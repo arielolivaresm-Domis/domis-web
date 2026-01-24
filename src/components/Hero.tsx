@@ -1,7 +1,6 @@
-import { ShieldAlert, ArrowRight, MessageCircle, Activity } from 'lucide-react';
+import { ShieldAlert, ArrowRight, Activity } from 'lucide-react';
 
 const Hero = () => {
-  // Trigger para la Auditoría Inicial (Fase 1)
   const whatsappNumber = "569XXXXXXXX"; 
   const message = "Hola DOMIS™, quiero proteger mi inversión. ¿Cómo empezamos con la Fase 1 de Auditoría Técnica y el Scanner de Vicios Ocultos?";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -30,7 +29,7 @@ const Hero = () => {
             Ingeniería & Auditoría Inmobiliaria
           </div>
 
-          {/* Título Principal Agresivo */}
+          {/* Título Principal */}
           <h1 className="text-5xl md:text-8xl font-black text-white leading-[0.9] uppercase tracking-tighter mb-8">
             NO COMPRES <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">
@@ -44,7 +43,7 @@ const Hero = () => {
             <span className="text-cyan-500/80 italic">Asegura tu plusvalía con auditoría técnica real.</span>
           </p>
 
-          {/* CTAs de Acción Inmediata */}
+          {/* CTAs de Acción */}
           <div className="flex flex-col md:flex-row gap-6 w-full md:w-auto">
             <a 
               href={whatsappUrl}
@@ -65,7 +64,7 @@ const Hero = () => {
             </a>
           </div>
 
-          {/* Estadísticas Rápidas (Efecto Plan Maestro) */}
+          {/* Estadísticas (Efecto Plan Maestro) */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 mt-24 border-t border-slate-900 pt-12 w-full max-w-4xl">
             <div className="text-left">
               <div className="text-2xl font-mono text-cyan-400 font-black">+900%</div>
@@ -84,11 +83,8 @@ const Hero = () => {
               <div className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Scanner de Humedad</div>
             </div>
           </div>
-
         </div>
       </div>
-
-      {/* Efecto decorativo inferior */}
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-slate-950 to-transparent"></div>
     </section>
   );

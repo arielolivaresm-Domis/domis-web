@@ -1,26 +1,21 @@
 export default function Problem() {
  return (
    <section id="problema" className="py-16 bg-slate-950 relative overflow-hidden flex items-center justify-center">
-     {/* DECORACIÓN DE FONDO */}
      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-cyan-900/10 blur-[80px] rounded-full"></div>
      </div>
 
      <div className="max-w-6xl w-full mx-auto px-6 relative z-10">
-       {/* CARD PRINCIPAL DEL PROBLEMA */}
        <div className="relative w-full bg-gradient-to-r from-slate-900/90 to-slate-900/60 backdrop-blur-md border border-slate-800 rounded-3xl p-8 md:p-10 shadow-2xl overflow-hidden group hover:border-slate-700 transition-all duration-500">
-           {/* LÍNEA LÁSER LATERAL */}
            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-cyan-500 to-transparent opacity-50"></div>
           
            <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
-               {/* ESTADÍSTICA DE IMPACTO */}
                <div className="flex-shrink-0 flex items-center justify-center">
                    <span className="text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-br from-slate-700 to-slate-600 leading-none select-none drop-shadow-sm">
                        90%
                    </span>
                </div>
 
-               {/* TEXTO CRÍTICO */}
                <div className="flex-1 text-center md:text-left">
                    <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-2">
                        El Error <span className="text-cyan-400">Más Caro</span>
@@ -30,7 +25,6 @@ export default function Problem() {
                    </p>
                </div>
 
-               {/* RESULTADO FINANCIERO */}
                <div className="flex-shrink-0 bg-slate-950/60 border border-slate-800/50 rounded-xl p-5 md:px-8 md:py-4 flex flex-col items-center justify-center shadow-inner min-w-[200px]">
                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">
                        Resultado

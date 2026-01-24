@@ -6,10 +6,9 @@ const PhasesTabs = () => {
   const { activeTab, setActiveTab } = useTabs();
   const [isSticky, setIsSticky] = useState(false);
 
-  // Lógica para detectar el scroll y achicar las pestañas
   useEffect(() => {
     const handleScroll = () => {
-      setIsSticky(window.scrollY > 800);
+      setIsSticky(window.scrollY > 900);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -31,7 +30,7 @@ const PhasesTabs = () => {
           'Sourcing: Buscamos la propiedad técnica por ti'
         ],
         cta: 'Solicitar Auditoría',
-        message: 'Hola DOMIS™, quiero solicitar una auditoría técnica Fase 1. Ya tengo una propiedad vista / necesito que busquen por mí.'
+        message: 'Hola DOMIS™, quiero solicitar una auditoría técnica Fase 1.'
       }
     },
     {
@@ -49,7 +48,7 @@ const PhasesTabs = () => {
           'Beneficio: 60% de reembolso de tu Fase 1'
         ],
         cta: 'Activar Negociación',
-        message: 'Hola, ya tengo el diagnóstico técnico de la Fase 1 y quiero pasar a la Fase 2. Necesito el Plan Maestro para bajar el precio de venta.'
+        message: 'Hola, quiero pasar a la Fase 2 para bajar el precio de venta.'
       }
     },
     {
@@ -67,7 +66,7 @@ const PhasesTabs = () => {
           'Entrega de Llave en Mano'
         ],
         cta: 'Cotizar Remodelación',
-        message: 'Hola DOMIS™, ya cerramos la compra y quiero avanzar con la Fase 3 de Remodelación y Gestión de Obra.'
+        message: 'Hola DOMIS™, ya cerramos la compra y quiero avanzar con la Fase 3.'
       }
     }
   ];
@@ -77,19 +76,19 @@ const PhasesTabs = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4 tracking-tighter">
-            El Sistema <span className="text-cyan-500 text-glow">DOMIS™</span>
+            El Sistema <span className="text-cyan-500">DOMIS™</span>
           </h2>
-          <p className="text-slate-400 font-light">Tres etapas diseñadas para proteger y multiplicar tu capital inmobiliario.</p>
+          <p className="text-slate-400 font-light italic">Etapas diseñadas para proteger tu capital inmobiliario.</p>
         </div>
 
-        {/* CONTENEDOR DE PESTAÑAS STICKY */}
-        <div className={`sticky top-20 z-50 transition-all duration-500 ${isSticky ? 'scale-90 opacity-90' : 'scale-100 opacity-100'}`}>
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {/* SELECTORES CON EFECTO STICKY */}
+        <div className={`sticky top-20 z-50 transition-all duration-500 py-4 ${isSticky ? 'scale-90 bg-slate-950/80 backdrop-blur-md rounded-full border border-slate-800 px-4' : 'scale-100'}`}>
+          <div className="flex flex-wrap justify-center gap-4">
             {phases.map((phase) => (
               <button
                 key={phase.id}
                 onClick={() => setActiveTab(phase.id)}
-                className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-widest transition-all border ${
+                className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all border ${
                   activeTab === phase.id
                     ? 'bg-cyan-500 border-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(34,211,238,0.3)]'
                     : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
@@ -103,8 +102,8 @@ const PhasesTabs = () => {
           </div>
         </div>
 
-        {/* Contenido de la Pestaña Activa */}
-        <div className="bg-slate-900/50 border border-slate-800 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-sm relative overflow-hidden min-h-[600px]">
+        {/* CONTENIDO DINÁMICO */}
+        <div className="mt-12 bg-slate-900/50 border border-slate-800 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-sm relative overflow-hidden">
           {phases.map((phase) => (
             <div
               key={phase.id}
@@ -112,17 +111,12 @@ const PhasesTabs = () => {
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
-                  <div className="flex items-center gap-4 text-cyan-500">
-                    <span className="text-5xl font-black opacity-20">{phase.number}</span>
-                    <div className="h-px flex-1 bg-cyan-500/20"></div>
-                  </div>
                   <h3 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight leading-none">
                     {phase.content.subtitle}
                   </h3>
-                  <p className="text-slate-400 text-lg leading-relaxed font-light">
+                  <p className="text-slate-400 text-lg font-light leading-relaxed">
                     {phase.content.description}
                   </p>
-                  
                   <ul className="space-y-4 pt-4">
                     {phase.content.items.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-3 text-slate-300">
@@ -137,7 +131,6 @@ const PhasesTabs = () => {
                   <div className="p-6 bg-cyan-500/10 rounded-full text-cyan-400">
                     {phase.icon}
                   </div>
-                  <p className="text-slate-400 text-sm">¿Listo para comenzar la {phase.title}?</p>
                   <a
                     href={`https://wa.me/569XXXXXXXX?text=${encodeURIComponent(phase.content.message)}`}
                     target="_blank"
