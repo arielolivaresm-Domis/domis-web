@@ -1,82 +1,44 @@
-import { AlertTriangle, Home, Droplets, Zap, ShieldAlert } from 'lucide-react';
-
-const Problem = () => {
-  const painPoints = [
-    {
-      icon: <Droplets className="text-cyan-500" size={24} />,
-      title: "Humedades Fantasmas",
-      description: "Filtraciones ocultas tras el papel tapiz o pintura fresca que destruyen el valor de reventa en meses."
-    },
-    {
-      icon: <Zap className="text-cyan-500" size={24} />,
-      title: "Redes Eléctricas Fuera de Norma",
-      description: "Tableros obsoletos o cableado artesanal que representan un riesgo de incendio y un gasto millonario no previsto."
-    },
-    {
-      icon: <Home className="text-cyan-500" size={24} />,
-      title: "Vicios Estructurales",
-      description: "Asentamientos o grietas maquilladas que comprometen la seguridad y la plusvalía real de la propiedad."
-    },
-    {
-      icon: <ShieldAlert className="text-cyan-500" size={24} />,
-      title: "Entornos de Riesgo",
-      description: "Comprar sin saber que a 2 cuadras hay factores que devalúan tu inversión un 30% inmediatamente."
-    }
-  ];
-
+export default function Problem() {
   return (
-    <section id="problem" className="py-24 bg-slate-950 px-6 relative overflow-hidden">
-      {/* Luz de advertencia de fondo */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+    <section id="problema" className="py-16 bg-slate-950 relative overflow-hidden flex items-center justify-center">
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-cyan-900/10 blur-[80px] rounded-full"></div>
+      </div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div className="max-w-6xl w-full mx-auto px-6 relative z-10">
+        <div className="relative w-full bg-gradient-to-r from-slate-900/90 to-slate-900/60 backdrop-blur-md border border-slate-800 rounded-3xl p-8 md:p-10 shadow-2xl overflow-hidden group hover:border-slate-700 transition-all duration-500">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-cyan-500 to-transparent opacity-50"></div>
           
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-black uppercase tracking-widest">
-              <AlertTriangle size={16} />
-              El riesgo del inversionista
-            </div>
-            
-            <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-none tracking-tighter">
-              EL COSTO DE <br />
-              <span className="text-red-500">NO AUDITAR</span>
-            </h2>
-            
-            <p className="text-slate-400 text-lg font-light leading-relaxed">
-              En el mundo del <strong className="text-white">Flipping</strong> y la inversión inmobiliaria, lo que no ves es lo que te quita la utilidad. Una remodelación estética no sirve si la base técnica está podrida.
-            </p>
-
-            <div className="p-6 bg-slate-900/50 border-l-4 border-red-500 rounded-r-2xl">
-              <p className="text-slate-300 italic text-sm">
-                "El 70% de las propiedades en venta ocultan al menos un vicio técnico que cuesta más de $3.000.000 reparar."
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {painPoints.map((point, idx) => (
-              <div 
-                key={idx} 
-                className="bg-slate-900/40 border border-slate-800 p-6 rounded-[2rem] hover:border-red-500/30 transition-all group"
-              >
-                <div className="mb-4 p-3 bg-slate-950 rounded-xl w-fit group-hover:scale-110 transition-transform">
-                  {point.icon}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
+                <div className="flex-shrink-0 flex items-center justify-center">
+                    <span className="text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-br from-slate-700 to-slate-600 leading-none select-none drop-shadow-sm">
+                        90%
+                    </span>
                 </div>
-                <h3 className="text-white font-black uppercase text-sm mb-2 tracking-tight">
-                  {point.title}
-                </h3>
-                <p className="text-slate-500 text-xs leading-relaxed font-light">
-                  {point.description}
-                </p>
-              </div>
-            ))}
-          </div>
 
+                <div className="flex-1 text-center md:text-left">
+                    <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-2">
+                        El Error <span className="text-cyan-400">Más Caro</span>
+                    </h2>
+                    <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-2xl">
+                        El 90% de los compradores en Chile firma la promesa de compraventa sin saber realmente qué está comprando.
+                    </p>
+                </div>
+
+                <div className="flex-shrink-0 bg-slate-950/60 border border-slate-800/50 rounded-xl p-5 md:px-8 md:py-4 flex flex-col items-center justify-center shadow-inner min-w-[200px]">
+                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">
+                        Resultado
+                    </span>
+                    <span className="text-xl md:text-2xl font-black text-white whitespace-nowrap">
+                        $20-50 Millones
+                    </span>
+                    <span className="text-[10px] text-red-400 font-bold uppercase tracking-wide mt-1 animate-pulse">
+                        Perdidos
+                    </span>
+                </div>
+            </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default Problem;
+}

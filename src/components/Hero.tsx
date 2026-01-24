@@ -8,7 +8,6 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 pb-32 overflow-hidden bg-slate-950">
       
-      {/* Fondos de Ingeniería */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#22d3ee_0%,transparent_50%)] opacity-20"></div>
         <div 
@@ -36,7 +35,8 @@ const Hero = () => {
           </h1>
 
           <p className="max-w-2xl text-slate-400 text-lg md:text-xl font-light leading-relaxed mb-12">
-            Como <strong className="text-white">Constructores Civiles</strong>, auditamos tu próxima inversión para detectar fallas que otros ignoran.
+            Somos <strong className="text-white">Constructores Civiles</strong> especializados en detectar fallas estructurales, eléctricas y sanitarias antes de que firmes. <br className="hidden md:block" />
+            <span className="text-cyan-500/80 italic">Asegura tu plusvalía con auditoría técnica real.</span>
           </p>
 
           <div className="flex flex-col md:flex-row gap-6 w-full md:w-auto">
@@ -44,11 +44,18 @@ const Hero = () => {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 bg-cyan-500 hover:bg-white text-slate-950 px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest transition-all shadow-xl group"
+              className="flex items-center justify-center gap-3 bg-cyan-500 hover:bg-white text-slate-950 px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest transition-all shadow-[0_0_30px_rgba(34,211,238,0.4)] group"
             >
               <ShieldAlert size={20} />
               Solicitar Auditoría F1
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </a>
+
+            <a 
+              href="#phases"
+              className="flex items-center justify-center gap-3 bg-slate-900 border border-slate-800 hover:border-cyan-500/50 text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest transition-all"
+            >
+              Ver Packs y Fases
             </a>
           </div>
 
@@ -73,6 +80,7 @@ const Hero = () => {
 
         </div>
       </div>
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-slate-950 to-transparent"></div>
     </section>
   );
 };
