@@ -12,23 +12,23 @@ export default function PhasesTabs() {
   const { activeTab, setActiveTab } = useTabs();
   const [isSticky, setIsSticky] = useState(false);
 
-  // 1. MOTOR DE PERSISTENCIA: Activa la barra flotante al hacer scroll
+  // 1. MOTOR DE PERSISTENCIA: Activa el modo compacto al bajar
   useEffect(() => {
     const handleScroll = () => {
-      // Se activa el modo compacto al pasar los 500px
-      setIsSticky(window.scrollY > 500);
+      // Se activa después de pasar el Hero y el Problema
+      setIsSticky(window.scrollY > 600);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 2. FUNCIÓN DE NIVELACIÓN: Al hacer clic, vuelve al inicio de la sección
+  // 2. NAVEGACIÓN DE PRECISIÓN: Vuelve al inicio de la fase seleccionada
   const handleTabChange = (id: 'fase1' | 'fase2' | 'fase3') => {
     setActiveTab(id);
     const element = document.getElementById('proceso');
     if (element) {
-      // Offset de 120px para que la barra flotante no tape el título
-      const yOffset = -120; 
+      // Offset de 160px para que los botones flotantes no tapen el contenido
+      const yOffset = -160; 
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       
       window.scrollTo({ top: y, behavior: 'smooth' });
@@ -43,7 +43,6 @@ export default function PhasesTabs() {
 
   return (
     <section className="py-20 bg-slate-950 relative" id="proceso">
-      {/* FONDO TÉCNICO */}
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -60,10 +59,10 @@ export default function PhasesTabs() {
           </h2>
         </div>
 
-        {/* NAVEGACIÓN PERSISTENTE (Sticky/Fixed): Se achica y te sigue hasta el FinalCTA */}
+        {/* NAVEGACIÓN PERSISTENTE (Sticky): Se achica y se queda en top-20 para no tapar el FinalCTA */}
         <div className={`transition-all duration-500 z-[100] ${
           isSticky 
-            ? 'fixed top-0 left-0 w-full py-3 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.8)]' 
+            ? 'fixed top-20 left-0 w-full py-3 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800 shadow-2xl' 
             : 'relative w-full max-w-4xl mx-auto py-6'
         }`}>
           <div className={`flex flex-col md:flex-row gap-3 md:gap-4 mx-auto transition-all px-4 ${
@@ -104,7 +103,7 @@ export default function PhasesTabs() {
           </div>
         </div>
 
-        {/* CONTENIDO DINÁMICO DE FASES */}
+        {/* CONTENIDO DINÁMICO */}
         <div className={`transition-all duration-500 ${isSticky ? 'mt-32' : 'mt-8'}`}>
           {activeTab === 'fase1' && (
             <div className="space-y-16 animate-fadeIn">
