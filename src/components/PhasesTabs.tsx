@@ -26,17 +26,19 @@ export default function PhasesTabs() {
 
   const handleTabChange = (id: 'fase1' | 'fase2' | 'fase3') => {
     setActiveTab(id);
-    const element = document.getElementById('proceso');
-    if (element) {
-      // AJUSTE TÉCNICO: En móvil el offset es menor porque no está la barra de pestañas
-      const isMobile = window.innerWidth < 768;
-      const yOffset = isMobile ? -90 : -140; 
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+    
+    // Timer para asegurar que el contenido cargue antes de scrollear
+    setTimeout(() => {
+      const element = document.getElementById('fase-anchor');
+      if (element) {
+        const isMobile = window.innerWidth < 768;
+        const yOffset = isMobile ? -80 : -140; 
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 50);
   };
 
-  // Componente Puente: Mantiene diseño original y asegura el salto de fase
   const BridgeButton = ({ targetId, label, subtitle, icon }: { targetId: 'fase1' | 'fase2' | 'fase3', label: string, subtitle: string, icon: string }) => (
     <div className="pt-24 border-t border-slate-900/50">
       <p className="text-cyan-400 font-mono text-xs uppercase tracking-[0.2em] mb-8 font-bold">Continuar Trayectoria Técnica</p>
@@ -68,14 +70,36 @@ export default function PhasesTabs() {
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
             <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Protocolo DOMIS™</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
+          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
             Cómo <span className="text-cyan-400">Funciona</span>
           </h2>
         </div>
 
-        <div ref={triggerRef} className="h-1 w-full absolute top-[300px] pointer-events-none"></div>
+        {/* RESUMEN DEL PROTOCOLO (Módulos 1, 2 y 3) - SIEMPRE VISIBLES */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          <div className="engineering-frame p-8 bg-slate-950 border border-slate-800 rounded-xl relative overflow-hidden">
+            <div className="animate-scan"></div>
+            <div className="w-12 h-12 bg-slate-800 rounded-full border-2 border-slate-600 mb-6 flex items-center justify-center text-xl font-black text-white mx-auto relative z-20">1</div>
+            <h3 className="text-xl font-black text-white uppercase mb-2 text-center">AUDITORÍA</h3>
+            <p className="text-slate-400 text-sm leading-relaxed text-center">Inspección física rigurosa para identificar vicios ocultos.</p>
+          </div>
+          <div className="engineering-frame p-8 bg-slate-950 border border-slate-800 rounded-xl relative overflow-hidden">
+            <div className="animate-scan"></div>
+            <div className="w-12 h-12 bg-slate-800 rounded-full border-2 border-slate-600 mb-6 flex items-center justify-center text-xl font-black text-white mx-auto relative z-20">2</div>
+            <h3 className="text-xl font-black text-white uppercase mb-2 text-center">NEGOCIACIÓN</h3>
+            <p className="text-slate-400 text-sm leading-relaxed text-center">Estrategia técnica para rebajar el precio de compra.</p>
+          </div>
+          <div className="engineering-frame p-8 bg-slate-950 border border-slate-800 rounded-xl relative overflow-hidden">
+            <div className="animate-scan"></div>
+            <div className="w-12 h-12 bg-slate-800 rounded-full border-2 border-slate-600 mb-6 flex items-center justify-center text-xl font-black text-white mx-auto relative z-20">3</div>
+            <h3 className="text-xl font-black text-white uppercase mb-2 text-center">REMODELACIÓN</h3>
+            <p className="text-slate-400 text-sm leading-relaxed text-center">Ejecución de reparaciones con equipo experto.</p>
+          </div>
+        </div>
 
-        {/* NAVEGACIÓN: Se oculta en móvil (hidden) y se muestra desde tablet (md:block) */}
+        <div ref={triggerRef} id="fase-anchor" className="h-1 w-full absolute pointer-events-none" style={{ top: '800px' }}></div>
+
+        {/* NAVEGACIÓN: Se oculta en móvil como pediste (hidden) */}
         <nav className={`hidden md:block sticky top-20 z-[100] transition-all duration-700 ease-in-out mb-16 ${isShrunk ? 'scale-90' : 'scale-100'}`}>
           <div className={`flex flex-col md:flex-row gap-3 max-w-4xl mx-auto p-2 rounded-2xl transition-all duration-700 ${isShrunk ? 'bg-slate-950/90 backdrop-blur-xl border border-slate-800 shadow-2xl' : ''}`}>
             {[
@@ -104,19 +128,14 @@ export default function PhasesTabs() {
           </div>
         </nav>
 
-        {/* CONTENIDOS POR FASE */}
+        {/* CONTENIDOS DETALLADOS */}
         <div className="mt-8">
           {activeTab === 'fase1' && (
             <div className="space-y-24 animate-fadeIn text-center">
               <AuditPacks onNext={() => handleTabChange('fase2')} />
               <Sourcing />
               <Calculator />
-              <BridgeButton
-                targetId="fase2"
-                label="Fase 2"
-                subtitle="Negociación Técnica"
-                icon="💼"
-              />
+              <BridgeButton targetId="fase2" label="Fase 2" subtitle="Negociación Técnica" icon="💼" />
             </div>
           )}
 
@@ -125,28 +144,17 @@ export default function PhasesTabs() {
               <BenefitFlyer />
               <Deliverable />
               <Phase2 onNext={() => handleTabChange('fase3')} />
-              <BridgeButton
-                targetId="fase3"
-                label="Fase 3"
-                subtitle="Remodelación Estratégica"
-                icon="🏗️"
-              />
+              <BridgeButton targetId="fase3" label="Fase 3" subtitle="Remodelación Estratégica" icon="🏗️" />
             </div>
           )}
 
           {activeTab === 'fase3' && (
             <div className="space-y-24 animate-fadeIn text-center">
               <Phase3 />
-              <BridgeButton
-                targetId="fase1"
-                label="Fase 1"
-                subtitle="Reiniciar Auditoría"
-                icon="🔍"
-              />
+              <BridgeButton targetId="fase1" label="Fase 1" subtitle="Reiniciar Auditoría" icon="🔍" />
             </div>
           )}
         </div>
-
       </div>
     </section>
   );
