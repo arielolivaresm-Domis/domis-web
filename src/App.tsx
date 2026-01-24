@@ -7,7 +7,7 @@ import Footer from './components/Footer';
 import { TabsProvider, useTabs } from './context/TabsContext';
 
 /**
- * AppContent: Escucha el estado para mostrar u ocultar el flyer.
+ * AppContent: Gestiona qué se ve y qué no.
  */
 const AppContent = () => {
   const { activeTab } = useTabs();
@@ -25,7 +25,8 @@ const AppContent = () => {
         <Problem />
         <PhasesTabs />
         
-        {/* LÓGICA DE CONTROL: Solo se renderiza en la Fase 2 */}
+        {/* REGLA DE VISIBILIDAD: 
+            Si estamos en Fase 1 o 3, este bloque desaparece por completo. */}
         {activeTab === 'fase2' && <BenefitFlyer />}
       </main>
 

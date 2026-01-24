@@ -4,7 +4,7 @@ import { useTabs } from '../context/TabsContext';
 const PhasesTabs = () => {
   const { activeTab, setActiveTab } = useTabs();
 
-  // Definimos las fases sin tipos complejos para evitar errores de Namespace
+  // Definimos los IDs como constantes para evitar errores de TypeScript
   const phases = [
     {
       id: 'fase1' as const,
@@ -29,8 +29,6 @@ const PhasesTabs = () => {
   return (
     <section id="phases" className="py-24 bg-slate-950 px-6 relative">
       <div className="max-w-6xl mx-auto">
-        
-        {/* Selectores de Pestañas */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           {phases.map((phase) => (
             <button
@@ -42,21 +40,16 @@ const PhasesTabs = () => {
                   : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
               }`}
             >
-              {phase.icon}
-              {phase.title}
+              {phase.icon} {phase.title}
             </button>
           ))}
         </div>
 
-        {/* Caja de Contenido */}
         <div className="bg-slate-900/50 border border-slate-800 rounded-[2.5rem] p-8 md:p-12 text-center backdrop-blur-sm">
           <div className="max-w-2xl mx-auto space-y-6">
             <h3 className="text-3xl font-black text-white uppercase tracking-tighter">
               {phases.find(p => p.id === activeTab)?.title}
             </h3>
-            <p className="text-slate-400 text-sm font-light">
-              Haz clic abajo para activar esta etapa con nuestro equipo técnico profesional.
-            </p>
             <div className="flex justify-center">
               <a 
                 href={`https://wa.me/569XXXXXXXX?text=${encodeURIComponent(phases.find(p => p.id === activeTab)?.msg || '')}`}
