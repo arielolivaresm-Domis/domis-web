@@ -70,42 +70,48 @@ export default function PhasesTabs() {
           <button 
             onClick={() => handleTabChange('fase1')}
             className={`engineering-frame p-8 border-2 transition-all duration-500 group relative overflow-hidden rounded-xl text-left flex flex-col h-full ${
-              activeTab === 'fase1' ? 'border-cyan-500 bg-slate-900' : 'border-slate-800 bg-slate-950 hover:border-slate-600'
+              activeTab === 'fase1' ? 'border-cyan-500 bg-slate-900 shadow-[0_0_20px_rgba(34,211,238,0.1)]' : 'border-slate-800 bg-slate-950 hover:border-slate-600'
             }`}
           >
             <div className="animate-scan"></div>
             <div className="w-12 h-12 bg-slate-800 rounded-full border-2 border-slate-600 mb-6 flex items-center justify-center text-xl font-black text-white mx-auto relative z-20 group-hover:border-cyan-400 group-hover:text-cyan-400 transition-colors">1</div>
-            <h3 className={`text-xl font-black uppercase mb-2 text-center transition-colors ${activeTab === 'fase1' ? 'text-cyan-400' : 'text-white'}`}>AUDITORÍA</h3>
-            <p className="text-slate-400 text-sm leading-relaxed text-center flex-grow">Inspección física rigurosa para identificar vicios ocultos.</p>
-            <div className="mt-4 text-[10px] text-cyan-500 font-bold uppercase tracking-widest text-center opacity-0 group-hover:opacity-100 transition-opacity">Ver Detalles →</div>
+            <h3 className={`text-xl font-black uppercase mb-3 text-center transition-colors ${activeTab === 'fase1' ? 'text-cyan-400' : 'text-white'}`}>AUDITORÍA TÉCNICA</h3>
+            <p className="text-slate-400 text-sm leading-relaxed text-center flex-grow">
+              Protocolo <strong>PCF-15™</strong> para detectar vicios ocultos. Scoring técnico 0-7 en 3 días + escaneo del entorno.
+            </p>
+            <div className="mt-4 text-[10px] text-cyan-500 font-bold uppercase tracking-widest text-center opacity-0 group-hover:opacity-100 transition-opacity">Especificaciones →</div>
           </button>
 
           {/* MÓDULO 2: NEGOCIACIÓN */}
           <button 
             onClick={() => handleTabChange('fase2')}
             className={`engineering-frame p-8 border-2 transition-all duration-500 group relative overflow-hidden rounded-xl text-left flex flex-col h-full ${
-              activeTab === 'fase2' ? 'border-cyan-500 bg-slate-900' : 'border-slate-800 bg-slate-950 hover:border-slate-600'
+              activeTab === 'fase2' ? 'border-cyan-500 bg-slate-900 shadow-[0_0_20px_rgba(34,211,238,0.1)]' : 'border-slate-800 bg-slate-950 hover:border-slate-600'
             }`}
           >
             <div className="animate-scan"></div>
             <div className="w-12 h-12 bg-slate-800 rounded-full border-2 border-slate-600 mb-6 flex items-center justify-center text-xl font-black text-white mx-auto relative z-20 group-hover:border-cyan-400 group-hover:text-cyan-400 transition-colors">2</div>
-            <h3 className={`text-xl font-black uppercase mb-2 text-center transition-colors ${activeTab === 'fase2' ? 'text-cyan-400' : 'text-white'}`}>NEGOCIACIÓN</h3>
-            <p className="text-slate-400 text-sm leading-relaxed text-center flex-grow">Estrategia técnica para rebajar el precio de compra.</p>
-            <div className="mt-4 text-[10px] text-cyan-500 font-bold uppercase tracking-widest text-center opacity-0 group-hover:opacity-100 transition-opacity">Ver Detalles →</div>
+            <h3 className={`text-xl font-black uppercase mb-3 text-center transition-colors ${activeTab === 'fase2' ? 'text-cyan-400' : 'text-white'}`}>NEGOCIACIÓN ESTRATÉGICA</h3>
+            <p className="text-slate-400 text-sm leading-relaxed text-center flex-grow">
+              Inteligencia de mercado (CBR/IA) para definir 3 escenarios de cierre basados en ROI real y evidencia.
+            </p>
+            <div className="mt-4 text-[10px] text-cyan-500 font-bold uppercase tracking-widest text-center opacity-0 group-hover:opacity-100 transition-opacity">Estrategia de Cierre →</div>
           </button>
 
           {/* MÓDULO 3: REMODELACIÓN */}
           <button 
             onClick={() => handleTabChange('fase3')}
             className={`engineering-frame p-8 border-2 transition-all duration-500 group relative overflow-hidden rounded-xl text-left flex flex-col h-full ${
-              activeTab === 'fase3' ? 'border-cyan-500 bg-slate-900' : 'border-slate-800 bg-slate-950 hover:border-slate-600'
+              activeTab === 'fase3' ? 'border-cyan-500 bg-slate-900 shadow-[0_0_20px_rgba(34,211,238,0.1)]' : 'border-slate-800 bg-slate-950 hover:border-slate-600'
             }`}
           >
             <div className="animate-scan"></div>
             <div className="w-12 h-12 bg-slate-800 rounded-full border-2 border-slate-600 mb-6 flex items-center justify-center text-xl font-black text-white mx-auto relative z-20 group-hover:border-cyan-400 group-hover:text-cyan-400 transition-colors">3</div>
-            <h3 className={`text-xl font-black uppercase mb-2 text-center transition-colors ${activeTab === 'fase3' ? 'text-cyan-400' : 'text-white'}`}>REMODELACIÓN</h3>
-            <p className="text-slate-400 text-sm leading-relaxed text-center flex-grow">Ejecución de reparaciones con equipo experto.</p>
-            <div className="mt-4 text-[10px] text-cyan-500 font-bold uppercase tracking-widest text-center opacity-0 group-hover:opacity-100 transition-opacity">Ver Detalles →</div>
+            <h3 className={`text-xl font-black uppercase mb-3 text-center transition-colors ${activeTab === 'fase3' ? 'text-cyan-400' : 'text-white'}`}>PLUSVALÍA Y REMODELACIÓN</h3>
+            <p className="text-slate-400 text-sm leading-relaxed text-center flex-grow">
+              Ejecución de precisión para corregir fallas de auditoría, garantizando habitabilidad y plusvalía inmediata.
+            </p>
+            <div className="mt-4 text-[10px] text-cyan-500 font-bold uppercase tracking-widest text-center opacity-0 group-hover:opacity-100 transition-opacity">Plan de Ejecución →</div>
           </button>
         </div>
 
