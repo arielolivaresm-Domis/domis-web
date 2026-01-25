@@ -17,8 +17,10 @@ export default function Deliverable() {
           Tu Poder en la Mesa de <br className="hidden md:block" />
           <span className="text-cyan-400">Negociación</span>
         </h2>
-        <p className="text-slate-400 italic max-w-2xl mx-auto mb-16">
-          El Reporte genera automáticamente tu estrategia de ahorro basada estrictamente en el saneamiento de patologías críticas detectadas.
+        
+        {/* Subtítulo: Actualizado con Inteligencia de Mercado */}
+        <p className="text-slate-400 italic max-w-3xl mx-auto mb-16 leading-relaxed">
+          Cruzamos el <strong>Scoring PCF-15™</strong> con inteligencia de mercado real para proyectar escenarios de ahorro basados en evidencia técnica, transacciones del CBR y algoritmos de IA.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -28,7 +30,7 @@ export default function Deliverable() {
             <div className="animate-scan"></div>
             <h3 className="text-xl font-black text-white uppercase mb-4">Oferta Conservadora</h3>
             <p className="text-slate-400 text-sm italic leading-relaxed">
-              Basada estrictamente en el saneamiento de redes y vicios ocultos de alto costo.
+              Basada estrictamente en la recuperación de inversión para el saneamiento de redes y vicios ocultos de alto costo detectados en la auditoría.
             </p>
           </div>
 
@@ -39,7 +41,7 @@ export default function Deliverable() {
               Punto DOMIS<span className="text-lg relative -top-1.5 ml-0.5">™</span>
             </h3>
             <p className="text-slate-200 text-sm font-bold italic leading-relaxed">
-              Ahorro técnico proyectado sumando patologías críticas + actualizaciones normativas por m².
+              <strong>El "Sweet Spot" de inversión.</strong> Ahorro técnico proyectado sumando patologías críticas + actualizaciones normativas + valor real de mercado por m².
             </p>
           </div>
 
@@ -48,7 +50,7 @@ export default function Deliverable() {
             <div className="animate-scan"></div>
             <h3 className="text-white font-black uppercase mb-4">Oferta Agresiva</h3>
             <p className="text-slate-400 text-sm italic leading-relaxed">
-              Incluye saneamiento total, actualizaciones estéticas y penalización por obsolescencia técnica.
+              Incluye saneamiento total, penalización por obsolescencia técnica y factor de riesgo de mercado para maximizar el margen de negociación.
             </p>
           </div>
         </div>
