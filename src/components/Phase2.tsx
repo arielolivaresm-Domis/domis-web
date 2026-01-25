@@ -2,13 +2,13 @@ import { Handshake, FileCheck } from 'lucide-react';
 
 /**
  * COMPONENTE FASE 2: NEGOCIACIÓN
- * Corrección: Se utiliza 'onNext' para eliminar el error ts(6133).
+ * Actualizado con narrativa de Inteligencia de Mercado y Datos Reales.
  */
 export default function Phase2({ onNext }: { onNext: () => void }) {
   return (
     <section className="relative">
       
-      {/* CONTENEDOR PRINCIPAL: Ahora usa onNext al hacer clic */}
+      {/* CONTENEDOR PRINCIPAL: Mantiene estructura original */}
       <div 
         onClick={() => onNext()}
         className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden border-2 border-slate-800 group transition-all duration-500 hover:border-cyan-500/50 shadow-2xl shadow-slate-950/50 cursor-pointer"
@@ -29,31 +29,31 @@ export default function Phase2({ onNext }: { onNext: () => void }) {
         {/* CONTENIDO SUPERPUESTO */}
         <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12 text-left">
           
-          {/* Badge */}
+          {/* Badge: Actualizado para reflejar Data-Driven */}
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/20 border border-cyan-500/40 rounded-full mb-6 w-fit backdrop-blur-md">
             <Handshake className="w-4 h-4 text-cyan-400" />
             <span className="text-[10px] font-mono text-cyan-300 uppercase tracking-widest font-bold">
-              Mesa de Negociación Técnica
+              Inteligencia de Mercado & Cierre
             </span>
           </div>
 
-          {/* Título */}
+          {/* Título: Énfasis en la estrategia */}
           <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight mb-4 drop-shadow-lg leading-tight">
-            El poder de los <br className="hidden md:block"/>
+            Poder de Negociación <br className="hidden md:block"/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">
-              Datos Duros
+              Basado en Evidencia
             </span>
           </h3>
 
-          {/* Descripción */}
-          <p className="text-slate-300 text-sm md:text-lg max-w-xl leading-relaxed mb-8 drop-shadow-md font-medium">
-            No negociamos con opiniones, sino con un informe de ingeniería forense en mano. Transformamos los hallazgos técnicos en argumentos financieros irrefutables.
+          {/* Descripción: Integración de IA y CBR */}
+          <p className="text-slate-300 text-sm md:text-lg max-w-2xl leading-relaxed mb-8 drop-shadow-md font-medium">
+            No negociamos con supuestos. Cruzamos el **Scoring PCF-15™** con datos de transacciones reales (CBR) y algoritmos de IA para transformar hallazgos técnicos en una estrategia de ahorro financiero irrefutable.
           </p>
           
-          {/* Indicador de Resultado */}
+          {/* Indicador de Resultado: Enfoque en ROI */}
           <div className="flex items-center gap-3 text-white/80">
              <FileCheck className="w-5 h-5 text-cyan-500" />
-             <span className="text-xs font-bold uppercase tracking-wider">Resultado: Ajuste de precio justo</span>
+             <span className="text-xs font-bold uppercase tracking-wider">Resultado: ROI optimizado por datos reales</span>
           </div>
 
         </div>
