@@ -47,41 +47,42 @@ const BenefitFlyer = () => {
   return (
     <section id="beneficio-fase2" className="py-20 bg-slate-950 px-6 relative">
       <div className="max-w-5xl mx-auto">
+        {/* Contenedor Principal con Gradiente */}
         <div className="relative bg-gradient-to-br from-cyan-600 to-blue-800 rounded-[2.5rem] p-1 md:p-1.5 shadow-[0_0_50px_rgba(34,211,238,0.2)]">
           <div className="bg-slate-900 rounded-[2.3rem] p-8 md:p-16 relative overflow-hidden">
             
-            {/* Fondo decorativo */}
+            {/* Grid de Fondo */}
             <div className="absolute inset-0 opacity-10 pointer-events-none z-0"
                  style={{ backgroundImage: 'linear-gradient(#22d3ee 1px, transparent 1px), linear-gradient(90deg, #22d3ee 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
             </div>
 
-            <div className="relative z-10 flex flex-col items-center text-center">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[11px] font-black uppercase tracking-[0.2em] mb-8 shadow-lg shadow-cyan-500/20 font-sans">
+            <div className="relative z-10 flex flex-col items-center text-center font-sans">
+              <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[11px] font-black uppercase tracking-[0.2em] mb-8 shadow-lg shadow-cyan-500/20">
                 Fase 2: Negociación Técnica
               </div>
 
-              <h2 className="text-3xl md:text-5xl font-black text-white mb-4 leading-tight uppercase font-sans">
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-4 leading-tight uppercase">
                 💰 Cómo se paga Fase 2
               </h2>
 
-              <p className="text-slate-300 text-lg md:text-xl max-w-3xl mb-10 font-light font-sans">
+              <p className="text-slate-300 text-lg md:text-xl max-w-3xl mb-10 font-light">
                 Pagas en dos momentos clave:
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mb-8 text-left font-sans">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mb-8 text-left">
                 <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-3xl">1️⃣</span>
-                    <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter">Fee Inicial</h3>
+                    <span className="text-3xl font-normal">1️⃣</span>
+                    <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-none">Fee Inicial</h3>
                   </div>
                   <div className="text-2xl md:text-3xl font-mono text-cyan-400 font-black">$500.000</div>
-                  <p className="text-xs md:text-sm text-slate-400 mt-2 italic">Entrega del Plan Maestro Técnico y estrategia.</p>
+                  <p className="text-xs md:text-sm text-slate-400 mt-2 italic font-light">Entrega del Plan Maestro Técnico y estrategia.</p>
                 </div>
 
                 <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-3xl">2️⃣</span>
-                    <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-tight">Al firmar éxito</h3>
+                    <span className="text-3xl font-normal">2️⃣</span>
+                    <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-none">Al firmar éxito</h3>
                   </div>
                   <div className="text-2xl md:text-3xl font-mono text-cyan-400 font-black">15% del ahorro</div>
                   <p className="text-xs md:text-sm text-slate-400 mt-2 font-medium">Calculado únicamente sobre la rebaja lograda.</p>
@@ -90,13 +91,15 @@ const BenefitFlyer = () => {
 
               <div className="w-full max-w-3xl h-px bg-slate-800 mb-12"></div>
 
-              <h2 className="text-4xl md:text-6xl font-black text-white mb-6 uppercase font-sans">
+              <h2 className="text-4xl md:text-6xl font-black text-white mb-6 uppercase">
                 <span className="text-cyan-400">60% OFF</span> EN AUDITORÍA
               </h2>
 
+              {/* BOTÓN DISPARADOR */}
               <button 
+                type="button"
                 onClick={() => setIsModalOpen(true)}
-                className="relative z-20 group inline-flex items-center gap-3 px-10 md:px-12 py-5 bg-white text-slate-950 font-black rounded-full uppercase tracking-widest text-xs md:text-sm hover:scale-105 transition-all shadow-xl active:scale-95 touch-manipulation font-sans"
+                className="group relative z-30 inline-flex items-center gap-3 px-10 md:px-12 py-5 bg-white text-slate-950 font-black rounded-full uppercase tracking-widest text-xs md:text-sm hover:scale-105 transition-all shadow-xl active:scale-95 touch-manipulation"
               >
                 <MessageCircle size={20} className="fill-current" />
                 Activar Negociación Fase 2
@@ -107,22 +110,17 @@ const BenefitFlyer = () => {
         </div>
       </div>
 
-      {/* MODAL: FIJADO AL VIEWPORT ACTUAL (ESTO ARREGLA EL SCROLL) */}
+      {/* MODAL: POSICIONAMIENTO NUCLEAR (FUERA DEL FLUJO DEL DOCUMENTO) */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
-          
-          {/* Backdrop con Blur - Este ocupa toda la pantalla VISIBLE */}
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center pointer-events-none">
+          {/* Backdrop: Bloquea todo y centra la vista */}
           <div 
-            className="fixed inset-0 bg-slate-950/98 backdrop-blur-xl" 
-            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+            className="fixed inset-0 bg-slate-950/98 backdrop-blur-xl pointer-events-auto" 
             onClick={() => setIsModalOpen(false)}
           ></div>
           
-          {/* Card: Forzamos centrado absoluto con CSS inline para mayor seguridad */}
-          <div 
-            className="relative z-[100000] bg-slate-900 border border-cyan-500/50 w-full max-w-md rounded-[2.5rem] p-6 md:p-10 shadow-2xl overflow-y-auto animate-in fade-in zoom-in duration-300 font-sans"
-            style={{ maxHeight: '90dvh' }}
-          >
+          {/* Card del Formulario: Centrado relativo al VIEWPORT (tus ojos) */}
+          <div className="relative z-[100000] bg-slate-900 border border-cyan-500/50 w-[92%] max-w-md h-fit max-h-[85vh] rounded-[2.5rem] p-6 md:p-10 shadow-2xl overflow-y-auto pointer-events-auto animate-in fade-in zoom-in duration-300 font-sans">
             
             <button 
               onClick={() => setIsModalOpen(false)} 
@@ -133,7 +131,7 @@ const BenefitFlyer = () => {
             
             <div className="mb-6 text-left">
               <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Activar Fase 2</h3>
-              <p className="text-slate-400 text-sm mt-1">Completa los datos para iniciar la gestión.</p>
+              <p className="text-slate-400 text-sm mt-1">Completa los datos para tu negociación.</p>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -170,7 +168,7 @@ const BenefitFlyer = () => {
               </div>
 
               <button type="submit" className="w-full bg-cyan-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-cyan-400 transition-all shadow-xl mt-4 group">
-                <span className="flex items-center justify-center gap-2">Solicitar Negociación <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></span>
+                <span className="flex items-center justify-center gap-2">Enviar Solicitud <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></span>
               </button>
             </form>
           </div>
