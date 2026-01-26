@@ -1,20 +1,54 @@
 import { useState, useMemo } from 'react';
-import { MessageCircle, ArrowRight, CheckCircle2, AlertTriangle, X } from 'lucide-react';
+import { MessageCircle, ArrowRight, CheckCircle2, AlertTriangle, X, Plus } from 'lucide-react';
 
 const BenefitFlyer = () => {
+  // --- ESTADOS DINÁMICOS ---
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({ nombre: '', auditorias: '1', codigo: '' });
+  const [nombre, setNombre] = useState('');
+  const [quantitySelect, setQuantitySelect] = useState('1');
+  // Estado para manejar múltiples códigos: inicia con un espacio vacío
+  const [codes, setCodes] = useState<string[]>(['']); 
 
   const whatsappNumber = "56929901343"; 
+
+  // --- LÓGICA: Al cambiar la cantidad del dropdown ---
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const qty = e.target.value;
+    setQuantitySelect(qty);
+    
+    let numInputs = 1;
+    if (qty === '2') numInputs = 2;
+    if (qty === '3+') numInputs = 3; // Mostramos 3 campos para el pack grande
+
+    // Ajustar el array de códigos según la cantidad seleccionada
+    setCodes(prevCodes => {
+      const newCodes = [...prevCodes];
+      // Si faltan campos, agregar vacíos
+      while (newCodes.length < numInputs) newCodes.push('');
+      // Si sobran campos, recortar
+      if (newCodes.length > numInputs) newCodes.splice(numInputs);
+      return newCodes;
+    });
+  };
+
+  // --- LÓGICA: Al escribir en un campo de código específico ---
+  const handleCodeChange = (index: number, value: string) => {
+    const newCodes = [...codes];
+    newCodes[index] = value.toUpperCase(); // Forzar mayúsculas
+    setCodes(newCodes);
+  };
   
   const whatsappUrl = useMemo(() => {
+    // Unir los códigos con comas para el mensaje
+    const codesString = codes.filter(c => c.trim() !== '').join(', ');
+    
     const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n` +
-                    `• *Nombre:* ${formData.nombre}\n` +
-                    `• *Auditorías:* ${formData.auditorias}\n` +
-                    `• *ID Protocolo:* ${formData.codigo}\n\n` +
-                    `Hola, ya tengo el diagnóstico técnico de la Fase 1 y quiero pasar a la Fase 2. Necesito el Plan Maestro para negociar el precio de la propiedad.`;
+                    `• *Nombre:* ${nombre}\n` +
+                    `• *Auditorías:* ${quantitySelect}\n` +
+                    `• *IDs Protocolo:* ${codesString || 'Pendiente'}\n\n` +
+                    `Hola, quiero activar la negociación por éxito para estos expedientes y aplicar el 60% OFF.`;
     return `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
-  }, [formData]);
+  }, [nombre, quantitySelect, codes]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,40 +129,60 @@ const BenefitFlyer = () => {
         </div>
       </div>
 
-      {/* MODAL CON ID DE AUDITORÍA */}
+      {/* MODAL DINÁMICO Y CENTRADO */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
-          <div className="fixed inset-0 bg-slate-950/95 backdrop-blur-md" onClick={() => setIsModalOpen(false)}></div>
+        // ESTRUCTURA DE CENTRADO "INDESTRUCTIBLE"
+        <div className="fixed inset-0 z-[10000] flex justify-center items-center p-4 overflow-y-auto bg-slate-950/90 backdrop-blur-md supports-[height:100cqh]:h-[100cqh] supports-[height:100svh]:h-[100svh]">
           
-          <div className="relative bg-slate-900 border border-cyan-500/50 w-full max-w-md rounded-[2.5rem] p-8 md:p-10 shadow-[0_0_80px_rgba(34,211,238,0.2)] animate-in fade-in zoom-in duration-300">
-            <button onClick={() => setIsModalOpen(false)} className="absolute top-8 right-8 text-slate-500 hover:text-white p-2 transition-colors"><X size={24}/></button>
+          {/* Capa de cierre al hacer clic fuera */}
+          <div className="fixed inset-0" onClick={() => setIsModalOpen(false)}></div>
+          
+          {/* Contenedor del Modal */}
+          <div className="relative bg-slate-900 border border-cyan-500/50 w-full max-w-md rounded-[2.5rem] p-8 md:p-10 shadow-[0_0_80px_rgba(34,211,238,0.2)] animate-in fade-in zoom-in duration-300 my-auto">
+            <button onClick={() => setIsModalOpen(false)} className="absolute top-8 right-8 text-slate-500 hover:text-white p-2 transition-colors z-20"><X size={24}/></button>
             
-            <div className="mb-8 text-left">
+            <div className="mb-8 text-left relative z-10">
               <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Activar Fase 2</h3>
-              <p className="text-slate-400 text-sm mt-1">Ingresa el ID de tu reporte de Fase 1.</p>
+              <p className="text-slate-400 text-sm mt-1">Ingresa los IDs de tus reportes de Fase 1.</p>
             </div>
             
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
+              {/* 1. NOMBRE */}
               <div className="text-left">
                 <label className="block text-[10px] uppercase text-cyan-500 font-black mb-2 tracking-widest">Nombre Completo</label>
-                <input required type="text" value={formData.nombre} onChange={(e) => setFormData({...formData, nombre: e.target.value})} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium" placeholder="Ariel Smith" />
+                <input required type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium" placeholder="Ariel Smith" />
               </div>
 
-              <div className="text-left">
-                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-2 tracking-widest">Código de Auditoría (Fase 1)</label>
-                <input required type="text" value={formData.codigo} onChange={(e) => setFormData({...formData, codigo: e.target.value})} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium placeholder:text-slate-700 uppercase" placeholder="Ej: DOM-4521" />
-              </div>
-
+              {/* 2. CANTIDAD (Selector) */}
               <div className="text-left">
                 <label className="block text-[10px] uppercase text-cyan-500 font-black mb-2 tracking-widest">Auditorías a Negociar</label>
                 <div className="relative">
-                  <select value={formData.auditorias} onChange={(e) => setFormData({...formData, auditorias: e.target.value})} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 appearance-none font-medium cursor-pointer">
+                  <select value={quantitySelect} onChange={handleQuantityChange} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 appearance-none font-medium cursor-pointer">
                     <option value="1">1 Auditoría</option>
                     <option value="2">2 Auditorías (Pack Dupla)</option>
                     <option value="3+">3+ Auditorías (Pack Inversionista)</option>
                   </select>
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-cyan-500"><ArrowRight size={18} className="rotate-90" /></div>
                 </div>
+              </div>
+
+              {/* 3. CÓDIGOS DINÁMICOS (Se generan según la cantidad) */}
+              <div className="space-y-3">
+                <label className="block text-[10px] uppercase text-cyan-500 font-black tracking-widest">Códigos de Auditoría (Fase 1)</label>
+                {codes.map((code, index) => (
+                  <input 
+                    key={index}
+                    required
+                    type="text" 
+                    value={code}
+                    onChange={(e) => handleCodeChange(index, e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium placeholder:text-slate-700 uppercase" 
+                    placeholder={`Ej: DOM-452${index + 1}`}
+                  />
+                ))}
+                {quantitySelect === '3+' && (
+                  <p className="text-xs text-slate-500 italic flex items-center gap-1"><Plus size={12}/> Si tienes más de 3, indícalos en el chat de WhatsApp.</p>
+                )}
               </div>
 
               <button type="submit" className="w-full bg-cyan-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-cyan-400 transition-all shadow-xl shadow-cyan-500/20 mt-4 group">
