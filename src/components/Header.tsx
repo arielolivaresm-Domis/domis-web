@@ -9,7 +9,8 @@ const LockIcon = () => (
 );
 
 export default function Header() {
-  const whatsappUrl = "https://wa.me/56929901343?text=Hola Ariel, quiero solicitar una auditoría técnica con DOMIS™.";
+  // URL de WhatsApp con el mensaje oficial de Ingeniería DOMIS™
+  const whatsappUrl = "https://wa.me/56929901343?text=Hola, equipo de Ingeniería DOMIS™. Estoy en la web y necesito Auditoría técnica profesional + Estrategia de negociación para una propiedad...";
   
   const [isScanning, setIsScanning] = useState(false);
   const [cycleCount, setCycleCount] = useState(0);
@@ -50,7 +51,7 @@ export default function Header() {
       <nav className="fixed top-0 w-full z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-900/80 px-4 md:px-6 py-4 transition-all duration-300 shadow-lg shadow-slate-950/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center relative">
           
-          {/* --- LOGO TRANSFORMER (Ajustado para móvil) --- */}
+          {/* --- LOGO TRANSFORMER --- */}
           <a href="#" className="relative w-32 md:w-48 h-12 md:h-16 flex items-center select-none z-50 group cursor-pointer" aria-label="Ir al inicio">
             
             <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-sm">
@@ -95,7 +96,7 @@ export default function Header() {
             </div>
           </a>
           
-          {/* --- MENÚ DE FASES (Desktop Only) --- */}
+          {/* --- MENÚ DE FASES --- */}
           <div className="hidden xl:flex items-center gap-6 text-xs font-bold text-slate-400 uppercase tracking-wide relative z-10">
             <a href="#problema" className="hover:text-white transition-colors">El Problema</a>
             <a href="#proceso" onClick={() => setActiveTab('fase1')} className="hover:text-cyan-400 transition-colors flex items-center gap-1">
@@ -109,7 +110,7 @@ export default function Header() {
             </a>
           </div>
 
-          {/* --- ACCIONES PRIMARIAS (Visibles en Móvil y Desktop) --- */}
+          {/* --- ACCIONES PRIMARIAS --- */}
           <div className="flex items-center gap-2 md:gap-3 relative z-10">
             {/* PCF-15 Acceso */}
             <a 
