@@ -9,7 +9,7 @@ const LockIcon = () => (
 );
 
 export default function Header() {
-  const whatsappUrl = "https://wa.me/56982348089?text=Hola Ariel, quiero solicitar una auditoría técnica con DOMIS™.";
+  const whatsappUrl = "https://wa.me/56929901343?text=Hola Ariel, quiero solicitar una auditoría técnica con DOMIS™.";
   
   const [isScanning, setIsScanning] = useState(false);
   const [cycleCount, setCycleCount] = useState(0);

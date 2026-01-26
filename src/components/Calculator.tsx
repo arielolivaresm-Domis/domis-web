@@ -30,19 +30,19 @@ const Calculator = () => {
     return { totalAuditNet, sourcingNet, totalConIva, discountF1, realCostF1, vipAlternatives };
   }, [pack, meters, sourcing]);
 
-  // BLOQUE DE SEGURIDAD: Pre-calculamos el link para que sea instantáneo y sin errores
+  // BLOQUE DE SEGURIDAD: Pre-calculamos el link con el mensaje oficial de Ingeniería
   const whatsappUrl = useMemo(() => {
     const pLabel = pack === 1 ? 'Individual' : pack === 2 ? 'Pack Dupla' : 'Pack Inversionista';
     const sLabel = sourcing === 'vip' ? 'Sourcing VIP' : sourcing === 'normal' ? 'Sourcing Normal' : 'Sin Sourcing';
     
-    const text = `🛠️ *SOLICITUD DE AUDITORÍA FASE 1 - DOMIS™*\n\n` +
+    const text = `Hola, equipo de Ingeniería DOMIS™. Estoy en la web y necesito Auditoría técnica profesional + Estrategia de negociación para una propiedad.\n\n` +
+                 `🛠️ *DATOS DE LA SIMULACIÓN:*\n` +
                  `• *Modelo:* ${pLabel}\n` +
                  `• *Superficie:* ${meters} m²\n` +
                  `• *Sourcing:* ${sLabel}\n` +
-                 `• *Inversión F1:* $${calculations.totalConIva.toLocaleString()}\n\n` +
+                 `• *Inversión Est. F1:* $${calculations.totalConIva.toLocaleString()}\n\n` +
                  `*Deseo iniciar el protocolo de validación técnica.*`;
 
-    // Usamos api.whatsapp.com para mayor compatibilidad entre App y Web
     return `https://api.whatsapp.com/send?phone=56929901343&text=${encodeURIComponent(text)}`;
   }, [pack, meters, sourcing, calculations.totalConIva]);
 
@@ -51,6 +51,7 @@ const Calculator = () => {
       <h2 className="text-2xl font-bold mb-6 text-cyan-400 uppercase tracking-wider text-center">Estima tu Inversión Técnica</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* COLUMNA DE ENTRADA (INPUTS) */}
         <div className="space-y-6">
           <div>
             <label className="block text-xs uppercase text-cyan-500 mb-2 font-bold tracking-widest">1. Propiedades a Auditar</label>
@@ -59,7 +60,7 @@ const Calculator = () => {
                 <button 
                   key={v}
                   onClick={() => setPack(v)}
-                  className={`flex-1 py-4 border rounded-lg transition-all ${pack === v ? 'bg-cyan-600 border-cyan-400' : 'bg-slate-800 border-slate-700'}`}
+                  className={`flex-1 py-4 border rounded-lg transition-all ${pack === v ? 'bg-cyan-600 border-cyan-400 shadow-lg shadow-cyan-500/20' : 'bg-slate-800 border-slate-700 hover:border-cyan-500/50'}`}
                 >
                   <span className="block text-2xl font-black">{v}{v === 3 && '+'}</span>
                   <span className="text-[10px] uppercase font-bold tracking-widest">{v === 1 ? 'Individual' : v === 2 ? 'Pack Dupla' : 'Pack Inversionista'}</span>
@@ -96,31 +97,34 @@ const Calculator = () => {
           </div>
         </div>
 
+        {/* COLUMNA DE RESULTADOS */}
         <div className="bg-slate-800/50 p-6 rounded-xl border border-slate-700 flex flex-col justify-between relative overflow-hidden">
           <div className="absolute top-0 right-0 bg-slate-700 text-cyan-400 text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-widest">Fase 1: Auditoría</div>
           
           <div className="space-y-4 mt-4">
             <div className="flex justify-between text-slate-400 text-sm font-medium">
               <span>Auditoría Técnica ({pack}x):</span>
-              <span className="font-mono">${calculations.totalAuditNet.toLocaleString()}</span>
+              <span className="font-mono font-medium">${calculations.totalAuditNet.toLocaleString()}</span>
             </div>
+            
             {calculations.sourcingNet > 0 && (
               <div className="flex justify-between text-slate-400 text-sm font-medium">
-                <span>Sourcing:</span>
-                <span className="font-mono">${calculations.sourcingNet.toLocaleString()}</span>
+                <span>Sourcing ({sourcing === 'normal' ? `${pack} props` : `${calculations.vipAlternatives} alt.`}):</span>
+                <span className="font-mono font-medium">${calculations.sourcingNet.toLocaleString()}</span>
               </div>
             )}
+
             <div className="border-t border-slate-700 pt-4 flex justify-between items-end">
               <div>
                 <span className="block text-xs uppercase text-cyan-400 font-bold mb-1 tracking-widest">Inversión Total F1 (IVA Incl.)</span>
-                <span className="text-4xl font-black font-mono text-white">${calculations.totalConIva.toLocaleString()}</span>
+                <span className="text-4xl font-black font-mono text-white tracking-tight">${calculations.totalConIva.toLocaleString()}</span>
               </div>
             </div>
           </div>
 
           <button 
             onClick={() => window.open(whatsappUrl, '_blank')}
-            className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 py-4 rounded-xl font-black uppercase mt-8 hover:brightness-110 transition-all text-[10px] tracking-[0.2em]"
+            className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 py-4 rounded-xl font-black uppercase mt-8 hover:brightness-110 transition-all shadow-lg shadow-cyan-500/30 text-[10px] tracking-[0.2em]"
           >
             Comenzar Auditoría Técnica
           </button>
