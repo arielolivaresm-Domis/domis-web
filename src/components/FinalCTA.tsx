@@ -1,4 +1,7 @@
 export default function FinalCTA() {
+  // URL de WhatsApp con tu mensaje exacto y número oficial de Ingeniería
+  const whatsappUrl = "https://wa.me/56929901343?text=Hola, equipo DOMIS™.  necesito Auditoría técnica profesional + Estrategia de negociación para una propiedad...";
+
   return (
     <section id="contacto" className="py-24 px-6 bg-slate-950">
       <div className="max-w-7xl mx-auto">
@@ -37,13 +40,13 @@ export default function FinalCTA() {
 
               <div className="flex flex-col sm:flex-row gap-6">
                 <a 
-                  href="https://wa.me/56982348089?text=Hola%20Ariel,%20necesito%20una%20auditoría%20técnica%20para%20mi%20próxima%20propiedad."
+                  href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="group relative px-10 py-5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black uppercase rounded-2xl transition-all duration-300 text-center shadow-[0_0_30px_rgba(34,211,238,0.4)]"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-3">
-                    Agendar Auditoría Técnica
+                    Solicitar Auditoría Técnica
                     <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
                   </span>
                 </a>
