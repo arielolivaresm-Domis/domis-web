@@ -55,7 +55,7 @@ export default function AuditPacks({ onNext }: { onNext: () => void }) {
             }`}
             onClick={() => {
               setActivePack(p.id as any);
-              onNext(); // Habilita la transición técnica
+              onNext(); 
             }}
           >
             <div className="relative z-10 flex-1">
@@ -81,8 +81,9 @@ export default function AuditPacks({ onNext }: { onNext: () => void }) {
                   <span className="text-3xl font-black text-white">{p.price}</span>
                   <span className="text-slate-500 text-xs font-mono">/ m²</span>
                 </div>
+                {/* BOTÓN UNIFICADO CON NÚMERO Y MENSAJE OFICIAL */}
                 <a 
-                  href={`https://wa.me/56982348089?text=Hola,%20quiero%20información%20sobre%20el%20${encodeURIComponent(p.title)}`} 
+                  href={`https://wa.me/56929901343?text=Hola,%20equipo%20DOMIS™.%20Quiero%20información%20sobre%20el%20${encodeURIComponent(p.title)}`} 
                   target="_blank" 
                   rel="noreferrer" 
                   className="block w-full py-3 font-black uppercase rounded-xl transition-all mt-4 text-sm bg-cyan-500 text-slate-950 hover:bg-cyan-400"
