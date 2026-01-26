@@ -1,9 +1,25 @@
-import { MessageCircle, ArrowRight, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { MessageCircle, ArrowRight, CheckCircle2, AlertTriangle, X } from 'lucide-react';
 
 const BenefitFlyer = () => {
-  const whatsappNumber = "569XXXXXXXX"; 
-  const message = "Hola, ya tengo el diagnóstico técnico de la Fase 1 y quiero pasar a la Fase 2. Necesito el Plan Maestro para bajar el precio de venta.";
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  // --- CAPA DE LÓGICA (LO NUEVO) ---
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({ nombre: '', auditorias: '1' });
+
+  const whatsappNumber = "56929901343"; 
+  
+  const whatsappUrl = useMemo(() => {
+    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${formData.nombre}\n• *Auditorías:* ${formData.auditorias}\n\nHola, ya tengo el diagnóstico técnico de la Fase 1 y quiero pasar a la Fase 2. Necesito el Plan Maestro para negociar el precio de la propiedad.`;
+    return `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
+  }, [formData]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Respaldo para log de correo (EmailJS mañana)
+    console.log("Notificación de Intención Fase 2:", formData);
+    window.open(whatsappUrl, '_blank');
+    setIsModalOpen(false);
+  };
 
   return (
     <section id="beneficio-fase2" className="py-20 bg-slate-950 px-6 overflow-hidden">
@@ -11,7 +27,7 @@ const BenefitFlyer = () => {
         <div className="relative bg-gradient-to-br from-cyan-600 to-blue-800 rounded-[2.5rem] p-1 md:p-1.5 shadow-[0_0_50px_rgba(34,211,238,0.2)]">
           <div className="bg-slate-900 rounded-[2.3rem] p-8 md:p-16 relative overflow-hidden">
             
-            {/* Grid de Fondo */}
+            {/* Grid de Fondo - ORIGINAL */}
             <div className="absolute inset-0 opacity-10 pointer-events-none"
                  style={{ backgroundImage: 'linear-gradient(#22d3ee 1px, transparent 1px), linear-gradient(90deg, #22d3ee 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
             </div>
@@ -66,20 +82,69 @@ const BenefitFlyer = () => {
                 <span className="text-cyan-400">60% OFF</span> EN AUDITORÍA
               </h2>
 
-              <a 
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              {/* CAMBIO: De <a> a <button> para activar el modal */}
+              <button 
+                onClick={() => setIsModalOpen(true)}
                 className="group inline-flex items-center gap-3 px-12 py-5 bg-white text-slate-950 font-black rounded-full uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-xl"
               >
                 <MessageCircle size={20} className="fill-current" />
                 Activar Negociación Fase 2
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-              </a>
+              </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* MODAL DE DATOS - LO NUEVO */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm">
+          <div className="bg-slate-900 border border-cyan-500/30 w-full max-w-md rounded-[2rem] p-8 relative shadow-2xl">
+            <button 
+              onClick={() => setIsModalOpen(false)} 
+              className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors"
+            >
+              <X size={24}/>
+            </button>
+            
+            <h3 className="text-2xl font-black text-white uppercase mb-6 tracking-tighter">Activar Fase 2</h3>
+            
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-2 tracking-widest">Nombre Completo</label>
+                <input 
+                  required 
+                  type="text" 
+                  value={formData.nombre} 
+                  onChange={(e) => setFormData({...formData, nombre: e.target.value})} 
+                  className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium" 
+                  placeholder="Tu nombre"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-2 tracking-widest">Auditorías a Negociar</label>
+                <select 
+                  value={formData.auditorias} 
+                  onChange={(e) => setFormData({...formData, auditorias: e.target.value})} 
+                  className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 appearance-none font-medium cursor-pointer"
+                >
+                  <option value="1">1 Auditoría</option>
+                  <option value="2">2 Auditorías (Pack Dupla)</option>
+                  <option value="3+">3+ Auditorías (Pack Inversionista)</option>
+                </select>
+              </div>
+
+              <button 
+                type="submit" 
+                className="w-full bg-cyan-500 text-slate-950 py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-cyan-400 transition-all shadow-lg shadow-cyan-500/20"
+              >
+                Enviar Solicitud
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
