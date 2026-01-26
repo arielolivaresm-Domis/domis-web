@@ -65,7 +65,7 @@ const BenefitFlyer = () => {
                 💰 Cómo se paga Fase 2
               </h2>
 
-              <p className="text-slate-300 text-lg md:text-xl max-w-3xl mb-10 font-light">
+              <p className="text-slate-300 text-lg md:text-xl max-w-3xl mb-10 font-light italic">
                 Pagas en dos momentos clave:
               </p>
 
@@ -73,26 +73,26 @@ const BenefitFlyer = () => {
                 <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6 space-y-4">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-3xl">1️⃣</span>
-                    <h3 className="text-xl font-black text-white uppercase tracking-tighter">Fee Inicial</h3>
+                    <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter">Fee Inicial</h3>
                   </div>
-                  <div className="text-3xl font-mono text-cyan-400 font-black">$500.000</div>
-                  <p className="text-sm text-slate-400">Entrega del Plan Maestro Técnico y estrategia.</p>
+                  <div className="text-2xl md:text-3xl font-mono text-cyan-400 font-black">$500.000</div>
+                  <p className="text-xs md:text-sm text-slate-400">Entrega del Plan Maestro Técnico y estrategia.</p>
                 </div>
 
                 <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6 space-y-4">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-3xl">2️⃣</span>
-                    <h3 className="text-xl font-black text-white uppercase tracking-tighter text-[13px] md:text-base leading-tight">Al firmar promesa de compraventa</h3>
+                    <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-tight">Al firmar éxito</h3>
                   </div>
                   <div className="text-2xl md:text-3xl font-mono text-cyan-400 font-black">15% del ahorro</div>
-                  <p className="text-sm text-slate-400">Calculado sobre la baja de precio lograda.</p>
+                  <p className="text-xs md:text-sm text-slate-400 font-medium">Calculado únicamente sobre la rebaja lograda.</p>
                 </div>
               </div>
 
               <div className="space-y-3 w-full max-w-3xl mb-12">
                 <div className="flex items-start gap-3 text-left bg-slate-800/30 p-4 rounded-xl border border-slate-700/50">
                   <CheckCircle2 className="text-cyan-500 shrink-0" size={18} />
-                  <p className="text-sm text-slate-300">Comisión solo si cerramos con éxito.</p>
+                  <p className="text-sm text-slate-300">Sin rebaja en el precio = Sin honorarios.</p>
                 </div>
               </div>
 
@@ -115,17 +115,17 @@ const BenefitFlyer = () => {
         </div>
       </div>
 
-      {/* MODAL CON CENTRADO FORZADO EN VIEWPORT */}
+      {/* MODAL: FIJADO AL VIEWPORT ACTUAL (NO AL TOP DE LA PÁGINA) */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[99999] flex items-center justify-center">
-          {/* Backdrop que bloquea el fondo y el scroll visual */}
+          {/* Backdrop con Blur */}
           <div 
             className="fixed inset-0 bg-slate-950/95 backdrop-blur-md" 
             onClick={() => setIsModalOpen(false)}
           ></div>
           
-          {/* Contenedor del Modal: Centrado absoluto respecto a la pantalla */}
-          <div className="relative z-[100000] bg-slate-900 border border-cyan-500/50 w-[90%] max-w-md rounded-[2.5rem] p-6 md:p-10 shadow-2xl animate-in fade-in zoom-in duration-300 overflow-y-auto max-h-[85vh]">
+          {/* Cuadro del Formulario - Forzamos el centrado vertical con h-fit */}
+          <div className="relative z-[100000] bg-slate-900 border border-cyan-500/50 w-[92%] max-w-md h-fit max-h-[90dvh] rounded-[2.5rem] p-6 md:p-10 shadow-2xl animate-in fade-in zoom-in duration-300 overflow-y-auto">
             
             <button 
               onClick={() => setIsModalOpen(false)} 
@@ -136,51 +136,3 @@ const BenefitFlyer = () => {
             
             <div className="mb-6 text-left">
               <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Activar Fase 2</h3>
-              <p className="text-slate-400 text-sm mt-1">Ingresa los IDs de tu reporte.</p>
-            </div>
-            
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="text-left">
-                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest">Nombre Completo</label>
-                <input required type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium text-base" placeholder="Tu nombre" />
-              </div>
-
-              <div className="text-left">
-                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest">Auditorías a Negociar</label>
-                <div className="relative">
-                  <select value={quantitySelect} onChange={handleQuantityChange} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 appearance-none font-medium cursor-pointer text-base">
-                    <option value="1">1 Auditoría</option>
-                    <option value="2">2 Auditorías (Pack Dupla)</option>
-                    <option value="3+">3+ Auditorías (Pack Inversionista)</option>
-                  </select>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-cyan-500"><ArrowRight size={18} className="rotate-90" /></div>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest">Códigos de Auditoría (Fase 1)</label>
-                {codes.map((code, index) => (
-                  <input 
-                    key={index}
-                    required
-                    type="text" 
-                    value={code}
-                    onChange={(e) => handleCodeChange(index, e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium placeholder:text-slate-700 uppercase text-base" 
-                    placeholder={`ID Propiedad ${index + 1}`}
-                  />
-                ))}
-              </div>
-
-              <button type="submit" className="w-full bg-cyan-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-cyan-400 transition-all shadow-xl mt-4">
-                Enviar Solicitud
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-    </section>
-  );
-};
-
-export default BenefitFlyer;
