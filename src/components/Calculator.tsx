@@ -30,7 +30,7 @@ const Calculator = () => {
     return { totalAuditNet, sourcingNet, totalConIva, discountF1, realCostF1, vipAlternatives };
   }, [pack, meters, sourcing]);
 
-  // BLOQUE DE SEGURIDAD: Pre-calculamos el link con el mensaje oficial de Ingeniería
+  // MANTENEMOS TU LÓGICA DE BOTÓN Y MENSAJE INTACTA
   const whatsappUrl = useMemo(() => {
     const pLabel = pack === 1 ? 'Individual' : pack === 2 ? 'Pack Dupla' : 'Pack Inversionista';
     const sLabel = sourcing === 'vip' ? 'Sourcing VIP' : sourcing === 'normal' ? 'Sourcing Normal' : 'Sin Sourcing';
@@ -77,7 +77,7 @@ const Calculator = () => {
                 value={meters === 0 ? '' : meters}
                 onChange={(e) => setMeters(Number(e.target.value))}
                 onBlur={() => setMeters((v) => Math.max(100, v))}
-                className="w-full bg-slate-800 border border-slate-700 p-4 rounded-lg text-xl font-mono focus:border-cyan-400 outline-none"
+                className="w-full bg-slate-800 border border-slate-700 p-4 rounded-lg text-xl font-mono focus:border-cyan-400 outline-none pr-12"
               />
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-mono">m²</span>
             </div>
@@ -88,7 +88,7 @@ const Calculator = () => {
             <select 
               value={sourcing} 
               onChange={(e) => setSourcing(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 p-4 rounded-lg outline-none focus:border-cyan-400 appearance-none font-medium"
+              className="w-full bg-slate-800 border border-slate-700 p-4 rounded-lg outline-none focus:border-cyan-400 appearance-none font-medium text-slate-300"
             >
               <option value="none">No necesito Sourcing (Ya tengo las propiedades)</option>
               <option value="normal">Sourcing Normal (+$60.000/propiedad)</option>
@@ -119,6 +119,26 @@ const Calculator = () => {
                 <span className="block text-xs uppercase text-cyan-400 font-bold mb-1 tracking-widest">Inversión Total F1 (IVA Incl.)</span>
                 <span className="text-4xl font-black font-mono text-white tracking-tight">${calculations.totalConIva.toLocaleString()}</span>
               </div>
+            </div>
+          </div>
+
+          {/* EL BLOQUE EXACTO DE LA FOTO */}
+          <div className="mt-8 p-5 bg-gradient-to-r from-cyan-900/40 to-blue-900/40 border border-cyan-500/50 rounded-xl relative animate-pulse">
+            <div className="absolute -top-3 left-4 bg-cyan-500 text-slate-950 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg shadow-cyan-500/20">
+              Fase 2: Negociación
+            </div>
+            
+            <div className="mt-2">
+                <p className="text-xs text-cyan-300 font-bold mb-2 uppercase tracking-wider flex items-center justify-center gap-2">
+                  <span className="text-lg">🎁</span> Beneficio Exclusivo por Éxito
+                </p>
+                <p className="text-[11px] text-slate-200 leading-relaxed text-center italic">
+                  Contrata la negociación técnica con <strong>DOMIS<span className="text-cyan-500 text-[9px] relative -top-1 ml-0.5">™</span></strong> y descontamos el 60% del costo de tu auditoría (F1).
+                </p>
+                <div className="mt-4 pt-3 border-t border-cyan-500/30 flex justify-between items-center">
+                  <span className="text-sm text-cyan-400 font-bold">Costo Real F1:</span>
+                  <span className="text-3xl font-black font-mono text-white">${calculations.realCostF1.toLocaleString()}</span>
+                </div>
             </div>
           </div>
 
