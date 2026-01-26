@@ -2,21 +2,22 @@ import { useState, useMemo } from 'react';
 import { MessageCircle, ArrowRight, CheckCircle2, AlertTriangle, X } from 'lucide-react';
 
 const BenefitFlyer = () => {
-  // --- CAPA DE LÓGICA: ESTADOS Y CAPTURA ---
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({ nombre: '', auditorias: '1' });
+  const [formData, setFormData] = useState({ nombre: '', auditorias: '1', codigo: '' });
 
   const whatsappNumber = "56929901343"; 
   
-  // Cálculo del link dinámico basado en el formulario
   const whatsappUrl = useMemo(() => {
-    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${formData.nombre}\n• *Auditorías:* ${formData.auditorias}\n\nHola, ya tengo el diagnóstico técnico de la Fase 1 y quiero pasar a la Fase 2. Necesito el Plan Maestro para negociar el precio de la propiedad.`;
+    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n` +
+                    `• *Nombre:* ${formData.nombre}\n` +
+                    `• *Auditorías:* ${formData.auditorias}\n` +
+                    `• *ID Protocolo:* ${formData.codigo}\n\n` +
+                    `Hola, ya tengo el diagnóstico técnico de la Fase 1 y quiero pasar a la Fase 2. Necesito el Plan Maestro para negociar el precio de la propiedad.`;
     return `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
   }, [formData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Apertura de WhatsApp y cierre de modal
     window.open(whatsappUrl, '_blank');
     setIsModalOpen(false);
   };
@@ -27,7 +28,6 @@ const BenefitFlyer = () => {
         <div className="relative bg-gradient-to-br from-cyan-600 to-blue-800 rounded-[2.5rem] p-1 md:p-1.5 shadow-[0_0_50px_rgba(34,211,238,0.2)]">
           <div className="bg-slate-900 rounded-[2.3rem] p-8 md:p-16 relative overflow-hidden">
             
-            {/* Grid de Fondo - ORIGINAL */}
             <div className="absolute inset-0 opacity-10 pointer-events-none"
                  style={{ backgroundImage: 'linear-gradient(#22d3ee 1px, transparent 1px), linear-gradient(90deg, #22d3ee 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
             </div>
@@ -58,7 +58,7 @@ const BenefitFlyer = () => {
                 <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6 space-y-4">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-3xl">2️⃣</span>
-                    <h3 className="text-xl font-black text-white uppercase">Al firmar promesa de compraventa</h3>
+                    <h3 className="text-xl font-black text-white uppercase tracking-tighter text-[13px] md:text-base">Al firmar promesa de compraventa</h3>
                   </div>
                   <div className="text-2xl font-mono text-cyan-400 font-black">15% del ahorro</div>
                   <p className="text-sm text-slate-400">Calculado sobre la baja de precio lograda.</p>
@@ -95,69 +95,44 @@ const BenefitFlyer = () => {
         </div>
       </div>
 
-      {/* MODAL CENTRADO EN PANTALLA */}
+      {/* MODAL CON ID DE AUDITORÍA */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
-          {/* Fondo oscuro con desenfoque */}
-          <div 
-            className="fixed inset-0 bg-slate-950/95 backdrop-blur-md"
-            onClick={() => setIsModalOpen(false)}
-          ></div>
+          <div className="fixed inset-0 bg-slate-950/95 backdrop-blur-md" onClick={() => setIsModalOpen(false)}></div>
           
-          {/* Card del Formulario */}
           <div className="relative bg-slate-900 border border-cyan-500/50 w-full max-w-md rounded-[2.5rem] p-8 md:p-10 shadow-[0_0_80px_rgba(34,211,238,0.2)] animate-in fade-in zoom-in duration-300">
-            <button 
-              onClick={() => setIsModalOpen(false)} 
-              className="absolute top-8 right-8 text-slate-500 hover:text-white p-2 transition-colors"
-            >
-              <X size={24}/>
-            </button>
+            <button onClick={() => setIsModalOpen(false)} className="absolute top-8 right-8 text-slate-500 hover:text-white p-2 transition-colors"><X size={24}/></button>
             
             <div className="mb-8 text-left">
               <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Activar Fase 2</h3>
-              <p className="text-slate-400 text-sm mt-1">Localiza tu auditoría para iniciar la negociación.</p>
+              <p className="text-slate-400 text-sm mt-1">Ingresa el ID de tu reporte de Fase 1.</p>
             </div>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div className="text-left">
                 <label className="block text-[10px] uppercase text-cyan-500 font-black mb-2 tracking-widest">Nombre Completo</label>
-                <input 
-                  required 
-                  type="text" 
-                  autoFocus
-                  value={formData.nombre} 
-                  onChange={(e) => setFormData({...formData, nombre: e.target.value})} 
-                  className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium" 
-                  placeholder="Tu nombre aquí"
-                />
+                <input required type="text" value={formData.nombre} onChange={(e) => setFormData({...formData, nombre: e.target.value})} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium" placeholder="Ariel Smith" />
+              </div>
+
+              <div className="text-left">
+                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-2 tracking-widest">Código de Auditoría (Fase 1)</label>
+                <input required type="text" value={formData.codigo} onChange={(e) => setFormData({...formData, codigo: e.target.value})} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium placeholder:text-slate-700 uppercase" placeholder="Ej: DOM-4521" />
               </div>
 
               <div className="text-left">
                 <label className="block text-[10px] uppercase text-cyan-500 font-black mb-2 tracking-widest">Auditorías a Negociar</label>
                 <div className="relative">
-                  <select 
-                    value={formData.auditorias} 
-                    onChange={(e) => setFormData({...formData, auditorias: e.target.value})} 
-                    className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 appearance-none font-medium cursor-pointer"
-                  >
+                  <select value={formData.auditorias} onChange={(e) => setFormData({...formData, auditorias: e.target.value})} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 appearance-none font-medium cursor-pointer">
                     <option value="1">1 Auditoría</option>
                     <option value="2">2 Auditorías (Pack Dupla)</option>
                     <option value="3+">3+ Auditorías (Pack Inversionista)</option>
                   </select>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-cyan-500">
-                    <ArrowRight size={18} className="rotate-90" />
-                  </div>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-cyan-500"><ArrowRight size={18} className="rotate-90" /></div>
                 </div>
               </div>
 
-              <button 
-                type="submit" 
-                className="w-full bg-cyan-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-cyan-400 transition-all shadow-xl shadow-cyan-500/20 mt-4 group"
-              >
-                <span className="flex items-center justify-center gap-2">
-                  Continuar a WhatsApp
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </span>
+              <button type="submit" className="w-full bg-cyan-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-cyan-400 transition-all shadow-xl shadow-cyan-500/20 mt-4 group">
+                <span className="flex items-center justify-center gap-2">Enviar y Negociar<ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></span>
               </button>
             </form>
           </div>
