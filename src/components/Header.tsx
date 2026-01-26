@@ -122,15 +122,14 @@ export default function Header() {
               <span className="text-[9px] md:text-[10px] font-bold tracking-wider">PCF-15™</span>
             </a>
 
-            {/* CTA Principal */}
+            {/* CTA Principal: "Solicitar Auditoría" fijo para todos los dispositivos */}
             <a 
               href={whatsappUrl} 
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-cyan-500 hover:bg-white text-slate-950 px-3 md:px-5 py-2 md:py-2.5 rounded-lg text-[10px] md:text-xs font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:scale-105 active:scale-95 whitespace-nowrap"
             >
-              <span className="hidden xs:inline">Solicitar Auditoría</span>
-              <span className="xs:hidden">Solicitar</span>
+              Solicitar Auditoría
             </a>
           </div>
         </div>
