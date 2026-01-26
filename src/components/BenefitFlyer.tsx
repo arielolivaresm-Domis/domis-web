@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { MessageCircle, ArrowRight, X } from 'lucide-react'; 
-// Limpieza: Solo importamos lo necesario para que Vercel pase en verde.
+// Limpieza: Solo importamos lo que usamos para que Vercel no dé error.
 
 const BenefitFlyer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,40 +47,42 @@ const BenefitFlyer = () => {
 
   return (
     <>
-      {/* 1. EL MODAL (Fuera de cualquier contenedor para que no se mueva) */}
+      {/* 1. CAPA DEL MODAL: CLAVADA AL VIEWPORT (Lo que el cliente ve) */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
-          {/* Fondo oscuro con desenfoque que bloquea todo */}
+        <div 
+          className="fixed inset-0 z-[999999] flex items-center justify-center p-4 sm:p-6"
+          style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+        >
+          {/* Backdrop que oscurece TODO el celular */}
           <div 
-            className="fixed inset-0 bg-slate-950/95 backdrop-blur-md" 
+            className="fixed inset-0 bg-slate-950/98 backdrop-blur-xl"
             onClick={() => setIsModalOpen(false)}
           ></div>
           
-          {/* Cuadro del Formulario: Centrado absoluto en la VENTANA */}
-          <div className="relative z-[100000] bg-slate-900 border border-cyan-500/50 w-full max-w-md h-fit max-h-[90dvh] rounded-[2.5rem] p-8 md:p-10 shadow-[0_0_80px_rgba(34,211,238,0.3)] overflow-y-auto animate-in fade-in zoom-in duration-200">
-            
+          {/* Card del Formulario: Centrado matemático en la pantalla actual */}
+          <div className="relative w-full max-w-md bg-slate-900 border border-cyan-500/50 rounded-[2.5rem] p-8 md:p-10 shadow-[0_0_100px_rgba(34,211,238,0.3)] animate-in fade-in zoom-in duration-300">
             <button 
               onClick={() => setIsModalOpen(false)} 
-              className="absolute top-8 right-8 text-slate-500 hover:text-white transition-colors"
+              className="absolute top-6 right-6 text-slate-500 hover:text-white p-2"
             >
               <X size={24}/>
             </button>
             
             <div className="mb-8 text-left">
               <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Activar Fase 2</h3>
-              <p className="text-slate-400 text-sm mt-1">Nombre, Cantidad e IDs.</p>
+              <p className="text-slate-400 text-sm mt-1">Completa los datos para tu negociación.</p>
             </div>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div className="text-left">
-                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-2 tracking-widest">Tu Nombre</label>
-                <input required type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium text-base" placeholder="Nombre completo" />
+                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest">Nombre Completo</label>
+                <input required type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 text-base" placeholder="Tu nombre" />
               </div>
 
               <div className="text-left">
-                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-2 tracking-widest">Cantidad de Auditorías</label>
+                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest">Cantidad de Auditorías</label>
                 <div className="relative">
-                  <select value={quantitySelect} onChange={handleQuantityChange} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 appearance-none font-medium cursor-pointer text-base">
+                  <select value={quantitySelect} onChange={handleQuantityChange} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 appearance-none cursor-pointer text-base">
                     <option value="1">1 Auditoría</option>
                     <option value="2">2 Auditorías (Pack Dupla)</option>
                     <option value="3+">3+ Auditorías (Pack Inversionista)</option>
@@ -90,7 +92,7 @@ const BenefitFlyer = () => {
               </div>
 
               <div className="space-y-3">
-                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-2 tracking-widest text-left">Códigos de Fase 1</label>
+                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest text-left">Códigos de Fase 1</label>
                 {codes.map((code, index) => (
                   <input 
                     key={index}
@@ -98,27 +100,27 @@ const BenefitFlyer = () => {
                     type="text" 
                     value={code}
                     onChange={(e) => handleCodeChange(index, e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium placeholder:text-slate-700 uppercase text-base" 
-                    placeholder={`ID Propiedad ${index + 1}`}
+                    className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 placeholder:text-slate-700 uppercase text-base" 
+                    placeholder={`ID de propiedad ${index + 1}`}
                   />
                 ))}
               </div>
 
               <button type="submit" className="w-full bg-cyan-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-cyan-400 transition-all shadow-xl mt-4">
-                Solicitar Negociación
+                Enviar y Abrir WhatsApp
               </button>
             </form>
           </div>
         </div>
       )}
 
-      {/* 2. EL CONTENIDO DEL FLYER (Lo que el usuario ve normalmente) */}
-      <section id="beneficio-fase2" className="py-20 bg-slate-950 px-6 relative overflow-hidden">
+      {/* 2. DISEÑO DEL FLYER (Lo que no se mueve) */}
+      <section id="beneficio-fase2" className="py-20 bg-slate-950 px-6 relative">
         <div className="max-w-5xl mx-auto">
           <div className="relative bg-gradient-to-br from-cyan-600 to-blue-800 rounded-[2.5rem] p-1 md:p-1.5 shadow-[0_0_50px_rgba(34,211,238,0.2)]">
             <div className="bg-slate-900 rounded-[2.3rem] p-8 md:p-16 relative overflow-hidden">
               
-              <div className="absolute inset-0 opacity-10 pointer-events-none"
+              <div className="absolute inset-0 opacity-10 pointer-events-none z-0"
                    style={{ backgroundImage: 'linear-gradient(#22d3ee 1px, transparent 1px), linear-gradient(90deg, #22d3ee 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
               </div>
 
@@ -131,7 +133,7 @@ const BenefitFlyer = () => {
                   💰 Cómo se paga Fase 2
                 </h2>
 
-                <p className="text-slate-300 text-lg md:text-xl max-w-3xl mb-10 font-light">
+                <p className="text-slate-300 text-lg md:text-xl max-w-3xl mb-10 font-light italic">
                   Pagas en dos momentos clave:
                 </p>
 
@@ -139,7 +141,7 @@ const BenefitFlyer = () => {
                   <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-3xl">1️⃣</span>
-                      <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter">Fee Inicial</h3>
+                      <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-none">Fee Inicial</h3>
                     </div>
                     <div className="text-2xl md:text-3xl font-mono text-cyan-400 font-black">$500.000</div>
                     <p className="text-xs md:text-sm text-slate-400 mt-2 italic font-light">Entrega del Plan Maestro Técnico y estrategia.</p>
