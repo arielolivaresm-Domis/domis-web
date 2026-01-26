@@ -24,26 +24,26 @@ export default function FinalCTA() {
                 </span>
               </div>
 
+              {/* Título: El Gancho de Datos Reales */}
               <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-8 leading-tight">
                 CONSTRUYE TU <span className="text-cyan-400">FUTURO</span> SOBRE <br />
-                TERRENO SEGURO
+                DATOS REALES
               </h2>
 
+              {/* Descripción: Blindaje de Patrimonio */}
               <p className="text-slate-200 text-lg md:text-xl leading-relaxed mb-12 font-medium max-w-xl">
-                No dejes la inversión más importante de tu vida al azar. 
-                Obtén la claridad técnica que necesitas para comprar, 
-                negociar o remodelar con total confianza.
+                No dejes tu patrimonio al azar. Blindamos la inversión más importante de tu vida con la claridad técnica del <strong className="text-white">Protocolo PCF-15™</strong> para que compres, negocies o remodeles con total seguridad.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6">
                 <a 
-                  href="https://wa.me/56982348089?text=Hola%20Ariel,%20necesito%20una%20auditoría%20para%20mi%20próxima%20propiedad."
+                  href="https://wa.me/56982348089?text=Hola%20Ariel,%20necesito%20una%20auditoría%20técnica%20para%20mi%20próxima%20propiedad."
                   target="_blank"
                   rel="noreferrer"
                   className="group relative px-10 py-5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black uppercase rounded-2xl transition-all duration-300 text-center shadow-[0_0_30px_rgba(34,211,238,0.4)]"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-3">
-                    Agendar Auditoría Ahora
+                    Agendar Auditoría Técnica
                     <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
                   </span>
                 </a>
@@ -51,11 +51,11 @@ export default function FinalCTA() {
             </div>
           </div>
 
-          {/* MARCA TÉCNICA SUTIL */}
+          {/* MARCA TÉCNICA SUTIL ACTUALIZADA */}
           <div className="absolute bottom-8 right-12 hidden md:block">
             <div className="text-right">
-              <p className="text-slate-500 font-mono text-[10px] uppercase tracking-[0.5em] mb-1">Certificación Técnica</p>
-              <p className="text-white font-black text-xl italic tracking-tighter">DOMIS™ PROTOCOL</p>
+              <p className="text-slate-500 font-mono text-[10px] uppercase tracking-[0.5em] mb-1">Certificación de Ingeniería</p>
+              <p className="text-white font-black text-xl italic tracking-tighter uppercase">PCF-15™ Protocol</p>
             </div>
           </div>
         </div>
