@@ -9,12 +9,12 @@ const LockIcon = () => (
 );
 
 export default function Header() {
-  const whatsappUrl = "https://wa.me/56982348089?text=Hola Ariel, quiero solicitar una auditoría técnica con DOMIS™.";
+  // CONFIGURACIÓN ACTIVA: Número +56929901343 y mensaje de autoridad
+  const whatsappUrl = "https://wa.me/56929901343?text=Hola%2C%20equipo%20de%20Ingenier%C3%ADa%20DOMIS%E2%84%A2.%20Estoy%20en%20la%20web%20y%20necesito%20asesor%C3%ADa%20t%C3%A9cnica%20para%20una%20propiedad...";
   
   const [isScanning, setIsScanning] = useState(false);
   const [cycleCount, setCycleCount] = useState(0);
 
-  // Acceso al cerebro global de las pestañas
   const { setActiveTab } = useTabs();
 
   useEffect(() => {
@@ -50,9 +50,7 @@ export default function Header() {
       <nav className="fixed top-0 w-full z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-900/80 px-6 py-4 transition-all duration-300 shadow-lg shadow-slate-950/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center relative">
           
-          {/* --- LOGO TRANSFORMER --- */}
           <a href="#" className="relative w-48 h-16 flex items-center select-none z-50 group cursor-pointer" aria-label="Ir al inicio">
-            
             <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-sm">
                 <div 
                   key={cycleCount}
@@ -61,97 +59,43 @@ export default function Header() {
             </div>
 
             <div className="relative w-full h-full flex items-center">
-              <div 
-                className={`absolute inset-0 flex flex-col justify-center items-start transition-all duration-500 ease-in-out ${
-                  !isScanning ? 'opacity-100 delay-300 blur-0 scale-100' : 'opacity-0 delay-0 blur-sm scale-95'
-                }`}
-              >
+              <div className={`absolute inset-0 flex flex-col justify-center items-start transition-all duration-500 ease-in-out ${!isScanning ? 'opacity-100 delay-300 blur-0 scale-100' : 'opacity-0 delay-0 blur-sm scale-95'}`}>
                 <div className="flex items-start">
-                  <span className="text-3xl font-black text-white tracking-tighter uppercase leading-none drop-shadow-sm group-hover:text-cyan-50 transition-colors">
-                    DOMIS
-                  </span>
-                  <span className="text-cyan-500 text-lg font-bold ml-1 relative top-[-4px]">
-                    ™
-                  </span>
+                  <span className="text-3xl font-black text-white tracking-tighter uppercase leading-none drop-shadow-sm group-hover:text-cyan-50 transition-colors">DOMIS</span>
+                  <span className="text-cyan-500 text-lg font-bold ml-1 relative top-[-4px]">™</span>
                 </div>
-                <span className="text-[10px] text-cyan-500 font-bold tracking-[0.35em] uppercase leading-none mt-1">
-                  PROPERTY-AUDIT
-                </span>
+                <span className="text-[10px] text-cyan-500 font-bold tracking-[0.35em] uppercase leading-none mt-1">PROPERTY-AUDIT</span>
               </div>
 
-              <div 
-                className={`absolute inset-0 flex items-center justify-start transition-all duration-500 ease-in-out pointer-events-none ${
-                  isScanning ? 'opacity-100 delay-300 blur-0 scale-100' : 'opacity-0 delay-0 blur-sm scale-95'
-                }`}
-              >
+              <div className={`absolute inset-0 flex items-center justify-start transition-all duration-500 ease-in-out pointer-events-none ${isScanning ? 'opacity-100 delay-300 blur-0 scale-100' : 'opacity-0 delay-0 blur-sm scale-95'}`}>
                 <div className="relative h-[76px] w-full flex flex-col justify-center items-start -ml-5 top-3">
-                  <img 
-                    src="/wireframe.png" 
-                    alt="System Scan" 
-                    className="h-full w-auto object-contain object-left drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] block"
-                  />
+                  <img src="/wireframe.png" alt="System Scan" className="h-full w-auto object-contain object-left drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] block" />
                   <div className="absolute -bottom-1 left-7 flex items-center gap-1.5 leading-none">
                     <div className="flex items-center gap-1">
                        <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse shadow-[0_0_5px_#ef4444]"></span>
-                       <span className="text-[9px] font-mono font-bold text-red-400 tracking-wider uppercase whitespace-nowrap">
-                         SCANNING...
-                       </span>
+                       <span className="text-[9px] font-mono font-bold text-red-400 tracking-wider uppercase whitespace-nowrap">SCANNING...</span>
                     </div>
-                    <span className="text-[9px] text-cyan-400 font-mono font-bold tracking-widest">
-                      95%
-                    </span>
+                    <span className="text-[9px] text-cyan-400 font-mono font-bold tracking-widest">95%</span>
                   </div>
                 </div>
               </div>
             </div>
           </a>
           
-          {/* --- MENÚ DE FASES CONECTADO AL CONTEXTO --- */}
           <div className="hidden xl:flex items-center gap-6 text-xs font-bold text-slate-400 uppercase tracking-wide relative z-10">
             <a href="#problema" className="hover:text-white transition-colors">El Problema</a>
-            
-            <a 
-              href="#proceso" 
-              onClick={() => setActiveTab('fase1')}
-              className="hover:text-cyan-400 transition-colors flex items-center gap-1"
-            >
-              Auditoría <span className="text-[9px] text-slate-500 font-medium normal-case border border-slate-800 px-1 rounded">(Fase 1)</span>
-            </a>
-            
-            <a 
-              href="#proceso" 
-              onClick={() => setActiveTab('fase2')}
-              className="hover:text-cyan-400 transition-colors flex items-center gap-1"
-            >
-              Negociación <span className="text-[9px] text-slate-500 font-medium normal-case border border-slate-800 px-1 rounded">(Fase 2)</span>
-            </a>
-            
-            <a 
-              href="#proceso" 
-              onClick={() => setActiveTab('fase3')}
-              className="hover:text-cyan-400 transition-colors flex items-center gap-1"
-            >
-              Remodelación <span className="text-[9px] text-slate-500 font-medium normal-case border border-slate-800 px-1 rounded">(Fase 3)</span>
-            </a>
+            <a href="#proceso" onClick={() => setActiveTab('fase1')} className="hover:text-cyan-400 transition-colors flex items-center gap-1">Auditoría <span className="text-[9px] text-slate-500 font-medium normal-case border border-slate-800 px-1 rounded">(Fase 1)</span></a>
+            <a href="#proceso" onClick={() => setActiveTab('fase2')} className="hover:text-cyan-400 transition-colors flex items-center gap-1">Negociación <span className="text-[9px] text-slate-500 font-medium normal-case border border-slate-800 px-1 rounded">(Fase 2)</span></a>
+            <a href="#proceso" onClick={() => setActiveTab('fase3')} className="hover:text-cyan-400 transition-colors flex items-center gap-1">Remodelación <span className="text-[9px] text-slate-500 font-medium normal-case border border-slate-800 px-1 rounded">(Fase 3)</span></a>
           </div>
 
-          {/* --- ACCIONES --- */}
           <div className="flex items-center gap-3 relative z-10">
-            <a 
-              href="/calculator" 
-              className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-800 bg-slate-900/50 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-slate-900 transition-all group"
-              title="Acceso Privado Clientes"
-            >
+            <a href="/calculator" className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-800 bg-slate-900/50 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-slate-900 transition-all group" title="Acceso Privado Clientes">
               <LockIcon />
               <span className="text-[10px] font-bold tracking-wider">PCF-15™</span>
             </a>
 
-            <a 
-              href={whatsappUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hidden md:block bg-cyan-500 hover:bg-white text-slate-950 px-5 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:scale-105 active:scale-95"
-            >
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="hidden md:block bg-cyan-500 hover:bg-white text-slate-950 px-5 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:scale-105 active:scale-95">
               Solicitar Auditoría
             </a>
           </div>
