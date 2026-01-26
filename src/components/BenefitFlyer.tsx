@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
-import { MessageCircle, ArrowRight, CheckCircle2, X } from 'lucide-react'; 
-// Eliminados 'AlertTriangle' y 'Plus' para corregir error TS6133 en Vercel
+import { MessageCircle, ArrowRight, CheckCircle2, X } from 'lucide-react';
 
 const BenefitFlyer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,7 +12,6 @@ const BenefitFlyer = () => {
   const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const qty = e.target.value;
     setQuantitySelect(qty);
-    // Lógica para determinar cuántos campos de código mostrar
     let numInputs = qty === '2' ? 2 : qty === '3+' ? 3 : 1;
 
     setCodes(prevCodes => {
@@ -52,24 +50,25 @@ const BenefitFlyer = () => {
         <div className="relative bg-gradient-to-br from-cyan-600 to-blue-800 rounded-[2.5rem] p-1 md:p-1.5 shadow-[0_0_50px_rgba(34,211,238,0.2)]">
           <div className="bg-slate-900 rounded-[2.3rem] p-8 md:p-16 relative overflow-hidden">
             
+            {/* Fondo decorativo */}
             <div className="absolute inset-0 opacity-10 pointer-events-none z-0"
                  style={{ backgroundImage: 'linear-gradient(#22d3ee 1px, transparent 1px), linear-gradient(90deg, #22d3ee 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
             </div>
 
             <div className="relative z-10 flex flex-col items-center text-center">
-              <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[11px] font-black uppercase tracking-[0.2em] mb-8 shadow-lg shadow-cyan-500/20">
+              <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[11px] font-black uppercase tracking-[0.2em] mb-8 shadow-lg shadow-cyan-500/20 font-sans">
                 Fase 2: Negociación Técnica
               </div>
 
-              <h2 className="text-3xl md:text-5xl font-black text-white mb-4 leading-tight uppercase">
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-4 leading-tight uppercase font-sans">
                 💰 Cómo se paga Fase 2
               </h2>
 
-              <p className="text-slate-300 text-lg md:text-xl max-w-3xl mb-10 font-light">
+              <p className="text-slate-300 text-lg md:text-xl max-w-3xl mb-10 font-light font-sans">
                 Pagas en dos momentos clave:
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mb-8 text-left">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mb-8 text-left font-sans">
                 <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-3xl">1️⃣</span>
@@ -91,13 +90,13 @@ const BenefitFlyer = () => {
 
               <div className="w-full max-w-3xl h-px bg-slate-800 mb-12"></div>
 
-              <h2 className="text-4xl md:text-6xl font-black text-white mb-6 uppercase">
+              <h2 className="text-4xl md:text-6xl font-black text-white mb-6 uppercase font-sans">
                 <span className="text-cyan-400">60% OFF</span> EN AUDITORÍA
               </h2>
 
               <button 
                 onClick={() => setIsModalOpen(true)}
-                className="relative z-20 group inline-flex items-center gap-3 px-10 md:px-12 py-5 bg-white text-slate-950 font-black rounded-full uppercase tracking-widest text-xs md:text-sm hover:scale-105 transition-all shadow-xl active:scale-95 touch-manipulation"
+                className="relative z-20 group inline-flex items-center gap-3 px-10 md:px-12 py-5 bg-white text-slate-950 font-black rounded-full uppercase tracking-widest text-xs md:text-sm hover:scale-105 transition-all shadow-xl active:scale-95 touch-manipulation font-sans"
               >
                 <MessageCircle size={20} className="fill-current" />
                 Activar Negociación Fase 2
@@ -108,17 +107,22 @@ const BenefitFlyer = () => {
         </div>
       </div>
 
-      {/* MODAL: CENTRADO TOTAL EN EL VIEWPORT ACTUAL */}
+      {/* MODAL: FIJADO AL VIEWPORT ACTUAL (ESTO ARREGLA EL SCROLL) */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center pointer-events-auto">
-          {/* Fondo desenfocado */}
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
+          
+          {/* Backdrop con Blur - Este ocupa toda la pantalla VISIBLE */}
           <div 
             className="fixed inset-0 bg-slate-950/98 backdrop-blur-xl" 
+            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
             onClick={() => setIsModalOpen(false)}
           ></div>
           
-          {/* Card: Se centra en pantalla sin importar el scroll */}
-          <div className="relative z-[100000] bg-slate-900 border border-cyan-500/50 w-[92%] max-w-md h-fit max-h-[90dvh] rounded-[2.5rem] p-6 md:p-10 shadow-2xl overflow-y-auto animate-in fade-in zoom-in duration-300">
+          {/* Card: Forzamos centrado absoluto con CSS inline para mayor seguridad */}
+          <div 
+            className="relative z-[100000] bg-slate-900 border border-cyan-500/50 w-full max-w-md rounded-[2.5rem] p-6 md:p-10 shadow-2xl overflow-y-auto animate-in fade-in zoom-in duration-300 font-sans"
+            style={{ maxHeight: '90dvh' }}
+          >
             
             <button 
               onClick={() => setIsModalOpen(false)} 
@@ -129,17 +133,17 @@ const BenefitFlyer = () => {
             
             <div className="mb-6 text-left">
               <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Activar Fase 2</h3>
-              <p className="text-slate-400 text-sm mt-1">Completa los datos para iniciar.</p>
+              <p className="text-slate-400 text-sm mt-1">Completa los datos para iniciar la gestión.</p>
             </div>
             
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="text-left">
-                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest">Tu Nombre</label>
-                <input required type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium text-base" placeholder="Ariel Smith" />
+                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest">Nombre Completo</label>
+                <input required type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium text-base" placeholder="Tu nombre" />
               </div>
 
               <div className="text-left">
-                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest">Auditorías a Negociar</label>
+                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest">Cantidad de Auditorías</label>
                 <div className="relative">
                   <select value={quantitySelect} onChange={handleQuantityChange} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 appearance-none font-medium cursor-pointer text-base">
                     <option value="1">1 Auditoría</option>
@@ -151,7 +155,7 @@ const BenefitFlyer = () => {
               </div>
 
               <div className="space-y-3">
-                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest text-left">IDs de Fase 1</label>
+                <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest text-left">Códigos de Fase 1</label>
                 {codes.map((code, index) => (
                   <input 
                     key={index}
@@ -160,13 +164,13 @@ const BenefitFlyer = () => {
                     value={code}
                     onChange={(e) => handleCodeChange(index, e.target.value)}
                     className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 transition-all font-medium placeholder:text-slate-700 uppercase text-base" 
-                    placeholder={`Código Propiedad ${index + 1}`}
+                    placeholder={`ID Propiedad ${index + 1}`}
                   />
                 ))}
               </div>
 
               <button type="submit" className="w-full bg-cyan-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-cyan-400 transition-all shadow-xl mt-4 group">
-                <span className="flex items-center justify-center gap-2">Enviar Solicitud <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></span>
+                <span className="flex items-center justify-center gap-2">Solicitar Negociación <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></span>
               </button>
             </form>
           </div>
