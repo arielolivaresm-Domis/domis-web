@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 
 /**
  * COMPONENTE: Calculator.tsx
- * Lógica completa de inversión para DOMIS™ - ACTIVACIÓN DE CONTACTO
+ * Lógica completa de inversión para DOMIS™ - CORRECCIÓN DE ETIQUETAS
  */
 const Calculator = () => {
   const [pack, setPack] = useState(3);
@@ -35,23 +35,27 @@ const Calculator = () => {
     return { totalAuditNet, sourcingNet, totalConIva, discountF1, realCostF1, vipAlternatives };
   }, [pack, meters, sourcing]);
 
-  // --- LÓGICA DE ENVÍO (WhatsApp + Registro) ---
+  // --- LÓGICA DE ENVÍO REFORZADA ---
   const handleComenzarAuditoria = () => {
     const packLabel = pack === 1 ? 'Individual' : pack === 2 ? 'Pack Dupla' : 'Pack Inversionista';
-    const sourcingLabel = sourcing === 'none' ? 'Sin Sourcing' : sourcing === 'normal' ? 'Normal' : 'VIP';
     
-    const message = `🛠️ *SOLICITUD DE AUDITORÍA FASE 1 - DOMIS™*\n\n• *Modelo:* ${packLabel}\n• *Superficie:* ${meters} m²\n• *Sourcing:* ${sourcingLabel}\n• *Inversión F1:* $${calculations.totalConIva.toLocaleString()}\n\n*Deseo iniciar el protocolo de validación técnica.*`;
+    // MAPEO EXPLÍCITO: Si el valor es 'normal', la etiqueta SERÁ 'Sourcing Normal'
+    const sourcingLabels: Record<string, string> = {
+      'none': 'Sin Sourcing',
+      'normal': 'Sourcing Normal',
+      'vip': 'Sourcing VIP'
+    };
     
-    // 1. Apertura de WhatsApp con el mensaje estructurado
+    const sourcingFinal = sourcingLabels[sourcing] || 'Sin Sourcing';
+    
+    const message = `🛠️ *SOLICITUD DE AUDITORÍA FASE 1 - DOMIS™*\n\n` +
+                    `• *Modelo:* ${packLabel}\n` +
+                    `• *Superficie:* ${meters} m²\n` +
+                    `• *Sourcing:* ${sourcingFinal}\n` +
+                    `• *Inversión F1:* $${calculations.totalConIva.toLocaleString()}\n\n` +
+                    `*Deseo iniciar el protocolo de validación técnica.*`;
+    
     window.open(`https://wa.me/56929901343?text=${encodeURIComponent(message)}`, '_blank');
-
-    // 2. Registro para envío de correo (Placeholder para integración EmailJS/API)
-    console.log("Ficha enviada al correo de DOMIS™:", {
-      pack: packLabel,
-      metros: meters,
-      sourcing: sourcingLabel,
-      total: calculations.totalConIva
-    });
   };
 
   return (
@@ -59,7 +63,6 @@ const Calculator = () => {
       <h2 className="text-2xl font-bold mb-6 text-cyan-400 uppercase tracking-wider text-center">Estima tu Inversión Técnica</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* COLUMNA DE ENTRADA (INPUTS) */}
         <div className="space-y-6">
           <div>
             <label className="block text-xs uppercase text-cyan-500 mb-2 font-bold tracking-widest">1. Propiedades a Auditar</label>
@@ -115,7 +118,6 @@ const Calculator = () => {
           </div>
         </div>
 
-        {/* COLUMNA DE RESULTADOS */}
         <div className="bg-slate-800/50 p-6 rounded-xl border border-slate-700 flex flex-col justify-between relative overflow-hidden">
           <div className="absolute top-0 right-0 bg-slate-700 text-cyan-400 text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-widest">
             Fase 1: Auditoría
@@ -144,7 +146,6 @@ const Calculator = () => {
             </div>
           </div>
 
-          {/* BENEFICIO FASE 2 */}
           <div className="mt-8 p-5 bg-gradient-to-r from-cyan-900/40 to-blue-900/40 border border-cyan-500/50 rounded-xl relative animate-pulse">
             <div className="absolute -top-3 left-4 bg-cyan-500 text-slate-950 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg shadow-cyan-500/20">
               Fase 2: Negociación
@@ -164,7 +165,6 @@ const Calculator = () => {
             </div>
           </div>
 
-          {/* BOTÓN CON FUNCIÓN ONCLICK AÑADIDA */}
           <button 
             onClick={handleComenzarAuditoria}
             className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 py-4 rounded-xl font-black uppercase mt-8 hover:brightness-110 transition-all shadow-lg shadow-cyan-500/30 text-[10px] tracking-[0.2em]"
