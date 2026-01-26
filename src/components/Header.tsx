@@ -47,11 +47,11 @@ export default function Header() {
         }
       `}</style>
 
-      <nav className="fixed top-0 w-full z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-900/80 px-6 py-4 transition-all duration-300 shadow-lg shadow-slate-950/20">
+      <nav className="fixed top-0 w-full z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-900/80 px-4 md:px-6 py-4 transition-all duration-300 shadow-lg shadow-slate-950/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center relative">
           
-          {/* --- LOGO TRANSFORMER --- */}
-          <a href="#" className="relative w-48 h-16 flex items-center select-none z-50 group cursor-pointer" aria-label="Ir al inicio">
+          {/* --- LOGO TRANSFORMER (Ajustado para móvil) --- */}
+          <a href="#" className="relative w-32 md:w-48 h-12 md:h-16 flex items-center select-none z-50 group cursor-pointer" aria-label="Ir al inicio">
             
             <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-sm">
                 <div 
@@ -67,14 +67,14 @@ export default function Header() {
                 }`}
               >
                 <div className="flex items-start">
-                  <span className="text-3xl font-black text-white tracking-tighter uppercase leading-none drop-shadow-sm group-hover:text-cyan-50 transition-colors">
+                  <span className="text-xl md:text-3xl font-black text-white tracking-tighter uppercase leading-none drop-shadow-sm group-hover:text-cyan-50 transition-colors">
                     DOMIS
                   </span>
-                  <span className="text-cyan-500 text-lg font-bold ml-1 relative top-[-4px]">
+                  <span className="text-cyan-500 text-sm md:text-lg font-bold ml-1 relative top-[-2px] md:top-[-4px]">
                     ™
                   </span>
                 </div>
-                <span className="text-[10px] text-cyan-500 font-bold tracking-[0.35em] uppercase leading-none mt-1">
+                <span className="text-[7px] md:text-[10px] text-cyan-500 font-bold tracking-[0.2em] md:tracking-[0.35em] uppercase leading-none mt-1">
                   PROPERTY-AUDIT
                 </span>
               </div>
@@ -84,75 +84,52 @@ export default function Header() {
                   isScanning ? 'opacity-100 delay-300 blur-0 scale-100' : 'opacity-0 delay-0 blur-sm scale-95'
                 }`}
               >
-                <div className="relative h-[76px] w-full flex flex-col justify-center items-start -ml-5 top-3">
+                <div className="relative h-10 md:h-[76px] w-full flex flex-col justify-center items-start -ml-2 md:-ml-5 top-1 md:top-3">
                   <img 
                     src="/wireframe.png" 
                     alt="System Scan" 
                     className="h-full w-auto object-contain object-left drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] block"
                   />
-                  <div className="absolute -bottom-1 left-7 flex items-center gap-1.5 leading-none">
-                    <div className="flex items-center gap-1">
-                       <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse shadow-[0_0_5px_#ef4444]"></span>
-                       <span className="text-[9px] font-mono font-bold text-red-400 tracking-wider uppercase whitespace-nowrap">
-                         SCANNING...
-                       </span>
-                    </div>
-                    <span className="text-[9px] text-cyan-400 font-mono font-bold tracking-widest">
-                      95%
-                    </span>
-                  </div>
                 </div>
               </div>
             </div>
           </a>
           
-          {/* --- MENÚ DE FASES CONECTADO AL CONTEXTO --- */}
+          {/* --- MENÚ DE FASES (Desktop Only) --- */}
           <div className="hidden xl:flex items-center gap-6 text-xs font-bold text-slate-400 uppercase tracking-wide relative z-10">
             <a href="#problema" className="hover:text-white transition-colors">El Problema</a>
-            
-            <a 
-              href="#proceso" 
-              onClick={() => setActiveTab('fase1')}
-              className="hover:text-cyan-400 transition-colors flex items-center gap-1"
-            >
+            <a href="#proceso" onClick={() => setActiveTab('fase1')} className="hover:text-cyan-400 transition-colors flex items-center gap-1">
               Auditoría <span className="text-[9px] text-slate-500 font-medium normal-case border border-slate-800 px-1 rounded">(Fase 1)</span>
             </a>
-            
-            <a 
-              href="#proceso" 
-              onClick={() => setActiveTab('fase2')}
-              className="hover:text-cyan-400 transition-colors flex items-center gap-1"
-            >
+            <a href="#proceso" onClick={() => setActiveTab('fase2')} className="hover:text-cyan-400 transition-colors flex items-center gap-1">
               Negociación <span className="text-[9px] text-slate-500 font-medium normal-case border border-slate-800 px-1 rounded">(Fase 2)</span>
             </a>
-            
-            <a 
-              href="#proceso" 
-              onClick={() => setActiveTab('fase3')}
-              className="hover:text-cyan-400 transition-colors flex items-center gap-1"
-            >
+            <a href="#proceso" onClick={() => setActiveTab('fase3')} className="hover:text-cyan-400 transition-colors flex items-center gap-1">
               Remodelación <span className="text-[9px] text-slate-500 font-medium normal-case border border-slate-800 px-1 rounded">(Fase 3)</span>
             </a>
           </div>
 
-          {/* --- ACCIONES --- */}
-          <div className="flex items-center gap-3 relative z-10">
+          {/* --- ACCIONES PRIMARIAS (Visibles en Móvil y Desktop) --- */}
+          <div className="flex items-center gap-2 md:gap-3 relative z-10">
+            {/* PCF-15 Acceso */}
             <a 
               href="/calculator" 
-              className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-800 bg-slate-900/50 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-slate-900 transition-all group"
+              className="flex items-center gap-1.5 md:gap-2 px-2 md:px-3 py-2 rounded-lg border border-slate-800 bg-slate-900/50 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-slate-900 transition-all group"
               title="Acceso Privado Clientes"
             >
               <LockIcon />
-              <span className="text-[10px] font-bold tracking-wider">PCF-15™</span>
+              <span className="text-[9px] md:text-[10px] font-bold tracking-wider">PCF-15™</span>
             </a>
 
+            {/* CTA Principal */}
             <a 
               href={whatsappUrl} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hidden md:block bg-cyan-500 hover:bg-white text-slate-950 px-5 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:scale-105 active:scale-95"
+              className="bg-cyan-500 hover:bg-white text-slate-950 px-3 md:px-5 py-2 md:py-2.5 rounded-lg text-[10px] md:text-xs font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:scale-105 active:scale-95 whitespace-nowrap"
             >
-              Solicitar Auditoría
+              <span className="hidden xs:inline">Solicitar Auditoría</span>
+              <span className="xs:hidden">Solicitar</span>
             </a>
           </div>
         </div>
