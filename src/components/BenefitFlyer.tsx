@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
-import { MessageCircle, ArrowRight, CheckCircle2, X } from 'lucide-react';
+import { MessageCircle, ArrowRight, X } from 'lucide-react'; 
+// Limpieza: Solo importamos lo que realmente dibujamos para que Vercel no dé error.
 
 const BenefitFlyer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,14 +48,22 @@ const BenefitFlyer = () => {
   return (
     <section id="beneficio-fase2" className="py-20 bg-slate-950 px-6 relative">
       <div className="max-w-5xl mx-auto">
-        {/* Contenedor Principal con Gradiente */}
-        <div className="relative bg-gradient-to-br from-cyan-600 to-blue-800 rounded-[2.5rem] p-1 md:p-1.5 shadow-[0_0_50px_rgba(34,211,238,0.2)]">
+        
+        {/* ELIMINACIÓN DE RAÍZ: Si el modal está abierto, quitamos el gradiente y la sombra del padre */}
+        <div className={`relative rounded-[2.5rem] p-1 md:p-1.5 transition-all duration-300 ${
+          isModalOpen 
+          ? 'bg-slate-800 shadow-none' 
+          : 'bg-gradient-to-br from-cyan-600 to-blue-800 shadow-[0_0_50px_rgba(34,211,238,0.2)]'
+        }`}>
+          
           <div className="bg-slate-900 rounded-[2.3rem] p-8 md:p-16 relative overflow-hidden">
             
-            {/* Grid de Fondo */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none z-0"
-                 style={{ backgroundImage: 'linear-gradient(#22d3ee 1px, transparent 1px), linear-gradient(90deg, #22d3ee 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
-            </div>
+            {/* Ocultamos el grid de fondo si el modal está abierto para máxima claridad */}
+            {!isModalOpen && (
+              <div className="absolute inset-0 opacity-10 pointer-events-none z-0"
+                   style={{ backgroundImage: 'linear-gradient(#22d3ee 1px, transparent 1px), linear-gradient(90deg, #22d3ee 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
+              </div>
+            )}
 
             <div className="relative z-10 flex flex-col items-center text-center font-sans">
               <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[11px] font-black uppercase tracking-[0.2em] mb-8 shadow-lg shadow-cyan-500/20">
@@ -72,7 +81,7 @@ const BenefitFlyer = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mb-8 text-left">
                 <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-3xl font-normal">1️⃣</span>
+                    <span className="text-3xl">1️⃣</span>
                     <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-none">Fee Inicial</h3>
                   </div>
                   <div className="text-2xl md:text-3xl font-mono text-cyan-400 font-black">$500.000</div>
@@ -81,11 +90,11 @@ const BenefitFlyer = () => {
 
                 <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-3xl font-normal">2️⃣</span>
-                    <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-none">Al firmar éxito</h3>
+                    <span className="text-3xl">2️⃣</span>
+                    <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-tight">Al firmar éxito</h3>
                   </div>
                   <div className="text-2xl md:text-3xl font-mono text-cyan-400 font-black">15% del ahorro</div>
-                  <p className="text-xs md:text-sm text-slate-400 mt-2 font-medium">Calculado únicamente sobre la rebaja lograda.</p>
+                  <p className="text-xs md:text-sm text-slate-400 mt-2 font-medium font-sans">Calculado únicamente sobre la rebaja lograda.</p>
                 </div>
               </div>
 
@@ -95,11 +104,10 @@ const BenefitFlyer = () => {
                 <span className="text-cyan-400">60% OFF</span> EN AUDITORÍA
               </h2>
 
-              {/* BOTÓN DISPARADOR */}
               <button 
                 type="button"
                 onClick={() => setIsModalOpen(true)}
-                className="group relative z-30 inline-flex items-center gap-3 px-10 md:px-12 py-5 bg-white text-slate-950 font-black rounded-full uppercase tracking-widest text-xs md:text-sm hover:scale-105 transition-all shadow-xl active:scale-95 touch-manipulation"
+                className="group relative z-30 inline-flex items-center gap-3 px-10 md:px-12 py-5 bg-white text-slate-950 font-black rounded-full uppercase tracking-widest text-xs md:text-sm hover:scale-105 transition-all shadow-xl active:scale-95 touch-manipulation font-sans"
               >
                 <MessageCircle size={20} className="fill-current" />
                 Activar Negociación Fase 2
@@ -110,28 +118,27 @@ const BenefitFlyer = () => {
         </div>
       </div>
 
-      {/* MODAL: POSICIONAMIENTO NUCLEAR (FUERA DEL FLUJO DEL DOCUMENTO) */}
+      {/* MODAL: FIJADO AL VIEWPORT ACTUAL (ELIMINADA CUALQUIER INTERFERENCIA) */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center pointer-events-none">
-          {/* Backdrop: Bloquea todo y centra la vista */}
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center pointer-events-auto">
+          {/* Backdrop casi opaco para centrar la atención */}
           <div 
-            className="fixed inset-0 bg-slate-950/98 backdrop-blur-xl pointer-events-auto" 
+            className="fixed inset-0 bg-slate-950/98 backdrop-blur-sm pointer-events-auto" 
             onClick={() => setIsModalOpen(false)}
           ></div>
           
-          {/* Card del Formulario: Centrado relativo al VIEWPORT (tus ojos) */}
-          <div className="relative z-[100000] bg-slate-900 border border-cyan-500/50 w-[92%] max-w-md h-fit max-h-[85vh] rounded-[2.5rem] p-6 md:p-10 shadow-2xl overflow-y-auto pointer-events-auto animate-in fade-in zoom-in duration-300 font-sans">
+          <div className="relative z-[100000] bg-slate-900 border border-cyan-500/50 w-[92%] max-w-md h-fit max-h-[85vh] rounded-[2.5rem] p-6 md:p-10 shadow-2xl overflow-y-auto animate-in fade-in zoom-in duration-200 font-sans">
             
             <button 
               onClick={() => setIsModalOpen(false)} 
-              className="absolute top-6 right-6 text-slate-500 p-2 hover:text-white transition-colors"
+              className="absolute top-6 right-6 text-slate-500 p-2 hover:text-white"
             >
               <X size={24}/>
             </button>
             
             <div className="mb-6 text-left">
               <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Activar Fase 2</h3>
-              <p className="text-slate-400 text-sm mt-1">Completa los datos para tu negociación.</p>
+              <p className="text-slate-400 text-sm mt-1">Nombre, Cantidad e IDs.</p>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-4">
