@@ -1,6 +1,7 @@
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Problem from './components/Problem';
+import AuditTechnicalDetails from './components/AuditTechnicalDetails';
 import PhasesTabs from './components/PhasesTabs';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
@@ -20,6 +21,8 @@ function App() {
         <main>
           <Hero />
           <Problem />
+          {/* Integración del Protocolo de Auditoría PCF-15™ */}
+          <AuditTechnicalDetails />
           <PhasesTabs />
           <FinalCTA />
         </main>
