@@ -7,7 +7,7 @@ export default function AuditPacks({ onNext }: { onNext: () => void }) {
     {
       id: 'individual',
       title: "Pack 1: Individual",
-      price: "$1.900",
+      price: "$1.900 CLP",
       tag: "Popular",
       icon: "🔍",
       desc: "Para quien ya tiene la propiedad elegida y necesita validación técnica total.",
@@ -16,16 +16,16 @@ export default function AuditPacks({ onNext }: { onNext: () => void }) {
     {
       id: 'dupla',
       title: "Pack 2: Dupla",
-      price: "$1.710",
+      price: "$1.710 CLP",
       tag: "10% OFF",
       icon: "👥",
       desc: "Evaluación comparativa de dos opciones para determinar cuál es mejor inversión.",
-      color: "slate"
+      color: "cyan"
     },
     {
       id: 'inversionista',
       title: "Pack 3+: Inversionista",
-      price: "$1.520",
+      price: "$1.520 CLP",
       tag: "20% OFF",
       icon: "🛡️",
       desc: "Diseñado para carteras de inversión o múltiples unidades. Máxima optimización.",
@@ -44,7 +44,7 @@ export default function AuditPacks({ onNext }: { onNext: () => void }) {
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+      <div className="grid lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4">
         {packs.map((p) => (
           <div 
             key={p.id}
@@ -55,7 +55,7 @@ export default function AuditPacks({ onNext }: { onNext: () => void }) {
             }`}
             onClick={() => {
               setActivePack(p.id as any);
-              onNext(); 
+              if (onNext) onNext(); 
             }}
           >
             <div className="relative z-10 flex-1">
@@ -65,7 +65,15 @@ export default function AuditPacks({ onNext }: { onNext: () => void }) {
                 </div>
                 <div className="text-right">
                   <h4 className="text-xl font-black text-white uppercase italic tracking-tighter">{p.title}</h4>
-                  <p className="text-cyan-400 font-mono text-[10px] uppercase tracking-widest font-bold">
+                  
+                  {/* TAGS DESTACADOS: Lógica de resaltado para descuentos */}
+                  <p className={`font-mono text-[10px] uppercase tracking-widest font-bold inline-block mt-1 ${
+                    p.tag.includes('OFF') 
+                      ? p.id === 'inversionista' 
+                        ? 'bg-red-500/20 text-red-500 border border-red-500/50 px-2 py-0.5 rounded-full animate-pulse' 
+                        : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/50 px-2 py-0.5 rounded-full'
+                      : 'text-slate-500'
+                  }`}>
                     {p.tag}
                   </p>
                 </div>
@@ -81,12 +89,13 @@ export default function AuditPacks({ onNext }: { onNext: () => void }) {
                   <span className="text-3xl font-black text-white">{p.price}</span>
                   <span className="text-slate-500 text-xs font-mono">/ m²</span>
                 </div>
-                {/* BOTÓN UNIFICADO CON NÚMERO Y MENSAJE OFICIAL */}
+                
                 <a 
-                  href={`https://wa.me/56929901343?text=Hola,%20equipo%20DOMIS™.%20Quiero%20información%20sobre%20el%20${encodeURIComponent(p.title)}`} 
+                  href={`https://wa.me/56929901343?text=Hola,%20equipo%20DOMIS™. Quiero información sobre el ${encodeURIComponent(p.title)}`} 
                   target="_blank" 
                   rel="noreferrer" 
-                  className="block w-full py-3 font-black uppercase rounded-xl transition-all mt-4 text-sm bg-cyan-500 text-slate-950 hover:bg-cyan-400"
+                  className="block w-full py-3 font-black uppercase rounded-xl transition-all mt-4 text-sm bg-cyan-500 text-slate-950 hover:bg-cyan-400 shadow-[0_4px_15px_rgba(6,182,212,0.2)]"
+                  onClick={(e) => e.stopPropagation()} // Evita que el clic en el botón active el onNext del contenedor
                 >
                   Seleccionar Pack
                 </a>
