@@ -1,48 +1,25 @@
 import { useState, useMemo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { MessageCircle, ArrowRight, X, Zap } from 'lucide-react';
+import { MessageCircle, ArrowRight, X } from 'lucide-react';
 
-const BenefitFlyer = () => {
+export default function Benefit() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [nombre, setNombre] = useState('');
-  const [quantitySelect, setQuantitySelect] = useState('1');
-  const [codes, setCodes] = useState<string[]>(['']);
   const [mounted, setMounted] = useState(false);
 
+  // Control de montaje y bloqueo de scroll para el Portal
   useEffect(() => {
     setMounted(true);
-    if (isModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    if (isModalOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'unset';
     return () => { document.body.style.overflow = 'unset'; };
   }, [isModalOpen]);
 
-  const whatsappNumber = "56929901343"; 
-
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const qty = e.target.value;
-    setQuantitySelect(qty);
-    const numInputs = qty === '2' ? 2 : qty === '3+' ? 3 : 1;
-    setCodes(prev => {
-      const next = [...prev];
-      while (next.length < numInputs) next.push('');
-      return next.slice(0, numInputs);
-    });
-  };
-
-  const handleCodeChange = (index: number, value: string) => {
-    const next = [...codes];
-    next[index] = value.toUpperCase();
-    setCodes(next);
-  };
-  
+  const whatsappNumber = "56929901343";
   const whatsappUrl = useMemo(() => {
-    const codesString = codes.filter(c => c.trim() !== '').join(', ');
-    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${nombre}\n• *Auditorías:* ${quantitySelect}\n• *IDs:* ${codesString}\n\nHola, quiero activar la negociación técnica.`;
+    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\nHola, ya tengo el diagnóstico técnico y quiero activar la Fase 2 de Negociación para mi propiedad. Mi nombre es ${nombre}.`;
     return `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
-  }, [nombre, quantitySelect, codes]);
+  }, [nombre]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,33 +27,24 @@ const BenefitFlyer = () => {
     setIsModalOpen(false);
   };
 
+  // PORTAL: Garantiza el centrado absoluto en el visor (viewport)
   const ModalPortal = (
-    <div className="fixed inset-0 z-[1000000] flex items-center justify-center p-4" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100dvh' }}>
-      <div className="absolute inset-0 bg-slate-950/98 backdrop-blur-xl" onClick={() => setIsModalOpen(false)} />
-      <div className="relative z-[1000001] w-full max-w-md bg-slate-900 border border-cyan-500/50 rounded-[2.5rem] p-8 shadow-2xl overflow-y-auto max-h-[90dvh] animate-in fade-in zoom-in duration-300 font-sans">
-        <button onClick={() => setIsModalOpen(false)} className="absolute top-6 right-6 text-slate-500 p-2"><X size={24}/></button>
-        <h3 className="text-2xl font-black text-white uppercase mb-6 tracking-tighter italic">Activar Fase 2</h3>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md" onClick={() => setIsModalOpen(false)} />
+      
+      <div className="relative z-[100000] w-full max-w-md bg-slate-900 border-2 border-cyan-500 rounded-[2.5rem] p-8 shadow-[0_0_50px_rgba(34,211,238,0.3)] animate-in fade-in zoom-in duration-300">
+        <button onClick={() => setIsModalOpen(false)} className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors"><X size={24}/></button>
+        
+        <h3 className="text-2xl font-black text-white uppercase mb-2 tracking-tighter italic">Activar Fase 2</h3>
+        <p className="text-cyan-500 text-[10px] font-black uppercase tracking-[0.2em] mb-8">Negociación Estratégica</p>
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="text-left">
-            <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest font-sans">Nombre Completo</label>
-            <input required type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-400 font-sans" placeholder="Tu nombre" />
+            <label className="block text-[10px] uppercase text-slate-400 font-black mb-2 tracking-widest font-sans">Nombre del Inversionista</label>
+            <input required type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-500 transition-all font-sans" placeholder="Tu nombre" />
           </div>
-          <div className="text-left font-sans">
-            <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest">Cantidad</label>
-            <select value={quantitySelect} onChange={handleQuantityChange} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none cursor-pointer">
-              <option value="1">1 Propiedad</option>
-              <option value="2">2 Propiedades</option>
-              <option value="3+">3+ Propiedades</option>
-            </select>
-          </div>
-          <div className="space-y-3 font-sans">
-            <label className="block text-[10px] uppercase text-cyan-500 font-black mb-1.5 tracking-widest text-left">IDs de Fase 1</label>
-            {codes.map((code, i) => (
-              <input key={i} required type="text" value={code} onChange={(e) => handleCodeChange(i, e.target.value)} className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white uppercase" placeholder={`ID Propiedad ${i + 1}`} />
-            ))}
-          </div>
-          <button type="submit" className="w-full bg-cyan-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-lg shadow-cyan-500/20 mt-4 font-sans">
-             Solicitar Negociación
+          <button type="submit" className="w-full bg-cyan-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-lg shadow-cyan-500/20 hover:bg-white transition-all active:scale-95 font-sans">
+             Solicitar Plan Maestro
           </button>
         </form>
       </div>
@@ -84,68 +52,74 @@ const BenefitFlyer = () => {
   );
 
   return (
-    <>
-      {/* 🚀 EL ÚNICO BOTÓN MÓVIL (Sustituye al Header) */}
-      <div className="md:hidden fixed bottom-8 right-6 z-[999999] flex flex-col items-end gap-3">
-        <div className="bg-slate-900/80 backdrop-blur-md border border-cyan-500/30 px-3 py-1 rounded-lg shadow-xl animate-fade-in">
-          <span className="text-cyan-400 text-[9px] font-black uppercase tracking-widest">Activar Fase 2</span>
-        </div>
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className="relative bg-cyan-500 text-slate-950 w-16 h-16 rounded-full shadow-[0_0_40px_rgba(34,211,238,0.7)] flex items-center justify-center animate-bounce-slow active:scale-90 transition-all group"
-        >
-          <span className="absolute inset-0 rounded-full bg-cyan-500 animate-ping opacity-25"></span>
-          <Zap size={30} fill="currentColor" />
-        </button>
-      </div>
+    <section id="beneficio-fase2" className="py-24 bg-slate-950 px-6 font-sans">
+      <div className="max-w-7xl mx-auto">
+        <div className="relative rounded-[2.5rem] overflow-hidden border-2 border-cyan-500 shadow-[0_0_40px_rgba(34,211,238,0.2)] min-h-[600px] flex items-center justify-center bg-slate-900">
+          
+          {/* FONDO: Estética cinematográfica de "Problem" */}
+          <div className="absolute inset-0">
+            <img 
+              src="/DOMIS_negotiation_bg.webp" 
+              alt="Negociación DOMIS" 
+              className="w-full h-full object-cover opacity-80 grayscale-[0.2] contrast-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/30"></div>
+          </div>
 
-      <section id="beneficio-fase2" className="py-20 bg-slate-950 px-6 relative overflow-hidden font-sans">
-        <div className="max-w-5xl mx-auto">
-          <div className="relative bg-gradient-to-br from-cyan-600 to-blue-800 rounded-[2.5rem] p-1 md:p-1.5 shadow-[0_0_50px_rgba(34,211,238,0.2)]">
-            <div className="bg-slate-900 rounded-[2.3rem] p-8 md:p-16 relative overflow-hidden">
-              <div className="relative z-10 flex flex-col items-center text-center">
-                
-                <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[11px] font-black uppercase tracking-[0.2em] mb-8">
-                  Protocolo Fase 2
+          {/* CONTENIDO: Base informativa del Flyer */}
+          <div className="relative z-10 p-8 md:p-16 flex flex-col items-center text-center max-w-4xl w-full">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[11px] font-black uppercase tracking-[0.2em] mb-8 shadow-lg shadow-cyan-500/20">
+              Fase 2: Negociación Técnica
+            </div>
+
+            <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight uppercase tracking-tighter drop-shadow-2xl">
+              💰 CÓMO SE PAGA <br className="hidden md:block" /> LA FASE 2
+            </h2>
+
+            <p className="text-slate-200 text-lg md:text-xl max-w-2xl mb-12 font-medium drop-shadow-md">
+              Pagas en dos momentos clave para asegurar tu ahorro:
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mb-12 text-left">
+              <div className="bg-slate-950/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">1️⃣</span>
+                  <h3 className="text-lg font-black text-white uppercase tracking-tight">Fee Inicial</h3>
                 </div>
-                
-                <h2 className="text-3xl md:text-5xl font-black text-white mb-10 uppercase tracking-tighter">
-                   Negociación por Éxito
-                </h2>
+                <div className="text-3xl font-mono text-cyan-400 font-black mb-2">$500.000</div>
+                <p className="text-[10px] text-slate-400 leading-relaxed font-bold uppercase tracking-wider">Plan Maestro Técnico + Estrategia de Negociación.</p>
+              </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mb-12 text-left">
-                  <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6">
-                    <div className="text-cyan-500 font-black text-[10px] uppercase mb-2">Paso 1</div>
-                    <div className="text-2xl text-white font-black">$500.000 <span className="text-slate-500 text-xs font-light tracking-normal">(Fee)</span></div>
-                  </div>
-                  <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6">
-                    <div className="text-cyan-500 font-black text-[10px] uppercase mb-2">Paso 2</div>
-                    <div className="text-2xl text-white font-black">15% Ahorro <span className="text-slate-500 text-xs font-light tracking-normal">(Baja de precio)</span></div>
-                  </div>
+              <div className="bg-slate-950/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">2️⃣</span>
+                  <h3 className="text-lg font-black text-white uppercase tracking-tight">Éxito Final</h3>
                 </div>
-
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-8 uppercase tracking-tighter">
-                  <span className="text-cyan-400">60% OFF</span> EN AUDITORÍA
-                </h2>
-
-                <button 
-                  type="button"
-                  onClick={() => setIsModalOpen(true)}
-                  className="group relative z-20 inline-flex items-center gap-3 px-12 py-5 bg-white text-slate-950 font-black rounded-full uppercase tracking-widest text-sm shadow-xl active:scale-95 touch-manipulation"
-                >
-                  <MessageCircle size={20} className="fill-current" />
-                  Activar Negociación
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </button>
+                <div className="text-3xl font-mono text-cyan-400 font-black mb-2">15% DEL AHORRO</div>
+                <p className="text-[10px] text-slate-400 leading-relaxed font-bold uppercase tracking-wider">Comisión calculada sobre el descuento logrado.</p>
               </div>
             </div>
+
+            <div className="mb-12">
+              <h2 className="text-5xl md:text-7xl font-black text-white mb-2 uppercase tracking-tighter drop-shadow-2xl">
+                <span className="text-cyan-400">60% OFF</span>
+              </h2>
+              <p className="text-white font-black text-[10px] md:text-xs uppercase tracking-[0.4em] opacity-90">En tu Auditoría al activar Fase 2</p>
+            </div>
+
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="group inline-flex items-center gap-4 px-12 py-6 bg-white text-slate-950 font-black rounded-2xl uppercase tracking-[0.15em] text-sm hover:scale-105 transition-all shadow-2xl active:scale-95 touch-manipulation"
+            >
+              <MessageCircle size={22} className="fill-current" />
+              Activar Negociación
+              <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
         </div>
-      </section>
+      </div>
 
       {mounted && isModalOpen && createPortal(ModalPortal, document.body)}
-    </>
+    </section>
   );
-};
-
-export default BenefitFlyer;
+}
