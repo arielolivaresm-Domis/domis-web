@@ -15,7 +15,7 @@ export default function Problem() {
           </div>
 
           <div className="relative z-10 p-8 md:p-12 text-center max-w-4xl">
-            {/* BADGE (Blanco Hueso como acordamos) */}
+            {/* BADGE (Blanco Hueso para visibilidad) */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-slate-200/10 border border-slate-200/30 rounded-full mb-8">
               <span className="text-[10px] font-mono text-slate-200 uppercase tracking-[0.3em] font-black">
                 Alerta de Riesgo Inmobiliario
@@ -36,9 +36,9 @@ export default function Problem() {
               EL ERROR <span className="text-red-500">MÁS CARO</span> ES NO AUDITAR
             </h3>
             
-            {/* TEXTO ACTUALIZADO: "Si ya encontraste una propiedad..." */}
+            {/* TEXTO CORREGIDO: Solo casas y departamentos */}
             <p className="text-slate-200 text-base md:text-lg leading-relaxed mb-10 max-w-3xl mx-auto font-medium drop-shadow-md">
-              Si ya encontraste una <span className="text-white font-bold">casa, departamento, terreno o local</span> y lo quieres comprar, nosotros lo auditamos para detectar fallas que <span className="text-white font-bold underline decoration-red-500 underline-offset-2">tú terminarás pagando</span>. Si aún no tienes la propiedad, nosotros la buscamos y auditamos por ti.
+              Si ya encontraste una <span className="text-white font-bold">casa o departamento</span> y lo quieres comprar, nosotros lo auditamos para detectar fallas que <span className="text-white font-bold underline decoration-red-500 underline-offset-2">tú terminarás pagando</span>. Si aún no tienes la propiedad, nosotros la buscamos y auditamos por ti.
             </p>
             
             <p className="text-cyan-400 font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold border-t border-cyan-500/20 pt-6 inline-block">
