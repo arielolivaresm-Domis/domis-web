@@ -66,13 +66,13 @@ export default function AuditPacks({ onNext }: { onNext: () => void }) {
                 <div className="text-right">
                   <h4 className="text-xl font-black text-white uppercase italic tracking-tighter">{p.title}</h4>
                   
-                  {/* TAGS DESTACADOS: Lógica de resaltado para descuentos */}
-                  <p className={`font-mono text-[10px] uppercase tracking-widest font-bold inline-block mt-1 ${
+                  {/* BADGES DE DESCUENTO: Estilo Rojo Intenso Unificado y Agrandado */}
+                  <p className={`font-mono uppercase tracking-widest font-bold inline-block mt-2 ${
                     p.tag.includes('OFF') 
-                      ? p.id === 'inversionista' 
-                        ? 'bg-red-500/20 text-red-500 border border-red-500/50 px-2 py-0.5 rounded-full animate-pulse' 
-                        : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/50 px-2 py-0.5 rounded-full'
-                      : 'text-slate-500'
+                      // Estilo ALERTA ROJA para ambos descuentos
+                      ? 'bg-red-950/60 text-red-400 border-2 border-red-500 px-3 py-1 rounded-full animate-pulse text-xs shadow-[0_0_20px_rgba(239,68,68,0.5)]' 
+                      // Estilo estándar para "Popular"
+                      : 'text-slate-500 text-[10px]'
                   }`}>
                     {p.tag}
                   </p>
@@ -95,7 +95,7 @@ export default function AuditPacks({ onNext }: { onNext: () => void }) {
                   target="_blank" 
                   rel="noreferrer" 
                   className="block w-full py-3 font-black uppercase rounded-xl transition-all mt-4 text-sm bg-cyan-500 text-slate-950 hover:bg-cyan-400 shadow-[0_4px_15px_rgba(6,182,212,0.2)]"
-                  onClick={(e) => e.stopPropagation()} // Evita que el clic en el botón active el onNext del contenedor
+                  onClick={(e) => e.stopPropagation()} 
                 >
                   Seleccionar Pack
                 </a>
