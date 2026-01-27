@@ -3,13 +3,17 @@ export default function Problem() {
     <section id="problema" className="py-24 bg-slate-950 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="relative rounded-[2rem] overflow-hidden border-2 border-cyan-500 shadow-[0_0_40px_rgba(34,211,238,0.2)] min-h-[500px] flex items-center justify-center bg-slate-900">
+          
+          {/* CAPA DE IMAGEN: Menos opacidad oscura, más visibilidad de fondo */}
           <div className="absolute inset-0">
             <img 
               src="/DOMIS_error_mas_comun.webp" 
               alt="Error en compra inmobiliaria" 
-              className="w-full h-full object-cover opacity-50 grayscale-[0.2] contrast-110"
+              // Subimos la opacidad de la imagen al 80% para que se vea mucho más clara
+              className="w-full h-full object-cover opacity-80 grayscale-[0.2] contrast-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/50"></div>
+            {/* Gradiente suavizado: Reducimos la carga de negro en la parte superior (to-slate-950/20) */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20"></div>
           </div>
 
           <div className="relative z-10 p-8 md:p-12 text-center max-w-4xl">
@@ -19,24 +23,23 @@ export default function Problem() {
               </span>
             </div>
             
-            {/* 90% - Grande pero controlado */}
+            {/* 90% - El dato técnico imponente */}
             <div className="mb-6">
-              <span className="block text-7xl md:text-8xl font-black text-white tracking-tighter leading-none mb-4">
+              <span className="block text-7xl md:text-8xl font-black text-white tracking-tighter leading-none mb-4 drop-shadow-2xl">
                 EL 90%
               </span>
-              {/* Texto intermedio - Tamaño uniforme y más pequeño */}
-              <h2 className="text-lg md:text-xl font-bold text-white uppercase tracking-widest leading-relaxed max-w-2xl mx-auto">
+              <h2 className="text-lg md:text-xl font-bold text-white uppercase tracking-widest leading-relaxed max-w-2xl mx-auto drop-shadow-md">
                 de los compradores en Chile firma la promesa de compraventa <br className="hidden md:block" />
                 sin saber realmente qué está comprando.
               </h2>
             </div>
 
-            {/* ERROR MÁS CARO - Reducido para no competir con el 90% */}
-            <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-8 italic">
+            {/* ERROR MÁS CARO */}
+            <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-8 italic drop-shadow-md">
               EL ERROR <span className="text-red-500">MÁS CARO</span> ES NO AUDITAR
             </h3>
             
-            <p className="text-slate-300 text-base md:text-lg leading-relaxed mb-10 max-w-3xl mx-auto">
+            <p className="text-slate-200 text-base md:text-lg leading-relaxed mb-10 max-w-3xl mx-auto font-medium drop-shadow-md">
               Si ya tienes la propiedad, nosotros la auditamos para detectar fallas que <span className="text-white font-bold underline decoration-red-500 underline-offset-2">tú terminarás pagando</span>. Si aún no tienes la propiedad, nosotros la buscamos y auditamos por ti.
             </p>
             
