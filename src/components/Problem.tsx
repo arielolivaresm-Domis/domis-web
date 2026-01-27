@@ -4,7 +4,7 @@ export default function Problem() {
       <div className="max-w-7xl mx-auto">
         <div className="relative rounded-[2rem] overflow-hidden border-2 border-cyan-500 shadow-[0_0_40px_rgba(34,211,238,0.2)] min-h-[500px] flex items-center justify-center bg-slate-900">
           
-          {/* CAPA DE IMAGEN: Estructura original preservada */}
+          {/* CAPA DE IMAGEN: Estructura original intacta */}
           <div className="absolute inset-0">
             <img 
               src="/DOMIS_error_mas_comun.webp" 
@@ -15,7 +15,7 @@ export default function Problem() {
           </div>
 
           <div className="relative z-10 p-8 md:p-12 text-center max-w-4xl">
-            {/* BADGE (Blanco Hueso para visibilidad) */}
+            {/* BADGE: Blanco Hueso (slate-200) para visibilidad técnica */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-slate-200/10 border border-slate-200/30 rounded-full mb-8">
               <span className="text-[10px] font-mono text-slate-200 uppercase tracking-[0.3em] font-black">
                 Alerta de Riesgo Inmobiliario
@@ -36,10 +36,18 @@ export default function Problem() {
               EL ERROR <span className="text-red-500">MÁS CARO</span> ES NO AUDITAR
             </h3>
             
-            {/* TEXTO CORREGIDO: Solo casas y departamentos */}
-            <p className="text-slate-200 text-base md:text-lg leading-relaxed mb-10 max-w-3xl mx-auto font-medium drop-shadow-md">
-              Si ya encontraste una <span className="text-white font-bold">casa o departamento</span> y lo quieres comprar, nosotros lo auditamos para detectar fallas que <span className="text-white font-bold underline decoration-red-500 underline-offset-2">tú terminarás pagando</span>. Si aún no tienes la propiedad, nosotros la buscamos y auditamos por ti.
-            </p>
+            {/* --- NUEVA NARRATIVA DE ALTO IMPACTO --- */}
+            <div className="space-y-6 mb-10 max-w-3xl mx-auto">
+              <p className="text-slate-200 text-lg md:text-xl leading-relaxed font-medium drop-shadow-md">
+                <span className="text-white font-bold italic underline decoration-cyan-500/50">¿Ya encontraste esa casa o departamento que te encantó?</span><br />
+                Auditamos cada detalle para detectar fallas ocultas que <span className="text-white font-bold underline decoration-red-500 underline-offset-2">terminarás pagando por años</span>.
+              </p>
+              
+              <p className="text-slate-200 text-lg md:text-xl leading-relaxed font-medium drop-shadow-md pt-4 border-t border-white/5">
+                <span className="text-cyan-400 font-bold italic">¿Todavía buscando? Mejor aún.</span><br />
+                Filtramos el mercado y solo te presentamos propiedades con <span className="text-white font-bold">scoring técnico real</span>.
+              </p>
+            </div>
             
             <p className="text-cyan-400 font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold border-t border-cyan-500/20 pt-6 inline-block">
               MÍNIMO TÉCNICO DE 100 M² POR PROPIEDAD.
