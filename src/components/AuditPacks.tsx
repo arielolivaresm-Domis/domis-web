@@ -18,7 +18,6 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    // AJUSTE DE BORDES: Se agregó rounded-[40px] y mx-4 para dar efecto cápsula
     <div className="py-24 mx-4 md:mx-8 my-8 animate-fadeIn bg-slate-950 relative overflow-hidden rounded-[40px]">
       
       {/* CAPA DE FONDO: DOMIS_audi.webp */}
@@ -30,7 +29,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           backgroundPosition: 'center',
         }}
       >
-        {/* AJUSTE DE TRANSPARENCIA: Bajado al 10% para máxima visibilidad de la familia */}
+        {/* FONDO MANTENIDO CLARO (10%) para ver a la familia */}
         <div className="absolute inset-0 bg-slate-950/10 backdrop-blur-[1px]"></div>
       </div>
 
@@ -45,10 +44,12 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
         </div>
 
         <div className="max-w-2xl mx-auto px-4">
-          <div className="bg-slate-950/90 backdrop-blur-xl border-2 border-cyan-500 rounded-3xl p-8 shadow-[0_0_60px_rgba(0,0,0,0.9)]">
+          {/* CAJA CENTRAL TRANSPARENTE (Efecto Cristal) */}
+          {/* Se bajó de /90 a /30 para ver a través de ella */}
+          <div className="bg-slate-950/30 backdrop-blur-xl border-2 border-cyan-500 rounded-3xl p-8 shadow-[0_0_60px_rgba(0,0,0,0.5)]">
              
             <div className="flex items-center justify-between mb-8">
-              <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800">
+              <div className="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
                 <span className="text-3xl">🔍</span>
               </div>
               <div className="text-right">
@@ -63,7 +64,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               </div>
             </div>
 
-            <div className="space-y-3 mb-8 text-sm text-slate-300 border-b border-slate-800/50 pb-6">
+            <div className="space-y-3 mb-8 text-sm text-slate-100 border-b border-slate-500/30 pb-6 font-medium shadow-black drop-shadow-md">
               <div className="flex items-center gap-3">
                 <CheckCircle size={16} className="text-cyan-400" />
                 <span>Protocolo para <strong className="text-white">{efectiveCantidad} {efectiveCantidad === 1 ? 'propiedad' : 'propiedades'}</strong></span>
@@ -78,21 +79,21 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               </div>
             </div>
 
-            <div className="bg-slate-900/80 rounded-2xl p-6 border border-slate-800 mb-6">
+            <div className="bg-slate-900/60 rounded-2xl p-6 border border-slate-700/50 mb-6 backdrop-blur-md">
               <div className="flex items-center gap-2 mb-6">
                 <Calculator size={16} className="text-cyan-400" />
                 <span className="text-xs uppercase text-cyan-400 font-bold tracking-widest">Calculadora de Inversión</span>
               </div>
 
               <div className="mb-6">
-                <label className="block text-xs uppercase text-slate-400 mb-3 font-bold italic tracking-tighter">Unidades:</label>
+                <label className="block text-xs uppercase text-slate-300 mb-3 font-bold italic tracking-tighter">Unidades:</label>
                 <div className="flex gap-2">
                   {[1, 2, 3].map((num) => (
                     <button
                       key={num}
                       onClick={() => setCantidad(num)}
                       className={`flex-1 py-3 rounded-lg border-2 transition-all font-black text-lg ${
-                        cantidad === num ? 'bg-cyan-500 border-cyan-400 text-slate-950' : 'bg-slate-800 border-slate-700 text-slate-400'
+                        cantidad === num ? 'bg-cyan-500 border-cyan-400 text-slate-950' : 'bg-slate-800/80 border-slate-600 text-slate-300 hover:bg-slate-700'
                       }`}
                     >
                       {num === 3 ? (cantidad === 3 ? <input type="number" value={cantidadCustom} onChange={(e) => setCantidadCustom(Math.max(3, Number(e.target.value)))} className="w-full bg-transparent text-center outline-none" /> : '3+') : num}
@@ -102,20 +103,20 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               </div>
 
               <div className="mb-6">
-                <label className="block text-xs uppercase text-slate-400 mb-3 font-bold italic tracking-tighter">Superficie (m²):</label>
+                <label className="block text-xs uppercase text-slate-300 mb-3 font-bold italic tracking-tighter">Superficie (m²):</label>
                 <div className="relative">
                   <input
                     type="number"
                     value={meters}
                     onChange={(e) => setMeters(Number(e.target.value))}
                     onBlur={() => setMeters(Math.max(100, meters))}
-                    className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-lg font-mono text-white focus:border-cyan-400 outline-none"
+                    className="w-full bg-slate-800/80 border border-slate-600 rounded-lg px-4 py-3 text-lg font-mono text-white focus:border-cyan-400 outline-none placeholder-slate-500"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-mono text-sm">m²</span>
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-mono text-sm">m²</span>
                 </div>
               </div>
 
-              <div className="bg-slate-950/50 rounded-xl p-4 border border-slate-800">
+              <div className="bg-slate-950/60 rounded-xl p-4 border border-slate-700">
                 <div className="flex justify-between pt-2 font-black text-cyan-400">
                   <span className="text-xs uppercase tracking-widest">Inversión Estimada:</span>
                   <span className="font-mono text-xl">${totalCost.toLocaleString()} + IVA</span>
@@ -127,7 +128,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               href={whatsappUrl}
               target="_blank" 
               rel="noreferrer" 
-              className="block w-full py-5 font-black uppercase rounded-xl text-sm bg-cyan-500 text-slate-950 hover:bg-white transition-all shadow-lg text-center tracking-widest"
+              className="block w-full py-5 font-black uppercase rounded-xl text-sm bg-cyan-500 text-slate-950 hover:bg-white transition-all shadow-lg text-center tracking-widest hover:scale-[1.02]"
               onClick={() => onNext && onNext()}
             >
               Seleccionar Pack
