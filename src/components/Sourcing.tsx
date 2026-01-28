@@ -30,8 +30,10 @@ export default function Sourcing() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
           
-          {/* OPCIÓN 1: NORMAL */}
-          <div className="bg-slate-900/50 border border-white/10 p-6 md:p-10 rounded-2xl hover:border-slate-600 transition-all group relative flex flex-col">
+          {/* =======================================================
+              OPCIÓN 1: NORMAL
+             ======================================================= */}
+          <div className="bg-slate-900/50 border border-white/10 p-6 md:p-10 rounded-2xl hover:border-slate-600 transition-all group relative flex flex-col h-full">
             <div className="flex items-center gap-5 mb-6">
               <div className="p-4 bg-slate-800 rounded-xl group-hover:bg-slate-700 transition-colors">
                 <Search className="text-slate-300 w-8 h-8" />
@@ -42,11 +44,13 @@ export default function Sourcing() {
               </div>
             </div>
             
-            <p className="text-slate-300 text-sm md:text-base mb-6 leading-relaxed">
+            {/* Margen reducido (mb-4) y quitamos mt-auto de abajo para subir la caja */}
+            <p className="text-slate-300 text-sm md:text-base mb-4 leading-relaxed">
               Filtramos el mercado y te presentamos las mejores opciones <strong>digitalmente</strong>. Tú eliges tu favorita y nosotros la auditamos a fondo.
             </p>
 
-            <div className="bg-slate-950/80 rounded-xl p-6 border border-slate-800 mb-6 mt-auto">
+            {/* Caja de Protocolo subida (sin mt-auto) */}
+            <div className="bg-slate-950/80 rounded-xl p-6 border border-slate-800 mb-6">
               <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-6 text-center border-b border-slate-800 pb-3">
                 Protocolo de Filtrado
               </p>
@@ -91,13 +95,16 @@ export default function Sourcing() {
               </div>
             </div>
 
-            <button className="w-full bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest transition-all">
+            {/* El botón se encarga de llenar el espacio restante hacia abajo */}
+            <button className="w-full bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest transition-all mt-auto">
               Seleccionar Pack
             </button>
           </div>
 
-          {/* OPCIÓN 2: VIP */}
-          <div className="bg-gradient-to-b from-slate-900 to-slate-950 border border-cyan-500/50 p-6 md:p-10 rounded-2xl relative overflow-hidden group hover:shadow-[0_0_50px_rgba(34,211,238,0.15)] transition-all flex flex-col">
+          {/* =======================================================
+              OPCIÓN 2: VIP
+             ======================================================= */}
+          <div className="bg-gradient-to-b from-slate-900 to-slate-950 border border-cyan-500/50 p-6 md:p-10 rounded-2xl relative overflow-hidden group hover:shadow-[0_0_50px_rgba(34,211,238,0.15)] transition-all flex flex-col h-full">
             <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[10px] font-black px-4 py-1.5 rounded-bl-xl uppercase tracking-widest">
               Recomendado
             </div>
@@ -112,12 +119,11 @@ export default function Sourcing() {
               </div>
             </div>
 
-            {/* PACKS SIMPLIFICADOS */}
-            <div className="space-y-4 mb-8 mt-auto">
+            <div className="space-y-4 mb-8">
               {[
-                { pack: 1, presentamos: 2, visitamos: 2, eliges: 1, auditamos: 1, precio: "100.000" },
-                { pack: 2, presentamos: 3, visitamos: 3, eliges: 2, auditamos: 2, precio: "150.000" },
-                { pack: 3, presentamos: 5, visitamos: 5, eliges: 3, auditamos: 3, precio: "250.000" }
+                { pack: 1, presentamos: 2, visitamos: 2, eliges: 1, auditamos: 1, precio: "100.000", calc: "(2 x $50.000)" },
+                { pack: 2, presentamos: 3, visitamos: 3, eliges: 2, auditamos: 2, precio: "150.000", calc: "(3 x $50.000)" },
+                { pack: 3, presentamos: 5, visitamos: 5, eliges: 3, auditamos: 3, precio: "250.000", calc: "(5 x $50.000)" }
               ].map((item) => (
                 <div key={item.pack} className="bg-slate-950/80 border border-cyan-900/50 rounded-xl p-5">
                   <h4 className="text-white font-black uppercase text-sm mb-4">
@@ -142,16 +148,17 @@ export default function Sourcing() {
                       <span>Auditoría completa: <strong className="text-white">{item.auditamos}</strong></span>
                     </div>
                     
-                    <div className="pt-3 mt-3 border-t border-cyan-500/20">
+                    <div className="pt-3 mt-3 border-t border-cyan-500/20 flex justify-between items-center">
                       <span className="text-cyan-400 text-base font-bold">💰 Inversión: ${item.precio}</span>
+                      {/* Aquí está el desglose de precio solicitado */}
+                      <span className="text-[10px] text-cyan-200/50 font-mono">{item.calc}</span>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* NOTA EXPLICATIVA */}
-            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mb-6 text-xs text-slate-300">
+            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mb-6 text-xs text-slate-300 mt-auto">
               <span className="text-cyan-400 font-bold">ℹ️ Informe FAST:</span> Nota rápida (scoring) de cada propiedad para que compares y elijas la mejor.
             </div>
 
