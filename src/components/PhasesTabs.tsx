@@ -1,6 +1,6 @@
 import AuditPacks from './AuditPacks';
 import Sourcing from './Sourcing';
-import Calculator from './Calculator';
+// import Calculator from './Calculator'; // <--- BORRADO (Desactivado)
 import BenefitFlyer from './BenefitFlyer';
 import Deliverable from './Deliverable';
 import Phase2 from './Phase2';
@@ -122,9 +122,10 @@ export default function PhasesTabs() {
         <div className="mt-8">
           {activeTab === 'fase1' && (
             <div className="space-y-24 animate-fadeIn text-center">
+              {/* === ORDEN CORREGIDO === */}
               <AuditPacks onNext={() => handleTabChange('fase2')} />
               <Sourcing />
-              <Calculator />
+              {/* <Calculator />  <--- ELIMINADO */}
               <BridgeButton targetId="fase2" label="Fase 2" subtitle="Negociación Técnica" icon="💼" />
             </div>
           )}
