@@ -1,4 +1,4 @@
-import { Search, Crown, Zap, Clock, MapPin, CheckCircle, FileText } from 'lucide-react';
+import { Search, Crown, Zap, Clock, MapPin, CheckCircle, FileText, ListFilter } from 'lucide-react';
 
 export default function Sourcing() {
   return (
@@ -30,8 +30,10 @@ export default function Sourcing() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
           
-          {/* OPCIÓN 1: NORMAL */}
-          <div className="bg-slate-900/50 border border-white/10 p-6 md:p-10 rounded-2xl hover:border-slate-600 transition-all group relative flex flex-col">
+          {/* =======================================================
+              OPCIÓN 1: SOURCING NORMAL
+             ======================================================= */}
+          <div className="bg-slate-900/50 border border-white/10 p-6 md:p-10 rounded-2xl hover:border-slate-600 transition-all group relative flex flex-col h-full">
             <div className="flex items-center gap-5 mb-6">
               <div className="p-4 bg-slate-800 rounded-xl group-hover:bg-slate-700 transition-colors">
                 <Search className="text-slate-300 w-8 h-8" />
@@ -42,9 +44,30 @@ export default function Sourcing() {
               </div>
             </div>
             
-            <p className="text-slate-300 text-sm md:text-base mb-8 leading-relaxed">
-              Filtramos el mercado y te presentamos las mejores opciones <strong>digitalmente</strong>. Tú eliges tu favorita y nosotros la auditamos a fondo.
-            </p>
+            {/* BLOQUE NUEVO PARA EQUILIBRAR ALTURA */}
+            <div className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-4 mb-8">
+              <p className="text-slate-400 text-xs font-bold uppercase tracking-wide mb-3 flex items-center gap-2">
+                <ListFilter size={14} className="text-slate-300" /> Cómo funciona:
+              </p>
+              <div className="space-y-2 text-sm text-slate-400">
+                <div className="flex items-start gap-2">
+                  <span className="text-slate-200 font-bold">1.</span>
+                  <span>Filtramos el mercado digital por ti</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-slate-200 font-bold">2.</span>
+                  <span>Te presentamos las mejores opciones</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-slate-200 font-bold">3.</span>
+                  <span>Tú eliges tu favorita</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-white font-bold">4.</span>
+                  <span>Nosotros la auditamos a fondo</span>
+                </div>
+              </div>
+            </div>
 
             <div className="bg-slate-950/80 rounded-xl p-6 border border-slate-800 mb-6 mt-auto">
               <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-6 text-center border-b border-slate-800 pb-3">
@@ -53,11 +76,11 @@ export default function Sourcing() {
               
               <div className="space-y-5">
                 {[
-                  { pack: 1, presentamos: 2, eliges: 1, auditamos: 1, precio: "60.000", calc: "(1 × $60.000)" },
-                  { pack: 2, presentamos: 3, eliges: 2, auditamos: 2, precio: "120.000", calc: "(2 × $60.000)" },
-                  { pack: 3, presentamos: 5, eliges: 3, auditamos: 3, precio: "180.000", calc: "(3 × $60.000)" }
+                  { pack: "1 Propiedad", presentamos: 2, eliges: 1, auditamos: 1, precio: "60.000", calc: "(1 × $60.000)" },
+                  { pack: "2 Propiedades", presentamos: 3, eliges: 2, auditamos: 2, precio: "120.000", calc: "(2 × $60.000)" },
+                  { pack: "3 Propiedades", presentamos: 5, eliges: 3, auditamos: 3, precio: "180.000", calc: "(3 × $60.000)" }
                 ].map((item, idx) => (
-                  <div key={item.pack} className={`${idx !== 0 ? 'border-t border-slate-800 pt-5' : ''}`}>
+                  <div key={idx} className={`${idx !== 0 ? 'border-t border-slate-800 pt-5' : ''}`}>
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-white font-black uppercase text-sm">Pack {item.pack}</span>
                       <span className="text-cyan-400 text-xs font-bold px-3 py-1 bg-slate-800 rounded border border-slate-700">
@@ -94,8 +117,10 @@ export default function Sourcing() {
             </button>
           </div>
 
-          {/* OPCIÓN 2: VIP */}
-          <div className="bg-gradient-to-b from-slate-900 to-slate-950 border border-cyan-500/50 p-6 md:p-10 rounded-2xl relative overflow-hidden group hover:shadow-[0_0_50px_rgba(34,211,238,0.15)] transition-all flex flex-col">
+          {/* =======================================================
+              OPCIÓN 2: SOURCING VIP
+             ======================================================= */}
+          <div className="bg-gradient-to-b from-slate-900 to-slate-950 border border-cyan-500/50 p-6 md:p-10 rounded-2xl relative overflow-hidden group hover:shadow-[0_0_50px_rgba(34,211,238,0.15)] transition-all flex flex-col h-full">
             <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[10px] font-black px-4 py-1.5 rounded-bl-xl uppercase tracking-widest">
               Recomendado
             </div>
@@ -142,11 +167,11 @@ export default function Sourcing() {
               
               <div className="space-y-5 relative">
                 {[
-                  { pack: 1, visitamos: 2, eliges: 1, auditamos: 1, precio: "100.000", calc: "(2 × $50.000)" },
-                  { pack: 2, visitamos: 3, eliges: 2, auditamos: 2, precio: "150.000", calc: "(3 × $50.000)" },
-                  { pack: 3, visitamos: 5, eliges: 3, auditamos: 3, precio: "250.000", calc: "(5 × $50.000)" }
+                  { pack: "1 Propiedad", visitamos: 2, eliges: 1, auditamos: 1, precio: "100.000", calc: "(2 × $50.000)" },
+                  { pack: "2 Propiedades", visitamos: 3, eliges: 2, auditamos: 2, precio: "150.000", calc: "(3 × $50.000)" },
+                  { pack: "3 Propiedades", visitamos: 5, eliges: 3, auditamos: 3, precio: "250.000", calc: "(5 × $50.000)" }
                 ].map((item, idx) => (
-                  <div key={item.pack} className={`${idx !== 0 ? 'border-t border-cyan-500/20 pt-5' : ''}`}>
+                  <div key={idx} className={`${idx !== 0 ? 'border-t border-cyan-500/20 pt-5' : ''}`}>
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-white font-black uppercase text-sm">Pack {item.pack}</span>
                       <span className="text-cyan-400 text-xs font-bold px-3 py-1 bg-cyan-900/30 rounded border border-cyan-500/30">
