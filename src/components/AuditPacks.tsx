@@ -18,7 +18,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <div className="py-24 animate-fadeIn bg-slate-950 relative overflow-hidden">
+    <div className="py-24 mx-4 md:mx-8 my-8 animate-fadeIn bg-slate-950 relative overflow-hidden rounded-[40px]">
       
       {/* CAPA DE FONDO: DOMIS_audi.webp */}
       <div 
@@ -29,8 +29,8 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           backgroundPosition: 'center',
         }}
       >
-        {/* Opacidad al 40% para que la familia sea visible */}
-        <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]"></div>
+        {/* TRANSPARENCIA AJUSTADA AL 30% */}
+        <div className="absolute inset-0 bg-slate-950/30 backdrop-blur-[1px]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -84,7 +84,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               </div>
 
               <div className="mb-6">
-                <label className="block text-xs uppercase text-slate-400 mb-3 font-bold italic tracking-tighter">Unidades a Auditar:</label>
+                <label className="block text-xs uppercase text-slate-400 mb-3 font-bold italic tracking-tighter">Unidades:</label>
                 <div className="flex gap-2">
                   {[1, 2, 3].map((num) => (
                     <button
@@ -134,7 +134,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           </div>
 
           <div className="mt-8 text-center">
-            <div className="inline-flex items-center gap-2 text-slate-400 text-[10px] bg-black/60 backdrop-blur-sm p-4 rounded-xl border border-slate-800">
+            <div className="inline-flex items-center gap-2 text-slate-100 text-[10px] bg-black/60 backdrop-blur-sm p-4 rounded-xl border border-slate-800 shadow-xl">
               <Info size={12} className="text-cyan-500" />
               <p>Asesoría técnica post-auditoría incluida para la interpretación de resultados.</p>
             </div>
