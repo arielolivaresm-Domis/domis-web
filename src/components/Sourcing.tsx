@@ -1,4 +1,5 @@
-import { Search, Crown, Clock, MapPin, CheckCircle, FileText, Users } from 'lucide-react';
+import { useState } from 'react';
+import { Search, Crown, Clock, MapPin, CheckCircle, FileText, Calculator, Info } from 'lucide-react';
 
 export default function Sourcing() {
   return (
@@ -30,142 +31,11 @@ export default function Sourcing() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
           
-          {/* =======================================================
-              OPCIÓN 1: NORMAL
-             ======================================================= */}
-          <div className="bg-slate-900/50 border border-white/10 p-6 md:p-10 rounded-2xl hover:border-slate-600 transition-all group relative flex flex-col h-full">
-            <div className="flex items-center gap-5 mb-6">
-              <div className="p-4 bg-slate-800 rounded-xl group-hover:bg-slate-700 transition-colors">
-                <Search className="text-slate-300 w-8 h-8" />
-              </div>
-              <div>
-                <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-wider">Sourcing Normal</h3>
-                <p className="text-sm text-cyan-400 font-bold mt-1">Solo auditas la que eliges</p>
-              </div>
-            </div>
-            
-            {/* Margen reducido (mb-4) y quitamos mt-auto de abajo para subir la caja */}
-            <p className="text-slate-300 text-sm md:text-base mb-4 leading-relaxed">
-              Filtramos el mercado y te presentamos las mejores opciones <strong>digitalmente</strong>. Tú eliges tu favorita y nosotros la auditamos a fondo.
-            </p>
+          {/* OPCIÓN 1: SOURCING NORMAL */}
+          <SourcingNormal />
 
-            {/* Caja de Protocolo subida (sin mt-auto) */}
-            <div className="bg-slate-950/80 rounded-xl p-6 border border-slate-800 mb-6">
-              <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-6 text-center border-b border-slate-800 pb-3">
-                Protocolo de Filtrado
-              </p>
-              
-              <div className="space-y-5">
-                {[
-                  { pack: 1, presentamos: 2, eliges: 1, auditamos: 1, precio: "60.000", calc: "(1 × $60.000)" },
-                  { pack: 2, presentamos: 3, eliges: 2, auditamos: 2, precio: "120.000", calc: "(2 × $60.000)" },
-                  { pack: 3, presentamos: 5, eliges: 3, auditamos: 3, precio: "180.000", calc: "(3 × $60.000)" }
-                ].map((item, idx) => (
-                  <div key={item.pack} className={`${idx !== 0 ? 'border-t border-slate-800 pt-5' : ''}`}>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-white font-black uppercase text-sm">
-                        Pack {item.pack} {item.pack === 1 ? 'propiedad' : 'propiedades'}
-                      </span>
-                      <span className="text-cyan-400 text-xs font-bold px-3 py-1 bg-slate-800 rounded border border-slate-700">
-                        {item.presentamos} opciones digitales
-                      </span>
-                    </div>
-                    
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2 text-slate-400">
-                        <Search size={14} className="text-slate-500" />
-                        <span>Presentamos: <strong className="text-slate-300">{item.presentamos} propiedades</strong></span>
-                      </div>
-                      <div className="flex items-center gap-2 text-slate-400">
-                        <CheckCircle size={14} className="text-cyan-500" />
-                        <span>Tú eliges: <strong className="text-cyan-400">{item.eliges}</strong></span>
-                      </div>
-                      <div className="flex items-center gap-2 text-slate-400">
-                        <FileText size={14} className="text-slate-500" />
-                        <span>Auditoría completa: <strong className="text-white">{item.auditamos}</strong></span>
-                      </div>
-                    </div>
-
-                    <div className="mt-3 pt-3 border-t border-slate-800/50 flex justify-between items-center">
-                      <span className="text-cyan-500 text-sm font-bold">Inversión: ${item.precio}</span>
-                      <span className="text-[10px] text-slate-500 font-mono">{item.calc}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* El botón se encarga de llenar el espacio restante hacia abajo */}
-            <button className="w-full bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest transition-all mt-auto">
-              Seleccionar Pack
-            </button>
-          </div>
-
-          {/* =======================================================
-              OPCIÓN 2: VIP
-             ======================================================= */}
-          <div className="bg-gradient-to-b from-slate-900 to-slate-950 border border-cyan-500/50 p-6 md:p-10 rounded-2xl relative overflow-hidden group hover:shadow-[0_0_50px_rgba(34,211,238,0.15)] transition-all flex flex-col h-full">
-            <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[10px] font-black px-4 py-1.5 rounded-bl-xl uppercase tracking-widest">
-              Recomendado
-            </div>
-
-            <div className="flex items-center gap-5 mb-6">
-              <div className="p-4 bg-cyan-500/20 border border-cyan-500/30 rounded-xl">
-                <Crown className="text-cyan-400 w-8 h-8 animate-pulse" />
-              </div>
-              <div>
-                <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-wider">Sourcing VIP</h3>
-                <p className="text-sm text-cyan-400 font-bold mt-1">Visitamos todas, eliges con datos reales</p>
-              </div>
-            </div>
-
-            <div className="space-y-4 mb-8">
-              {[
-                { pack: 1, presentamos: 2, visitamos: 2, eliges: 1, auditamos: 1, precio: "100.000", calc: "(2 x $50.000)" },
-                { pack: 2, presentamos: 3, visitamos: 3, eliges: 2, auditamos: 2, precio: "150.000", calc: "(3 x $50.000)" },
-                { pack: 3, presentamos: 5, visitamos: 5, eliges: 3, auditamos: 3, precio: "250.000", calc: "(5 x $50.000)" }
-              ].map((item) => (
-                <div key={item.pack} className="bg-slate-950/80 border border-cyan-900/50 rounded-xl p-5">
-                  <h4 className="text-white font-black uppercase text-sm mb-4">
-                    Pack {item.pack} {item.pack === 1 ? 'propiedad' : 'propiedades'}
-                  </h4>
-                  
-                  <div className="space-y-2 text-sm text-slate-300">
-                    <div className="flex items-center gap-2">
-                      <MapPin size={14} className="text-cyan-400" />
-                      <span>Presentamos: <strong className="text-white">{item.presentamos} propiedades</strong></span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Users size={14} className="text-cyan-400" />
-                      <span>Visitamos: <strong className="text-white">{item.visitamos}</strong> (con Informe FAST)</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle size={14} className="text-cyan-400" />
-                      <span>Tú eliges: <strong className="text-cyan-400">{item.eliges}</strong></span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FileText size={14} className="text-cyan-400" />
-                      <span>Auditoría completa: <strong className="text-white">{item.auditamos}</strong></span>
-                    </div>
-                    
-                    <div className="pt-3 mt-3 border-t border-cyan-500/20 flex justify-between items-center">
-                      <span className="text-cyan-400 text-base font-bold">💰 Inversión: ${item.precio}</span>
-                      {/* Aquí está el desglose de precio solicitado */}
-                      <span className="text-[10px] text-cyan-200/50 font-mono">{item.calc}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mb-6 text-xs text-slate-300 mt-auto">
-              <span className="text-cyan-400 font-bold">ℹ️ Informe FAST:</span> Nota rápida (scoring) de cada propiedad para que compares y elijas la mejor.
-            </div>
-
-            <button className="w-full bg-cyan-500 hover:bg-white text-slate-950 px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest transition-all shadow-lg shadow-cyan-500/20 hover:scale-[1.02]">
-              Quiero Seguridad VIP
-            </button>
-          </div>
+          {/* OPCIÓN 2: SOURCING VIP */}
+          <SourcingVIP />
         </div>
 
         <div className="max-w-4xl mx-auto bg-slate-900/30 border border-slate-800 rounded-xl p-5 flex items-start gap-4">
@@ -177,5 +47,317 @@ export default function Sourcing() {
         </div>
       </div>
     </section>
+  );
+}
+
+// ==========================================
+// COMPONENTE INTERNO: SOURCING NORMAL
+// ==========================================
+function SourcingNormal() {
+  const [cantidad, setCantidad] = useState(1);
+  const [cantidadCustom, setCantidadCustom] = useState(3);
+  const [meters, setMeters] = useState(100);
+
+  const efectiveCantidad = cantidad === 3 ? cantidadCustom : cantidad;
+  const effectiveMeters = Math.max(100, meters);
+  
+  // Calcular precio por m² según cantidad
+  const pricePerM2 = cantidad === 1 ? 1900 : cantidad === 2 ? 1710 : 1520;
+  
+  // Calcular costos
+  const auditCost = efectiveCantidad * effectiveMeters * pricePerM2;
+  const sourcingFee = efectiveCantidad * 60000;
+  const totalCost = auditCost + sourcingFee;
+
+  return (
+    <div className="bg-slate-900/50 border border-white/10 p-6 md:p-10 rounded-2xl hover:border-slate-600 transition-all group relative flex flex-col">
+      <div className="flex items-center gap-5 mb-6">
+        <div className="p-4 bg-slate-800 rounded-xl group-hover:bg-slate-700 transition-colors">
+          <Search className="text-slate-300 w-8 h-8" />
+        </div>
+        <div>
+          <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-wider">Sourcing Normal</h3>
+          <p className="text-sm text-cyan-400 font-bold mt-1">Solo auditas la que eliges</p>
+        </div>
+      </div>
+      
+      <p className="text-slate-300 text-sm md:text-base mb-6 leading-relaxed">
+        Filtramos el mercado y te presentamos las mejores opciones <strong>digitalmente</strong>. Tú eliges tu favorita y nosotros la auditamos a fondo.
+      </p>
+
+      {/* CALCULADORA COMPACTA */}
+      <div className="bg-slate-950/80 rounded-xl p-6 border border-slate-800 mb-6 mt-auto">
+        <div className="flex items-center gap-2 mb-6">
+          <Calculator size={16} className="text-cyan-400" />
+          <span className="text-xs uppercase text-cyan-400 font-bold tracking-widest">Calculadora de Inversión</span>
+        </div>
+
+        {/* SELECTOR DE CANTIDAD */}
+        <div className="mb-5">
+          <label className="block text-xs uppercase text-slate-400 mb-3 font-bold">Propiedades a auditar:</label>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setCantidad(1)}
+              className={`flex-1 py-3 rounded-lg border-2 transition-all font-black text-lg ${
+                cantidad === 1
+                  ? 'bg-cyan-500 border-cyan-400 text-white shadow-lg shadow-cyan-500/20'
+                  : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-600'
+              }`}
+            >
+              1
+            </button>
+            <button
+              onClick={() => setCantidad(2)}
+              className={`flex-1 py-3 rounded-lg border-2 transition-all font-black text-lg ${
+                cantidad === 2
+                  ? 'bg-cyan-500 border-cyan-400 text-white shadow-lg shadow-cyan-500/20'
+                  : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-600'
+              }`}
+            >
+              2
+            </button>
+            <div className="flex-1 relative">
+              <button
+                onClick={() => setCantidad(3)}
+                className={`w-full h-full py-3 rounded-lg border-2 transition-all font-black text-lg ${
+                  cantidad === 3
+                    ? 'bg-cyan-500 border-cyan-400 text-white shadow-lg shadow-cyan-500/20'
+                    : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-600'
+                }`}
+              >
+                {cantidad === 3 ? (
+                  <input
+                    type="number"
+                    value={cantidadCustom}
+                    onChange={(e) => setCantidadCustom(Math.max(3, Number(e.target.value)))}
+                    onClick={(e) => e.stopPropagation()}
+                    className="w-full bg-transparent text-center outline-none font-black"
+                    min="3"
+                  />
+                ) : (
+                  '3+'
+                )}
+              </button>
+              {cantidad === 3 && (
+                <div className="absolute -bottom-5 left-0 right-0 text-center">
+                  <span className="text-[9px] text-cyan-400 font-bold">editable</span>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center gap-1 mt-3 text-[10px] text-slate-500">
+            <Info size={10} />
+            <span>Descuentos: 1 prop = $1.900/m² | 2 props = $1.710/m² (10% OFF) | 3+ props = $1.520/m² (20% OFF)</span>
+          </div>
+        </div>
+
+        {/* INPUT DE METRAJE */}
+        <div className="mb-5">
+          <label className="block text-xs uppercase text-slate-400 mb-3 font-bold">Metraje por propiedad:</label>
+          <div className="relative">
+            <input
+              type="number"
+              value={meters}
+              onChange={(e) => setMeters(Number(e.target.value))}
+              onBlur={() => setMeters(Math.max(100, meters))}
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-lg font-mono text-white focus:border-cyan-400 outline-none pr-12"
+              min="100"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-mono text-sm">m²</span>
+          </div>
+          {meters < 100 && (
+            <p className="text-[10px] text-orange-400 mt-1">Mínimo técnico: 100m² por propiedad</p>
+          )}
+        </div>
+
+        {/* RESULTADOS */}
+        <div className="bg-slate-900/50 rounded-lg p-4 space-y-2">
+          <div className="flex justify-between text-sm text-slate-400">
+            <span>Auditoría ({efectiveCantidad}×{effectiveMeters}m²):</span>
+            <span className="font-mono font-bold text-slate-300">${auditCost.toLocaleString()}</span>
+          </div>
+          <div className="flex justify-between text-sm text-slate-400">
+            <span>Sourcing ({efectiveCantidad} props):</span>
+            <span className="font-mono font-bold text-slate-300">${sourcingFee.toLocaleString()}</span>
+          </div>
+          <div className="flex justify-between pt-2 border-t border-slate-700 font-black text-cyan-400">
+            <span>TOTAL:</span>
+            <span className="font-mono text-lg">${totalCost.toLocaleString()} + IVA</span>
+          </div>
+        </div>
+      </div>
+
+      <button className="w-full bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest transition-all">
+        Seleccionar Pack
+      </button>
+    </div>
+  );
+}
+
+// ==========================================
+// COMPONENTE INTERNO: SOURCING VIP
+// ==========================================
+function SourcingVIP() {
+  const [cantidad, setCantidad] = useState(1);
+  const [cantidadCustom, setCantidadCustom] = useState(3);
+  const [meters, setMeters] = useState(100);
+
+  const efectiveCantidad = cantidad === 3 ? cantidadCustom : cantidad;
+  const effectiveMeters = Math.max(100, meters);
+  
+  // Calcular precio por m² según cantidad
+  const pricePerM2 = cantidad === 1 ? 1900 : cantidad === 2 ? 1710 : 1520;
+  
+  // Calcular visitas (siempre +1)
+  const visitamos = efectiveCantidad + 1;
+  
+  // Calcular costos
+  const auditCost = efectiveCantidad * effectiveMeters * pricePerM2;
+  const sourcingFee = visitamos * 50000;
+  const totalCost = auditCost + sourcingFee;
+
+  return (
+    <div className="bg-gradient-to-b from-slate-900 to-slate-950 border border-cyan-500/50 p-6 md:p-10 rounded-2xl relative overflow-hidden group hover:shadow-[0_0_50px_rgba(34,211,238,0.15)] transition-all flex flex-col">
+      <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[10px] font-black px-4 py-1.5 rounded-bl-xl uppercase tracking-widest">
+        Recomendado
+      </div>
+
+      <div className="flex items-center gap-5 mb-6">
+        <div className="p-4 bg-cyan-500/20 border border-cyan-500/30 rounded-xl">
+          <Crown className="text-cyan-400 w-8 h-8 animate-pulse" />
+        </div>
+        <div>
+          <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-wider">Sourcing VIP</h3>
+          <p className="text-sm text-cyan-400 font-bold mt-1">Visitamos todas, eliges con datos reales</p>
+        </div>
+      </div>
+
+      {/* CALCULADORA COMPACTA VIP */}
+      <div className="bg-slate-950/80 rounded-xl p-6 border border-cyan-900/50 mb-6 mt-auto">
+        <div className="flex items-center gap-2 mb-6">
+          <Calculator size={16} className="text-cyan-400" />
+          <span className="text-xs uppercase text-cyan-400 font-bold tracking-widest">Calculadora de Inversión</span>
+        </div>
+
+        {/* SELECTOR DE CANTIDAD */}
+        <div className="mb-5">
+          <label className="block text-xs uppercase text-cyan-400 mb-3 font-bold">Propiedades a auditar:</label>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setCantidad(1)}
+              className={`flex-1 py-3 rounded-lg border-2 transition-all font-black text-lg ${
+                cantidad === 1
+                  ? 'bg-cyan-500 border-cyan-400 text-white shadow-lg shadow-cyan-500/20'
+                  : 'bg-slate-800 border-cyan-900 text-slate-400 hover:border-cyan-800'
+              }`}
+            >
+              1
+            </button>
+            <button
+              onClick={() => setCantidad(2)}
+              className={`flex-1 py-3 rounded-lg border-2 transition-all font-black text-lg ${
+                cantidad === 2
+                  ? 'bg-cyan-500 border-cyan-400 text-white shadow-lg shadow-cyan-500/20'
+                  : 'bg-slate-800 border-cyan-900 text-slate-400 hover:border-cyan-800'
+              }`}
+            >
+              2
+            </button>
+            <div className="flex-1 relative">
+              <button
+                onClick={() => setCantidad(3)}
+                className={`w-full h-full py-3 rounded-lg border-2 transition-all font-black text-lg ${
+                  cantidad === 3
+                    ? 'bg-cyan-500 border-cyan-400 text-white shadow-lg shadow-cyan-500/20'
+                    : 'bg-slate-800 border-cyan-900 text-slate-400 hover:border-cyan-800'
+                }`}
+              >
+                {cantidad === 3 ? (
+                  <input
+                    type="number"
+                    value={cantidadCustom}
+                    onChange={(e) => setCantidadCustom(Math.max(3, Number(e.target.value)))}
+                    onClick={(e) => e.stopPropagation()}
+                    className="w-full bg-transparent text-center outline-none font-black"
+                    min="3"
+                  />
+                ) : (
+                  '3+'
+                )}
+              </button>
+              {cantidad === 3 && (
+                <div className="absolute -bottom-5 left-0 right-0 text-center">
+                  <span className="text-[9px] text-cyan-400 font-bold">editable</span>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center gap-1 mt-3 text-[10px] text-cyan-400/70">
+            <Info size={10} />
+            <span>Visitamos {visitamos} propiedades con Informe FAST | Tú eliges {efectiveCantidad} | Auditamos {efectiveCantidad}</span>
+          </div>
+        </div>
+
+        {/* INPUT DE METRAJE */}
+        <div className="mb-5">
+          <label className="block text-xs uppercase text-cyan-400 mb-3 font-bold">Metraje por propiedad:</label>
+          <div className="relative">
+            <input
+              type="number"
+              value={meters}
+              onChange={(e) => setMeters(Number(e.target.value))}
+              onBlur={() => setMeters(Math.max(100, meters))}
+              className="w-full bg-slate-800 border border-cyan-900 rounded-lg px-4 py-3 text-lg font-mono text-white focus:border-cyan-400 outline-none pr-12"
+              min="100"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-mono text-sm">m²</span>
+          </div>
+          {meters < 100 && (
+            <p className="text-[10px] text-orange-400 mt-1">Mínimo técnico: 100m² por propiedad</p>
+          )}
+        </div>
+
+        {/* DETALLES */}
+        <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-3 mb-4 space-y-1 text-sm text-slate-300">
+          <div className="flex items-center gap-2">
+            <MapPin size={14} className="text-cyan-400" />
+            <span>Visitamos: <strong className="text-white">{visitamos} propiedades</strong> (con Informe FAST)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircle size={14} className="text-cyan-400" />
+            <span>Tú eliges: <strong className="text-cyan-400">{efectiveCantidad}</strong></span>
+          </div>
+          <div className="flex items-center gap-2">
+            <FileText size={14} className="text-cyan-400" />
+            <span>Auditoría completa: <strong className="text-white">{efectiveCantidad}</strong></span>
+          </div>
+        </div>
+
+        {/* RESULTADOS */}
+        <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-4 space-y-2">
+          <div className="flex justify-between text-sm text-slate-300">
+            <span>Auditoría ({efectiveCantidad}×{effectiveMeters}m²):</span>
+            <span className="font-mono font-bold text-white">${auditCost.toLocaleString()}</span>
+          </div>
+          <div className="flex justify-between text-sm text-slate-300">
+            <span>Sourcing ({visitamos} visitas):</span>
+            <span className="font-mono font-bold text-white">${sourcingFee.toLocaleString()}</span>
+          </div>
+          <div className="flex justify-between pt-2 border-t border-cyan-500/20 font-black text-cyan-400">
+            <span>TOTAL:</span>
+            <span className="font-mono text-lg">${totalCost.toLocaleString()} + IVA</span>
+          </div>
+        </div>
+      </div>
+
+      {/* NOTA EXPLICATIVA */}
+      <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mb-6 text-xs text-slate-300">
+        <span className="text-cyan-400 font-bold">ℹ️ Informe FAST:</span> Nota rápida (scoring) de cada propiedad para que compares y elijas la mejor.
+      </div>
+
+      <button className="w-full bg-cyan-500 hover:bg-white text-slate-950 px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest transition-all shadow-lg shadow-cyan-500/20 hover:scale-[1.02]">
+        Quiero Seguridad VIP
+      </button>
+    </div>
   );
 }
