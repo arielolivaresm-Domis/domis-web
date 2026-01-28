@@ -18,6 +18,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
+    // AJUSTE DE BORDES: Se agregó rounded-[40px] y mx-4 para dar efecto cápsula
     <div className="py-24 mx-4 md:mx-8 my-8 animate-fadeIn bg-slate-950 relative overflow-hidden rounded-[40px]">
       
       {/* CAPA DE FONDO: DOMIS_audi.webp */}
@@ -29,8 +30,8 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           backgroundPosition: 'center',
         }}
       >
-        {/* TRANSPARENCIA AJUSTADA AL 30% */}
-        <div className="absolute inset-0 bg-slate-950/30 backdrop-blur-[1px]"></div>
+        {/* AJUSTE DE TRANSPARENCIA: Bajado al 10% para máxima visibilidad de la familia */}
+        <div className="absolute inset-0 bg-slate-950/10 backdrop-blur-[1px]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
