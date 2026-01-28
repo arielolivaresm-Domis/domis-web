@@ -48,7 +48,6 @@ const technicalModules = [
 export default function AuditTechnicalDetails() {
   return (
     <section className="py-24 bg-slate-950 relative overflow-hidden border-t border-slate-900">
-      {/* Fondo de Grilla Técnica - Error de 'size' corregido aquí */}
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none" 
         style={{ 
@@ -60,7 +59,7 @@ export default function AuditTechnicalDetails() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter mb-4">
+            <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter mb-4 leading-tight">
               Protocolo de <span className="text-cyan-500">Auditoría PCF-15™</span>
             </h2>
             <p className="text-slate-400 text-lg font-medium leading-relaxed">
