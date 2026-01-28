@@ -1,4 +1,4 @@
-import { Search, Crown, ArrowRight, Zap, Clock } from 'lucide-react';
+import { Search, Crown, Zap, Clock, MapPin, CheckCircle, FileText } from 'lucide-react';
 
 export default function Sourcing() {
   return (
@@ -15,7 +15,7 @@ export default function Sourcing() {
             <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Inteligencia de Mercado</span>
           </div>
           
-          <h2 className="text-5xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4 leading-none">
+          <h2 className="text-5xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4">
             Buscamos por ti
           </h2>
           
@@ -31,134 +31,155 @@ export default function Sourcing() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
           
           {/* OPCIÓN 1: NORMAL */}
-          <div className="bg-slate-900/50 border border-white/10 p-8 md:p-10 rounded-2xl hover:border-slate-600 transition-all group relative flex flex-col">
-            <div className="flex items-center gap-5 mb-8">
+          <div className="bg-slate-900/50 border border-white/10 p-6 md:p-10 rounded-2xl hover:border-slate-600 transition-all group relative flex flex-col">
+            <div className="flex items-center gap-5 mb-6">
               <div className="p-4 bg-slate-800 rounded-xl group-hover:bg-slate-700 transition-colors">
                 <Search className="text-slate-300 w-8 h-8" />
               </div>
               <div>
-                <h3 className="text-2xl font-black text-white uppercase tracking-wider">Sourcing Normal</h3>
-                <p className="text-xs text-slate-500 uppercase tracking-widest font-bold">Pre-selección Digital</p>
+                <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-wider">Sourcing Normal</h3>
+                <p className="text-sm text-cyan-400 font-bold mt-1">Solo auditas la que eliges</p>
               </div>
             </div>
             
-            <p className="text-slate-300 text-base mb-8 leading-relaxed min-h-[60px]">
-              Nosotros filtramos el mercado y te presentamos las mejores opciones digitalmente. <strong>Tú eliges tu favorita</strong> y nosotros vamos a auditarla a fondo.
+            <p className="text-slate-300 text-sm md:text-base mb-8 leading-relaxed">
+              Filtramos el mercado y te presentamos las mejores opciones <strong>digitalmente</strong>. Tú eliges tu favorita y nosotros la auditamos a fondo.
             </p>
 
             <div className="bg-slate-950/80 rounded-xl p-6 border border-slate-800 mb-6 mt-auto">
-              <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-6 text-center border-b border-slate-800 pb-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-6 text-center border-b border-slate-800 pb-3">
                 Protocolo de Filtrado
               </p>
-              <div className="space-y-6">
+              
+              <div className="space-y-5">
                 {[
-                  { id: 1, buscamos: 2, eliges: 1, inversion: "60.000", detalle: "(1 × $60.000)" },
-                  { id: 2, buscamos: 3, eliges: 2, inversion: "120.000", detalle: "(2 × $60.000)" },
-                  { id: 3, buscamos: 5, eliges: 3, inversion: "180.000", detalle: "(3 × $60.000)" }
-                ].map((pack, idx) => (
-                  <div key={pack.id} className={`flex flex-col gap-3 ${idx !== 0 ? 'border-t border-white/5 pt-4' : ''}`}>
-                    <div className="flex items-center justify-between">
-                      <span className="text-slate-300 font-black uppercase text-sm">Pack {pack.id}</span>
-                      
-                      {/* VISTA DESKTOP: HORIZONTAL ORIGINAL */}
-                      <div className="hidden md:flex items-center gap-3 text-slate-400 font-bold text-sm md:text-base">
-                        <span>Buscamos <span className="text-cyan-400">{pack.buscamos}</span></span>
-                        <ArrowRight size={14} className="text-slate-600" />
-                        <span>Eliges <span className="text-cyan-400">{pack.eliges}</span></span>
-                        <ArrowRight size={14} className="text-slate-600" />
-                        <span className="text-white bg-slate-800 px-3 py-1 rounded border border-slate-700 text-xs whitespace-nowrap">Auditamos {pack.eliges}</span>
+                  { pack: 1, presentamos: 2, eliges: 1, auditamos: 1, precio: "60.000", calc: "(1 × $60.000)" },
+                  { pack: 2, presentamos: 3, eliges: 2, auditamos: 2, precio: "120.000", calc: "(2 × $60.000)" },
+                  { pack: 3, presentamos: 5, eliges: 3, auditamos: 3, precio: "180.000", calc: "(3 × $60.000)" }
+                ].map((item, idx) => (
+                  <div key={item.pack} className={`${idx !== 0 ? 'border-t border-slate-800 pt-5' : ''}`}>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-white font-black uppercase text-sm">Pack {item.pack}</span>
+                      <span className="text-cyan-400 text-xs font-bold px-3 py-1 bg-slate-800 rounded border border-slate-700">
+                        {item.presentamos} opciones digitales
+                      </span>
+                    </div>
+                    
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center gap-2 text-slate-400">
+                        <Search size={14} className="text-slate-500" />
+                        <span>Presentamos: <strong className="text-slate-300">{item.presentamos} propiedades</strong></span>
                       </div>
-
-                      {/* VISTA MÓVIL: NOMENCLATURA 2 LÍNEAS B-E-A */}
-                      <div className="md:hidden flex flex-col items-end gap-1.5 font-mono text-xs font-bold text-right">
-                        <div className="flex items-center gap-2">
-                          <span className="text-slate-400">B: {pack.buscamos}</span>
-                          <span className="text-slate-700">|</span>
-                          <span className="text-cyan-400">E: {pack.eliges}</span>
-                        </div>
-                        <div className="bg-slate-800 text-white px-2 py-0.5 rounded border border-slate-700 text-[10px] uppercase font-black">
-                          Auditamos {pack.eliges}
-                        </div>
+                      <div className="flex items-center gap-2 text-slate-400">
+                        <CheckCircle size={14} className="text-cyan-500" />
+                        <span>Tú eliges: <strong className="text-cyan-400">{item.eliges}</strong></span>
+                      </div>
+                      <div className="flex items-center gap-2 text-slate-400">
+                        <FileText size={14} className="text-slate-500" />
+                        <span>Auditoría completa: <strong className="text-white">{item.auditamos}</strong></span>
                       </div>
                     </div>
-                    <div className="flex justify-between items-center border-t border-slate-800/50 pt-2">
-                      <span className="text-cyan-500/80 text-xs font-bold uppercase tracking-tight">Inversión: ${pack.inversion}</span>
-                      <span className="text-[10px] text-slate-500 font-mono">{pack.detalle}</span>
+
+                    <div className="mt-3 pt-3 border-t border-slate-800/50 flex justify-between items-center">
+                      <span className="text-cyan-500 text-sm font-bold">Inversión: ${item.precio}</span>
+                      <span className="text-[10px] text-slate-500 font-mono">{item.calc}</span>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <button className="w-full bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest transition-all mt-4">
+            <button className="w-full bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest transition-all">
               Seleccionar Pack
             </button>
           </div>
 
           {/* OPCIÓN 2: VIP */}
-          <div className="bg-gradient-to-b from-slate-900 to-slate-950 border border-cyan-500/50 p-8 md:p-10 rounded-2xl relative overflow-hidden group hover:shadow-[0_0_50px_rgba(34,211,238,0.15)] transition-all flex flex-col">
-            <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[10px] font-black px-4 py-1.5 rounded-bl-xl uppercase tracking-widest z-20">
+          <div className="bg-gradient-to-b from-slate-900 to-slate-950 border border-cyan-500/50 p-6 md:p-10 rounded-2xl relative overflow-hidden group hover:shadow-[0_0_50px_rgba(34,211,238,0.15)] transition-all flex flex-col">
+            <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[10px] font-black px-4 py-1.5 rounded-bl-xl uppercase tracking-widest">
               Recomendado
             </div>
 
-            <div className="flex items-center gap-5 mb-8">
+            <div className="flex items-center gap-5 mb-6">
               <div className="p-4 bg-cyan-500/20 border border-cyan-500/30 rounded-xl">
                 <Crown className="text-cyan-400 w-8 h-8 animate-pulse" />
               </div>
               <div>
-                <h3 className="text-2xl font-black text-white uppercase tracking-wider leading-tight">Sourcing VIP</h3>
-                <p className="text-xs text-cyan-500 uppercase tracking-widest font-bold">Auditoría Total Adelantada</p>
+                <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-wider">Sourcing VIP</h3>
+                <p className="text-sm text-cyan-400 font-bold mt-1">Auditas todas antes de elegir</p>
               </div>
             </div>
             
-            <p className="text-slate-300 text-base mb-8 leading-relaxed min-h-[60px]">
-              Visitamos todas las opciones por ti. Recibes un <strong>"Informe Fast"</strong> de cada una para que elijas la mejor con datos reales.
-            </p>
+            <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-4 mb-8">
+              <p className="text-cyan-400 text-xs font-bold uppercase tracking-wide mb-3 flex items-center gap-2">
+                <Zap size={14} className="text-yellow-400" /> Cómo funciona:
+              </p>
+              <div className="space-y-2 text-sm text-slate-300">
+                <div className="flex items-start gap-2">
+                  <span className="text-cyan-400 font-bold">1.</span>
+                  <span>Buscamos y visitamos todas las opciones</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-cyan-400 font-bold">2.</span>
+                  <span>Te damos un <strong className="text-white">"Informe Fast"</strong> de cada una</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-cyan-400 font-bold">3.</span>
+                  <span>Eliges con datos reales (no a ciegas)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-cyan-400 font-bold">4.</span>
+                  <span>Auditamos a fondo solo las que elegiste</span>
+                </div>
+              </div>
+            </div>
             
             <div className="bg-slate-950/80 rounded-xl p-6 border border-cyan-900/50 mb-8 relative mt-auto">
-               <div className="absolute -inset-1 bg-cyan-500/5 blur-sm rounded-lg"></div>
-               <p className="relative text-[10px] text-cyan-400 uppercase tracking-widest font-bold mb-6 text-center flex items-center justify-center gap-2 border-b border-cyan-900/50 pb-2">
+              <div className="absolute -inset-1 bg-cyan-500/5 blur-sm rounded-lg"></div>
+              <p className="relative text-[10px] text-cyan-400 uppercase tracking-widest font-bold mb-6 text-center flex items-center justify-center gap-2 border-b border-cyan-900/50 pb-3">
                 <Zap size={14} className="text-yellow-400" /> Seguridad Total
               </p>
               
-              <div className="space-y-6 relative">
+              <div className="space-y-5 relative">
                 {[
-                  { id: 1, buscamos: 2, visitamos: 2, auditamos: 1, inversion: "100.000", detalle: "(2 × $50.000)" },
-                  { id: 2, buscamos: 3, visitamos: 3, auditamos: 2, inversion: "150.000", detalle: "(3 × $50.000)" },
-                  { id: 3, buscamos: 5, visitamos: 5, auditamos: 3, inversion: "250.000", detalle: "(5 × $50.000)" }
-                ].map((pack, idx) => (
-                  <div key={pack.id} className={`flex flex-col gap-3 ${idx !== 0 ? 'border-t border-cyan-500/20 pt-4' : ''}`}>
-                    <div className="flex items-center justify-between">
-                      <span className="text-slate-200 font-black uppercase text-sm">Pack {pack.id}</span>
-                      
-                      {/* VISTA DESKTOP: HORIZONTAL ORIGINAL */}
-                      <div className="hidden md:flex items-center gap-2.5 text-slate-300 font-bold text-sm md:text-base">
-                        <span>Buscamos <span className="text-cyan-400">{pack.buscamos}</span></span>
-                        <ArrowRight size={14} className="text-cyan-500/40" />
-                        <span>Visitamos <span className="text-cyan-400">{pack.visitamos}</span></span>
-                        <ArrowRight size={14} className="text-cyan-500/40" />
-                        <span className="text-white bg-cyan-900/50 border border-cyan-500/30 px-3 py-1 rounded text-xs whitespace-nowrap">Auditamos {pack.auditamos}</span>
+                  { pack: 1, visitamos: 2, eliges: 1, auditamos: 1, precio: "100.000", calc: "(2 × $50.000)" },
+                  { pack: 2, visitamos: 3, eliges: 2, auditamos: 2, precio: "150.000", calc: "(3 × $50.000)" },
+                  { pack: 3, visitamos: 5, eliges: 3, auditamos: 3, precio: "250.000", calc: "(5 × $50.000)" }
+                ].map((item, idx) => (
+                  <div key={item.pack} className={`${idx !== 0 ? 'border-t border-cyan-500/20 pt-5' : ''}`}>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-white font-black uppercase text-sm">Pack {item.pack}</span>
+                      <span className="text-cyan-400 text-xs font-bold px-3 py-1 bg-cyan-900/30 rounded border border-cyan-500/30">
+                        {item.visitamos} visitas con Informe Fast
+                      </span>
+                    </div>
+                    
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center gap-2 text-slate-300">
+                        <MapPin size={14} className="text-cyan-500" />
+                        <span>Visitamos: <strong className="text-white">{item.visitamos} propiedades</strong></span>
                       </div>
-
-                      {/* VISTA MÓVIL: NOMENCLATURA TÉCNICA 2 LÍNEAS B-V-A */}
-                      <div className="md:hidden flex flex-col items-end gap-1.5 font-mono text-xs font-bold text-right">
-                        <div className="flex items-center gap-2">
-                          <span className="text-white">B: {pack.buscamos}</span>
-                          <span className="text-cyan-900">|</span>
-                          <span className="text-cyan-400">V: {pack.visitamos}</span>
-                        </div>
-                        <span className="bg-cyan-500 text-slate-950 px-2 py-0.5 rounded text-[10px] font-black uppercase whitespace-nowrap">
-                          Auditamos {pack.auditamos}
-                        </span>
+                      <div className="flex items-center gap-2 text-slate-300">
+                        <CheckCircle size={14} className="text-cyan-400" />
+                        <span>Tú eliges: <strong className="text-cyan-400">{item.eliges}</strong></span>
+                      </div>
+                      <div className="flex items-center gap-2 text-slate-300">
+                        <FileText size={14} className="text-cyan-500" />
+                        <span>Auditoría completa: <strong className="text-white">{item.auditamos}</strong></span>
                       </div>
                     </div>
-                    <div className="flex justify-between items-center border-t border-cyan-500/20 pt-2">
-                      <span className="text-cyan-400 text-xs font-bold uppercase tracking-tight">Inversión: ${pack.inversion}</span>
-                      <span className="text-[10px] text-cyan-200/40 font-mono">{pack.detalle}</span>
+
+                    <div className="mt-3 pt-3 border-t border-cyan-500/20 flex justify-between items-center">
+                      <span className="text-cyan-400 text-sm font-bold">Inversión: ${item.precio}</span>
+                      <span className="text-[10px] text-cyan-200/40 font-mono">{item.calc}</span>
                     </div>
                   </div>
                 ))}
               </div>
+            </div>
+
+            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mb-6 text-xs text-slate-300">
+              <span className="text-cyan-400 font-bold">ℹ️ Informe FAST:</span> Nota rápida (scoring) de cada propiedad para que compares y elijas la mejor.
             </div>
 
             <button className="w-full bg-cyan-500 hover:bg-white text-slate-950 px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest transition-all shadow-lg shadow-cyan-500/20 hover:scale-[1.02]">
