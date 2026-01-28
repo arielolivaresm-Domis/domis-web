@@ -29,8 +29,8 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           backgroundPosition: 'center',
         }}
       >
-        {/* FONDO MANTENIDO CLARO (10%) para ver a la familia */}
-        <div className="absolute inset-0 bg-slate-950/10 backdrop-blur-[1px]"></div>
+        {/* FONDO ULTRA-CLARO (5%) */}
+        <div className="absolute inset-0 bg-slate-950/5 backdrop-blur-[1px]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -44,9 +44,8 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
         </div>
 
         <div className="max-w-2xl mx-auto px-4">
-          {/* CAJA CENTRAL TRANSPARENTE (Efecto Cristal) */}
-          {/* Se bajó de /90 a /30 para ver a través de ella */}
-          <div className="bg-slate-950/30 backdrop-blur-xl border-2 border-cyan-500 rounded-3xl p-8 shadow-[0_0_60px_rgba(0,0,0,0.5)]">
+          {/* CAJA CENTRAL ULTRA-TRANSPARENTE (10%) */}
+          <div className="bg-slate-950/10 backdrop-blur-xl border-2 border-cyan-500 rounded-3xl p-8 shadow-[0_0_60px_rgba(0,0,0,0.5)]">
              
             <div className="flex items-center justify-between mb-8">
               <div className="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
