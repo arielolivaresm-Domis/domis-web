@@ -20,7 +20,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   return (
     <div className="py-24 animate-fadeIn bg-slate-950 relative overflow-hidden">
       
-      {/* IMAGEN DE FONDO: DOMIS_audi.webp */}
+      {/* CAPA DE FONDO: DOMIS_audi.webp */}
       <div 
         className="absolute top-0 left-0 w-full h-full z-0"
         style={{
@@ -29,23 +29,23 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           backgroundPosition: 'center',
         }}
       >
-        <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-[2px]"></div>
+        {/* Opacidad al 40% para que la familia sea visible */}
+        <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <h3 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter">
+          <h3 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter drop-shadow-2xl">
             Selección de <span className="text-cyan-400">Protocolo de Auditoría</span>
           </h3>
-          <p className="text-slate-500 font-mono text-xs uppercase tracking-widest mt-2 italic">
+          <p className="text-slate-100 font-mono text-xs uppercase tracking-widest mt-2 italic bg-black/40 inline-block px-4 py-1 rounded-full backdrop-blur-sm">
             Mínimo técnico de 100 m² por propiedad.
           </p>
         </div>
 
         <div className="max-w-2xl mx-auto px-4">
-          <div className="bg-slate-950/90 backdrop-blur-xl border-2 border-cyan-500 rounded-3xl p-8 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+          <div className="bg-slate-950/90 backdrop-blur-xl border-2 border-cyan-500 rounded-3xl p-8 shadow-[0_0_60px_rgba(0,0,0,0.9)]">
              
-            {/* HEADER CON DESCUENTO DINÁMICO */}
             <div className="flex items-center justify-between mb-8">
               <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800">
                 <span className="text-3xl">🔍</span>
@@ -55,18 +55,17 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                   Auditoría PCF-15™
                 </h4>
                 {discount > 0 && (
-                  <p className="bg-red-950/60 text-red-400 border-2 border-red-500 px-3 py-1 rounded-full animate-pulse text-xs font-bold uppercase tracking-widest mt-2 inline-block">
+                  <p className="bg-red-950/60 text-red-400 border-2 border-red-500 px-3 py-1 rounded-full animate-pulse text-[10px] font-bold uppercase tracking-widest mt-2 inline-block">
                     {discount}% OFF
                   </p>
                 )}
               </div>
             </div>
 
-            {/* LISTADO TÉCNICO (Usando los iconos para limpiar warnings) */}
             <div className="space-y-3 mb-8 text-sm text-slate-300 border-b border-slate-800/50 pb-6">
               <div className="flex items-center gap-3">
                 <CheckCircle size={16} className="text-cyan-400" />
-                <span>Análisis para <strong className="text-white">{efectiveCantidad} {efectiveCantidad === 1 ? 'propiedad' : 'propiedades'}</strong></span>
+                <span>Protocolo para <strong className="text-white">{efectiveCantidad} {efectiveCantidad === 1 ? 'propiedad' : 'propiedades'}</strong></span>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin size={16} className="text-cyan-400" />
@@ -74,11 +73,10 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               </div>
               <div className="flex items-center gap-3">
                 <FileText size={16} className="text-cyan-400" />
-                <span>Entrega de Informe PCF-15™ en <strong className="text-white">72 horas</strong></span>
+                <span>Informe digital certificado en 72h</span>
               </div>
             </div>
 
-            {/* CALCULADORA */}
             <div className="bg-slate-900/80 rounded-2xl p-6 border border-slate-800 mb-6">
               <div className="flex items-center gap-2 mb-6">
                 <Calculator size={16} className="text-cyan-400" />
@@ -86,7 +84,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               </div>
 
               <div className="mb-6">
-                <label className="block text-xs uppercase text-slate-400 mb-3 font-bold">Unidades a Auditar:</label>
+                <label className="block text-xs uppercase text-slate-400 mb-3 font-bold italic tracking-tighter">Unidades a Auditar:</label>
                 <div className="flex gap-2">
                   {[1, 2, 3].map((num) => (
                     <button
@@ -103,23 +101,22 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               </div>
 
               <div className="mb-6">
-                <label className="block text-xs uppercase text-slate-400 mb-3 font-bold">Superficie (m²):</label>
-                <input
-                  type="number"
-                  value={meters}
-                  onChange={(e) => setMeters(Number(e.target.value))}
-                  onBlur={() => setMeters(Math.max(100, meters))}
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-lg font-mono text-white focus:border-cyan-400 outline-none"
-                />
+                <label className="block text-xs uppercase text-slate-400 mb-3 font-bold italic tracking-tighter">Superficie (m²):</label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    value={meters}
+                    onChange={(e) => setMeters(Number(e.target.value))}
+                    onBlur={() => setMeters(Math.max(100, meters))}
+                    className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-lg font-mono text-white focus:border-cyan-400 outline-none"
+                  />
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-mono text-sm">m²</span>
+                </div>
               </div>
 
-              <div className="bg-slate-950/50 rounded-xl p-4 space-y-2 border border-slate-800">
-                <div className="flex justify-between text-sm text-slate-400 italic">
-                  <span>Inversión por m²:</span>
-                  <span>${pricePerM2.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between pt-2 border-t border-slate-700 font-black text-cyan-400">
-                  <span>TOTAL ESTIMADO:</span>
+              <div className="bg-slate-950/50 rounded-xl p-4 border border-slate-800">
+                <div className="flex justify-between pt-2 font-black text-cyan-400">
+                  <span className="text-xs uppercase tracking-widest">Inversión Estimada:</span>
                   <span className="font-mono text-xl">${totalCost.toLocaleString()} + IVA</span>
                 </div>
               </div>
@@ -137,9 +134,9 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           </div>
 
           <div className="mt-8 text-center">
-            <div className="inline-flex items-center gap-2 text-slate-400 text-xs bg-slate-900/80 p-4 rounded-xl border border-slate-800">
-              <Info size={14} className="text-cyan-500" />
-              <p>Asesoría post-auditoría incluida para interpretación de resultados técnicos.</p>
+            <div className="inline-flex items-center gap-2 text-slate-400 text-[10px] bg-black/60 backdrop-blur-sm p-4 rounded-xl border border-slate-800">
+              <Info size={12} className="text-cyan-500" />
+              <p>Asesoría técnica post-auditoría incluida para la interpretación de resultados.</p>
             </div>
           </div>
         </div>
