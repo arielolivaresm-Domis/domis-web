@@ -27,14 +27,14 @@ export default function PhasesTabs() {
 
   const BridgeButton = ({ targetId, label, subtitle, icon }: { targetId: 'fase1' | 'fase2' | 'fase3', label: string, subtitle: string, icon: string }) => (
     <div className="pt-24 border-t border-slate-900/50">
-      <p className="text-cyan-400 font-mono text-xs uppercase tracking-[0.2em] mb-8 font-bold">Continuar Trayectoria Técnica</p>
+      <p className="text-cyan-400 font-mono text-xs uppercase tracking-[0.2em] mb-8 font-bold text-center">Continuar Trayectoria Técnica</p>
       <button
         onClick={() => handleTabChange(targetId)}
-        className="w-full max-w-4xl mx-auto p-8 rounded-2xl border-2 border-slate-800 bg-slate-900/50 hover:border-cyan-500 hover:bg-cyan-500/5 transition-all duration-500 group relative overflow-hidden"
+        className="w-full max-w-4xl mx-auto p-8 rounded-2xl border-2 border-slate-800 bg-slate-900/50 hover:border-cyan-500 hover:bg-cyan-500/5 transition-all duration-500 group relative overflow-hidden flex flex-col items-center gap-4"
       >
-        <div className="flex flex-col items-center gap-4 relative z-10">
+        <div className="flex flex-col items-center gap-4 relative z-10 text-center">
           <span className="text-5xl group-hover:scale-110 transition-transform duration-500">{icon}</span>
-          <div className="text-center">
+          <div>
             <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1 group-hover:text-cyan-400 transition-colors">
               {label}
             </div>
@@ -77,7 +77,7 @@ export default function PhasesTabs() {
             <div className="w-12 h-12 bg-slate-800 rounded-full border-2 border-slate-600 mb-6 flex items-center justify-center text-xl font-black text-white mx-auto relative z-20 group-hover:border-cyan-400 group-hover:text-cyan-400 transition-colors">1</div>
             <h3 className={`text-xl font-black uppercase mb-3 text-center transition-colors ${activeTab === 'fase1' ? 'text-cyan-400' : 'text-white'}`}>AUDITORÍA TÉCNICA</h3>
             <p className="text-slate-400 text-sm leading-relaxed text-center flex-grow">
-              Protocolo <strong>PCF-15™</strong> para detectar vicios ocultos. Scoring técnico 0-7 en 3 días + escaneo del entorno.
+              Protocolo <strong>PCF-15™</strong> para detectar vicios ocultos. Scoring técnico 1-7 en 3 días + escaneo del entorno.
             </p>
             <div className="mt-4 text-[10px] text-cyan-500 font-bold uppercase tracking-widest text-center opacity-0 group-hover:opacity-100 transition-opacity">Especificaciones →</div>
           </button>
@@ -130,9 +130,18 @@ export default function PhasesTabs() {
 
           {activeTab === 'fase2' && (
             <div className="space-y-24 animate-fadeIn text-center">
-              <BenefitFlyer />
+              {/* === CAMBIO REALIZADO: Phase2 va primero === */}
+              <div id="negociacion-tecnica">
+                <Phase2 onNext={() => document.getElementById('benefit-anchor')?.scrollIntoView({ behavior: 'smooth' })} />
+              </div>
+              
               <Deliverable />
-              <Phase2 onNext={() => handleTabChange('fase3')} />
+              
+              {/* === BenefitFlyer va al final de la explicación === */}
+              <div id="benefit-anchor" className="scroll-mt-24">
+                <BenefitFlyer />
+              </div>
+
               <BridgeButton targetId="fase3" label="Fase 3" subtitle="Remodelación Estratégica" icon="🏗️" />
             </div>
           )}
