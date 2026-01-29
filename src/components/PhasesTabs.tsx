@@ -1,5 +1,6 @@
 import AuditPacks from './AuditPacks';
 import Sourcing from './Sourcing';
+// import Calculator from './Calculator'; // <--- BORRADO (Desactivado)
 import BenefitFlyer from './BenefitFlyer';
 import Deliverable from './Deliverable';
 import Phase2 from './Phase2';
@@ -59,10 +60,10 @@ export default function PhasesTabs() {
           <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
             Cómo <span className="text-cyan-400">Funciona</span>
           </h2>
-          <p className="text-slate-400 italic text-center text-sm">Ecosistema técnico integrado en 3 etapas críticas.</p>
+          <p className="text-slate-400 italic text-center">Ecosistema técnico integrado en 3 etapas críticas.</p>
         </div>
 
-        {/* SELECTOR DE MÓDULOS (TABS) */}
+        {/* RESUMEN DEL PROTOCOLO (Módulos interactivos) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           
           {/* MÓDULO 1: AUDITORÍA */}
@@ -76,7 +77,7 @@ export default function PhasesTabs() {
             <div className="w-12 h-12 bg-slate-800 rounded-full border-2 border-slate-600 mb-6 flex items-center justify-center text-xl font-black text-white mx-auto relative z-20 group-hover:border-cyan-400 group-hover:text-cyan-400 transition-colors">1</div>
             <h3 className={`text-xl font-black uppercase mb-3 text-center transition-colors ${activeTab === 'fase1' ? 'text-cyan-400' : 'text-white'}`}>AUDITORÍA TÉCNICA</h3>
             <p className="text-slate-400 text-sm leading-relaxed text-center flex-grow">
-              Protocolo <strong>PCF-15™</strong> para detectar vicios ocultos. Scoring técnico 1-7 en 3 días + escaneo del entorno.
+              Protocolo <strong>PCF-15™</strong> para detectar vicios ocultos. Scoring técnico 0-7 en 3 días + escaneo del entorno.
             </p>
             <div className="mt-4 text-[10px] text-cyan-500 font-bold uppercase tracking-widest text-center opacity-0 group-hover:opacity-100 transition-opacity">Especificaciones →</div>
           </button>
@@ -117,9 +118,8 @@ export default function PhasesTabs() {
         {/* ANCLA PARA EL SCROLL */}
         <div id="fase-anchor" className="scroll-mt-24"></div>
 
-        {/* CONTENIDOS DINÁMICOS */}
+        {/* CONTENIDOS DETALLADOS POR FASE */}
         <div className="mt-8">
-          {/* FASE 1: AUDITORÍA */}
           {activeTab === 'fase1' && (
             <div className="space-y-24 animate-fadeIn text-center">
               <AuditPacks onNext={() => handleTabChange('fase2')} />
@@ -128,25 +128,15 @@ export default function PhasesTabs() {
             </div>
           )}
 
-          {/* FASE 2: NEGOCIACIÓN (ORDEN SOLICITADO) */}
           {activeTab === 'fase2' && (
             <div className="space-y-24 animate-fadeIn text-center">
-              {/* 1. Valor Técnico y Estratégico */}
-              <Phase2 onNext={() => document.getElementById('benefit-anchor')?.scrollIntoView({ behavior: 'smooth' })} />
-              
-              {/* 2. El Detalle del Entregable */}
+              <BenefitFlyer />
               <Deliverable />
-
-              {/* 3. Estructura de Cobro con Ancla de Precisión */}
-              <div id="benefit-anchor" className="scroll-mt-20">
-                <BenefitFlyer />
-              </div>
-
+              <Phase2 onNext={() => handleTabChange('fase3')} />
               <BridgeButton targetId="fase3" label="Fase 3" subtitle="Remodelación Estratégica" icon="🏗️" />
             </div>
           )}
 
-          {/* FASE 3: REMODELACIÓN */}
           {activeTab === 'fase3' && (
             <div className="space-y-24 animate-fadeIn text-center">
               <Phase3 />
