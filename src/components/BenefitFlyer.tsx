@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { MessageCircle, ArrowRight, X, Building2, ShieldCheck } from 'lucide-react';
+import { MessageCircle, ArrowRight, X, Building2 } from 'lucide-react';
 
 export default function BenefitFlyer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,7 +34,7 @@ export default function BenefitFlyer() {
   
   const whatsappUrl = useMemo(() => {
     const codesString = domisCodes.filter(c => c.trim() !== '').join(', ');
-    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${nombre}\n• *Propiedades:* ${propCount}\n• *IDs DOMIS:* ${codesString}\n\nHola, quiero activar la negociación técnica para estas propiedades con el nuevo sistema de 3 hitos.`;
+    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${nombre}\n• *Propiedades:* ${propCount}\n• *IDs DOMIS:* ${codesString}\n\nHola, quiero activar la negociación técnica con el sistema de 3 hitos.`;
     return `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
   }, [nombre, propCount, domisCodes]);
 
@@ -133,48 +133,45 @@ export default function BenefitFlyer() {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/30"></div>
           </div>
 
-          <div className="relative z-10 p-8 md:p-16 flex flex-col items-center text-center max-w-6xl w-full">
+          <div className="relative z-10 p-8 md:p-16 flex flex-col items-center text-center max-w-5xl w-full">
             <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[11px] font-black uppercase tracking-[0.2em] mb-8 shadow-lg shadow-cyan-500/20">
               Fase 2: Modelo de Inversión
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter drop-shadow-2xl leading-tight">
+            <h2 className="text-4xl md:text-6xl font-black text-white mb-10 uppercase tracking-tighter drop-shadow-2xl leading-tight">
               💰 ESTRUCTURA DE PAGO <br className="hidden md:block" /> POR ÉXITO
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-12 text-left">
               {/* PASO 1 */}
-              <div className="bg-slate-950/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl transition-all hover:border-cyan-500/50">
+              <div className="bg-slate-950/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-2xl">1️⃣</span>
                   <h3 className="text-lg font-black text-white uppercase tracking-tight">Fee Inicial</h3>
                 </div>
-                <div className="text-2xl font-mono text-cyan-400 font-black mb-2">$500.000</div>
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider italic">Activación + Plan Maestro de Negociación.</p>
+                <div className="text-3xl font-mono text-cyan-400 font-black mb-2">$500.000</div>
+                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider italic">Activación + Plan Maestro Técnico.</p>
               </div>
 
               {/* PASO 2 */}
-              <div className="bg-slate-950/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl transition-all hover:border-cyan-500/50">
+              <div className="bg-slate-950/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-2xl">2️⃣</span>
                   <h3 className="text-lg font-black text-white uppercase tracking-tight">Hito Promesa</h3>
                 </div>
-                <div className="text-2xl font-mono text-cyan-400 font-black mb-2">$500.000</div>
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider italic">Firma de Promesa de Compraventa (No Reembolsable).</p>
+                <div className="text-3xl font-mono text-cyan-400 font-black mb-2">$500.000</div>
+                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider italic">Firma de Promesa (No Reembolsable).</p>
               </div>
 
               {/* PASO 3 */}
-              <div className="bg-slate-950/80 backdrop-blur-md border-2 border-cyan-500 p-6 rounded-2xl shadow-[0_0_30px_rgba(34,211,238,0.1)] relative">
-                <div className="absolute -top-3 right-6 bg-cyan-500 text-slate-950 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter">
-                  Liquidación Final
-                </div>
+              <div className="bg-slate-950/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-2xl">3️⃣</span>
                   <h3 className="text-lg font-black text-white uppercase tracking-tight">Éxito Final</h3>
                 </div>
-                <div className="text-2xl font-mono text-cyan-400 font-black mb-2">15% DEL AHORRO</div>
+                <div className="text-3xl font-mono text-cyan-400 font-black mb-2">15% ÉXITO</div>
                 <p className="text-[10px] text-slate-100 font-bold uppercase tracking-wider italic">
-                  Se descuenta el 100% de tus abonos anteriores del honorario final por éxito.
+                  Se descuenta el 100% de tus abonos anteriores del honorario final.
                 </p>
               </div>
             </div>
