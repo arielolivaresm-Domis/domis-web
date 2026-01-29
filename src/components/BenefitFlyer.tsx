@@ -34,7 +34,7 @@ export default function BenefitFlyer() {
   
   const whatsappUrl = useMemo(() => {
     const codesString = domisCodes.filter(c => c.trim() !== '').join(', ');
-    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${nombre}\n• *Propiedades:* ${propCount}\n• *IDs DOMIS:* ${codesString}\n\nHola, quiero activar la negociación técnica con el sistema de 3 hitos.`;
+    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${nombre}\n• *Propiedades:* ${propCount}\n• *IDs DOMIS:* ${codesString}\n\nHola, quiero activar la negociación técnica con el sistema de 3 hitos (Abonos No Reembolsables).`;
     return `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
   }, [nombre, propCount, domisCodes]);
 
@@ -143,14 +143,16 @@ export default function BenefitFlyer() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-12 text-left">
-              {/* PASO 1 */}
+              {/* PASO 1 - ACTUALIZADO */}
               <div className="bg-slate-950/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-2xl">1️⃣</span>
                   <h3 className="text-lg font-black text-white uppercase tracking-tight">Fee Inicial</h3>
                 </div>
                 <div className="text-3xl font-mono text-cyan-400 font-black mb-2">$500.000</div>
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider italic">Activación + Plan Maestro Técnico.</p>
+                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider italic">
+                  Activación + Plan Maestro (No Reembolsable).
+                </p>
               </div>
 
               {/* PASO 2 */}
@@ -160,7 +162,9 @@ export default function BenefitFlyer() {
                   <h3 className="text-lg font-black text-white uppercase tracking-tight">Hito Promesa</h3>
                 </div>
                 <div className="text-3xl font-mono text-cyan-400 font-black mb-2">$500.000</div>
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider italic">Firma de Promesa (No Reembolsable).</p>
+                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider italic">
+                  Firma de Promesa (No Reembolsable).
+                </p>
               </div>
 
               {/* PASO 3 */}
