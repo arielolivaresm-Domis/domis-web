@@ -1,4 +1,4 @@
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, AlertTriangle } from 'lucide-react';
 
 export default function Problem() {
   return (
@@ -6,7 +6,7 @@ export default function Problem() {
       <div className="max-w-7xl mx-auto">
         <div className="relative rounded-[2rem] overflow-hidden border-2 border-cyan-500 shadow-[0_0_40px_rgba(34,211,238,0.2)] min-h-[500px] flex items-center justify-center bg-slate-900">
           
-          {/* CAPA DE IMAGEN: Estructura original intacta */}
+          {/* CAPA DE IMAGEN: Estructura original intacta para máxima nitidez */}
           <div className="absolute inset-0">
             <img 
               src="/DOMIS_error_mas_comun.webp" 
@@ -17,8 +17,9 @@ export default function Problem() {
           </div>
 
           <div className="relative z-10 p-8 md:p-12 text-center max-w-4xl">
-            {/* BADGE: Blanco Hueso (slate-200) */}
+            {/* BADGE TÉCNICO */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-slate-200/10 border border-slate-200/30 rounded-full mb-8">
+              <AlertTriangle className="w-3 h-3 text-red-500" />
               <span className="text-[10px] font-mono text-slate-200 uppercase tracking-[0.3em] font-black">
                 Alerta de Riesgo Inmobiliario
               </span>
@@ -35,7 +36,7 @@ export default function Problem() {
             </div>
 
             <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-8 italic drop-shadow-md">
-              EL ERROR <span className="text-red-500">MÁS CARO</span> ES PAGAR LA PRETENSIÓN DEL DUEÑO
+              EL ERROR <span className="text-red-500">MÁS CARO</span> NO ES COMPRAR MAL. <br className="md:hidden" /> ES <span className="text-red-500">PAGAR DE MÁS</span>.
             </h3>
             
             {/* --- NARRATIVA DOMIS™: MANTENIENDO EL ESTILO BASE --- */}
@@ -56,15 +57,15 @@ export default function Problem() {
                 <p className="text-white text-sm font-bold uppercase tracking-widest mb-4 text-center">Evidencia que el vendedor no puede refutar:</p>
                 <div className="flex items-start gap-3 text-slate-200 text-sm">
                   <CheckCircle2 className="w-4 h-4 text-cyan-400 mt-0.5 shrink-0" />
-                  <span><strong className="text-white">Tasación IA:</strong> Sinceramos el valor real frente al emocional.</span>
+                  <span><strong className="text-white">Tasación IA:</strong> Sinceramos el valor real frente al emocional del propietario.</span>
                 </div>
                 <div className="flex items-start gap-3 text-slate-200 text-sm">
                   <CheckCircle2 className="w-4 h-4 text-cyan-400 mt-0.5 shrink-0" />
-                  <span><strong className="text-white">Fallas en UF:</strong> Cuantificamos vicios ocultos detectados.</span>
+                  <span><strong className="text-white">Fallas en UF:</strong> Cuantificamos vicios ocultos con instrumental Bosch/FLIR.</span>
                 </div>
                 <div className="flex items-start gap-3 text-slate-200 text-sm">
                   <CheckCircle2 className="w-4 h-4 text-cyan-400 mt-0.5 shrink-0" />
-                  <span><strong className="text-white">Costo de Oportunidad:</strong> Tu ahorro financia tu remodelación (Fase 3).</span>
+                  <span><strong className="text-white">Financiamiento Fase 3:</strong> Tu ahorro paga gran parte de tu remodelación.</span>
                 </div>
               </div>
 
