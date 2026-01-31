@@ -93,7 +93,7 @@ export default function PhasesTabs() {
             <div className="w-12 h-12 bg-slate-800 rounded-full border-2 border-slate-600 mb-6 flex items-center justify-center text-xl font-black text-white mx-auto relative z-20 group-hover:border-cyan-400 group-hover:text-cyan-400 transition-colors">2</div>
             <h3 className={`text-xl font-black uppercase mb-3 text-center transition-colors ${activeTab === 'fase2' ? 'text-cyan-400' : 'text-white'}`}>NEGOCIACIÓN ESTRATÉGICA</h3>
             <p className="text-slate-400 text-sm leading-relaxed text-center flex-grow">
-              Inteligencia de mercado (CBR/IA) para definir 3 escenarios de cierre basados en ROI real y evidencia.
+              Inteligencia de mercado (CBR/IA) y valorización de fallas <strong>PCF-15 (NDI)</strong> netamente para generar poder de negociación. 3 escenarios de cierre basados en ROI real y evidencia técnica.
             </p>
             <div className="mt-4 text-[10px] text-cyan-500 font-bold uppercase tracking-widest text-center opacity-0 group-hover:opacity-100 transition-opacity">Estrategia de Cierre →</div>
           </button>
@@ -102,7 +102,7 @@ export default function PhasesTabs() {
           <button 
             onClick={() => handleTabChange('fase3')}
             className={`engineering-frame p-8 border-2 transition-all duration-500 group relative overflow-hidden rounded-xl text-left flex flex-col h-full ${
-              activeTab === 'fase3' ? 'border-cyan-500 bg-slate-900 shadow-[0_0_20px_rgba(34,211,238,0.1)]' : 'border-slate-800 bg-slate-950 hover:border-slate-600'
+              activeTab === 'fase3' ? 'border-cyan-500 bg-slate-900 shadow-[0_0_20_rgba(34,211,238,0.1)]' : 'border-slate-800 bg-slate-950 hover:border-slate-600'
             }`}
           >
             <div className="animate-scan"></div>
@@ -130,7 +130,7 @@ export default function PhasesTabs() {
 
           {activeTab === 'fase2' && (
             <div className="space-y-24 animate-fadeIn text-center">
-              {/* === CAMBIO REALIZADO: Phase2 va primero === */}
+              {/* === Phase2 va primero === */}
               <div id="negociacion-tecnica">
                 <Phase2 onNext={() => document.getElementById('benefit-anchor')?.scrollIntoView({ behavior: 'smooth' })} />
               </div>
