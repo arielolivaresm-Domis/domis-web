@@ -182,7 +182,7 @@ export default function BenefitFlyer() {
 
             <div className="mb-12">
               <h2 className="text-5xl md:text-7xl font-black text-white mb-2 uppercase tracking-tighter drop-shadow-2xl">
-                <span className="text-cyan-400">60% OFF</span>
+                <span className="text-cyan-400">40% OFF</span>
               </h2>
               <p className="text-white font-black text-[10px] md:text-xs uppercase tracking-[0.4em] opacity-90">En tu Auditoría al activar Fase 2</p>
             </div>
