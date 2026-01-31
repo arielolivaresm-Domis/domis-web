@@ -173,7 +173,7 @@ export default function BenefitFlyer() {
                   <span className="text-2xl">3️⃣</span>
                   <h3 className="text-lg font-black text-white uppercase tracking-tight">Éxito Final</h3>
                 </div>
-                <div className="text-3xl font-mono text-cyan-400 font-black mb-2">15% ÉXITO</div>
+                <div className="text-3xl font-mono text-cyan-400 font-black mb-2">10% ÉXITO</div>
                 <p className="text-[10px] text-slate-100 font-bold uppercase tracking-wider italic">
                   Se descuenta el 100% de tus abonos anteriores del honorario final.
                 </p>
