@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-slate-950 border-t border-slate-900 pt-20 pb-10 px-6">
+    <footer className="bg-slate-950 border-t border-slate-900 pt-20 pb-10 px-6 font-sans">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
         
         {/* COLUMNA 1: MARCA (LOGO TIPOGRÁFICO DEFINITIVO) */}
@@ -39,11 +39,11 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* COLUMNA 3: LEGAL */}
+        {/* COLUMNA 3: LEGAL (ACTUALIZADA CON BLINDAJE SENIOR) */}
         <div>
           <h4 className="text-white font-black uppercase tracking-widest text-xs mb-6">Nota Legal</h4>
-          <p className="text-slate-500 text-[10px] leading-relaxed text-justify">
-            Los informes emitidos por DOMIS™ constituyen opiniones técnicas basadas en inspección visual e instrumental no destructiva. No representan garantías legales de compra ni sustituyen el estudio de títulos realizado por abogados. El uso de la información para la negociación es responsabilidad final del cliente.
+          <p className="text-slate-500 text-[9px] leading-relaxed text-justify uppercase tracking-tight">
+            <strong className="text-slate-400">EXENCIÓN DE RESPONSABILIDAD TÉCNICA Y LEGAL:</strong> Este informe constituye una opinión profesional basada exclusivamente en métodos de Inspección No Destructiva (NDI) e inspección visual. Los valores proyectados en la Fase 2 (Negociación) son estimaciones técnicas destinadas a fortalecer la posición comercial del cliente y no representan un presupuesto final de ejecución o remodelación, los cuales requieren estudios invasivos y de ingeniería adicionales. Este documento no garantiza la viabilidad jurídica de la compra ni sustituye el Estudio de Títulos realizado por abogados. El uso de esta información para decisiones transaccionales es responsabilidad exclusiva del contratante.
           </p>
         </div>
       </div>
