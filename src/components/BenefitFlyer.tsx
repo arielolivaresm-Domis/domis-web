@@ -143,8 +143,8 @@ export default function BenefitFlyer() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full mb-14 text-left max-w-4xl mx-auto">
-              {/* BLOQUE INICIAL - GLASSMORPHISM ULTRA TRANSPARENTE */}
-              <div className="bg-slate-950/10 backdrop-blur-2xl border-2 border-white/5 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/40 transition-all group shadow-2xl">
+              {/* BLOQUE INICIAL - CRYSTAL GLASS (5% OPACITY) */}
+              <div className="bg-slate-950/5 backdrop-blur-2xl border-2 border-white/5 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/40 transition-all group shadow-2xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="w-8 h-8 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-sm">1</span>
                   <h3 className="text-xl font-black text-white uppercase tracking-tight">INICIAL</h3>
@@ -167,8 +167,8 @@ export default function BenefitFlyer() {
                 </div>
               </div>
 
-              {/* BLOQUE ÉXITO - GLASSMORPHISM ULTRA TRANSPARENTE */}
-              <div className="bg-slate-950/10 backdrop-blur-2xl border-2 border-white/5 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/40 transition-all group shadow-2xl">
+              {/* BLOQUE ÉXITO - CRYSTAL GLASS (5% OPACITY) */}
+              <div className="bg-slate-950/5 backdrop-blur-2xl border-2 border-white/5 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/40 transition-all group shadow-2xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="w-8 h-8 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-sm">2</span>
                   <h3 className="text-xl font-black text-white uppercase tracking-tight">ÉXITO</h3>
