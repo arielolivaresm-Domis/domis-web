@@ -143,7 +143,7 @@ export default function BenefitFlyer() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full mb-14 text-left max-w-4xl mx-auto">
-              {/* BLOQUE INICIAL - CRYSTAL GLASS (5% OPACITY) */}
+              {/* BLOQUE INICIAL - CRYSTAL GLASS */}
               <div className="bg-slate-950/5 backdrop-blur-2xl border-2 border-white/5 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/40 transition-all group shadow-2xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="w-8 h-8 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-sm">1</span>
@@ -159,15 +159,19 @@ export default function BenefitFlyer() {
                       {item}
                     </li>
                   ))}
+                  <li className="flex items-center gap-2 text-cyan-400 font-black uppercase text-[10px] tracking-widest drop-shadow-md pt-2">
+                    <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                    Se descuenta del pago final
+                  </li>
                 </ul>
 
-                <div className="flex items-center gap-2 text-cyan-400 font-black uppercase text-[9px] tracking-widest pt-4 border-t border-white/5">
-                  <Check size={14} strokeWidth={4} />
-                  Cobro inicio Fase 2 Negociación
+                <div className="flex items-center gap-2 text-cyan-400 font-black uppercase text-[8px] tracking-widest pt-4 border-t border-white/5 leading-tight">
+                  <Check size={12} strokeWidth={4} />
+                  Cobro inicio Fase 2 Negociación, no reembolsable
                 </div>
               </div>
 
-              {/* BLOQUE ÉXITO - CRYSTAL GLASS (5% OPACITY) */}
+              {/* BLOQUE ÉXITO - CRYSTAL GLASS */}
               <div className="bg-slate-950/5 backdrop-blur-2xl border-2 border-white/5 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/40 transition-all group shadow-2xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="w-8 h-8 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-sm">2</span>
