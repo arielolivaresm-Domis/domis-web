@@ -34,7 +34,7 @@ export default function BenefitFlyer() {
   
   const whatsappUrl = useMemo(() => {
     const codesString = domisCodes.filter(c => c.trim() !== '').join(', ');
-    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${nombre}\n• *Propiedades:* ${propCount}\n• *IDs DOMIS:* ${codesString}\n\nHola, quiero activar la negociación técnica con el sistema de inversión Fase 2.`;
+    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${nombre}\n• *Propiedades:* ${propCount}\n• *IDs DOMIS:* ${codesString}\n\nHola, quiero activar la negociación técnica Fase 2.`;
     return `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
   }, [nombre, propCount, domisCodes]);
 
@@ -45,10 +45,10 @@ export default function BenefitFlyer() {
   };
 
   const ModalPortal = (
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 font-sans">
       <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-md" onClick={() => setIsModalOpen(false)} />
       
-      <div className="relative z-[100000] w-full max-w-md bg-slate-900 border-2 border-cyan-500 rounded-[2.5rem] p-8 shadow-[0_0_60px_rgba(34,211,238,0.3)] animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto font-sans">
+      <div className="relative z-[100000] w-full max-w-md bg-slate-900 border-2 border-cyan-500 rounded-[2.5rem] p-8 shadow-[0_0_60px_rgba(34,211,238,0.3)] animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto">
         <button onClick={() => setIsModalOpen(false)} className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors">
           <X size={24}/>
         </button>
@@ -66,7 +66,7 @@ export default function BenefitFlyer() {
               type="text" 
               value={nombre} 
               onChange={(e) => setNombre(e.target.value)} 
-              className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-500 transition-all font-sans" 
+              className="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-white outline-none focus:border-cyan-500 transition-all" 
               placeholder="Ej: Ariel..." 
             />
           </div>
@@ -122,29 +122,29 @@ export default function BenefitFlyer() {
   return (
     <section id="beneficio-fase2" className="py-24 bg-slate-950 px-6 font-sans">
       <div className="max-w-7xl mx-auto">
-        <div className="relative rounded-[2.5rem] overflow-hidden border-2 border-cyan-500 shadow-[0_0_40px_rgba(34,211,238,0.2)] min-h-[600px] flex items-center justify-center bg-slate-900">
+        <div className="relative rounded-[2.5rem] overflow-hidden border-2 border-cyan-500 shadow-[0_0_40px_rgba(34,211,238,0.2)] min-h-[650px] flex items-center justify-center bg-slate-900">
           
           <div className="absolute inset-0">
             <img 
               src="/DOMIS_Negociacion.webp" 
               alt="Negociación Estratégica DOMIS" 
-              className="w-full h-full object-cover opacity-80 grayscale-[0.2] contrast-110" 
+              className="w-full h-full object-cover opacity-90 grayscale-[0.3] contrast-125" 
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/30"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20"></div>
           </div>
 
           <div className="relative z-10 p-8 md:p-16 flex flex-col items-center text-center max-w-5xl w-full">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[11px] font-black uppercase tracking-[0.2em] mb-8 shadow-lg shadow-cyan-500/20">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[11px] font-black uppercase tracking-[0.2em] mb-10 shadow-lg shadow-cyan-500/20">
               Fase 2: Modelo de Inversión
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-10 uppercase tracking-tighter drop-shadow-2xl leading-tight">
+            <h2 className="text-4xl md:text-6xl font-black text-white mb-12 uppercase tracking-tighter drop-shadow-2xl leading-tight">
               💰 INVERSIÓN FASE 2
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full mb-12 text-left max-w-4xl mx-auto">
-              {/* BLOQUE INICIAL */}
-              <div className="bg-slate-950/90 backdrop-blur-md border-2 border-slate-800 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/50 transition-all group">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full mb-14 text-left max-w-4xl mx-auto">
+              {/* BLOQUE INICIAL - GLASSMORPHISM */}
+              <div className="bg-slate-950/20 backdrop-blur-2xl border-2 border-white/10 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/40 transition-all group shadow-2xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="w-8 h-8 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-sm">1</span>
                   <h3 className="text-xl font-black text-white uppercase tracking-tight">INICIAL</h3>
@@ -154,21 +154,21 @@ export default function BenefitFlyer() {
                 
                 <ul className="space-y-3 mb-8 flex-grow">
                   {['Plan Maestro', '3 Escenarios', 'Tasación IA'].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-slate-300 font-bold uppercase text-[11px] tracking-widest">
+                    <li key={item} className="flex items-center gap-2 text-white font-bold uppercase text-[11px] tracking-widest drop-shadow-md">
                       <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full"></span>
                       {item}
                     </li>
                   ))}
                 </ul>
 
-                <div className="flex items-center gap-2 text-cyan-500 font-black uppercase text-[10px] tracking-widest pt-4 border-t border-slate-800">
+                <div className="flex items-center gap-2 text-cyan-400 font-black uppercase text-[9px] tracking-widest pt-4 border-t border-white/10">
                   <Check size={14} strokeWidth={4} />
-                  Descontable
+                  Cobro inicio Fase 2 Negociación
                 </div>
               </div>
 
-              {/* BLOQUE ÉXITO */}
-              <div className="bg-slate-950/90 backdrop-blur-md border-2 border-slate-800 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/50 transition-all group">
+              {/* BLOQUE ÉXITO - GLASSMORPHISM */}
+              <div className="bg-slate-950/20 backdrop-blur-2xl border-2 border-white/10 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/40 transition-all group shadow-2xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="w-8 h-8 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-sm">2</span>
                   <h3 className="text-xl font-black text-white uppercase tracking-tight">ÉXITO</h3>
@@ -176,33 +176,35 @@ export default function BenefitFlyer() {
                 
                 <div className="text-4xl font-mono text-cyan-400 font-black mb-6 italic">10% AHORRO</div>
                 
-                <ul className="space-y-3 mb-8 flex-grow">
-                  <li className="text-slate-500 font-black uppercase text-[10px] tracking-[0.2em] mb-4">Solo si compras:</li>
-                  {['20% Promesa', '80% Escritura'].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-slate-300 font-bold uppercase text-[11px] tracking-widest">
-                      <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full"></span>
-                      {item}
-                    </li>
-                  ))}
+                <ul className="space-y-4 mb-8 flex-grow">
+                  <li className="text-slate-300 font-black uppercase text-[10px] tracking-[0.2em] mb-2 drop-shadow-sm">Solo si compras:</li>
+                  <li className="flex items-center gap-2 text-white font-bold uppercase text-[10px] tracking-widest leading-tight drop-shadow-md">
+                    <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full flex-shrink-0"></span>
+                    20% firma promesa compraventa
+                  </li>
+                  <li className="flex items-center gap-2 text-white font-bold uppercase text-[10px] tracking-widest leading-tight drop-shadow-md">
+                    <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full flex-shrink-0"></span>
+                    80% firma escritura
+                  </li>
                 </ul>
 
-                <div className="flex items-center gap-2 text-cyan-500 font-black uppercase text-[10px] tracking-widest pt-4 border-t border-slate-800">
+                <div className="flex items-center gap-2 text-cyan-400 font-black uppercase text-[10px] tracking-widest pt-4 border-t border-white/10">
                   <Check size={14} strokeWidth={4} />
                   Pago Seguro
                 </div>
               </div>
             </div>
 
-            <div className="mb-12">
+            <div className="mb-14">
               <h2 className="text-4xl md:text-5xl font-black text-white mb-2 uppercase tracking-tighter drop-shadow-2xl">
                 🎁 <span className="text-cyan-400">40% OFF</span> AUDITORÍA
               </h2>
-              <p className="text-white font-black text-[10px] md:text-xs uppercase tracking-[0.4em] opacity-90">al activar ambas fases</p>
+              <p className="text-white font-black text-[10px] md:text-xs uppercase tracking-[0.4em] opacity-90 drop-shadow-md">al activar ambas fases</p>
             </div>
 
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="group inline-flex items-center gap-4 px-12 py-6 bg-cyan-500 text-slate-950 font-black rounded-2xl uppercase tracking-[0.15em] text-sm hover:scale-105 hover:bg-white transition-all shadow-2xl active:scale-95 touch-manipulation"
+              className="group inline-flex items-center gap-4 px-12 py-6 bg-cyan-500 text-slate-950 font-black rounded-2xl uppercase tracking-[0.15em] text-sm hover:scale-105 hover:bg-white transition-all shadow-[0_0_30px_rgba(34,211,238,0.4)] active:scale-95 touch-manipulation"
             >
               <MessageCircle size={22} className="fill-current" />
               Activar Negociación
