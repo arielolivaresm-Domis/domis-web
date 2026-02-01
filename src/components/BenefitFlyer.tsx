@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { MessageCircle, ArrowRight, X, Building2 } from 'lucide-react';
+import { MessageCircle, ArrowRight, X, Building2, Check } from 'lucide-react';
 
 export default function BenefitFlyer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,7 +34,7 @@ export default function BenefitFlyer() {
   
   const whatsappUrl = useMemo(() => {
     const codesString = domisCodes.filter(c => c.trim() !== '').join(', ');
-    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${nombre}\n• *Propiedades:* ${propCount}\n• *IDs DOMIS:* ${codesString}\n\nHola, quiero activar la negociación técnica con el sistema de 3 hitos (Abonos No Reembolsables).`;
+    const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${nombre}\n• *Propiedades:* ${propCount}\n• *IDs DOMIS:* ${codesString}\n\nHola, quiero activar la negociación técnica con el sistema de inversión Fase 2.`;
     return `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
   }, [nombre, propCount, domisCodes]);
 
@@ -139,61 +139,74 @@ export default function BenefitFlyer() {
             </div>
 
             <h2 className="text-4xl md:text-6xl font-black text-white mb-10 uppercase tracking-tighter drop-shadow-2xl leading-tight">
-              💰 ESTRUCTURA DE PAGO <br className="hidden md:block" /> POR ÉXITO
+              💰 INVERSIÓN FASE 2
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-12 text-left">
-              {/* PASO 1 - ACTUALIZADO */}
-              <div className="bg-slate-950/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-2xl">1️⃣</span>
-                  <h3 className="text-lg font-black text-white uppercase tracking-tight">Fee Inicial</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full mb-12 text-left max-w-4xl mx-auto">
+              {/* BLOQUE INICIAL */}
+              <div className="bg-slate-950/90 backdrop-blur-md border-2 border-slate-800 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/50 transition-all group">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="w-8 h-8 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-sm">1</span>
+                  <h3 className="text-xl font-black text-white uppercase tracking-tight">INICIAL</h3>
                 </div>
-                <div className="text-3xl font-mono text-cyan-400 font-black mb-2">$500.000</div>
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider italic">
-                  Activación + Plan Maestro (No Reembolsable).
-                </p>
+                
+                <div className="text-4xl font-mono text-cyan-400 font-black mb-6">$400.000</div>
+                
+                <ul className="space-y-3 mb-8 flex-grow">
+                  {['Plan Maestro', '3 Escenarios', 'Tasación IA'].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-slate-300 font-bold uppercase text-[11px] tracking-widest">
+                      <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="flex items-center gap-2 text-cyan-500 font-black uppercase text-[10px] tracking-widest pt-4 border-t border-slate-800">
+                  <Check size={14} strokeWidth={4} />
+                  Descontable
+                </div>
               </div>
 
-              {/* PASO 2 */}
-              <div className="bg-slate-950/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-2xl">2️⃣</span>
-                  <h3 className="text-lg font-black text-white uppercase tracking-tight">Hito Promesa</h3>
+              {/* BLOQUE ÉXITO */}
+              <div className="bg-slate-950/90 backdrop-blur-md border-2 border-slate-800 p-8 rounded-[2rem] flex flex-col h-full hover:border-cyan-500/50 transition-all group">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="w-8 h-8 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-sm">2</span>
+                  <h3 className="text-xl font-black text-white uppercase tracking-tight">ÉXITO</h3>
                 </div>
-                <div className="text-3xl font-mono text-cyan-400 font-black mb-2">$500.000</div>
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider italic">
-                  Firma de Promesa (No Reembolsable).
-                </p>
-              </div>
+                
+                <div className="text-4xl font-mono text-cyan-400 font-black mb-6 italic">10% AHORRO</div>
+                
+                <ul className="space-y-3 mb-8 flex-grow">
+                  <li className="text-slate-500 font-black uppercase text-[10px] tracking-[0.2em] mb-4">Solo si compras:</li>
+                  {['20% Promesa', '80% Escritura'].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-slate-300 font-bold uppercase text-[11px] tracking-widest">
+                      <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
 
-              {/* PASO 3 */}
-              <div className="bg-slate-950/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-2xl">3️⃣</span>
-                  <h3 className="text-lg font-black text-white uppercase tracking-tight">Éxito Final</h3>
+                <div className="flex items-center gap-2 text-cyan-500 font-black uppercase text-[10px] tracking-widest pt-4 border-t border-slate-800">
+                  <Check size={14} strokeWidth={4} />
+                  Pago Seguro
                 </div>
-                <div className="text-3xl font-mono text-cyan-400 font-black mb-2">10% ÉXITO</div>
-                <p className="text-[10px] text-slate-100 font-bold uppercase tracking-wider italic">
-                  Se descuenta el 100% de tus abonos anteriores del honorario final.
-                </p>
               </div>
             </div>
 
             <div className="mb-12">
-              <h2 className="text-5xl md:text-7xl font-black text-white mb-2 uppercase tracking-tighter drop-shadow-2xl">
-                <span className="text-cyan-400">40% OFF</span>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-2 uppercase tracking-tighter drop-shadow-2xl">
+                🎁 <span className="text-cyan-400">40% OFF</span> AUDITORÍA
               </h2>
-              <p className="text-white font-black text-[10px] md:text-xs uppercase tracking-[0.4em] opacity-90">En tu Auditoría al activar Fase 2</p>
+              <p className="text-white font-black text-[10px] md:text-xs uppercase tracking-[0.4em] opacity-90">al activar ambas fases</p>
             </div>
 
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="group inline-flex items-center gap-4 px-12 py-6 bg-white text-slate-950 font-black rounded-2xl uppercase tracking-[0.15em] text-sm hover:scale-105 transition-all shadow-2xl active:scale-95 touch-manipulation"
+              className="group inline-flex items-center gap-4 px-12 py-6 bg-cyan-500 text-slate-950 font-black rounded-2xl uppercase tracking-[0.15em] text-sm hover:scale-105 hover:bg-white transition-all shadow-2xl active:scale-95 touch-manipulation"
             >
               <MessageCircle size={22} className="fill-current" />
               Activar Negociación
-              <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform" />
             </button>
           </div>
         </div>
