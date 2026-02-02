@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calculator, Info, MapPin, CheckCircle, FileText } from 'lucide-react';
+import { Calculator, Info, MapPin, CheckCircle, FileText, ArrowRight } from 'lucide-react';
 
 export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const [cantidad, setCantidad] = useState(1);
@@ -14,13 +14,13 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
    
   const totalCost = efectiveCantidad * effectiveMeters * pricePerM2;
 
-  const whatsappMessage = `Hola, equipo DOMIS™. Quiero información sobre auditoría de ${efectiveCantidad} ${efectiveCantidad === 1 ? 'propiedad' : 'propiedades'} de ${effectiveMeters}m² cada una. Total estimado: $${totalCost.toLocaleString()} + IVA`;
+  const whatsappMessage = `Hola, equipo DOMIS™. Ya elegí propiedad(es) y quiero auditarlas. Son ${efectiveCantidad} de ${effectiveMeters}m² cada una. Total estimado: $${totalCost.toLocaleString()} + IVA`;
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <div className="py-24 mx-4 md:mx-8 my-8 animate-fadeIn bg-slate-950 relative overflow-hidden rounded-[40px]">
+    <div className="py-24 mx-4 md:mx-8 my-8 animate-fadeIn bg-slate-950 relative overflow-hidden rounded-[3rem]">
       
-      {/* CAPA DE FONDO: DOMIS_audi.webp */}
+      {/* CAPA DE FONDO: INTEGRACIÓN TOTAL */}
       <div 
         className="absolute top-0 left-0 w-full h-full z-0"
         style={{
@@ -29,117 +29,115 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           backgroundPosition: 'center',
         }}
       >
-        {/* FONDO ULTRA-CLARO (5%) */}
-        <div className="absolute inset-0 bg-slate-950/5 backdrop-blur-[1px]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/20 to-slate-950/80"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 font-sans">
+        {/* HEADER DE SECCIÓN ACTUALIZADO */}
         <div className="text-center mb-16">
-          <h3 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter drop-shadow-2xl">
-            Selección de <span className="text-cyan-400">Protocolo de Auditoría</span>
-          </h3>
-          <p className="text-slate-100 font-mono text-xs uppercase tracking-widest mt-2 italic bg-black/40 inline-block px-4 py-1 rounded-full backdrop-blur-sm">
-            Mínimo técnico de 100 m² por propiedad.
+          <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg shadow-cyan-500/20">
+            Fase 1: Auditoría Directa
+          </div>
+          <h2 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter drop-shadow-2xl leading-tight">
+            ¿Ya elegiste tu propiedad? <br/>
+            <span className="text-cyan-400">Nosotros la Auditamos</span>
+          </h2>
+          <p className="text-white/60 font-mono text-[10px] uppercase tracking-widest mt-4 italic bg-white/5 border border-white/10 inline-block px-6 py-2 rounded-full backdrop-blur-md">
+            Inspección técnica para propiedades ya seleccionadas por el cliente.
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto px-4">
-          {/* CAJA CENTRAL ULTRA-TRANSPARENTE (10%) */}
-          <div className="bg-slate-950/10 backdrop-blur-xl border-2 border-cyan-500 rounded-3xl p-8 shadow-[0_0_60px_rgba(0,0,0,0.5)]">
-             
-            <div className="flex items-center justify-between mb-8">
-              <div className="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                <span className="text-3xl">🔍</span>
+        <div className="max-w-2xl mx-auto">
+          {/* CAJA CENTRAL: CRYSTAL GLASS (5% OPACITY) */}
+          <div className="bg-slate-950/5 backdrop-blur-2xl border-2 border-white/10 rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden group">
+            
+            <div className="flex items-center justify-between mb-10">
+              <div className="bg-cyan-500 p-4 rounded-2xl shadow-lg shadow-cyan-500/20">
+                <Calculator size={24} className="text-slate-950" />
               </div>
               <div className="text-right">
-                <h4 className="text-xl font-black text-white uppercase italic tracking-tighter">
-                  Auditoría PCF-15™
+                <h4 className="text-2xl font-black text-white uppercase italic tracking-tighter drop-shadow-md">
+                  PCF-15™ Engine
                 </h4>
                 {discount > 0 && (
-                  <p className="bg-red-950/60 text-red-400 border-2 border-red-500 px-3 py-1 rounded-full animate-pulse text-[10px] font-bold uppercase tracking-widest mt-2 inline-block">
-                    {discount}% OFF
+                  <p className="text-cyan-400 text-[11px] font-black uppercase tracking-widest mt-1">
+                    Beneficio: {discount}% OFF Aplicado
                   </p>
                 )}
               </div>
             </div>
 
-            <div className="space-y-3 mb-8 text-sm text-slate-100 border-b border-slate-500/30 pb-6 font-medium shadow-black drop-shadow-md">
-              <div className="flex items-center gap-3">
-                <CheckCircle size={16} className="text-cyan-400" />
-                <span>Protocolo para <strong className="text-white">{efectiveCantidad} {efectiveCantidad === 1 ? 'propiedad' : 'propiedades'}</strong></span>
-              </div>
-              <div className="flex items-center gap-3">
-                <MapPin size={16} className="text-cyan-400" />
-                <span>Escaneo de entorno (Radio 3km) incluido</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <FileText size={16} className="text-cyan-400" />
-                <span>Informe digital certificado en 72h</span>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10 border-b border-white/10 pb-10">
+              {[
+                { icon: <CheckCircle size={14}/>, text: `Pack: ${efectiveCantidad} unidades` },
+                { icon: <MapPin size={14}/>, text: 'Radio 3km Escaneado' },
+                { icon: <FileText size={14}/>, text: 'Certificación 72h' },
+                { icon: <Info size={14}/>, text: 'Asesoría Post-Informe' }
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3 text-white/80 font-bold uppercase text-[9px] tracking-widest">
+                  <span className="text-cyan-400">{item.icon}</span>
+                  {item.text}
+                </div>
+              ))}
             </div>
 
-            <div className="bg-slate-900/60 rounded-2xl p-6 border border-slate-700/50 mb-6 backdrop-blur-md">
-              <div className="flex items-center gap-2 mb-6">
-                <Calculator size={16} className="text-cyan-400" />
-                <span className="text-xs uppercase text-cyan-400 font-bold tracking-widest">Calculadora de Inversión</span>
-              </div>
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <label className="block text-[10px] uppercase text-cyan-500 mb-4 font-black tracking-widest">Unidades Auditoría:</label>
+                  <div className="flex gap-2">
+                    {[1, 2, 3].map((num) => (
+                      <button
+                        key={num}
+                        onClick={() => setCantidad(num)}
+                        className={`flex-1 py-4 rounded-xl border-2 transition-all font-black text-sm ${
+                          cantidad === num ? 'bg-white border-white text-slate-950' : 'bg-slate-950/40 border-white/10 text-white hover:border-cyan-500/50'
+                        }`}
+                      >
+                        {num === 3 ? (cantidad === 3 ? <input type="number" value={cantidadCustom} onChange={(e) => setCantidadCustom(Math.max(3, Number(e.target.value)))} className="w-full bg-transparent text-center outline-none" /> : '3+') : num}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-              <div className="mb-6">
-                <label className="block text-xs uppercase text-slate-300 mb-3 font-bold italic tracking-tighter">Unidades:</label>
-                <div className="flex gap-2">
-                  {[1, 2, 3].map((num) => (
-                    <button
-                      key={num}
-                      onClick={() => setCantidad(num)}
-                      className={`flex-1 py-3 rounded-lg border-2 transition-all font-black text-lg ${
-                        cantidad === num ? 'bg-cyan-500 border-cyan-400 text-slate-950' : 'bg-slate-800/80 border-slate-600 text-slate-300 hover:bg-slate-700'
-                      }`}
-                    >
-                      {num === 3 ? (cantidad === 3 ? <input type="number" value={cantidadCustom} onChange={(e) => setCantidadCustom(Math.max(3, Number(e.target.value)))} className="w-full bg-transparent text-center outline-none" /> : '3+') : num}
-                    </button>
-                  ))}
+                <div>
+                  <label className="block text-[10px] uppercase text-cyan-500 mb-4 font-black tracking-widest">Superficie (m²):</label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={meters}
+                      onChange={(e) => setMeters(Number(e.target.value))}
+                      onBlur={() => setMeters(Math.max(100, meters))}
+                      className="w-full bg-slate-950/40 border-2 border-white/10 rounded-xl px-4 py-4 text-sm font-mono text-white focus:border-cyan-400 outline-none transition-all"
+                    />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 font-mono text-xs font-bold uppercase">m²</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="mb-6">
-                <label className="block text-xs uppercase text-slate-300 mb-3 font-bold italic tracking-tighter">Superficie (m²):</label>
-                <div className="relative">
-                  <input
-                    type="number"
-                    value={meters}
-                    onChange={(e) => setMeters(Number(e.target.value))}
-                    onBlur={() => setMeters(Math.max(100, meters))}
-                    className="w-full bg-slate-800/80 border border-slate-600 rounded-lg px-4 py-3 text-lg font-mono text-white focus:border-cyan-400 outline-none placeholder-slate-500"
-                  />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-mono text-sm">m²</span>
+              <div className="bg-cyan-500/10 rounded-2xl p-6 border-2 border-cyan-500/20 text-center">
+                <span className="text-[10px] uppercase text-cyan-400 font-black tracking-[0.2em] mb-2 block">Inversión Estimada Auditoría</span>
+                <div className="text-3xl md:text-4xl font-mono text-white font-black tracking-tighter drop-shadow-lg">
+                  ${totalCost.toLocaleString()} <span className="text-sm opacity-50">+ IVA</span>
                 </div>
               </div>
 
-              <div className="bg-slate-950/60 rounded-xl p-4 border border-slate-700">
-                <div className="flex justify-between pt-2 font-black text-cyan-400">
-                  <span className="text-xs uppercase tracking-widest">Inversión Estimada:</span>
-                  <span className="font-mono text-xl">${totalCost.toLocaleString()} + IVA</span>
-                </div>
-              </div>
-            </div>
-
-            <a 
-              href={whatsappUrl}
-              target="_blank" 
-              rel="noreferrer" 
-              className="block w-full py-5 font-black uppercase rounded-xl text-sm bg-cyan-500 text-slate-950 hover:bg-white transition-all shadow-lg text-center tracking-widest hover:scale-[1.02]"
-              onClick={() => onNext && onNext()}
-            >
-              Seleccionar Pack
-            </a>
-          </div>
-
-          <div className="mt-8 text-center">
-            <div className="inline-flex items-center gap-2 text-slate-100 text-[10px] bg-black/60 backdrop-blur-sm p-4 rounded-xl border border-slate-800 shadow-xl">
-              <Info size={12} className="text-cyan-500" />
-              <p>Asesoría técnica post-auditoría incluida para la interpretación de resultados.</p>
+              <a 
+                href={whatsappUrl}
+                target="_blank" 
+                rel="noreferrer" 
+                className="group flex items-center justify-center gap-4 w-full py-6 font-black uppercase rounded-2xl text-xs bg-cyan-500 text-slate-950 hover:bg-white transition-all shadow-2xl tracking-[0.2em] active:scale-95"
+                onClick={() => onNext && onNext()}
+              >
+                Configurar Pack Técnico
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </a>
             </div>
           </div>
+
+          <p className="mt-10 text-center text-white/40 text-[9px] font-bold uppercase tracking-[0.3em] leading-relaxed max-w-lg mx-auto italic">
+            * Mínimo técnico 100 m² por unidad. El informe final se entrega en formato digital cifrado para validez legal en negociación.
+          </p>
         </div>
       </div>
     </div>
