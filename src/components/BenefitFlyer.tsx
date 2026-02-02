@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { MessageCircle, ArrowRight, X, Check, AlertCircle, Activity } from 'lucide-react';
+import { MessageCircle, ArrowRight, X, Check, AlertCircle } from 'lucide-react';
 
 export default function BenefitFlyer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,15 +53,15 @@ export default function BenefitFlyer() {
 
   return (
     <section id="beneficio-fase2" className="py-24 bg-slate-950 px-6 font-sans">
-      <div className="max-w-7xl mx-auto">
-        <div className="relative rounded-[3rem] overflow-hidden border-2 border-cyan-500 shadow-[0_0_50px_rgba(34,211,238,0.15)] bg-slate-900 min-h-[900px] flex items-center justify-center">
+      <div className="max-w-5xl mx-auto">
+        <div className="relative rounded-[3rem] overflow-hidden border-2 border-cyan-500 shadow-[0_0_50px_rgba(34,211,238,0.15)] bg-slate-900 min-h-[850px] flex items-center justify-center">
           
           <div className="absolute inset-0">
             <img src="/DOMIS_Negociacion.webp" alt="Negociación DOMIS" className="w-full h-full object-cover opacity-90 grayscale-[0.4] contrast-125" />
             <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/30 to-slate-950/90"></div>
           </div>
 
-          <div className="relative z-10 p-6 md:p-16 w-full max-w-6xl">
+          <div className="relative z-10 p-6 md:p-16 w-full max-w-4xl">
             {/* HEADER */}
             <div className="text-center mb-16">
               <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg shadow-cyan-500/20">Fase 2: Negociación Técnica</div>
@@ -70,97 +70,74 @@ export default function BenefitFlyer() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-              
-              {/* COLUMNA IZQUIERDA: PAGOS Y DEVOLUCIÓN */}
-              <div className="lg:col-span-7 space-y-6">
-                <div className="bg-slate-950/5 backdrop-blur-2xl border-2 border-white/5 p-8 rounded-[2.5rem] shadow-2xl h-full flex flex-col justify-center">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div>
-                      <h4 className="text-cyan-500 font-black text-xs uppercase tracking-widest mb-4">Fee Activación</h4>
-                      <div className="text-4xl font-mono text-white font-black mb-4">$400.000</div>
-                      <ul className="space-y-2">
-                        <li className="flex items-center gap-2 text-[10px] text-slate-300 font-bold uppercase tracking-widest">
-                          <Check size={12} className="text-cyan-500"/> No reembolsable
-                        </li>
-                        <li className="flex items-center gap-2 text-[10px] text-slate-300 font-bold uppercase tracking-widest">
-                          <Check size={12} className="text-cyan-500"/> Descontable del total
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="border-l border-white/10 md:pl-10">
-                      <h4 className="text-cyan-500 font-black text-xs uppercase tracking-widest mb-4">Comisión Éxito</h4>
-                      <div className="text-4xl font-mono text-white font-black mb-2">10% <span className="text-sm opacity-50 block uppercase tracking-tighter">del ahorro logrado</span></div>
-                      <ul className="space-y-2 mt-4">
-                        <li className="flex items-center gap-2 text-[10px] text-slate-300 font-bold uppercase tracking-widest">
-                          <Check size={12} className="text-cyan-500"/> 20% al firmar Promesa
-                        </li>
-                        <li className="flex items-center gap-2 text-[10px] text-slate-300 font-bold uppercase tracking-widest">
-                          <Check size={12} className="text-cyan-500"/> 80% al firmar Escritura
-                        </li>
-                      </ul>
-                    </div>
+            <div className="space-y-6">
+              {/* BLOQUE DE PAGOS (CRYSTAL GLASS) */}
+              <div className="bg-slate-950/5 backdrop-blur-2xl border-2 border-white/5 p-10 rounded-[2.5rem] shadow-2xl">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                  <div>
+                    <h4 className="text-cyan-500 font-black text-xs uppercase tracking-widest mb-4">Fee Activación</h4>
+                    <div className="text-5xl font-mono text-white font-black mb-4">$400.000</div>
+                    <ul className="space-y-3">
+                      <li className="flex items-center gap-2 text-[11px] text-slate-200 font-bold uppercase tracking-widest">
+                        <Check size={14} className="text-cyan-500"/> No reembolsable
+                      </li>
+                      <li className="flex items-center gap-2 text-[11px] text-slate-200 font-bold uppercase tracking-widest">
+                        <Check size={14} className="text-cyan-500"/> Descontable del total
+                      </li>
+                    </ul>
                   </div>
-                </div>
-
-                <div className="bg-cyan-500/5 backdrop-blur-2xl border-2 border-cyan-500/20 p-8 rounded-[2.5rem]">
-                  <div className="flex items-center gap-3 mb-6">
-                    <AlertCircle className="text-cyan-400" size={24} />
-                    <h3 className="text-white font-black uppercase tracking-tighter text-xl italic">Devolución Condicional 20%</h3>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[
-                      '✓ Cliente comprueba caída con documentos',
-                      '✓ DOMIS devuelve en 30 días hábiles',
-                      '✓ Monitoreo 120 días sobre ROL específico',
-                      '✓ Si ROL cambia → Cliente paga completo'
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-3 bg-slate-950/20 p-3 rounded-xl border border-white/5">
-                        <span className="text-[9px] text-slate-200 font-black uppercase tracking-widest leading-tight">{item}</span>
-                      </div>
-                    ))}
+                  <div className="border-l border-white/10 md:pl-12">
+                    <h4 className="text-cyan-500 font-black text-xs uppercase tracking-widest mb-4">Comisión Éxito</h4>
+                    <div className="text-5xl font-mono text-white font-black mb-2">10%</div>
+                    <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-6 italic">Del ahorro total logrado</p>
+                    <ul className="space-y-3">
+                      <li className="flex items-center gap-2 text-[11px] text-slate-200 font-bold uppercase tracking-widest leading-tight">
+                        <Check size={14} className="text-cyan-500"/> 20% al firmar Promesa
+                      </li>
+                      <li className="flex items-center gap-2 text-[11px] text-slate-200 font-bold uppercase tracking-widest leading-tight">
+                        <Check size={14} className="text-cyan-500"/> 80% al firmar Escritura
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
 
-              {/* COLUMNA DERECHA: VARIABLES Y CTA */}
-              <div className="lg:col-span-5 space-y-6">
-                <div className="bg-slate-950/5 backdrop-blur-2xl border-2 border-white/5 p-8 rounded-[2.5rem] flex flex-col h-full">
-                  <div className="flex items-center gap-3 mb-8 text-cyan-500">
-                    <Activity size={20} />
-                    <h4 className="font-black text-xs uppercase tracking-[0.2em]">Variables de Ajuste Técnico</h4>
-                  </div>
-                  
-                  <div className="space-y-6 mb-12">
-                    {[
-                      { label: 'Estado Propiedad', detail: 'Protocolo PCF-15™' },
-                      { label: 'Tiempo en Venta', detail: 'Urgencia de liquidez' },
-                      { label: 'Necesidad Vendedor', detail: 'Contexto transaccional' }
-                    ].map((item, i) => (
-                      <div key={i} className="border-b border-white/10 pb-4">
-                        <div className="text-white font-black text-sm uppercase tracking-widest mb-1">{item.label}</div>
-                        <div className="text-cyan-500 text-[10px] font-mono uppercase tracking-widest">{item.detail}</div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="mt-auto">
-                    <div className="text-center mb-8">
-                      <div className="text-4xl font-black text-white italic tracking-tighter drop-shadow-lg">40% OFF</div>
-                      <div className="text-cyan-400 font-black text-[10px] uppercase tracking-[0.3em] mt-2">AUDITORÍA AL ACTIVAR FASE 2</div>
+              {/* BLOQUE DEVOLUCIÓN (CYAN GLASS) */}
+              <div className="bg-cyan-500/5 backdrop-blur-2xl border-2 border-cyan-500/20 p-10 rounded-[2.5rem]">
+                <div className="flex items-center gap-4 mb-8">
+                  <AlertCircle className="text-cyan-400" size={28} />
+                  <h3 className="text-white font-black uppercase tracking-tighter text-2xl italic">Devolución Condicional 20%</h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {[
+                    'Cliente comprueba caída con documentos',
+                    'DOMIS devuelve en 30 días hábiles',
+                    'Monitoreo 120 días sobre ROL específico',
+                    'Si ROL cambia → Cliente paga completo'
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-4 bg-slate-950/30 p-4 rounded-2xl border border-white/5">
+                      <div className="w-2 h-2 bg-cyan-500 rounded-full flex-shrink-0" />
+                      <span className="text-[10px] text-slate-100 font-black uppercase tracking-[0.15em] leading-snug">{item}</span>
                     </div>
-                    
-                    <button 
-                      onClick={() => setIsModalOpen(true)}
-                      className="group w-full flex items-center justify-center gap-4 py-7 bg-cyan-500 text-slate-950 font-black rounded-3xl uppercase tracking-[0.2em] text-[11px] hover:bg-white hover:scale-[1.02] transition-all shadow-[0_0_40px_rgba(34,211,238,0.3)] active:scale-95"
-                    >
-                      <MessageCircle size={20} className="fill-current" />
-                      Activar Negociación
-                      <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
+                  ))}
                 </div>
               </div>
+            </div>
+
+            {/* BOTÓN FINAL */}
+            <div className="mt-16 flex flex-col items-center">
+              <div className="mb-8 text-center">
+                <span className="text-5xl font-black text-white italic tracking-tighter drop-shadow-lg">40% OFF</span>
+                <p className="text-cyan-400 font-black text-[11px] uppercase tracking-[0.4em] mt-2">AUDITORÍA AL ACTIVAR FASE 2</p>
+              </div>
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="group flex items-center justify-center gap-6 px-16 py-8 bg-cyan-500 text-slate-950 font-black rounded-[2rem] uppercase tracking-[0.2em] text-sm hover:bg-white hover:scale-[1.02] transition-all shadow-[0_0_50px_rgba(34,211,238,0.4)] active:scale-95"
+              >
+                <MessageCircle size={24} className="fill-current" />
+                Activar Negociación Técnica
+                <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
+              </button>
             </div>
 
           </div>
