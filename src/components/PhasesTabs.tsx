@@ -16,6 +16,7 @@ export default function PhasesTabs() {
    const handleScroll = () => {
      if (triggerRef.current) {
        const rect = triggerRef.current.getBoundingClientRect();
+       // Se activa la desaparición cuando el encabezado sale de la vista (80px)
        setIsShrunk(rect.top <= 80);
      }
    };
@@ -60,7 +61,7 @@ export default function PhasesTabs() {
    <section className="py-24 bg-slate-950 relative" id="proceso">
      <div className="max-w-7xl mx-auto px-6 relative z-10">
       
-       <div className="text-center mb-16">
+       <div ref={triggerRef} className="text-center mb-16">
          <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
            <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Protocolo DOMIS™</span>
          </div>
@@ -72,72 +73,58 @@ export default function PhasesTabs() {
           </p>
        </div>
 
-       <div ref={triggerRef} className="h-1 w-full absolute top-[300px] pointer-events-none"></div>
+       {/* NAV PEQUEÑA (STICKY) - SOLO SE VE AL HACER SCROLL */}
+       <div className={`fixed top-24 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 ${isShrunk ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10 pointer-events-none'}`}>
+          <div className="flex gap-2 p-1.5 bg-slate-900/90 backdrop-blur-xl border border-white/5 rounded-xl shadow-2xl">
+            {['fase1', 'fase2', 'fase3'].map((f, i) => (
+              <button 
+                key={f} 
+                onClick={() => handleTabChange(f as any)}
+                className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === f ? 'bg-cyan-500 text-slate-950' : 'text-slate-500 hover:text-white'}`}
+              >
+                {i === 0 ? 'Auditoría' : i === 1 ? 'Negociación' : 'Plusvalía'}
+              </button>
+            ))}
+          </div>
+       </div>
 
-       {/* NAVEGACIÓN SUPERIOR (MÓDULOS CAMBIADOS A ESTILO FOTO 2) */}
-       <div className={`sticky top-20 z-[100] transition-all duration-700 ease-in-out mb-16 ${isShrunk ? 'scale-90' : 'scale-100'}`}>
-         <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto transition-all duration-700`}>
+       {/* TARJETAS GRANDES (MÓDULOS) - DESAPARECEN AL HACER SCROLL */}
+       <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 mb-24 transition-all duration-500 ${isShrunk ? 'opacity-0 pointer-events-none -translate-y-4' : 'opacity-100 translate-y-0'}`}>
            {[
              { 
-               id: 'fase1', 
-               num: '1', 
-               title: 'Auditoría Técnica', 
-               desc: 'Protocolo PCF-15™ para asegurar tu inversión. Si ya elegiste tu propiedad, la auditamos; si no tienes una, activamos modo sourcing para buscarla por ti. Scoring técnico 1-7 en 3 días + escaneo del entorno.' 
+               id: 'fase1', num: '1', title: 'Auditoría Técnica', 
+               desc: 'Protocolo PCF-15™ para asegurar tu inversión. Si ya elegiste tu propiedad, la auditamos; si no tienes una, activamos modo sourcing para buscarla por ti.' 
              },
              { 
-               id: 'fase2', 
-               num: '2', 
-               title: 'Negociación Estratégica', 
-               desc: 'Inteligencia de mercado (CBR/IA) y valorización de fallas PCF-15 (NDI) netamente para generar poder de negociación. 3 escenarios de cierre basados en ROI real y evidencia técnica.' 
+               id: 'fase2', num: '2', title: 'Negociación Estratégica', 
+               desc: 'Inteligencia de mercado (CBR/IA) y valorización de fallas PCF-15 (NDI) netamente para generar poder de negociación.' 
              },
              { 
-               id: 'fase3', 
-               num: '3', 
-               title: 'Plusvalía y Remodelación', 
+               id: 'fase3', num: '3', title: 'Plusvalía y Remodelación', 
                desc: 'Ejecución de precisión para corregir fallas de auditoría, garantizando habitabilidad y plusvalía inmediata.' 
              }
            ].map((t) => (
              <button
                key={t.id}
                onClick={() => handleTabChange(t.id as any)}
-               className={`relative p-10 rounded-2xl border-2 transition-all duration-500 text-center flex flex-col items-center ${
-                 activeTab === t.id
-                   ? 'border-cyan-500 bg-slate-900/60 shadow-[0_0_40px_rgba(34,211,238,0.15)]'
-                   : 'border-slate-800 bg-slate-900/40 hover:border-slate-700'
+               className={`relative p-10 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center text-center ${
+                 activeTab === t.id ? 'border-cyan-500 bg-slate-900/60 shadow-[0_0_40px_rgba(34,211,238,0.1)]' : 'border-slate-800 bg-slate-900/40'
                }`}
              >
-               <div className={`w-12 h-12 rounded-full border-2 flex items-center justify-center text-sm font-black mb-10 transition-all duration-500 ${
-                 activeTab === t.id 
-                   ? 'border-cyan-500 bg-slate-950 text-white shadow-[0_0_15px_rgba(34,211,238,0.3)]' 
-                   : 'border-white/20 bg-slate-950 text-slate-500'
-               }`}>
-                 {t.num}
-               </div>
-               <h3 className={`text-xl font-black uppercase tracking-tighter mb-6 transition-colors duration-500 ${
-                 activeTab === t.id ? 'text-cyan-400' : 'text-white'
-               }`}>
-                 {t.title}
-               </h3>
-               <p className="text-slate-400 text-[11px] font-bold uppercase leading-relaxed tracking-wider">
-                 {t.desc}
-               </p>
+               <div className={`w-12 h-12 rounded-full border-2 flex items-center justify-center text-sm font-black mb-10 ${activeTab === t.id ? 'border-cyan-500 bg-slate-950 text-white' : 'border-white/20 text-slate-500'}`}>{t.num}</div>
+               <h3 className={`text-xl font-black uppercase tracking-tighter mb-6 ${activeTab === t.id ? 'text-cyan-400' : 'text-white'}`}>{t.title}</h3>
+               <p className="text-slate-400 text-[11px] font-bold uppercase leading-relaxed tracking-wider">{t.desc}</p>
              </button>
            ))}
-         </div>
        </div>
 
-       {/* CONTENIDOS POR FASE */}
-       <div className="mt-8">
+       {/* CONTENIDOS DINÁMICOS */}
+       <div className="mt-8 transition-opacity duration-500">
          {activeTab === 'fase1' && (
            <div className="space-y-24 animate-fadeIn text-center">
              <AuditPacks />
              <Sourcing />
-             <BridgeButton
-               targetId="fase2"
-               label="Fase 2"
-               subtitle="Negociación Técnica"
-               icon="💼"
-             />
+             <BridgeButton targetId="fase2" label="Fase 2" subtitle="Negociación Técnica" icon="💼" />
            </div>
          )}
 
@@ -145,26 +132,15 @@ export default function PhasesTabs() {
            <div className="space-y-24 animate-fadeIn text-center">
              <BenefitFlyer />
              <Deliverable />
-             {/* Corrección del error 'onNext' pasando la función requerida */}
              <Phase2 onNext={() => handleTabChange('fase3')} />
-             <BridgeButton
-               targetId="fase3"
-               label="Fase 3"
-               subtitle="Remodelación Estratégica"
-               icon="🏗️"
-             />
+             <BridgeButton targetId="fase3" label="Fase 3" subtitle="Remodelación Estratégica" icon="🏗️" />
            </div>
          )}
 
          {activeTab === 'fase3' && (
            <div className="space-y-24 animate-fadeIn text-center">
              <Phase3 />
-             <BridgeButton
-               targetId="fase1"
-               label="Fase 1"
-               subtitle="Reiniciar Auditoría"
-               icon="🔍"
-             />
+             <BridgeButton targetId="fase1" label="Fase 1" subtitle="Reiniciar Auditoría" icon="🔍" />
            </div>
          )}
        </div>
