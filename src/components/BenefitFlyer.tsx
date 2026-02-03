@@ -102,16 +102,16 @@ export default function BenefitFlyer() {
                 </div>
               </div>
 
-              {/* BLOQUE DEVOLUCIÓN (CYAN GLASS) */}
+              {/* BLOQUE DEVOLUCIÓN (CYAN GLASS) - CAMBIO DE TEXTO AQUÍ */}
               <div className="bg-cyan-500/5 backdrop-blur-2xl border-2 border-cyan-500/20 p-10 rounded-[2.5rem]">
                 <div className="flex items-center gap-4 mb-8">
                   <AlertCircle className="text-cyan-400" size={28} />
-                  <h3 className="text-white font-black uppercase tracking-tighter text-2xl italic">Devolución Condicional 20%</h3>
+                  <h3 className="text-white font-black uppercase tracking-tighter text-2xl italic">Devolución Condicional (20% Firma Promesa)</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {[
                     'Cliente comprueba caída con documentos',
-                    'DOMIS devuelve en 30 días hábiles',
+                    'DOMIS devuelve el 20% en 30 días hábiles',
                     'Monitoreo 120 días sobre ROL específico',
                     'Si ROL cambia → Cliente paga completo'
                   ].map((item, i) => (
