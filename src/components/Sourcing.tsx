@@ -28,7 +28,8 @@ export default function Sourcing() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-20">
+        {/* GRILLA DE TARJETAS - SE AÑADIÓ 'items-stretch' PARA ASEGURAR ALTURA IGUAL */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-20 items-stretch">
           <SourcingNormal onSelect={handleWhatsApp} />
           <SourcingVIP onSelect={handleWhatsApp} />
         </div>
@@ -62,16 +63,18 @@ function SourcingNormal({ onSelect }: { onSelect: any }) {
   const total = (efectiveCantidad * effectiveMeters * pricePerM2) + (efectiveCantidad * 60000);
 
   return (
-    <div className="bg-slate-900/40 border border-white/5 p-10 rounded-[2.5rem] hover:border-slate-700 transition-all flex flex-col group">
-      <div className="flex items-center gap-4 mb-6">
-        <div className="p-4 bg-slate-800 rounded-xl"><Search className="text-slate-300 w-7 h-7" /></div>
-        <h3 className="text-3xl font-black text-white uppercase italic">Sourcing Normal</h3>
+    <div className="bg-slate-900/40 border border-white/5 p-10 rounded-[2.5rem] hover:border-slate-700 transition-all flex flex-col group h-full">
+      {/* CONTENEDOR SUPERIOR FLEXIBLE PARA ALINEACIÓN */}
+      <div className="flex-grow">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="p-4 bg-slate-800 rounded-xl"><Search className="text-slate-300 w-7 h-7" /></div>
+          <h3 className="text-3xl font-black text-white uppercase italic">Sourcing Normal</h3>
+        </div>
+        
+        <p className="text-slate-300 text-base leading-relaxed font-medium">
+          Barremos la red por ti y depuramos opciones digitalmente. Tú decides qué auditamos a fondo con nuestro respaldo técnico. <span className="text-white italic">En esta modalidad, se auditan únicamente las propiedades que selecciones de la terna presentada.</span>
+        </p>
       </div>
-      
-      {/* TEXTO ACTUALIZADO FASE 1 NORMAL */}
-      <p className="text-slate-300 text-base mb-10 leading-relaxed font-medium">
-        Barremos la red por ti y depuramos opciones digitalmente. Tú decides qué auditamos a fondo con nuestro respaldo técnico. <span className="text-white italic">En esta modalidad, se auditan únicamente las propiedades que selecciones de la terna presentada.</span>
-      </p>
 
       <div className="bg-slate-950/80 rounded-[2.5rem] p-10 border border-slate-800 mb-8 mt-auto shadow-xl">
         <div className="space-y-8">
@@ -121,17 +124,20 @@ function SourcingVIP({ onSelect }: { onSelect: any }) {
   const total = (efectiveCantidad * effectiveMeters * pricePerM2) + (visitamos * 50000);
 
   return (
-    <div className="bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-cyan-500/30 p-10 rounded-[2.5rem] relative flex flex-col shadow-2xl overflow-hidden group">
+    <div className="bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-cyan-500/30 p-10 rounded-[2.5rem] relative flex flex-col shadow-2xl overflow-hidden group h-full">
       <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[12px] font-black px-8 py-3 rounded-bl-3xl uppercase tracking-widest shadow-xl">Recomendado VIP</div>
-      <div className="flex items-center gap-4 mb-6 mt-4 md:mt-0">
-        <div className="p-4 bg-cyan-500/10 rounded-xl"><Crown className="text-cyan-400 w-8 h-8 animate-pulse" /></div>
-        <h3 className="text-3xl font-black text-white uppercase italic">Sourcing VIP</h3>
-      </div>
       
-      {/* TEXTO ACTUALIZADO FASE 1 VIP */}
-      <p className="text-slate-300 text-base mb-10 leading-relaxed font-medium">
-        Evaluamos en terreno cada opción. Recibes un <span className="text-white font-bold italic underline decoration-cyan-500/50">Informe FAST</span> para comparar estados reales y decidir con total certeza cuáles auditamos. <span className="text-white italic">Visitamos todas las propiedades presentadas y creamos un Informe FAST de cada una para que elijas las que se auditan.</span>
-      </p>
+      {/* CONTENEDOR SUPERIOR FLEXIBLE PARA ALINEACIÓN */}
+      <div className="flex-grow">
+        <div className="flex items-center gap-4 mb-6 mt-4 md:mt-0">
+          <div className="p-4 bg-cyan-500/10 rounded-xl"><Crown className="text-cyan-400 w-8 h-8 animate-pulse" /></div>
+          <h3 className="text-3xl font-black text-white uppercase italic">Sourcing VIP</h3>
+        </div>
+        
+        <p className="text-slate-300 text-base leading-relaxed font-medium">
+          Evaluamos en terreno cada opción. Recibes un <span className="text-white font-bold italic underline decoration-cyan-500/50">Informe FAST</span> para comparar estados reales y decidir con total certeza cuáles auditamos. <span className="text-white italic">Visitamos todas las propiedades presentadas y creamos un Informe FAST de cada una para que elijas las que se auditan.</span>
+        </p>
+      </div>
 
       <div className="bg-slate-950/80 rounded-[2.5rem] p-10 border border-cyan-900/30 mb-8 mt-auto shadow-inner">
         <div className="space-y-8">
@@ -157,7 +163,7 @@ function SourcingVIP({ onSelect }: { onSelect: any }) {
           <div>
             <label className="text-[14px] font-black uppercase text-cyan-500 mb-4 block tracking-widest">Metraje (m²):</label>
             <div className="relative">
-                <input type="number" value={meters} onChange={e => setMeters(Number(e.target.value))} className="w-full bg-slate-800 border-2 border-cyan-900/30 rounded-xl px-6 py-4 text-white font-mono text-lg focus:border-cyan-400 outline-none transition-all" />
+                <input type="number" value={meters} onChange={e => setMeters(Number(e.target.value))} className="w-full bg-slate-800 border-2 border-cyan-900/30 rounded-xl px-6 py-4 text-white font-mono text-lg focus:border-cyan-500 outline-none transition-all" />
                 <span className="absolute right-6 top-1/2 -translate-y-1/2 text-cyan-900 font-mono text-sm font-bold">M²</span>
             </div>
           </div>
