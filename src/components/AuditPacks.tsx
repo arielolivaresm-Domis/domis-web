@@ -32,7 +32,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 font-sans">
-        {/* HEADER - TEXTOS INCREMENTADOS */}
+        {/* HEADER - MANTENEMOS EL TAMAÑO MEJORADO */}
         <div className="text-center mb-16">
           <div className="inline-block px-6 py-2 rounded-full bg-cyan-500 text-slate-950 text-[14px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg shadow-cyan-500/20">
             Fase 1: Auditoría Directa
@@ -47,7 +47,6 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
         </div>
 
         <div className="max-w-2xl mx-auto">
-          {/* CAJA CENTRAL */}
           <div className="bg-slate-950/5 backdrop-blur-3xl border-2 border-white/10 rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden">
             
             <div className="flex items-center justify-between mb-12">
@@ -66,7 +65,6 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               </div>
             </div>
 
-            {/* GRILLA DE ITEMS - MÁS GRANDES Y SEPARADOS */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 border-b border-white/10 pb-12">
               {[
                 { icon: <CheckCircle size={18}/>, text: `Pack: ${efectiveCantidad} unidades` },
@@ -115,10 +113,11 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                 </div>
               </div>
 
+              {/* BLOQUE DE PRECIO REVERTIDO A TAMAÑO ORIGINAL */}
               <div className="bg-cyan-500/10 rounded-[2rem] p-8 border-2 border-cyan-500/20 text-center shadow-inner">
-                <span className="text-[14px] uppercase text-cyan-400 font-black tracking-[0.2em] mb-3 block">Inversión Estimada Auditoría</span>
-                <div className="text-5xl md:text-6xl font-mono text-white font-black tracking-tighter drop-shadow-xl">
-                  ${totalCost.toLocaleString()} <span className="text-lg opacity-50 ml-2">+ IVA</span>
+                <span className="text-[10px] uppercase text-cyan-400 font-black tracking-[0.2em] mb-2 block">Inversión Estimada Auditoría</span>
+                <div className="text-3xl md:text-4xl font-mono text-white font-black tracking-tighter drop-shadow-lg">
+                  ${totalCost.toLocaleString()} <span className="text-sm opacity-50 ml-2">+ IVA</span>
                 </div>
               </div>
 
