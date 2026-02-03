@@ -28,13 +28,11 @@ export default function Sourcing() {
           </p>
         </div>
 
-        {/* GRILLA DE TARJETAS - SE AÑADIÓ 'items-stretch' PARA ASEGURAR ALTURA IGUAL */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-20 items-stretch">
           <SourcingNormal onSelect={handleWhatsApp} />
           <SourcingVIP onSelect={handleWhatsApp} />
         </div>
 
-        {/* PIE DE PÁGINA */}
         <div className="max-w-2xl mx-auto text-center border-t border-slate-900 pt-12">
           <div className="flex items-center justify-center gap-3 mb-6 text-slate-500">
             <Clock size={18} />
@@ -64,8 +62,8 @@ function SourcingNormal({ onSelect }: { onSelect: any }) {
 
   return (
     <div className="bg-slate-900/40 border border-white/5 p-10 rounded-[2.5rem] hover:border-slate-700 transition-all flex flex-col group h-full">
-      {/* CONTENEDOR SUPERIOR FLEXIBLE PARA ALINEACIÓN */}
-      <div className="flex-grow">
+      {/* ALTURA MÍNIMA CONTROLADA PARA NIVELAR */}
+      <div className="min-h-[320px]">
         <div className="flex items-center gap-4 mb-6">
           <div className="p-4 bg-slate-800 rounded-xl"><Search className="text-slate-300 w-7 h-7" /></div>
           <h3 className="text-3xl font-black text-white uppercase italic">Sourcing Normal</h3>
@@ -76,7 +74,7 @@ function SourcingNormal({ onSelect }: { onSelect: any }) {
         </p>
       </div>
 
-      <div className="bg-slate-950/80 rounded-[2.5rem] p-10 border border-slate-800 mb-8 mt-auto shadow-xl">
+      <div className="bg-slate-950/80 rounded-[2.5rem] p-10 border border-slate-800 mb-8 shadow-xl">
         <div className="space-y-8">
           <div>
             <label className="text-[14px] font-black uppercase text-slate-500 mb-5 block tracking-widest flex items-center gap-2"><Calculator size={14} /> Pack Auditoría:</label>
@@ -125,10 +123,10 @@ function SourcingVIP({ onSelect }: { onSelect: any }) {
 
   return (
     <div className="bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-cyan-500/30 p-10 rounded-[2.5rem] relative flex flex-col shadow-2xl overflow-hidden group h-full">
-      <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[12px] font-black px-8 py-3 rounded-bl-3xl uppercase tracking-widest shadow-xl">Recomendado VIP</div>
+      <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[12px] font-black px-8 py-3 rounded-bl-3xl uppercase tracking-widest shadow-xl z-20">Recomendado VIP</div>
       
-      {/* CONTENEDOR SUPERIOR FLEXIBLE PARA ALINEACIÓN */}
-      <div className="flex-grow">
+      {/* ALTURA MÍNIMA CONTROLADA PARA NIVELAR */}
+      <div className="min-h-[320px]">
         <div className="flex items-center gap-4 mb-6 mt-4 md:mt-0">
           <div className="p-4 bg-cyan-500/10 rounded-xl"><Crown className="text-cyan-400 w-8 h-8 animate-pulse" /></div>
           <h3 className="text-3xl font-black text-white uppercase italic">Sourcing VIP</h3>
@@ -139,7 +137,7 @@ function SourcingVIP({ onSelect }: { onSelect: any }) {
         </p>
       </div>
 
-      <div className="bg-slate-950/80 rounded-[2.5rem] p-10 border border-cyan-900/30 mb-8 mt-auto shadow-inner">
+      <div className="bg-slate-950/80 rounded-[2.5rem] p-10 border border-cyan-900/30 mb-8 shadow-inner">
         <div className="space-y-8">
           <div>
             <label className="text-[14px] font-black uppercase text-cyan-500 mb-5 block tracking-widest flex items-center gap-2"><MapPin size={14} /> Pack Auditoría VIP:</label>
@@ -163,7 +161,7 @@ function SourcingVIP({ onSelect }: { onSelect: any }) {
           <div>
             <label className="text-[14px] font-black uppercase text-cyan-500 mb-4 block tracking-widest">Metraje (m²):</label>
             <div className="relative">
-                <input type="number" value={meters} onChange={e => setMeters(Number(e.target.value))} className="w-full bg-slate-800 border-2 border-cyan-900/30 rounded-xl px-6 py-4 text-white font-mono text-lg focus:border-cyan-500 outline-none transition-all" />
+                <input type="number" value={meters} onChange={e => setMeters(Number(e.target.value))} className="w-full bg-slate-800 border-2 border-cyan-900/30 rounded-xl px-6 py-4 text-white font-mono text-lg focus:border-cyan-400 outline-none transition-all" />
                 <span className="absolute right-6 top-1/2 -translate-y-1/2 text-cyan-900 font-mono text-sm font-bold">M²</span>
             </div>
           </div>
