@@ -47,7 +47,8 @@ const technicalModules = [
 
 export default function AuditTechnicalDetails() {
   return (
-    <section className="py-16 md:py-24 bg-slate-950 relative overflow-hidden border-t border-slate-900">
+    /* CAMBIO: Se eliminó 'bg-slate-950' para dejarlo transparente y ver el fondo global */
+    <section className="py-16 md:py-24 bg-transparent relative overflow-hidden border-t border-slate-900/50">
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none" 
         style={{ 
@@ -68,7 +69,7 @@ export default function AuditTechnicalDetails() {
               Superamos la inspección visual. <span className="text-white">Escaneo activo</span> con instrumentación avanzada.
             </p>
           </div>
-          <div className="bg-slate-900/50 border border-slate-800 p-3 md:p-4 rounded-xl hidden md:block">
+          <div className="bg-slate-900/50 border border-slate-800 p-3 md:p-4 rounded-xl hidden md:block backdrop-blur-sm">
             <p className="text-cyan-500 font-mono text-[10px] uppercase tracking-[0.2em] font-bold animate-pulse">
               ● Escaneo Activo: Sistema Operativo
             </p>
@@ -83,8 +84,8 @@ export default function AuditTechnicalDetails() {
               className="group relative 
                          /* Estilo Mobile: Sin caja, flujo horizontal */
                          flex items-start gap-4
-                         /* Estilo Desktop: Módulo 3D intacto */
-                         md:flex-col md:items-start md:bg-slate-900/40 md:border md:border-slate-800 md:p-8 md:rounded-3xl md:hover:border-cyan-500/50 md:transition-all md:duration-500 md:hover:shadow-[0_0_40px_rgba(34,211,238,0.1)]"
+                         /* Estilo Desktop: Módulo 3D intacto con fondo semi-transparente */
+                         md:flex-col md:items-start md:bg-slate-900/40 md:border md:border-slate-800 md:p-8 md:rounded-3xl md:hover:border-cyan-500/50 md:transition-all md:duration-500 md:hover:shadow-[0_0_40px_rgba(34,211,238,0.1)] md:backdrop-blur-sm"
             >
               {/* ID DE MÓDULO (Solo en Desktop) */}
               <span className="hidden md:block absolute top-4 right-8 text-6xl font-black text-slate-800/20 group-hover:text-cyan-500/10 transition-colors duration-500 select-none">
