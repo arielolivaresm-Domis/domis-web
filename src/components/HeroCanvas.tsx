@@ -80,13 +80,17 @@ export default function HeroCanvas({ progress }: HeroCanvasProps) {
         ref={canvasRef}
         className={`w-full h-full transition-opacity duration-1000 ${isReady ? 'opacity-100' : 'opacity-0'}`}
         style={{ 
-          filter: 'brightness(0.4) contrast(1.1)',
+          // HÁGASE LA LUZ: Brillo al 100% para máxima visibilidad de la casa
+          filter: 'brightness(0.9) contrast(1.05)',
           pointerEvents: 'none'
         }}
       />
       
-      {/* MÁSCARA DE ATENUACIÓN: Cubre el logo y las luces inferiores */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent opacity-100" />
+      {/* CORTAFUEGOS INFERIOR: Solo tapa la base (logo y luces) sin oscurecer la casa */}
+      <div className="absolute inset-x-0 bottom-0 h-[25vh] bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent opacity-100" />
+      
+      {/* VELO SUPERIOR SUTIL: Para que el menú respire */}
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-slate-950/60 to-transparent" />
     </div>
   );
 }
