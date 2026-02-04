@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { Search, Crown, Clock, MapPin, CheckCircle, FileText, Calculator, Info, MessageCircle } from 'lucide-react';
+// Quitamos 'Info' que no se usaba para limpiar el error de TS
+import { Search, Crown, Clock, MapPin, CheckCircle, FileText, Calculator, MessageCircle } from 'lucide-react';
+import Section from './layout/Section';
 
 export default function Sourcing() {
   const handleWhatsApp = (tipo: string, cantidad: number, meters: number, total: number) => {
@@ -9,43 +11,41 @@ export default function Sourcing() {
   };
 
   return (
-    <section id="sourcing" className="py-24 bg-slate-950 relative overflow-hidden">
+    <Section id="sourcing" className="py-12 md:py-24 bg-slate-950 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 font-sans">
-        
-        {/* HEADER */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
-            <Search size={16} className="text-cyan-400" />
-            <span className="text-[13px] font-mono text-cyan-400 uppercase tracking-widest font-black">Inteligencia de Mercado</span>
-          </div>
-          <h2 className="text-5xl md:text-7xl font-black text-white uppercase italic tracking-tighter mb-4">
-            Buscamos <span className="text-cyan-400">por ti</span>
-          </h2>
-          <p className="text-2xl text-slate-300 font-light uppercase tracking-wide">
-            Tu tiempo es <span className="text-cyan-500 font-bold italic">Dinero</span>
+      <div className="text-center mb-16 relative z-10">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
+          <Search size={16} className="text-cyan-400" />
+          <span className="text-[11px] md:text-[13px] font-mono text-cyan-400 uppercase tracking-widest font-black">
+            Inteligencia de Mercado
+          </span>
+        </div>
+        <h2 className="text-4xl md:text-7xl font-black text-white uppercase italic tracking-tighter mb-4 leading-none">
+          Buscamos <span className="text-cyan-400">por ti</span>
+        </h2>
+        <p className="text-lg md:text-2xl text-slate-300 font-light uppercase tracking-wide">
+          Tu tiempo es <span className="text-cyan-500 font-bold italic">Dinero</span>
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-20 items-stretch relative z-10">
+        <SourcingNormal onSelect={handleWhatsApp} />
+        <SourcingVIP onSelect={handleWhatsApp} />
+      </div>
+
+      <div className="max-w-2xl mx-auto text-center border-t border-slate-900 pt-12 relative z-10">
+        <div className="flex items-center justify-center gap-3 mb-6 text-slate-500">
+          <Clock size={18} />
+          <p className="text-sm md:text-base italic">
+            "Si tu agenda se complica, <span className="text-slate-300 font-bold not-italic">DOMIS™ no se detiene.</span>"
           </p>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-20 items-stretch">
-          <SourcingNormal onSelect={handleWhatsApp} />
-          <SourcingVIP onSelect={handleWhatsApp} />
-        </div>
-
-        <div className="max-w-2xl mx-auto text-center border-t border-slate-900 pt-12">
-          <div className="flex items-center justify-center gap-3 mb-6 text-slate-500">
-            <Clock size={18} />
-            <p className="text-base italic">
-              "Si tu agenda se complica, <span className="text-slate-300 font-bold not-italic">DOMIS™ no se detiene.</span>"
-            </p>
-          </div>
-          <div className="tracking-[0.6em] text-slate-500 text-[13px] font-black uppercase">
-            VAMOS POR <span className="text-cyan-500">TI</span>
-          </div>
+        <div className="tracking-[0.4em] md:tracking-[0.6em] text-slate-500 text-[11px] md:text-[13px] font-black uppercase">
+          VAMOS POR <span className="text-cyan-500">TI</span>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
@@ -61,49 +61,47 @@ function SourcingNormal({ onSelect }: { onSelect: any }) {
   const total = (efectiveCantidad * effectiveMeters * pricePerM2) + (efectiveCantidad * 60000);
 
   return (
-    <div className="bg-slate-900/40 border border-white/5 p-10 rounded-[2.5rem] hover:border-slate-700 transition-all flex flex-col group h-full">
-      {/* ALTURA MÍNIMA CONTROLADA PARA NIVELAR */}
-      <div className="min-h-[320px]">
+    <div className="bg-slate-900/40 border border-white/5 p-6 md:p-10 rounded-[2.5rem] hover:border-slate-700 transition-all flex flex-col h-full">
+      <div className="min-h-0 md:min-h-[280px]">
         <div className="flex items-center gap-4 mb-6">
-          <div className="p-4 bg-slate-800 rounded-xl"><Search className="text-slate-300 w-7 h-7" /></div>
-          <h3 className="text-3xl font-black text-white uppercase italic">Sourcing Normal</h3>
+          <div className="p-3 bg-slate-800 rounded-xl"><Search className="text-slate-300 w-6 h-6" /></div>
+          <h3 className="text-2xl md:text-3xl font-black text-white uppercase italic">Sourcing Normal</h3>
         </div>
-        
-        <p className="text-slate-300 text-base leading-relaxed font-medium">
-          Barremos la red por ti y depuramos opciones digitalmente. Tú decides qué auditamos a fondo con nuestro respaldo técnico. <span className="text-white italic">En esta modalidad, se auditan únicamente las propiedades que selecciones de la terna presentada.</span>
+        <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium mb-8">
+          Barremos la red por ti y depuramos opciones digitalmente. <span className="text-white italic">Se auditan las propiedades que selecciones de la terna presentada.</span>
         </p>
       </div>
 
-      <div className="bg-slate-950/80 rounded-[2.5rem] p-10 border border-slate-800 mb-8 shadow-xl">
-        <div className="space-y-8">
+      <div className="bg-slate-950/80 rounded-[2rem] p-6 md:p-8 border border-slate-800 mb-8 shadow-xl">
+        <div className="space-y-6">
           <div>
-            <label className="text-[14px] font-black uppercase text-slate-500 mb-5 block tracking-widest flex items-center gap-2"><Calculator size={14} /> Pack Auditoría:</label>
-            <div className="flex gap-3">
-              {[1, 2].map(n => <button key={n} onClick={() => setCantidad(n)} className={`flex-1 py-4 rounded-xl font-black text-base transition-all border-2 ${cantidad === n ? 'bg-white text-slate-950 border-white' : 'border-slate-800 text-slate-500 hover:border-slate-600'}`}>{n}</button>)}
-              <button onClick={() => setCantidad(3)} className={`flex-1 py-4 rounded-xl font-black border-2 text-base ${cantidad === 3 ? 'bg-white text-slate-950 border-white' : 'border-slate-800 text-slate-500'}`}>
-                {cantidad === 3 ? <input type="number" value={cantidadCustom} onChange={e => setCantidadCustom(Number(e.target.value))} className="w-full bg-transparent text-center outline-none" min="3"/> : '3+'}
+            <label className="text-[12px] font-black uppercase text-slate-500 mb-4 block tracking-widest flex items-center gap-2"><Calculator size={14} /> Pack Auditoría:</label>
+            <div className="flex gap-2">
+              {[1, 2].map(n => <button key={n} onClick={() => setCantidad(n)} className={`flex-1 py-3 rounded-xl font-black text-sm transition-all border-2 ${cantidad === n ? 'bg-white text-slate-950 border-white' : 'border-slate-800 text-slate-500'}`}>{n}</button>)}
+              <button onClick={() => setCantidad(3)} className={`flex-1 py-3 rounded-xl font-black border-2 text-sm ${cantidad === 3 ? 'bg-white text-slate-950 border-white' : 'border-slate-800 text-slate-500'}`}>
+                {cantidad === 3 ? <input type="number" autoFocus value={cantidadCustom} onChange={e => setCantidadCustom(Number(e.target.value))} className="w-full bg-transparent text-center outline-none" min="3"/> : '3+'}
               </button>
             </div>
-            <div className="bg-slate-900/50 rounded-2xl p-4 mt-6 flex items-center justify-between text-[11px] font-black uppercase tracking-widest border border-white/5 text-slate-400">
-              <span>Presentamos: <span className="text-white">{presentamos} Propiedades</span></span>
-              <span><CheckCircle size={14} className="inline mr-1 text-cyan-400" /> Auditamos: {efectiveCantidad}</span>
+            <div className="bg-slate-900/50 rounded-xl p-3 mt-4 flex items-center justify-between text-[10px] font-black uppercase tracking-widest border border-white/5 text-slate-400">
+              <span>Presentamos: <span className="text-white">{presentamos} Prop.</span></span>
+              <span><CheckCircle size={12} className="inline mr-1 text-cyan-400" /> Auditamos: {efectiveCantidad}</span>
             </div>
           </div>
           <div>
-            <label className="text-[14px] font-black uppercase text-slate-500 mb-4 block tracking-widest">Metraje (m²):</label>
+            <label className="text-[12px] font-black uppercase text-slate-500 mb-3 block tracking-widest">Metraje m²:</label>
             <div className="relative">
-                <input type="number" value={meters} onChange={e => setMeters(Number(e.target.value))} className="w-full bg-slate-900 border-2 border-slate-800 rounded-xl px-6 py-4 text-white font-mono text-lg focus:border-cyan-500 outline-none transition-all" />
-                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-600 font-mono text-sm font-bold">M²</span>
+                <input type="number" value={meters} onChange={e => setMeters(Number(e.target.value))} className="w-full bg-slate-900 border-2 border-slate-800 rounded-xl px-4 py-3 text-white font-mono text-base outline-none focus:border-cyan-500 transition-all" />
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 font-mono text-xs font-bold">M²</span>
             </div>
           </div>
-          <div className="pt-6 border-t border-slate-800 flex justify-between items-center text-cyan-400 font-mono font-black text-xl">
-            <span className="text-[12px] text-slate-500 uppercase flex items-center gap-1"><Info size={14} /> Total Est:</span>
-            <span>${total.toLocaleString()} <span className="text-xs opacity-50">+ IVA</span></span>
+          <div className="pt-4 border-t border-slate-800 flex justify-between items-center text-cyan-400 font-mono font-black text-lg">
+            <span className="text-[10px] text-slate-500 uppercase">Total Est:</span>
+            <span>${total.toLocaleString()}</span>
           </div>
         </div>
       </div>
-      <button onClick={() => onSelect('Normal', efectiveCantidad, effectiveMeters, total)} className="w-full bg-slate-800 hover:bg-white hover:text-slate-950 text-white py-6 rounded-2xl text-[13px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3 shadow-lg">
-        <MessageCircle size={18} /> Seleccionar Pack Normal
+      <button onClick={() => onSelect('Normal', efectiveCantidad, effectiveMeters, total)} className="w-full mt-auto bg-slate-800 hover:bg-white hover:text-slate-950 text-white py-5 rounded-2xl text-[12px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3">
+        <MessageCircle size={18} /> Seleccionar Normal
       </button>
     </div>
   );
@@ -122,57 +120,55 @@ function SourcingVIP({ onSelect }: { onSelect: any }) {
   const total = (efectiveCantidad * effectiveMeters * pricePerM2) + (visitamos * 50000);
 
   return (
-    <div className="bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-cyan-500/30 p-10 rounded-[2.5rem] relative flex flex-col shadow-2xl overflow-hidden group h-full">
-      <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[12px] font-black px-8 py-3 rounded-bl-3xl uppercase tracking-widest shadow-xl z-20">Recomendado VIP</div>
+    <div className="bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-cyan-500/30 p-6 md:p-10 rounded-[2.5rem] relative flex flex-col shadow-2xl h-full">
+      <div className="absolute top-0 right-0 bg-cyan-500 text-slate-950 text-[10px] md:text-[12px] font-black px-6 md:px-8 py-2 md:py-3 rounded-bl-3xl uppercase tracking-widest z-20">Recomendado VIP</div>
       
-      {/* ALTURA MÍNIMA CONTROLADA PARA NIVELAR */}
-      <div className="min-h-[320px]">
-        <div className="flex items-center gap-4 mb-6 mt-4 md:mt-0">
-          <div className="p-4 bg-cyan-500/10 rounded-xl"><Crown className="text-cyan-400 w-8 h-8 animate-pulse" /></div>
-          <h3 className="text-3xl font-black text-white uppercase italic">Sourcing VIP</h3>
+      <div className="min-h-0 md:min-h-[280px]">
+        <div className="flex items-center gap-4 mb-6 mt-6 md:mt-0">
+          <div className="p-3 bg-cyan-500/10 rounded-xl"><Crown className="text-cyan-400 w-7 h-7 animate-pulse" /></div>
+          <h3 className="text-2xl md:text-3xl font-black text-white uppercase italic">Sourcing VIP</h3>
         </div>
-        
-        <p className="text-slate-300 text-base leading-relaxed font-medium">
-          Evaluamos en terreno cada opción. Recibes un <span className="text-white font-bold italic underline decoration-cyan-500/50">Informe FAST</span> para comparar estados reales y decidir con total certeza cuáles auditamos. <span className="text-white italic">Visitamos todas las propiedades presentadas y creamos un Informe FAST de cada una para que elijas las que se auditan.</span>
+        <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium mb-8">
+          Evaluamos en terreno cada opción. Recibes un <span className="text-white font-bold italic underline decoration-cyan-500/50">Informe FAST</span> para comparar estados reales antes de auditar.
         </p>
       </div>
 
-      <div className="bg-slate-950/80 rounded-[2.5rem] p-10 border border-cyan-900/30 mb-8 shadow-inner">
-        <div className="space-y-8">
+      <div className="bg-slate-950/80 rounded-[2rem] p-6 md:p-8 border border-cyan-900/30 mb-8 shadow-inner">
+        <div className="space-y-6">
           <div>
-            <label className="text-[14px] font-black uppercase text-cyan-500 mb-5 block tracking-widest flex items-center gap-2"><MapPin size={14} /> Pack Auditoría VIP:</label>
-            <div className="flex gap-3">
-              {[1, 2].map(n => <button key={n} onClick={() => setCantidad(n)} className={`flex-1 py-4 rounded-xl font-black text-base transition-all border-2 ${cantidad === n ? 'bg-cyan-500 text-slate-950 border-cyan-500' : 'border-slate-800 text-slate-500 hover:border-cyan-500/30'}`}>{n}</button>)}
-              <button onClick={() => setCantidad(3)} className={`flex-1 py-4 rounded-xl font-black border-2 text-base ${cantidad === 3 ? 'bg-cyan-500 text-slate-950 border-cyan-500' : 'border-slate-800 text-slate-500'}`}>
-                {cantidad === 3 ? <input type="number" value={cantidadCustom} onChange={e => setCantidadCustom(Number(e.target.value))} className="w-full bg-transparent text-center outline-none" min="3"/> : '3+'}
+            <label className="text-[12px] font-black uppercase text-cyan-500 mb-4 block tracking-widest flex items-center gap-2"><MapPin size={14} /> Pack Auditoría VIP:</label>
+            <div className="flex gap-2">
+              {[1, 2].map(n => <button key={n} onClick={() => setCantidad(n)} className={`flex-1 py-3 rounded-xl font-black text-sm transition-all border-2 ${cantidad === n ? 'bg-cyan-500 text-slate-950 border-cyan-500' : 'border-slate-800 text-slate-500'}`}>{n}</button>)}
+              <button onClick={() => setCantidad(3)} className={`flex-1 py-3 rounded-xl font-black border-2 text-sm ${cantidad === 3 ? 'bg-cyan-500 text-slate-950 border-cyan-500' : 'border-slate-800 text-slate-500'}`}>
+                {cantidad === 3 ? <input type="number" autoFocus value={cantidadCustom} onChange={e => setCantidadCustom(Number(e.target.value))} className="w-full bg-transparent text-center outline-none" min="3"/> : '3+'}
               </button>
             </div>
-            <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-2xl p-6 mt-6 space-y-4 text-[12px] font-bold uppercase tracking-wider text-slate-300">
-              <div className="flex items-center gap-3 text-white">
-                <div className="w-6 h-6 rounded-lg bg-cyan-500/20 flex items-center justify-center"><MapPin size={14} className="text-cyan-400" /></div>
-                <span>Visitas FAST: <span className="text-cyan-400 font-black">{labels} Propiedades</span></span>
+            <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-xl p-4 mt-4 space-y-3 text-[11px] font-bold uppercase text-slate-300">
+              <div className="flex items-center gap-2 text-white">
+                <MapPin size={14} className="text-cyan-400" />
+                <span>Visitas FAST: <span className="text-cyan-400 font-black">{labels} Prop.</span></span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-lg bg-cyan-500/20 flex items-center justify-center"><FileText size={14} className="text-cyan-400" /></div>
-                <span>Auditamos a fondo: <span className="text-white font-black">{efectiveCantidad}</span></span>
+              <div className="flex items-center gap-2">
+                <FileText size={14} className="text-cyan-400" />
+                <span>Auditamos: <span className="text-white font-black">{efectiveCantidad}</span></span>
               </div>
             </div>
           </div>
           <div>
-            <label className="text-[14px] font-black uppercase text-cyan-500 mb-4 block tracking-widest">Metraje (m²):</label>
+            <label className="text-[12px] font-black uppercase text-cyan-500 mb-3 block tracking-widest">Metraje m²:</label>
             <div className="relative">
-                <input type="number" value={meters} onChange={e => setMeters(Number(e.target.value))} className="w-full bg-slate-800 border-2 border-cyan-900/30 rounded-xl px-6 py-4 text-white font-mono text-lg focus:border-cyan-400 outline-none transition-all" />
-                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-cyan-900 font-mono text-sm font-bold">M²</span>
+                <input type="number" value={meters} onChange={e => setMeters(Number(e.target.value))} className="w-full bg-slate-800 border-2 border-cyan-900/30 rounded-xl px-4 py-3 text-white font-mono text-base outline-none focus:border-cyan-400 transition-all" />
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-cyan-900 font-mono text-xs font-bold">M²</span>
             </div>
           </div>
-          <div className="pt-6 border-t border-cyan-900/20 flex justify-between items-center text-white font-mono font-black text-xl">
-             <span className="text-[12px] text-cyan-500 uppercase flex items-center gap-1"><Crown size={14} /> Total VIP:</span>
-             <span>${total.toLocaleString()} <span className="text-xs opacity-50 ml-1">+ IVA</span></span>
+          <div className="pt-4 border-t border-cyan-900/20 flex justify-between items-center text-white font-mono font-black text-lg">
+             <span className="text-[10px] text-cyan-500 uppercase">Total VIP:</span>
+             <span>${total.toLocaleString()}</span>
           </div>
         </div>
       </div>
-      <button onClick={() => onSelect('VIP', efectiveCantidad, effectiveMeters, total)} className="w-full bg-cyan-500 hover:bg-white text-slate-950 py-6 rounded-2xl text-[13px] font-black uppercase tracking-widest transition-all shadow-[0_15px_40px_rgba(34,211,238,0.3)] flex items-center justify-center gap-3 active:scale-95">
-        <Crown size={18} /> Activar Seguridad VIP
+      <button onClick={() => onSelect('VIP', efectiveCantidad, effectiveMeters, total)} className="w-full mt-auto bg-cyan-500 hover:bg-white text-slate-950 py-5 rounded-2xl text-[12px] font-black uppercase tracking-widest transition-all shadow-xl active:scale-95">
+        <MessageCircle size={18} /> Activar VIP
       </button>
     </div>
   );
