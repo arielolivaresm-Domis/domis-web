@@ -9,7 +9,6 @@ import { useTabs } from '../context/TabsContext';
 export default function PhasesTabs() {
   const { activeTab, setActiveTab } = useTabs();
 
-  // Lógica de navegación con scroll suave al inicio de la sección
   const handleTabChange = (id: 'fase1' | 'fase2' | 'fase3') => {
     setActiveTab(id);
     const element = document.getElementById('proceso');
@@ -44,79 +43,91 @@ export default function PhasesTabs() {
   );
 
   return (
-    <section className="py-24 bg-slate-950 relative" id="proceso">
-      <div className="max-w-7xl mx-auto px-6 relative z-10 font-sans">
+    <section className="py-12 md:py-20 bg-transparent relative z-10" id="proceso">
+      <div className="max-w-7xl mx-auto px-6">
         
-        {/* ENCABEZADO */}
-        <div className="text-center mb-16">
-          <div className="inline-block px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
-            <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Protocolo DOMIS™</span>
+        {/* LA ISLA TÉCNICA: Contenedor Maestro para todo el Proceso */}
+        <div className="bg-slate-950 border border-white/5 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
+          
+          {/* SILUETA DEL LOGO (wireframe.png) */}
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
+
+          <div className="p-8 md:p-16 relative z-10">
+            
+            {/* ENCABEZADO INTERNO */}
+            <div className="text-center mb-16">
+              <div className="inline-block px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
+                <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest font-black">Protocolo DOMIS™</span>
+              </div>
+              <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter italic leading-tight">
+                CÓMO <span className="text-cyan-400">FUNCIONA</span>
+              </h2>
+              <p className="text-slate-400 text-xs md:text-sm font-black uppercase tracking-[0.3em] italic mt-4">
+                 Ecosistema técnico integrado en 3 etapas críticas.
+               </p>
+            </div>
+
+            {/* NAVEGACIÓN ESTÁTICA */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+                {[
+                  { 
+                    id: 'fase1', num: '1', title: 'Auditoría Técnica', 
+                    desc: 'Protocolo PCF-15™ para asegurar tu inversión. Si ya elegiste tu propiedad, la auditamos; si no tienes una, activamos modo sourcing.' 
+                  },
+                  { 
+                    id: 'fase2', num: '2', title: 'Negociación Estratégica', 
+                    desc: 'Inteligencia de mercado y valorización de fallas PCF-15 (NDI) para generar poder de negociación real.' 
+                  },
+                  { 
+                    id: 'fase3', num: '3', title: 'Plusvalía Inmediata', 
+                    desc: 'Ejecución de precisión para corregir fallas detectadas, garantizando habitabilidad y plusvalía inmediata.' 
+                  }
+                ].map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => handleTabChange(t.id as any)}
+                    className={`relative p-8 rounded-3xl border-2 transition-all duration-500 flex flex-col items-center text-center ${
+                      activeTab === t.id 
+                        ? 'border-cyan-500 bg-slate-900/60 shadow-[0_0_40px_rgba(34,211,238,0.1)]' 
+                        : 'border-slate-800 bg-slate-950 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-black mb-8 ${activeTab === t.id ? 'border-cyan-500 bg-slate-950 text-white' : 'border-white/20 text-slate-500'}`}>{t.num}</div>
+                    <h3 className={`text-lg font-black uppercase tracking-tighter mb-4 ${activeTab === t.id ? 'text-cyan-400' : 'text-white'}`}>{t.title}</h3>
+                    <p className="text-slate-500 text-[10px] font-bold uppercase leading-relaxed tracking-wider">{t.desc}</p>
+                  </button>
+                ))}
+            </div>
+
+            {/* CONTENIDOS DINÁMICOS */}
+            <div className="mt-8">
+              {activeTab === 'fase1' && (
+                <div className="space-y-24 animate-fadeIn text-center">
+                  <AuditPacks />
+                  <Sourcing />
+                  <BridgeButton targetId="fase2" label="Fase 2" subtitle="Negociación Técnica" icon="💼" />
+                </div>
+              )}
+
+              {activeTab === 'fase2' && (
+                <div className="space-y-24 animate-fadeIn text-center">
+                  <BenefitFlyer />
+                  <Deliverable />
+                  <Phase2 onNext={() => handleTabChange('fase3')} />
+                  <BridgeButton targetId="fase3" label="Fase 3" subtitle="Remodelación Estratégica" icon="🏗️" />
+                </div>
+              )}
+
+              {activeTab === 'fase3' && (
+                <div className="space-y-24 animate-fadeIn text-center">
+                  <Phase3 />
+                  <BridgeButton targetId="fase1" label="Fase 1" subtitle="Reiniciar Auditoría" icon="🔍" />
+                </div>
+              )}
+            </div>
+
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter italic">
-            Cómo <span className="text-cyan-400">Funciona</span>
-          </h2>
-          <p className="text-slate-400 text-sm md:text-base font-bold uppercase tracking-widest italic mt-4">
-             Ecosistema técnico integrado en 3 etapas críticas.
-           </p>
         </div>
-
-        {/* NAVEGACIÓN ESTÁTICA (LAS 3 TARJETAS QUE FALTABAN) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24">
-            {[
-              { 
-                id: 'fase1', num: '1', title: 'Auditoría Técnica', 
-                desc: 'Protocolo PCF-15™ para asegurar tu inversión. Si ya elegiste tu propiedad, la auditamos; si no tienes una, activamos modo sourcing para buscarla por ti.' 
-              },
-              { 
-                id: 'fase2', num: '2', title: 'Negociación Estratégica', 
-                desc: 'Inteligencia de mercado (CBR/IA) y valorización de fallas PCF-15 (NDI) netamente para generar poder de negociación.' 
-              },
-              { 
-                id: 'fase3', num: '3', title: 'Plusvalía y Remodelación', 
-                desc: 'Ejecución de precisión para corregir fallas de auditoría, garantizando habitabilidad y plusvalía inmediata.' 
-              }
-            ].map((t) => (
-              <button
-                key={t.id}
-                onClick={() => handleTabChange(t.id as any)}
-                className={`relative p-10 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center text-center ${
-                  activeTab === t.id ? 'border-cyan-500 bg-slate-900/60 shadow-[0_0_40px_rgba(34,211,238,0.1)]' : 'border-slate-800 bg-slate-900/40 hover:border-slate-700'
-                }`}
-              >
-                <div className={`w-12 h-12 rounded-full border-2 flex items-center justify-center text-sm font-black mb-10 ${activeTab === t.id ? 'border-cyan-500 bg-slate-950 text-white' : 'border-white/20 text-slate-500'}`}>{t.num}</div>
-                <h3 className={`text-xl font-black uppercase tracking-tighter mb-6 ${activeTab === t.id ? 'text-cyan-400' : 'text-white'}`}>{t.title}</h3>
-                <p className="text-slate-400 text-[11px] font-bold uppercase leading-relaxed tracking-wider">{t.desc}</p>
-              </button>
-            ))}
-        </div>
-
-        {/* CONTENIDOS DINÁMICOS */}
-        <div className="mt-8">
-          {activeTab === 'fase1' && (
-            <div className="space-y-24 animate-fadeIn text-center">
-              <AuditPacks />
-              <Sourcing />
-              <BridgeButton targetId="fase2" label="Fase 2" subtitle="Negociación Técnica" icon="💼" />
-            </div>
-          )}
-
-          {activeTab === 'fase2' && (
-            <div className="space-y-24 animate-fadeIn text-center">
-              <BenefitFlyer />
-              <Deliverable />
-              <Phase2 onNext={() => handleTabChange('fase3')} />
-              <BridgeButton targetId="fase3" label="Fase 3" subtitle="Remodelación Estratégica" icon="🏗️" />
-            </div>
-          )}
-
-          {activeTab === 'fase3' && (
-            <div className="space-y-24 animate-fadeIn text-center">
-              <Phase3 />
-              <BridgeButton targetId="fase1" label="Fase 1" subtitle="Reiniciar Auditoría" icon="🔍" />
-            </div>
-          )}
-        </div>
-
       </div>
     </section>
   );
