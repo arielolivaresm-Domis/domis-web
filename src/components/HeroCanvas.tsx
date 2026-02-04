@@ -3,7 +3,6 @@ import { MotionValue, useMotionValueEvent } from 'framer-motion';
 
 const TOTAL_FRAMES = 120;
 
-// Definimos la "entrada" para la propiedad progress
 interface HeroCanvasProps {
   progress: MotionValue<number>;
 }
@@ -13,7 +12,7 @@ export default function HeroCanvas({ progress }: HeroCanvasProps) {
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [isReady, setIsReady] = useState(false);
 
-  // 1. CARGA TÉCNICA DE IMÁGENES
+  // 1. CARGA TÉCNICA (Carpeta frame2)
   useEffect(() => {
     const loadedImages: HTMLImageElement[] = [];
     let loadedCount = 0;
@@ -34,7 +33,7 @@ export default function HeroCanvas({ progress }: HeroCanvasProps) {
     }
   }, []);
 
-  // 2. RENDERIZADO CONTROLADO POR MOTION VALUE (Sincronía Total)
+  // 2. RENDERIZADO CON ZOOM ANTILOGO Y RESPONSIVIDAD
   const drawFrame = (latestProgress: number) => {
     if (!canvasRef.current || images.length < TOTAL_FRAMES) return;
 
@@ -42,16 +41,22 @@ export default function HeroCanvas({ progress }: HeroCanvasProps) {
     const context = canvas.getContext('2d', { alpha: false });
     if (!context) return;
 
-    // Usamos el progreso que viene directamente del scroll de Hero.tsx
     const frameIndex = Math.floor(latestProgress * (TOTAL_FRAMES - 1));
     const img = images[frameIndex];
 
     if (img && img.complete) {
       const cw = canvas.width;
       const ch = canvas.height;
-      const ratio = Math.max(cw / img.width, ch / img.height);
+      
+      // AJUSTE TÉCNICO: Zoom del 5% para ocultar el logo 'Veo' 
+      // Esto NO baja la calidad, solo expande el renderizado en el navegador.
+      const SAFE_ZOOM = 1.05; 
+      
+      const ratio = Math.max(cw / img.width, ch / img.height) * SAFE_ZOOM;
       const dw = img.width * ratio;
       const dh = img.height * ratio;
+      
+      // Centrado perfecto para que el recorte sea uniforme
       const dx = (cw - dw) / 2;
       const dy = (ch - dh) / 2;
 
@@ -59,17 +64,16 @@ export default function HeroCanvas({ progress }: HeroCanvasProps) {
     }
   };
 
-  // Escuchamos el cambio de scroll de forma ultra-eficiente
   useMotionValueEvent(progress, "change", (latest) => {
     drawFrame(latest);
   });
 
-  // Ajuste inicial y de resize
   useEffect(() => {
     const handleResize = () => {
       if (!canvasRef.current) return;
-      canvasRef.current.width = window.innerWidth;
-      canvasRef.current.height = window.innerHeight;
+      // Usamos el ancho real de la ventana para evitar el "marco estrecho"
+      canvasRef.current.width = window.innerWidth * (window.devicePixelRatio || 1);
+      canvasRef.current.height = window.innerHeight * (window.devicePixelRatio || 1);
       drawFrame(progress.get());
     };
 
@@ -84,7 +88,7 @@ export default function HeroCanvas({ progress }: HeroCanvasProps) {
       ref={canvasRef}
       className={`fixed top-0 left-0 w-full h-full -z-10 bg-slate-950 transition-opacity duration-1000 ${isReady ? 'opacity-100' : 'opacity-0'}`}
       style={{ 
-        filter: 'brightness(0.4) contrast(1.1)',
+        filter: 'brightness(0.35) contrast(1.1)', // Ajuste de contraste para resaltar el texto
         pointerEvents: 'none'
       }}
     />
