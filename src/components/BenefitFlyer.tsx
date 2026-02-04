@@ -53,8 +53,8 @@ export default function BenefitFlyer() {
   );
 
   return (
-    <Section id="beneficio-fase2" className="py-24 bg-slate-950">
-      <div className="relative rounded-[2.5rem] md:rounded-[4rem] overflow-hidden border-2 border-cyan-500 shadow-[0_0_50px_rgba(34,211,238,0.15)] bg-slate-900 min-h-[700px] md:min-h-[850px] flex items-center justify-center">
+    <Section id="beneficio-fase2" className="py-0 md:py-24 bg-slate-950">
+      <div className="relative rounded-none md:rounded-[4rem] overflow-hidden border-y-2 md:border-2 border-cyan-500 shadow-[0_0_50px_rgba(34,211,238,0.15)] bg-slate-900 min-h-[700px] md:min-h-[850px] flex items-center justify-center">
         
         {/* BACKGROUND LAYER */}
         <div className="absolute inset-0">
@@ -62,7 +62,7 @@ export default function BenefitFlyer() {
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/30 to-slate-950/90"></div>
         </div>
 
-        <div className="relative z-10 p-5 md:p-16 w-full max-w-4xl">
+        <div className="relative z-10 p-4 md:p-16 w-full max-w-4xl">
           {/* HEADER */}
           <div className="text-center mb-12 md:mb-16">
             <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg shadow-cyan-500/20">
