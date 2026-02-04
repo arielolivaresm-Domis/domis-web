@@ -40,7 +40,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
             <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] md:text-[14px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg">
               Fase 2: Auditoría Directa
             </div>
-            <h2 className="text-3xl md:text-6xl font-black text-white uppercase italic tracking-tighter leading-none mb-6">
+            <h2 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter leading-none mb-6">
               ¿Ya elegiste propiedad? <br/>
               <span className="text-cyan-400">Nosotros la Auditamos</span>
             </h2>

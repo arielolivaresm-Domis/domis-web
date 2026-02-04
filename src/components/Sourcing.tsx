@@ -21,7 +21,7 @@ export default function Sourcing() {
             Inteligencia de Mercado
           </span>
         </div>
-        <h2 className="text-4xl md:text-7xl font-black text-white uppercase italic tracking-tighter mb-4 leading-none">
+        <h2 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter mb-4 leading-none">
           Buscamos <span className="text-cyan-400">por ti</span>
         </h2>
         <p className="text-lg md:text-2xl text-slate-300 font-light uppercase tracking-wide">
