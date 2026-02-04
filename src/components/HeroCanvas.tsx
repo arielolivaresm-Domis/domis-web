@@ -45,12 +45,9 @@ export default function HeroCanvas({ progress }: HeroCanvasProps) {
     if (img && img.complete) {
       const cw = canvas.width;
       const ch = canvas.height;
-      
-      // REVERTIDO A ESCALA 1.0: Máxima nitidez original
       const ratio = Math.max(cw / img.width, ch / img.height);
       const dw = img.width * ratio;
       const dh = img.height * ratio;
-      
       const dx = (cw - dw) / 2;
       const dy = (ch - dh) / 2;
 
@@ -65,8 +62,9 @@ export default function HeroCanvas({ progress }: HeroCanvasProps) {
   useEffect(() => {
     const handleResize = () => {
       if (!canvasRef.current) return;
-      canvasRef.current.width = window.innerWidth * (window.devicePixelRatio || 1);
-      canvasRef.current.height = window.innerHeight * (window.devicePixelRatio || 1);
+      const dpr = window.devicePixelRatio || 1;
+      canvasRef.current.width = window.innerWidth * dpr;
+      canvasRef.current.height = window.innerHeight * dpr;
       drawFrame(progress.get());
     };
 
@@ -86,8 +84,8 @@ export default function HeroCanvas({ progress }: HeroCanvasProps) {
           pointerEvents: 'none'
         }}
       />
-      {/* VELO TÉCNICO: Tapa el logo y recupera nitidez */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
+      {/* MÁSCARA TÉCNICA: Oculta el logo y da profundidad al texto */}
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90" />
     </div>
   );
 }
