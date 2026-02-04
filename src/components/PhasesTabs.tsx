@@ -44,12 +44,12 @@ export default function PhasesTabs() {
 
   return (
     <section className="py-12 md:py-20 bg-transparent relative z-10" id="proceso">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-0 md:px-6">
         
-        <div className="bg-slate-950 border border-white/5 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
+        <div className="bg-slate-950 border-y md:border border-white/5 rounded-none md:rounded-[2.5rem] relative overflow-hidden shadow-2xl">
           <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
-          <div className="p-8 md:p-16 relative z-10">
+          <div className="p-4 md:p-8 lg:p-16 relative z-10">
             
             {/* ENCABEZADO: Punto medio de escala */}
             <div className="text-center mb-16">
