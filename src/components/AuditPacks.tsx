@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calculator, Info, MapPin, CheckCircle, FileText, ArrowRight } from 'lucide-react';
+import { Calculator, MapPin, CheckCircle, FileText, ArrowRight } from 'lucide-react';
 import Section from './layout/Section';
 
 export default function AuditPacks({ onNext }: { onNext?: () => void }) {
@@ -9,61 +9,58 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
 
   const efectiveCantidad = cantidad === 3 ? cantidadCustom : cantidad;
   const effectiveMeters = Math.max(100, meters);
-   
+  
   const pricePerM2 = cantidad === 1 ? 1900 : cantidad === 2 ? 1710 : 1520;
   const discount = cantidad === 1 ? 0 : cantidad === 2 ? 10 : 20;
-   
+  
   const totalCost = efectiveCantidad * effectiveMeters * pricePerM2;
 
   const whatsappMessage = `Hola, equipo DOMIS™. Ya elegí propiedad(es) y quiero auditarlas. Son ${efectiveCantidad} de ${effectiveMeters}m² cada una. Total estimado: $${totalCost.toLocaleString()} + IVA`;
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    // bg-slate-950 sólido en la sección para bloquear la casa wireframe
-    <Section id="auditoria-directa" className="py-0 md:py-24 bg-slate-950">
+    /* PROBLEMA 1 RESUELTO: z-30 y bg-slate-950 sólido para tapar la casa azul */
+    <Section id="auditoria-directa" className="py-0 md:py-24 bg-slate-950 relative z-30">
       
-      {/* CONTENEDOR MAESTRO:
-          - bg-slate-950 OPACO: Esta es la clave para que no se vea el fondo 2.
-          - rounded-none en móvil para Full-Width.
+      {/* PROBLEMA 2 Y 3 RESUELTOS: 
+          - rounded-none: Elimina las curvas en móvil.
+          - border-x-0: Elimina los bordes laterales para que parezca infinito.
+          - w-full: Asegura ancho total.
       */}
-      <div className="relative overflow-hidden rounded-none md:rounded-[4rem] bg-slate-950 border-y md:border border-white/10 shadow-2xl">
+      <div className="relative overflow-hidden w-full rounded-none md:rounded-[4rem] bg-slate-950 border-y md:border border-white/10 shadow-2xl">
         
-        {/* CAPA DE SELLADO (Bloquea todo lo que hay detrás) */}
+        {/* CAPA DE BLOQUEO (Búnker Negro) */}
         <div className="absolute inset-0 bg-slate-950 z-0"></div>
 
-        {/* CAPA DE IMAGEN SOBRE EL SELLADO */}
+        {/* IMAGEN DE FONDO (Controlada) */}
         <div className="absolute inset-0 z-[1]">
           <img 
             src="/DOMIS_audi.webp" 
-            alt="Auditoría Técnica DOMIS" 
-            className="w-full h-full object-cover opacity-20"
+            alt="Auditoría" 
+            className="w-full h-full object-cover opacity-15 grayscale"
           />
-          {/* Gradiente más denso para asegurar que nada se filtre */}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/90 to-slate-950"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950 to-slate-950"></div>
         </div>
 
         {/* CONTENIDO INTERNO */}
         <div className="relative z-10 py-12 px-0 md:p-16">
           
           <div className="text-center mb-12 px-4">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] md:text-[14px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg shadow-cyan-500/20">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] md:text-[14px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg">
               Fase 2: Auditoría Directa
             </div>
             <h2 className="text-3xl md:text-6xl font-black text-white uppercase italic tracking-tighter leading-none mb-6">
               ¿Ya elegiste propiedad? <br/>
               <span className="text-cyan-400">Nosotros la Auditamos</span>
             </h2>
-            <p className="text-white/80 font-mono text-[10px] md:text-[13px] uppercase tracking-widest italic bg-white/5 border border-white/10 inline-block px-6 md:px-10 py-3 md:py-4 rounded-full backdrop-blur-md">
-              Inspección técnica con instrumental de precisión.
-            </p>
           </div>
 
           <div className="max-w-2xl mx-auto">
-            {/* CARD DEL MOTOR PCF-15™: Full-Width en móvil */}
-            <div className="bg-slate-900/40 backdrop-blur-3xl border-y md:border border-white/10 rounded-none md:rounded-[2.5rem] p-6 md:p-10 shadow-2xl">
+            {/* CARD INTERNA: También sin curvas y ancho total en móvil */}
+            <div className="bg-slate-900 border-y md:border border-white/10 rounded-none md:rounded-[2.5rem] p-6 md:p-10 shadow-2xl">
               
               <div className="flex items-center justify-between mb-10">
-                <div className="bg-cyan-500 p-4 rounded-xl shadow-lg shadow-cyan-500/20">
+                <div className="bg-cyan-500 p-4 rounded-xl shadow-lg">
                   <Calculator size={28} className="text-slate-950" />
                 </div>
                 <div className="text-right">
@@ -78,25 +75,11 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                 </div>
               </div>
 
-              {/* GRILLA DE CARACTERÍSTICAS */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 border-b border-white/10 pb-10">
-                {[
-                  { icon: <CheckCircle size={16}/>, text: `${efectiveCantidad} unidades` },
-                  { icon: <MapPin size={16}/>, text: 'Radio 3km Escaneado' },
-                  { icon: <FileText size={16}/>, text: 'Certificación 72h' },
-                  { icon: <Info size={16}/>, text: 'Asesoría Post-Informe' }
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 text-white font-bold uppercase text-[10px] md:text-[11px] tracking-widest">
-                    <span className="text-cyan-400">{item.icon}</span>
-                    {item.text}
-                  </div>
-                ))}
-              </div>
-
-              {/* INPUTS DE CÁLCULO */}
+              {/* INPUTS */}
               <div className="space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
+                  {/* UNIDADES */}
+                  <div className="px-1">
                     <label className="block text-[11px] uppercase text-cyan-500 mb-4 font-black tracking-widest">Unidades Auditoría:</label>
                     <div className="grid grid-cols-3 gap-2">
                       {[1, 2, 3].map((num) => (
@@ -104,38 +87,35 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                           key={num}
                           onClick={() => setCantidad(num)}
                           className={`py-4 rounded-xl border-2 transition-all font-black text-sm ${
-                            cantidad === num ? 'bg-white border-white text-slate-950' : 'bg-slate-900/50 border-white/10 text-white hover:border-cyan-500/50'
+                            cantidad === num ? 'bg-white border-white text-slate-950 shadow-xl' : 'bg-slate-950 border-white/10 text-white'
                           }`}
                         >
-                          {num === 3 ? (cantidad === 3 ? 
+                          {num === 3 && cantidad === 3 ? (
                             <input 
                               type="number" 
-                              autoFocus
                               value={cantidadCustom} 
                               onChange={(e) => setCantidadCustom(Math.max(3, Number(e.target.value)))} 
                               className="w-full bg-transparent text-center outline-none" 
-                            /> : '3+') : num}
+                            />
+                          ) : num === 3 ? '3+' : num}
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  <div>
+                  {/* SUPERFICIE */}
+                  <div className="px-1">
                     <label className="block text-[11px] uppercase text-cyan-500 mb-4 font-black tracking-widest">Superficie Total m²:</label>
-                    <div className="relative">
-                      <input
-                        type="number"
-                        value={meters}
-                        onChange={(e) => setMeters(Number(e.target.value))}
-                        onBlur={() => setMeters(Math.max(100, meters))}
-                        className="w-full bg-slate-900/50 border-2 border-white/10 rounded-xl px-4 py-4 text-base font-mono text-white focus:border-cyan-400 outline-none transition-all"
-                      />
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 font-mono text-xs font-bold uppercase">m²</span>
-                    </div>
+                    <input
+                      type="number"
+                      value={meters}
+                      onChange={(e) => setMeters(Number(e.target.value))}
+                      className="w-full bg-slate-950 border-2 border-white/10 rounded-xl px-4 py-4 text-white focus:border-cyan-400 outline-none transition-all"
+                    />
                   </div>
                 </div>
 
-                {/* BLOQUE DE PRECIO */}
+                {/* PRECIO */}
                 <div className="bg-cyan-500/10 rounded-2xl p-6 border border-cyan-500/20 text-center">
                   <span className="text-[9px] uppercase text-cyan-400 font-black tracking-[0.2em] mb-1 block">Inversión Estimada Auditoría</span>
                   <div className="text-3xl font-mono text-white font-black tracking-tighter">
@@ -143,21 +123,22 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                   </div>
                 </div>
 
+                {/* BOTÓN */}
                 <a 
                   href={whatsappUrl}
                   target="_blank" 
                   rel="noreferrer" 
-                  className="group flex items-center justify-center gap-4 w-full py-6 font-black uppercase rounded-2xl text-[13px] bg-cyan-500 text-slate-950 hover:bg-white transition-all shadow-xl tracking-widest active:scale-95"
+                  className="flex items-center justify-center gap-4 w-full py-6 font-black uppercase rounded-2xl text-[13px] bg-cyan-500 text-slate-950 hover:bg-white transition-all shadow-xl tracking-widest active:scale-95"
                   onClick={() => onNext && onNext()}
                 >
                   Configurar Pack Técnico
-                  <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
+                  <ArrowRight size={20} />
                 </a>
               </div>
             </div>
-
-            <p className="mt-10 px-4 text-center text-white/40 text-[9px] md:text-[12px] font-bold uppercase tracking-[0.2em] leading-relaxed italic max-w-lg mx-auto">
-              * Mínimo técnico 100 m² por unidad. El informe final se entrega cifrado para validez legal en negociación.
+            
+            <p className="mt-8 text-center text-white/30 text-[10px] uppercase font-bold tracking-widest px-4">
+              * Valores referenciales para Región Metropolitana.
             </p>
           </div>
         </div>
