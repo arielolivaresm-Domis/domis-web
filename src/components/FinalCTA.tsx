@@ -3,9 +3,9 @@ export default function FinalCTA() {
   const whatsappUrl = "https://wa.me/56929901343?text=Hola, equipo DOMIS™.  necesito Auditoría técnica profesional + Estrategia de negociación para una propiedad...";
 
   return (
-    <section id="contacto" className="py-24 px-6 bg-slate-950">
+    <section id="contacto" className="py-0 md:py-24 px-0 md:px-6 bg-slate-950">
       <div className="max-w-7xl mx-auto">
-        <div className="relative rounded-[3rem] overflow-hidden border-2 border-cyan-500/30 shadow-[0_0_50px_rgba(34,211,238,0.15)] min-h-[600px] flex items-center justify-center">
+        <div className="relative rounded-none md:rounded-[3rem] overflow-hidden border-y-2 md:border-2 border-cyan-500/30 shadow-[0_0_50px_rgba(34,211,238,0.15)] min-h-[600px] flex items-center justify-center">
           
           {/* IMAGEN DE FONDO: LA SOLUCIÓN Y TRANQUILIDAD */}
           <div className="absolute inset-0">
@@ -19,7 +19,7 @@ export default function FinalCTA() {
           </div>
 
           {/* CONTENIDO DE CONVERSIÓN */}
-          <div className="relative z-10 p-8 md:p-20 w-full">
+          <div className="relative z-10 p-4 md:p-8 lg:p-20 w-full">
             <div className="max-w-2xl text-left">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-8">
                 <span className="text-[10px] md:text-xs font-mono text-cyan-400 uppercase tracking-[0.3em] font-black">
