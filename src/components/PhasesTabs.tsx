@@ -21,7 +21,6 @@ export default function PhasesTabs() {
 
   const BridgeButton = ({ targetId, label, subtitle, icon }: { targetId: 'fase1' | 'fase2' | 'fase3', label: string, subtitle: string, icon: string }) => (
     <div className="pt-24 border-t border-slate-900/50 text-center">
-      {/* AGRANDADO: text-xs -> text-sm */}
       <p className="text-cyan-400 font-mono text-sm uppercase tracking-[0.2em] mb-8 font-bold">Continuar Trayectoria Técnica</p>
       <button
         onClick={() => handleTabChange(targetId)}
@@ -30,11 +29,9 @@ export default function PhasesTabs() {
         <div className="flex flex-col items-center gap-4 relative z-10">
           <span className="text-5xl group-hover:scale-110 transition-transform duration-500">{icon}</span>
           <div className="text-center">
-            {/* AGRANDADO: text-xs -> text-sm */}
             <div className="text-slate-500 text-sm font-bold uppercase tracking-widest mb-1 group-hover:text-cyan-400 transition-colors">
               {label}
             </div>
-            {/* AGRANDADO: text-2xl -> text-3xl */}
             <div className="text-white text-3xl font-black uppercase tracking-tighter flex items-center gap-3">
               {subtitle} <span className="group-hover:translate-x-2 transition-transform duration-500">→</span>
             </div>
@@ -50,22 +47,18 @@ export default function PhasesTabs() {
       <div className="max-w-7xl mx-auto px-6">
         
         <div className="bg-slate-950 border border-white/5 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
-          
           <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
           <div className="p-8 md:p-16 relative z-10">
             
             <div className="text-center mb-16">
               <div className="inline-block px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
-                {/* AGRANDADO: text-[10px] -> text-xs */}
                 <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-black">Protocolo DOMIS™</span>
               </div>
-              {/* AGRANDADO: text-4xl/6xl -> text-5xl/7xl */}
               <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter italic leading-tight">
                 CÓMO <span className="text-cyan-400">FUNCIONA</span>
               </h2>
-              {/* AGRANDADO: text-xs/sm -> text-sm/base */}
-              <p className="text-slate-400 text-sm md:text-base font-black uppercase tracking-[0.3em] italic mt-4">
+              <p className="text-slate-400 text-sm md:text-lg font-black uppercase tracking-[0.3em] italic mt-4">
                  Ecosistema técnico integrado en 3 etapas críticas.
                </p>
             </div>
@@ -74,15 +67,15 @@ export default function PhasesTabs() {
                 {[
                   { 
                     id: 'fase1', num: '1', title: 'Auditoría Técnica', 
-                    desc: 'Protocolo PCF-15™ para asegurar tu inversión inmobiliaria técnica.' 
+                    desc: 'Protocolo PCF-15™ para asegurar tu inversión. Si ya elegiste tu propiedad, la auditamos; si no tienes una, activamos modo sourcing para buscarla por ti.' 
                   },
                   { 
                     id: 'fase2', num: '2', title: 'Negociación Estratégica', 
-                    desc: 'Inteligencia de mercado y valorización de fallas para generar ahorro real.' 
+                    desc: 'Inteligencia de mercado (CBR/IA) y valorización de fallas PCF-15 (NDI) netamente para generar poder de negociación.' 
                   },
                   { 
-                    id: 'fase3', num: '3', title: 'Plusvalía Inmediata', 
-                    desc: 'Ejecución de precisión para corregir fallas y garantizar habitabilidad.' 
+                    id: 'fase3', num: '3', title: 'Plusvalía y Remodelación', 
+                    desc: 'Ejecución de precisión para corregir fallas de auditoría, garantizando habitabilidad y plusvalía inmediata.' 
                   }
                 ].map((t) => (
                   <button
@@ -94,12 +87,9 @@ export default function PhasesTabs() {
                         : 'border-slate-800 bg-slate-950 hover:border-slate-700'
                     }`}
                   >
-                    {/* AGRANDADO CIRCULO: w-10 -> w-12, h-10 -> h-12, text-xs -> text-sm */}
-                    <div className={`w-12 h-12 rounded-full border-2 flex items-center justify-center text-sm font-black mb-8 ${activeTab === t.id ? 'border-cyan-500 bg-slate-950 text-white' : 'border-white/20 text-slate-500'}`}>{t.num}</div>
-                    {/* AGRANDADO: text-lg -> text-xl */}
-                    <h3 className={`text-xl font-black uppercase tracking-tighter mb-4 ${activeTab === t.id ? 'text-cyan-400' : 'text-white'}`}>{t.title}</h3>
-                    {/* AGRANDADO: text-[10px] -> text-sm */}
-                    <p className={`text-sm font-bold uppercase leading-relaxed tracking-wider ${activeTab === t.id ? 'text-slate-300' : 'text-slate-500'}`}>{t.desc}</p>
+                    <div className={`w-14 h-14 rounded-full border-2 flex items-center justify-center text-base font-black mb-8 ${activeTab === t.id ? 'border-cyan-500 bg-slate-950 text-white' : 'border-white/20 text-slate-500'}`}>{t.num}</div>
+                    <h3 className={`text-xl md:text-2xl font-black uppercase tracking-tighter mb-4 ${activeTab === t.id ? 'text-cyan-400' : 'text-white'}`}>{t.title}</h3>
+                    <p className={`text-sm md:text-base font-bold uppercase leading-relaxed tracking-wider ${activeTab === t.id ? 'text-slate-200' : 'text-slate-500'}`}>{t.desc}</p>
                   </button>
                 ))}
             </div>
