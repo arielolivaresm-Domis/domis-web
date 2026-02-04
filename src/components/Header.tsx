@@ -9,12 +9,9 @@ const LockIcon = () => (
 );
 
 export default function Header() {
-  // URL de WhatsApp con el mensaje oficial de Ingeniería DOMIS™
   const whatsappUrl = "https://wa.me/56929901343?text=Hola, equipo de Ingeniería DOMIS™. Estoy en la web y necesito Auditoría técnica profesional + Estrategia de negociación para una propiedad...";
   const [isScanning, setIsScanning] = useState(false);
   const [cycleCount, setCycleCount] = useState(0);
-
-  // Acceso al cerebro global de las pestañas
   const { setActiveTab } = useTabs();
 
   useEffect(() => {
@@ -50,7 +47,7 @@ export default function Header() {
       <nav className="fixed top-0 w-full z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-900/80 px-4 md:px-6 py-4 transition-all duration-300 shadow-lg shadow-slate-950/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center relative">
          
-          {/* --- LOGO TRANSFORMER --- */}
+          {/* --- LOGO TRANSFORMER (Ajuste de visibilidad para la "M") --- */}
           <a href="#" className="relative w-32 md:w-48 h-12 md:h-16 flex items-center select-none z-50 group cursor-pointer" aria-label="Ir al inicio">
            
             <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-sm">
@@ -67,7 +64,7 @@ export default function Header() {
                 }`}
               >
                 <div className="flex items-start">
-                  <span className="text-xl md:text-3xl font-black text-white tracking-tighter uppercase leading-none drop-shadow-sm group-hover:text-cyan-50 transition-colors">
+                  <span className="text-xl md:text-3xl font-black text-white tracking-tight uppercase leading-none drop-shadow-sm group-hover:text-cyan-50 transition-colors">
                     DOMIS
                   </span>
                   <span className="text-cyan-500 text-sm md:text-lg font-bold ml-1 relative top-[-2px] md:top-[-4px]">
@@ -111,17 +108,19 @@ export default function Header() {
 
           {/* --- ACCIONES PRIMARIAS --- */}
           <div className="flex items-center gap-2 md:gap-3 relative z-10">
-            {/* PCF-15 Acceso */}
+            {/* PCF-15 Acceso (Puente directo al portal técnico) */}
             <a
-              href="/calculator"
+              href="/pcf-15tm"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-1.5 md:gap-2 px-2 md:px-3 py-2 rounded-lg border border-slate-800 bg-slate-900/50 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-slate-900 transition-all group"
-              title="Acceso Privado Clientes"
+              title="Acceso Privado PCF-15™"
             >
               <LockIcon />
               <span className="text-[9px] md:text-[10px] font-bold tracking-wider">PCF-15™</span>
             </a>
 
-            {/* CTA Principal: "Solicitar Auditoría" */}
+            {/* CTA Principal */}
             <a
               href={whatsappUrl}
               target="_blank"
