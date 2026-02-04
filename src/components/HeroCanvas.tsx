@@ -84,8 +84,9 @@ export default function HeroCanvas({ progress }: HeroCanvasProps) {
           pointerEvents: 'none'
         }}
       />
-      {/* MÁSCARA TÉCNICA: Oculta el logo y da profundidad al texto */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90" />
+      
+      {/* MÁSCARA DE ATENUACIÓN: Cubre el logo y las luces inferiores */}
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent opacity-100" />
     </div>
   );
 }
