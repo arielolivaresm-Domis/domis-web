@@ -19,11 +19,11 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <Section id="auditoria-directa" className="py-12 md:py-24 bg-slate-950">
+    <Section id="auditoria-directa" className="py-0 md:py-24 bg-slate-950">
       
       {/* CONTENEDOR MAESTRO:
-          - rounded-none en móvil para Full-Width total.
-          - border-x-0 en móvil para limpiar laterales.
+          - En Móvil: rounded-none, border-x-0 (Cero margen).
+          - En Mac: rounded-[4rem], border (Elegancia).
       */}
       <div className="relative overflow-hidden rounded-none md:rounded-[4rem] bg-slate-950 border-y md:border border-white/10 shadow-2xl">
         
@@ -37,11 +37,13 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/40 to-slate-950"></div>
         </div>
 
-        {/* CONTENIDO INTERNO */}
-        <div className="relative z-10 p-5 md:p-16">
+        {/* CONTENIDO INTERNO:
+            - py-12 px-0 en móvil para que el contenido toque los bordes.
+        */}
+        <div className="relative z-10 py-12 px-0 md:p-16">
           
-          {/* HEADER DE FASE */}
-          <div className="text-center mb-12">
+          {/* HEADER: px-4 para que el texto no toque el borde del cristal */}
+          <div className="text-center mb-12 px-4">
             <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] md:text-[14px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg shadow-cyan-500/20">
               Fase 2: Auditoría Directa
             </div>
@@ -56,20 +58,20 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
 
           <div className="max-w-2xl mx-auto">
             {/* CARD DEL MOTOR PCF-15™:
-                - rounded-none y border-x-0 en móvil para efecto consola.
+                - rounded-none y border-x-0 en móvil.
             */}
-            <div className="bg-slate-950/40 backdrop-blur-3xl border-y md:border border-white/10 rounded-none md:rounded-[2.5rem] p-6 md:p-10 shadow-2xl">
+            <div className="bg-slate-950/60 backdrop-blur-3xl border-y md:border border-white/10 rounded-none md:rounded-[2.5rem] p-6 md:p-10 shadow-2xl">
               
               <div className="flex items-center justify-between mb-10">
                 <div className="bg-cyan-500 p-4 rounded-xl shadow-lg shadow-cyan-500/20">
                   <Calculator size={28} className="text-slate-950" />
                 </div>
                 <div className="text-right">
-                  <h4 className="text-xl md:text-3xl font-black text-white uppercase italic tracking-tighter">
+                  <h4 className="text-xl md:text-3xl font-black text-white uppercase italic tracking-tighter leading-none">
                     PCF-15™ Engine
                   </h4>
                   {discount > 0 && (
-                    <p className="text-cyan-400 text-[11px] font-black uppercase tracking-widest">
+                    <p className="text-cyan-400 text-[11px] font-black uppercase tracking-widest mt-1">
                       {discount}% OFF Aplicado
                     </p>
                   )}
@@ -133,8 +135,8 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                   </div>
                 </div>
 
-                {/* BLOQUE DE PRECIO ESTIMADO */}
-                <div className="bg-cyan-500/10 rounded-2xl p-6 border border-cyan-500/20 text-center shadow-inner">
+                {/* BLOQUE DE PRECIO */}
+                <div className="bg-cyan-500/10 rounded-2xl p-6 border border-cyan-500/20 text-center">
                   <span className="text-[9px] uppercase text-cyan-400 font-black tracking-[0.2em] mb-1 block">Inversión Estimada Auditoría</span>
                   <div className="text-3xl font-mono text-white font-black tracking-tighter">
                     ${totalCost.toLocaleString()} <span className="text-xs opacity-50 ml-1">+ IVA</span>
@@ -154,7 +156,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               </div>
             </div>
 
-            <p className="mt-10 text-center text-white/40 text-[9px] md:text-[12px] font-bold uppercase tracking-[0.2em] leading-relaxed italic max-w-lg mx-auto">
+            <p className="mt-10 px-4 text-center text-white/40 text-[9px] md:text-[12px] font-bold uppercase tracking-[0.2em] leading-relaxed italic max-w-lg mx-auto">
               * Mínimo técnico 100 m² por unidad. El informe final se entrega cifrado para validez legal en negociación.
             </p>
           </div>
