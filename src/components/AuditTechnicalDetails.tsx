@@ -47,8 +47,8 @@ const technicalModules = [
 
 export default function AuditTechnicalDetails() {
   return (
-    /* CAMBIO: Se eliminó 'bg-slate-950' para dejarlo transparente y ver el fondo global */
-    <section className="py-16 md:py-24 bg-transparent relative overflow-hidden border-t border-slate-900/50">
+    /* CAMBIO: Se agregó bg-slate-950 para el fondo oscuro sólido, similar a "Problem.tsx" */
+    <section className="py-16 md:py-24 bg-slate-950/95 border-y border-slate-800 relative overflow-hidden z-10">
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none" 
         style={{ 
@@ -84,7 +84,7 @@ export default function AuditTechnicalDetails() {
               className="group relative 
                          /* Estilo Mobile: Sin caja, flujo horizontal */
                          flex items-start gap-4
-                         /* Estilo Desktop: Módulo 3D intacto con fondo semi-transparente */
+                         /* Estilo Desktop: Módulo 3D intacto */
                          md:flex-col md:items-start md:bg-slate-900/40 md:border md:border-slate-800 md:p-8 md:rounded-3xl md:hover:border-cyan-500/50 md:transition-all md:duration-500 md:hover:shadow-[0_0_40px_rgba(34,211,238,0.1)] md:backdrop-blur-sm"
             >
               {/* ID DE MÓDULO (Solo en Desktop) */}
