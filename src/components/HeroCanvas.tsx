@@ -1,111 +1,97 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
-import { MotionValue, useMotionValueEvent } from "framer-motion";
+import { useEffect, useRef, useState } from 'react';
 
-interface HeroCanvasProps {
-  progress: MotionValue<number>;
-}
-
-export default function HeroCanvas({ progress }: HeroCanvasProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+export default function HeroCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-  
-  // Ajustado a 40 para coincidir con tu carpeta "frame"
-  const TOTAL_FRAMES = 40; 
+  // Definimos los 120 cuadros que ya tienes en public/frame2/
+  const frameCount = 120; 
 
+  // 1. CARGA TÉCNICA DE IMÁGENES
   useEffect(() => {
     const loadedImages: HTMLImageElement[] = [];
     let loadedCount = 0;
 
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
-      const frameIndex = i.toString().padStart(3, "0");
-      img.src = `/frame/ezgif-frame-${frameIndex}.jpg`;
+      // Ajuste al nombre exacto de tus archivos: ezgif-frame-001.jpg
+      const frameIndex = i.toString().padStart(3, '0');
+      img.src = `/frame2/ezgif-frame-${frameIndex}.jpg`;
       
       img.onload = () => {
         loadedCount++;
-        if (loadedCount === TOTAL_FRAMES) {
-          setImages(loadedImages);
-          setIsLoaded(true);
+        if (loadedCount === frameCount) {
+          // Solo actualizamos el estado cuando la secuencia de 120 está completa
+          setImages([...loadedImages]);
         }
       };
-      loadedImages[i - 1] = img; 
+      // Aseguramos el orden en el array (índice 0 a 119)
+      loadedImages[i - 1] = img;
     }
   }, []);
 
-  const renderFrame = (index: number) => {
-    const canvas = canvasRef.current;
-    const img = images[index];
-    if (!canvas || !img) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-    ctx.scale(dpr, dpr);
-
-    // --- NUEVA LÓGICA DE RECORTE PARA QUITAR MARCA DE AGUA "VEO" ---
-    // Definimos qué parte de la imagen original queremos usar.
-    const sourceX = 0;
-    const sourceY = 0;
-    const sourceWidth = img.width;
-    // Recortamos el 6% inferior de la imagen original para eliminar el texto.
-    // Usamos el 94% superior. Puedes ajustar este 0.94 si necesitas cortar más o menos.
-    const sourceHeight = img.height * 0.94;
-
-    // Lógica para llenar la pantalla (Object Cover) usando las nuevas dimensiones recortadas
-    const canvasRatio = window.innerWidth / window.innerHeight;
-    // Usamos el ratio de la imagen YA RECORTADA
-    const imgRatio = sourceWidth / sourceHeight; 
-
-    let drawWidth, drawHeight, offsetX, offsetY;
-
-    if (canvasRatio > imgRatio) {
-      drawWidth = window.innerWidth;
-      drawHeight = window.innerWidth / imgRatio;
-      offsetX = 0;
-      offsetY = (window.innerHeight - drawHeight) / 2;
-    } else {
-      drawWidth = window.innerHeight * imgRatio;
-      drawHeight = window.innerHeight;
-      offsetX = (window.innerWidth - drawWidth) / 2;
-      offsetY = 0;
-    }
-
-    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-    // Usamos la versión avanzada de drawImage para recortar y escalar al mismo tiempo
-    // drawImage(imagen, inicioX_recorte, inicioY_recorte, ancho_recorte, alto_recorte, destinoX, destinoY, ancho_destino, alto_destino)
-    ctx.drawImage(
-      img,
-      sourceX,
-      sourceY,
-      sourceWidth,
-      sourceHeight, // <--- Aquí es donde se aplica el recorte del fondo
-      offsetX,
-      offsetY,
-      drawWidth,
-      drawHeight
-    );
-  };
-
-  useMotionValueEvent(progress, "change", (latest) => {
-    if (!isLoaded || images.length === 0) return;
-    const frameIndex = Math.min(images.length - 1, Math.floor(latest * images.length));
-    requestAnimationFrame(() => renderFrame(frameIndex));
-  });
-
+  // 2. RENDERIZADO DE ALTA PRECISIÓN (120 FPS FEEL)
   useEffect(() => {
-    if (isLoaded) renderFrame(0);
-  }, [isLoaded]);
+    if (images.length < frameCount || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d', { alpha: false }); // Optimización de rendimiento
+    if (!context) return;
+
+    const renderFrame = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      
+      // Cálculo del progreso de scroll (0 a 1)
+      const scrollFraction = Math.max(0, Math.min(1, scrollTop / maxScroll));
+      // Mapeamos a los 120 frames (0 a 119)
+      const frameIndex = Math.floor(scrollFraction * (frameCount - 1));
+
+      const img = images[frameIndex];
+      if (img && img.complete) {
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+        const imgWidth = img.width;
+        const imgHeight = img.height;
+        
+        // Lógica de "Cover" para que la imagen siempre llene el fondo sin deformarse
+        const ratio = Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
+        const drawWidth = imgWidth * ratio;
+        const drawHeight = imgHeight * ratio;
+        const drawX = (canvasWidth - drawWidth) / 2;
+        const drawY = (canvasHeight - drawHeight) / 2;
+
+        context.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+      }
+    };
+
+    const handleResize = () => {
+      if (canvasRef.current) {
+        canvasRef.current.width = window.innerWidth;
+        canvasRef.current.height = window.innerHeight;
+        renderFrame();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', renderFrame, { passive: true });
+    
+    // Dibujo inicial
+    handleResize(); 
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', renderFrame);
+    };
+  }, [images]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none bg-slate-950"
+      className="fixed top-0 left-0 w-full h-full -z-10 bg-slate-950"
+      style={{ 
+        filter: 'brightness(0.4) contrast(1.1)',
+        pointerEvents: 'none'
+      }}
     />
   );
 }
