@@ -21,7 +21,7 @@ export default function PhasesTabs() {
 
   const BridgeButton = ({ targetId, label, subtitle, icon }: { targetId: 'fase1' | 'fase2' | 'fase3', label: string, subtitle: string, icon: string }) => (
     <div className="pt-24 border-t border-slate-900/50 text-center">
-      <p className="text-cyan-400 font-mono text-sm uppercase tracking-[0.2em] mb-8 font-bold">Continuar Trayectoria Técnica</p>
+      <p className="text-cyan-400 font-mono text-xs uppercase tracking-[0.2em] mb-8 font-bold">Continuar Trayectoria Técnica</p>
       <button
         onClick={() => handleTabChange(targetId)}
         className="w-full max-w-4xl mx-auto p-8 rounded-2xl border-2 border-slate-800 bg-slate-900/50 hover:border-cyan-500 hover:bg-cyan-500/5 transition-all duration-500 group relative overflow-hidden"
@@ -29,10 +29,10 @@ export default function PhasesTabs() {
         <div className="flex flex-col items-center gap-4 relative z-10">
           <span className="text-5xl group-hover:scale-110 transition-transform duration-500">{icon}</span>
           <div className="text-center">
-            <div className="text-slate-500 text-sm font-bold uppercase tracking-widest mb-1 group-hover:text-cyan-400 transition-colors">
+            <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1 group-hover:text-cyan-400 transition-colors">
               {label}
             </div>
-            <div className="text-white text-3xl font-black uppercase tracking-tighter flex items-center gap-3">
+            <div className="text-white text-2xl md:text-3xl font-black uppercase tracking-tighter flex items-center gap-3">
               {subtitle} <span className="group-hover:translate-x-2 transition-transform duration-500">→</span>
             </div>
           </div>
@@ -51,18 +51,20 @@ export default function PhasesTabs() {
 
           <div className="p-8 md:p-16 relative z-10">
             
+            {/* ENCABEZADO: Punto medio de escala */}
             <div className="text-center mb-16">
               <div className="inline-block px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
-                <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-black">Protocolo DOMIS™</span>
+                <span className="text-[11px] font-mono text-cyan-400 uppercase tracking-widest font-black">Protocolo DOMIS™</span>
               </div>
-              <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter italic leading-tight">
+              <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter italic leading-tight">
                 CÓMO <span className="text-cyan-400">FUNCIONA</span>
               </h2>
-              <p className="text-slate-400 text-sm md:text-lg font-black uppercase tracking-[0.3em] italic mt-4">
+              <p className="text-slate-400 text-sm md:text-base font-black uppercase tracking-[0.3em] italic mt-4">
                  Ecosistema técnico integrado en 3 etapas críticas.
                </p>
             </div>
 
+            {/* NAVEGACIÓN: Punto medio de escala */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
                 {[
                   { 
@@ -87,9 +89,9 @@ export default function PhasesTabs() {
                         : 'border-slate-800 bg-slate-950 hover:border-slate-700'
                     }`}
                   >
-                    <div className={`w-14 h-14 rounded-full border-2 flex items-center justify-center text-base font-black mb-8 ${activeTab === t.id ? 'border-cyan-500 bg-slate-950 text-white' : 'border-white/20 text-slate-500'}`}>{t.num}</div>
-                    <h3 className={`text-xl md:text-2xl font-black uppercase tracking-tighter mb-4 ${activeTab === t.id ? 'text-cyan-400' : 'text-white'}`}>{t.title}</h3>
-                    <p className={`text-sm md:text-base font-bold uppercase leading-relaxed tracking-wider ${activeTab === t.id ? 'text-slate-200' : 'text-slate-500'}`}>{t.desc}</p>
+                    <div className={`w-12 h-12 rounded-full border-2 flex items-center justify-center text-sm font-black mb-8 ${activeTab === t.id ? 'border-cyan-500 bg-slate-950 text-white' : 'border-white/20 text-slate-500'}`}>{t.num}</div>
+                    <h3 className={`text-xl font-black uppercase tracking-tighter mb-4 ${activeTab === t.id ? 'text-cyan-400' : 'text-white'}`}>{t.title}</h3>
+                    <p className={`text-xs md:text-sm font-bold uppercase leading-relaxed tracking-wider ${activeTab === t.id ? 'text-slate-200' : 'text-slate-500'}`}>{t.desc}</p>
                   </button>
                 ))}
             </div>
