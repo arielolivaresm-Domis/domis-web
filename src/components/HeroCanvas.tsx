@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 
-// Constante técnica fuera del componente para evitar errores de compilación
 const TOTAL_FRAMES = 120;
 
 export default function HeroCanvas() {
@@ -8,7 +7,7 @@ export default function HeroCanvas() {
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [isReady, setIsReady] = useState(false);
 
-  // 1. CARGA TÉCNICA DE IMÁGENES (Carpeta frame2)
+  // 1. CARGA TÉCNICA DE IMÁGENES
   useEffect(() => {
     const loadedImages: HTMLImageElement[] = [];
     let loadedCount = 0;
@@ -16,7 +15,6 @@ export default function HeroCanvas() {
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
       const frameIndex = i.toString().padStart(3, '0');
-      // Ruta verificada según estructura de archivos
       img.src = `/frame2/ezgif-frame-${frameIndex}.jpg`;
       
       img.onload = () => {
@@ -30,7 +28,7 @@ export default function HeroCanvas() {
     }
   }, []);
 
-  // 2. RENDERIZADO DE PRECISIÓN
+  // 2. RENDERIZADO CON PROTECCIÓN DE NULOS
   useEffect(() => {
     if (!isReady || images.length < TOTAL_FRAMES || !canvasRef.current) return;
 
@@ -42,12 +40,13 @@ export default function HeroCanvas() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       
-      const scrollFraction = Math.max(0, Math.min(1, scrollTop / maxScroll));
+      const scrollFraction = Math.max(0, Math.min(1, (scrollTop || 0) / (maxScroll || 1)));
       const frameIndex = Math.floor(scrollFraction * (TOTAL_FRAMES - 1));
 
       const img = images[frameIndex];
       if (img && img.complete) {
-        const { width: cw, height: ch } = canvas;
+        const cw = canvas.width;
+        const ch = canvas.height;
         const ratio = Math.max(cw / img.width, ch / img.height);
         const dw = img.width * ratio;
         const dh = img.height * ratio;
@@ -59,11 +58,10 @@ export default function HeroCanvas() {
     };
 
     const handleResize = () => {
-      if (canvasRef.current) {
-        canvasRef.current.width = window.innerWidth;
-        canvasRef.current.height = window.innerHeight;
-        renderFrame();
-      }
+      if (!canvasRef.current) return;
+      canvasRef.current.width = window.innerWidth;
+      canvasRef.current.height = window.innerHeight;
+      renderFrame();
     };
 
     window.addEventListener('resize', handleResize);
