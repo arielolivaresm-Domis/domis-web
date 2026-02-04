@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import { MotionValue, useMotionValueEvent } from 'framer-motion';
 
 const TOTAL_FRAMES = 120;
 
-export default function HeroCanvas() {
+// Definimos la "entrada" para la propiedad progress
+interface HeroCanvasProps {
+  progress: MotionValue<number>;
+}
+
+export default function HeroCanvas({ progress }: HeroCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [isReady, setIsReady] = useState(false);
@@ -28,52 +34,50 @@ export default function HeroCanvas() {
     }
   }, []);
 
-  // 2. RENDERIZADO CON PROTECCIÓN DE NULOS
-  useEffect(() => {
-    if (!isReady || images.length < TOTAL_FRAMES || !canvasRef.current) return;
+  // 2. RENDERIZADO CONTROLADO POR MOTION VALUE (Sincronía Total)
+  const drawFrame = (latestProgress: number) => {
+    if (!canvasRef.current || images.length < TOTAL_FRAMES) return;
 
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d', { alpha: false });
     if (!context) return;
 
-    const renderFrame = () => {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      
-      const scrollFraction = Math.max(0, Math.min(1, (scrollTop || 0) / (maxScroll || 1)));
-      const frameIndex = Math.floor(scrollFraction * (TOTAL_FRAMES - 1));
+    // Usamos el progreso que viene directamente del scroll de Hero.tsx
+    const frameIndex = Math.floor(latestProgress * (TOTAL_FRAMES - 1));
+    const img = images[frameIndex];
 
-      const img = images[frameIndex];
-      if (img && img.complete) {
-        const cw = canvas.width;
-        const ch = canvas.height;
-        const ratio = Math.max(cw / img.width, ch / img.height);
-        const dw = img.width * ratio;
-        const dh = img.height * ratio;
-        const dx = (cw - dw) / 2;
-        const dy = (ch - dh) / 2;
+    if (img && img.complete) {
+      const cw = canvas.width;
+      const ch = canvas.height;
+      const ratio = Math.max(cw / img.width, ch / img.height);
+      const dw = img.width * ratio;
+      const dh = img.height * ratio;
+      const dx = (cw - dw) / 2;
+      const dy = (ch - dh) / 2;
 
-        context.drawImage(img, dx, dy, dw, dh);
-      }
-    };
+      context.drawImage(img, dx, dy, dw, dh);
+    }
+  };
 
+  // Escuchamos el cambio de scroll de forma ultra-eficiente
+  useMotionValueEvent(progress, "change", (latest) => {
+    drawFrame(latest);
+  });
+
+  // Ajuste inicial y de resize
+  useEffect(() => {
     const handleResize = () => {
       if (!canvasRef.current) return;
       canvasRef.current.width = window.innerWidth;
       canvasRef.current.height = window.innerHeight;
-      renderFrame();
+      drawFrame(progress.get());
     };
 
     window.addEventListener('resize', handleResize);
-    window.addEventListener('scroll', renderFrame, { passive: true });
-    
     handleResize(); 
     
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', renderFrame);
-    };
-  }, [isReady, images]);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isReady, images, progress]);
 
   return (
     <canvas
