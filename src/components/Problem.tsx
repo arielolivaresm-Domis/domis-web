@@ -1,25 +1,26 @@
 import { CheckCircle2, AlertTriangle } from 'lucide-react';
+import Section from './layout/Section';
 
 export default function Problem() {
   return (
-    <section id="problema" className="py-24 bg-transparent px-6 relative z-10">
-      <div className="max-w-7xl mx-auto">
-        {/* Contenedor principal */}
+    <Section id="problema" className="py-24 bg-transparent relative z-10">
+        {/* Contenedor principal: Usamos tu estilo pero con padding responsivo */}
         <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl min-h-[600px] flex items-center justify-center bg-slate-950">
           
-          {/* CAPA DE IMAGEN: AHORA 100% SÓLIDA */}
+          {/* CAPA DE IMAGEN: 100% SÓLIDA */}
           <div className="absolute inset-0">
             <img 
               src="/DOMIS_error_mas_comun.webp" 
               alt="Error en compra inmobiliaria - Asimetría de información" 
-              // CAMBIO CLAVE: opacity-100 para solidez total.
               className="w-full h-full object-cover opacity-100 grayscale-[0.2] contrast-110"
             />
-            {/* Gradiente oscuro superpuesto para asegurar que el texto se lea sobre la imagen sólida */}
+            {/* Gradiente oscuro para legibilidad */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/50"></div>
           </div>
 
-          <div className="relative z-10 p-8 md:p-16 text-center max-w-4xl">
+          {/* AJUSTE: p-5 en móvil para ganar ancho, md:p-16 en desktop */}
+          <div className="relative z-10 p-5 md:p-16 text-center max-w-4xl">
+            
             {/* BADGE TÉCNICO */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-slate-200/10 border border-slate-200/30 rounded-full mb-8">
               <AlertTriangle className="w-3 h-3 text-red-500" />
@@ -43,6 +44,7 @@ export default function Problem() {
             </h3>
             
             <div className="space-y-8 mb-12 max-w-3xl mx-auto">
+              {/* GRILLA DE DESCUENTOS */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-900/60 p-6 rounded-2xl border border-white/10 backdrop-blur-md shadow-xl">
                 <div className="text-center md:text-right border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0 md:pr-6">
                   <p className="text-slate-400 text-[10px] uppercase tracking-widest mb-1">Cortesía de mercado</p>
@@ -54,7 +56,8 @@ export default function Problem() {
                 </div>
               </div>
 
-              <div className="text-left space-y-4 bg-black/50 p-8 rounded-3xl border border-white/10 backdrop-blur-md">
+              {/* LISTA DE BENEFICIOS - Padding ajustado para móvil */}
+              <div className="text-left space-y-4 bg-black/50 p-6 md:p-8 rounded-3xl border border-white/10 backdrop-blur-md">
                 <div className="flex items-start gap-4 text-slate-200 text-sm">
                   <CheckCircle2 className="w-5 h-5 text-cyan-400 mt-0.5 shrink-0" />
                   <span><strong className="text-white uppercase tracking-tight">Tasación IA:</strong> Sinceramos el valor real frente al emocional del propietario.</span>
@@ -75,7 +78,6 @@ export default function Problem() {
             </p>
           </div>
         </div>
-      </div>
-    </section>
+    </Section>
   );
 }
