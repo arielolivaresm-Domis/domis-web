@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calculator, MapPin, CheckCircle, FileText, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Section from './layout/Section';
 
 export default function AuditPacks({ onNext }: { onNext?: () => void }) {
@@ -19,20 +19,12 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    /* PROBLEMA 1 RESUELTO: z-30 y bg-slate-950 sólido para tapar la casa azul */
     <Section id="auditoria-directa" className="py-0 md:py-24 bg-slate-950 relative z-30">
       
-      {/* PROBLEMA 2 Y 3 RESUELTOS: 
-          - rounded-none: Elimina las curvas en móvil.
-          - border-x-0: Elimina los bordes laterales para que parezca infinito.
-          - w-full: Asegura ancho total.
-      */}
       <div className="relative overflow-hidden w-full rounded-none md:rounded-[4rem] bg-slate-950 border-y md:border border-white/10 shadow-2xl">
         
-        {/* CAPA DE BLOQUEO (Búnker Negro) */}
         <div className="absolute inset-0 bg-slate-950 z-0"></div>
 
-        {/* IMAGEN DE FONDO (Controlada) */}
         <div className="absolute inset-0 z-[1]">
           <img 
             src="/DOMIS_audi.webp" 
@@ -42,7 +34,6 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950 to-slate-950"></div>
         </div>
 
-        {/* CONTENIDO INTERNO */}
         <div className="relative z-10 py-12 px-0 md:p-16">
           
           <div className="text-center mb-12 px-4">
@@ -56,12 +47,13 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           </div>
 
           <div className="max-w-2xl mx-auto">
-            {/* CARD INTERNA: También sin curvas y ancho total en móvil */}
             <div className="bg-slate-900 border-y md:border border-white/10 rounded-none md:rounded-[2.5rem] p-6 md:p-10 shadow-2xl">
               
               <div className="flex items-center justify-between mb-10">
                 <div className="bg-cyan-500 p-4 rounded-xl shadow-lg">
-                  <Calculator size={28} className="text-slate-950" />
+                  <div className="w-7 h-7 flex items-center justify-center text-slate-950 font-black text-xl">
+                    #
+                  </div>
                 </div>
                 <div className="text-right">
                   <h4 className="text-xl md:text-3xl font-black text-white uppercase italic tracking-tighter leading-none">
@@ -75,10 +67,8 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                 </div>
               </div>
 
-              {/* INPUTS */}
               <div className="space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* UNIDADES */}
                   <div className="px-1">
                     <label className="block text-[11px] uppercase text-cyan-500 mb-4 font-black tracking-widest">Unidades Auditoría:</label>
                     <div className="grid grid-cols-3 gap-2">
@@ -103,7 +93,6 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                     </div>
                   </div>
 
-                  {/* SUPERFICIE */}
                   <div className="px-1">
                     <label className="block text-[11px] uppercase text-cyan-500 mb-4 font-black tracking-widest">Superficie Total m²:</label>
                     <input
@@ -115,7 +104,6 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                   </div>
                 </div>
 
-                {/* PRECIO */}
                 <div className="bg-cyan-500/10 rounded-2xl p-6 border border-cyan-500/20 text-center">
                   <span className="text-[9px] uppercase text-cyan-400 font-black tracking-[0.2em] mb-1 block">Inversión Estimada Auditoría</span>
                   <div className="text-3xl font-mono text-white font-black tracking-tighter">
@@ -123,7 +111,6 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                   </div>
                 </div>
 
-                {/* BOTÓN */}
                 <a 
                   href={whatsappUrl}
                   target="_blank" 
