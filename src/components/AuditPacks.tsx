@@ -19,30 +19,32 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
+    // bg-slate-950 sólido en la sección para bloquear la casa wireframe
     <Section id="auditoria-directa" className="py-0 md:py-24 bg-slate-950">
       
       {/* CONTENEDOR MAESTRO:
-          - En Móvil: rounded-none, border-x-0 (Cero margen).
-          - En Mac: rounded-[4rem], border (Elegancia).
+          - bg-slate-950 OPACO: Esta es la clave para que no se vea el fondo 2.
+          - rounded-none en móvil para Full-Width.
       */}
       <div className="relative overflow-hidden rounded-none md:rounded-[4rem] bg-slate-950 border-y md:border border-white/10 shadow-2xl">
         
-        {/* CAPA DE IMAGEN TÉCNICA */}
-        <div className="absolute inset-0 z-0">
+        {/* CAPA DE SELLADO (Bloquea todo lo que hay detrás) */}
+        <div className="absolute inset-0 bg-slate-950 z-0"></div>
+
+        {/* CAPA DE IMAGEN SOBRE EL SELLADO */}
+        <div className="absolute inset-0 z-[1]">
           <img 
             src="/DOMIS_audi.webp" 
             alt="Auditoría Técnica DOMIS" 
-            className="w-full h-full object-cover opacity-30"
+            className="w-full h-full object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/40 to-slate-950"></div>
+          {/* Gradiente más denso para asegurar que nada se filtre */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/90 to-slate-950"></div>
         </div>
 
-        {/* CONTENIDO INTERNO:
-            - py-12 px-0 en móvil para que el contenido toque los bordes.
-        */}
+        {/* CONTENIDO INTERNO */}
         <div className="relative z-10 py-12 px-0 md:p-16">
           
-          {/* HEADER: px-4 para que el texto no toque el borde del cristal */}
           <div className="text-center mb-12 px-4">
             <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] md:text-[14px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg shadow-cyan-500/20">
               Fase 2: Auditoría Directa
@@ -57,10 +59,8 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           </div>
 
           <div className="max-w-2xl mx-auto">
-            {/* CARD DEL MOTOR PCF-15™:
-                - rounded-none y border-x-0 en móvil.
-            */}
-            <div className="bg-slate-950/60 backdrop-blur-3xl border-y md:border border-white/10 rounded-none md:rounded-[2.5rem] p-6 md:p-10 shadow-2xl">
+            {/* CARD DEL MOTOR PCF-15™: Full-Width en móvil */}
+            <div className="bg-slate-900/40 backdrop-blur-3xl border-y md:border border-white/10 rounded-none md:rounded-[2.5rem] p-6 md:p-10 shadow-2xl">
               
               <div className="flex items-center justify-between mb-10">
                 <div className="bg-cyan-500 p-4 rounded-xl shadow-lg shadow-cyan-500/20">
