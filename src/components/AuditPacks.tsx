@@ -19,11 +19,15 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <Section id="auditoria-directa" className="py-12 md:py-24">
-      {/* CONTENEDOR FLOTANTE CON FONDO DE IMAGEN */}
-      <div className="relative overflow-hidden rounded-[2.5rem] md:rounded-[4rem] bg-slate-950 border border-white/10 shadow-2xl">
+    <Section id="auditoria-directa" className="py-12 md:py-24 bg-slate-950">
+      
+      {/* CONTENEDOR MAESTRO:
+          - rounded-none en móvil para Full-Width total.
+          - border-x-0 en móvil para limpiar laterales.
+      */}
+      <div className="relative overflow-hidden rounded-none md:rounded-[4rem] bg-slate-950 border-y md:border border-white/10 shadow-2xl">
         
-        {/* CAPA DE IMAGEN Y GRADIENTES */}
+        {/* CAPA DE IMAGEN TÉCNICA */}
         <div className="absolute inset-0 z-0">
           <img 
             src="/DOMIS_audi.webp" 
@@ -34,25 +38,27 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
         </div>
 
         {/* CONTENIDO INTERNO */}
-        <div className="relative z-10 p-6 md:p-16">
+        <div className="relative z-10 p-5 md:p-16">
           
-          {/* HEADER */}
+          {/* HEADER DE FASE */}
           <div className="text-center mb-12">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[11px] md:text-[14px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg shadow-cyan-500/20">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] md:text-[14px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg shadow-cyan-500/20">
               Fase 2: Auditoría Directa
             </div>
             <h2 className="text-3xl md:text-6xl font-black text-white uppercase italic tracking-tighter leading-none mb-6">
               ¿Ya elegiste propiedad? <br/>
               <span className="text-cyan-400">Nosotros la Auditamos</span>
             </h2>
-            <p className="text-white/80 font-mono text-[11px] md:text-[13px] uppercase tracking-widest italic bg-white/5 border border-white/10 inline-block px-6 md:px-10 py-3 md:py-4 rounded-full backdrop-blur-md">
+            <p className="text-white/80 font-mono text-[10px] md:text-[13px] uppercase tracking-widest italic bg-white/5 border border-white/10 inline-block px-6 md:px-10 py-3 md:py-4 rounded-full backdrop-blur-md">
               Inspección técnica con instrumental de precisión.
             </p>
           </div>
 
           <div className="max-w-2xl mx-auto">
-            {/* CARD DEL MOTOR PCF-15™ */}
-            <div className="bg-slate-950/40 backdrop-blur-3xl border border-white/10 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 shadow-2xl">
+            {/* CARD DEL MOTOR PCF-15™:
+                - rounded-none y border-x-0 en móvil para efecto consola.
+            */}
+            <div className="bg-slate-950/40 backdrop-blur-3xl border-y md:border border-white/10 rounded-none md:rounded-[2.5rem] p-6 md:p-10 shadow-2xl">
               
               <div className="flex items-center justify-between mb-10">
                 <div className="bg-cyan-500 p-4 rounded-xl shadow-lg shadow-cyan-500/20">
@@ -63,7 +69,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                     PCF-15™ Engine
                   </h4>
                   {discount > 0 && (
-                    <p className="text-cyan-400 text-[12px] font-black uppercase tracking-widest">
+                    <p className="text-cyan-400 text-[11px] font-black uppercase tracking-widest">
                       {discount}% OFF Aplicado
                     </p>
                   )}
@@ -78,7 +84,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                   { icon: <FileText size={16}/>, text: 'Certificación 72h' },
                   { icon: <Info size={16}/>, text: 'Asesoría Post-Informe' }
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 text-white font-bold uppercase text-[11px] tracking-widest">
+                  <div key={i} className="flex items-center gap-3 text-white font-bold uppercase text-[10px] md:text-[11px] tracking-widest">
                     <span className="text-cyan-400">{item.icon}</span>
                     {item.text}
                   </div>
@@ -89,7 +95,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               <div className="space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <label className="block text-[12px] uppercase text-cyan-500 mb-4 font-black tracking-widest">Unidades:</label>
+                    <label className="block text-[11px] uppercase text-cyan-500 mb-4 font-black tracking-widest">Unidades Auditoría:</label>
                     <div className="grid grid-cols-3 gap-2">
                       {[1, 2, 3].map((num) => (
                         <button
@@ -113,7 +119,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                   </div>
 
                   <div>
-                    <label className="block text-[12px] uppercase text-cyan-500 mb-4 font-black tracking-widest">Superficie m²:</label>
+                    <label className="block text-[11px] uppercase text-cyan-500 mb-4 font-black tracking-widest">Superficie Total m²:</label>
                     <div className="relative">
                       <input
                         type="number"
@@ -127,9 +133,9 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                   </div>
                 </div>
 
-                {/* BLOQUE DE PRECIO */}
-                <div className="bg-cyan-500/10 rounded-2xl p-6 border border-cyan-500/20 text-center">
-                  <span className="text-[10px] uppercase text-cyan-400 font-black tracking-[0.2em] mb-1 block">Inversión Estimada Auditoría</span>
+                {/* BLOQUE DE PRECIO ESTIMADO */}
+                <div className="bg-cyan-500/10 rounded-2xl p-6 border border-cyan-500/20 text-center shadow-inner">
+                  <span className="text-[9px] uppercase text-cyan-400 font-black tracking-[0.2em] mb-1 block">Inversión Estimada Auditoría</span>
                   <div className="text-3xl font-mono text-white font-black tracking-tighter">
                     ${totalCost.toLocaleString()} <span className="text-xs opacity-50 ml-1">+ IVA</span>
                   </div>
@@ -139,7 +145,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                   href={whatsappUrl}
                   target="_blank" 
                   rel="noreferrer" 
-                  className="group flex items-center justify-center gap-4 w-full py-6 font-black uppercase rounded-2xl text-[14px] bg-cyan-500 text-slate-950 hover:bg-white transition-all shadow-xl tracking-widest active:scale-95"
+                  className="group flex items-center justify-center gap-4 w-full py-6 font-black uppercase rounded-2xl text-[13px] bg-cyan-500 text-slate-950 hover:bg-white transition-all shadow-xl tracking-widest active:scale-95"
                   onClick={() => onNext && onNext()}
                 >
                   Configurar Pack Técnico
@@ -148,8 +154,8 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
               </div>
             </div>
 
-            <p className="mt-8 text-center text-white/40 text-[10px] md:text-[12px] font-bold uppercase tracking-[0.2em] leading-relaxed italic">
-              * Mínimo técnico 100 m² por unidad. <br className="md:hidden" /> Informe con validez legal para negociación.
+            <p className="mt-10 text-center text-white/40 text-[9px] md:text-[12px] font-bold uppercase tracking-[0.2em] leading-relaxed italic max-w-lg mx-auto">
+              * Mínimo técnico 100 m² por unidad. El informe final se entrega cifrado para validez legal en negociación.
             </p>
           </div>
         </div>
