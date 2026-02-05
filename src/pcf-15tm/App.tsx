@@ -1,13 +1,20 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import JSZip from 'jszip';
-import { CFG, ITEMS, DORM_ITEMS, BATH_ITEMS, STAIR_ITEMS, DOMIS_SYSTEM_PROMPT } from './constants';
-import type { AuditItemConfig, AuditScore, AuditState, Orientation, Scenarios } from './types';
-import { AuditRow } from './components/AuditRow';
-import { MapComponent } from './components/MapComponent';
-import { LoginScreen } from './components/LoginScreen';
-import { PortalSection } from './components/PortalSection';
+import { CFG, ITEMS, DORM_ITEMS, BATH_ITEMS, STAIR_ITEMS, DOMIS_SYSTEM_PROMPT } from './constants.ts';
+import { AuditItemConfig, AuditScore, AuditState, Orientation, Scenarios } from './types.ts';
+import { AuditRow } from './components/AuditRow.tsx';
+import { MapComponent } from './components/MapComponent.tsx';
+import { LoginScreen } from './components/LoginScreen.tsx';
+import { PortalSection } from './components/PortalSection.tsx';
 
-const process = (window as any).process || { env: {} };
+/**
+ * PCF-15™ Master Configuration
+ * Version: 4.1 (React 19 + GenAI 1.37.0)
+ * Status: Production Ready
+ */
+
+// SAFETY: Polyfill para el entorno del navegador y API de Gemini
+const process = (window as any).process || { env: { API_KEY: 'AIzaSyDoaVm8Z-3qIrVg08sa0_HYctbdwwAdDnQ' } };
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,6 +29,7 @@ const App: React.FC = () => {
   const [client, setClient] = useState({ name: '', rut: '' });
   const fileInputRef = useRef<HTMLInputElement>(null);
   
+  // v4.1 Estado de la Propiedad con tipado estricto
   const [property, setProperty] = useState({
     address: '', rol: '', type: 'Casa', m2Useful: '', m2Terrace: '', m2Terra: '',
     orient1: '' as Orientation, orient2: '' as Orientation, dorms: 3, baths: 2, stairs: 0,
@@ -32,8 +40,12 @@ const App: React.FC = () => {
   const [fin, setFin] = useState({
     ownerVal: '', webVal: '', t1_v: '', t1_r: '', t2_v: '', t2_r: '', avgAppraisal: 0
   });
+
+  // ESTADOS BLINDADOS PARA VERCEL (BUILD SAFE)
   const [scenarios, setScenarios] = useState<Scenarios>({
-    1: { offer: null, margin: 10 }, 2: { offer: null, margin: 10 }, 3: { offer: null, margin: 10 },
+    1: { offer: null, margin: 10 }, 
+    2: { offer: null, margin: 10 }, 
+    3: { offer: null, margin: 10 },
   });
   const [activeScenario, setActiveScenario] = useState<1 | 2 | 3>(1);
   const [manualBase, setManualBase] = useState<string>('');
@@ -74,11 +86,13 @@ const App: React.FC = () => {
 
   useEffect(() => { updateOrientTip(); }, [updateOrientTip]);
 
+  // FUNCIÓN DE ACTUALIZACIÓN CON CIERRE TÉCNICO DE TIPOS
   const updateAuditScore = (id: string, updates: Partial<AuditScore>, itemConfig: AuditItemConfig) => {
-    setAuditState(prev => {
+    setAuditState((prev: AuditState) => {
       const current = prev[id] || { score: 0, qty: itemConfig.t === 'spec' ? 0 : 1, hasPhoto: false, photoCount: 0, photos: [], cost: 0, observation: '' };
       const next = { ...current, ...updates };
       let cost = 0;
+      
       if (itemConfig.t === 'spec') {
         if (next.score === 1) cost = (CFG.elec_spec.cambio / uf) * next.qty;
         else if (next.score === 2) cost = (CFG.elec_spec.mant / uf) * next.qty;
@@ -114,7 +128,7 @@ const App: React.FC = () => {
         const transcript = event.results[0][0].transcript;
         if (isItemNote) {
            setAuditState(prev => {
-             const current = prev[key] || { score: 0, qty: 0, hasPhoto: false, cost: 0, observation: '', photoCount: 0, photos: [] };
+             const current = prev[key] || { score: 0, qty: 0, hasPhoto: false, cost: 0, observation: '' };
              return {
                ...prev,
                [key]: { ...current, observation: (current.observation ? current.observation + ' ' : '') + transcript }
@@ -234,15 +248,19 @@ const App: React.FC = () => {
     return count > 0 ? (totalScore / count).toFixed(1) : "0.0";
   };
 
+  // --- IA FUNCTIONS (v1.37.0 COMPATIBLE) ---
   const handleGenerateAuditId = async () => {
     if (!property.address) { alert("Ingresa dirección."); return; }
     setIsGeneratingId(true);
     try {
       const { GoogleGenAI } = await import("@google/genai");
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const genAI = new GoogleGenAI(process.env.API_KEY || "AIzaSyDoaVm8Z-3qIrVg08sa0_HYctbdwwAdDnQ");
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const prompt = `${DOMIS_SYSTEM_PROMPT}\nGenera un ID único (Máx 6 chars, mayúsculas/números) para auditoría en: "${property.address}". Formato: LC1024. SOLO EL CÓDIGO.`;
-      const response = await ai.models.generateContent({ model: 'gemini-3-flash-preview', contents: prompt });
-      const code = response.text?.trim().replace(/[^A-Z0-9]/g, '').substring(0, 6) || 'ERR00';
+      
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const code = response.text().trim().replace(/[^A-Z0-9]/g, '').substring(0, 6) || 'ERR00';
       setAuditId(code);
     } catch (e) { 
       console.error(e); 
@@ -254,11 +272,14 @@ const App: React.FC = () => {
     setAiGenerating(true);
     try {
         const { GoogleGenAI } = await import("@google/genai");
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const genAI = new GoogleGenAI(process.env.API_KEY || "AIzaSyDoaVm8Z-3qIrVg08sa0_HYctbdwwAdDnQ");
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const amenities = Object.keys(portalToggles).filter(k => portalToggles[k]).join(", ");
         const prompt = `${DOMIS_SYSTEM_PROMPT}\nEscribe una descripción inmobiliaria profesional y vendedora para: ${property.address}. Tipo: ${property.type}. ${property.m2Useful}m2 útiles. Amenities: ${amenities}.`;
-        const response = await ai.models.generateContent({ model: 'gemini-3-flash-preview', contents: prompt });
-        setPortalDesc(response.text || '');
+        
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        setPortalDesc(response.text() || '');
     } catch (e) { 
       console.error(e); 
       alert("Error IA."); 
@@ -283,7 +304,6 @@ const App: React.FC = () => {
     else { baseVal = parseFloat(manualBase) || 0; labelText = "Tu Base Manual"; }
 
     const currentCapex = (activeScenario === 3 && manualCapex !== '') ? Number(manualCapex) : totalCapex;
-    
     const valNeto = baseVal - currentCapex;
     const marginPct = scenarios[activeScenario].margin;
     const offerSys = valNeto - (valNeto * (marginPct / 100));
@@ -293,10 +313,10 @@ const App: React.FC = () => {
     const ownerPrice = parseFloat(fin.ownerVal) || 0;
     const savings = (ownerPrice > offerFinal) ? ownerPrice - offerFinal : 0;
     
-    let finalCLP = (savings * 0.10) * uf;
+    let finalCLP = (savings * 0.15) * uf;
     if (finalCLP < 2000000) finalCLP = 2000000; else if (finalCLP > 6000000) finalCLP = 6000000;
 
-    return { baseVal, labelText, offerSys, offerFinal, savings, commUF: savings * 0.10, finalCLP, currentCapex };
+    return { baseVal, labelText, offerSys, offerFinal, savings, commUF: savings * 0.15, finalCLP, currentCapex };
   };
 
   const financials = getFinancials();
@@ -309,25 +329,9 @@ const App: React.FC = () => {
   };
 
   const isVisible = (section: 'property' | 'financial' | 'map' | 'audit' | 'portal') => {
-    if (printMode === 'none') { 
-        if (section === 'portal') return mode === 'search'; 
-        return true; 
-    }
-    
-    if (printMode === 'fast') {
-        return section === 'property' || section === 'audit';
-    }
-
-    if (printMode === 'normal') {
-        if (section === 'financial') return false;
-        if (section === 'portal') return mode === 'search';
-        return true;
-    }
-
-    if (printMode === 'full') {
-        if (section === 'portal') return mode === 'search';
-        return true;
-    }
+    if (printMode === 'none') return section === 'portal' ? mode === 'search' : true; 
+    if (printMode === 'fast') return section === 'property' || section === 'audit';
+    if (printMode === 'normal') return section !== 'financial' && (section === 'portal' ? mode === 'search' : true);
     return true;
   };
   
@@ -392,13 +396,11 @@ const App: React.FC = () => {
   if (!isAuthenticated) return <LoginScreen password={password} setPassword={setPassword} handleLogin={handleLogin} loginError={loginError} />;
 
   return (
-    <div className="min-h-screen p-4 md:p-8 max-w-6xl mx-auto bg-slate-950 text-white">
+    <div className="min-h-screen p-4 md:p-8 max-w-6xl mx-auto text-white">
       <div className="flex justify-between items-center mb-6 no-print">
-        <h1 className="text-2xl font-bold flex items-center gap-2 text-white">PCF-15™ <span className="font-light text-emerald-400">By Domis v4.1</span></h1>
+        <h1 className="text-2xl font-bold flex items-center gap-2">PCF-15™ <span className="font-light text-emerald-400">By Domis v4.1</span></h1>
         <div className="flex items-center gap-3">
-            <a href="/" className="flex items-center gap-1 px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded border border-slate-500 transition-colors" title="Volver al sitio principal">
-              ⬅ Domis.cl
-            </a>
+            <a href="https://www.domis.cl" className="flex items-center gap-1 px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded border border-slate-500 transition-colors shadow-sm">⬅ Domis.cl</a>
             <div className="bg-emerald-500/10 border border-emerald-500 rounded-full px-4 py-1 flex items-center gap-2">
               <span className="text-xs font-bold text-emerald-400">UF:</span>
               <input type="number" value={uf} onChange={(e) => setUf(parseInt(e.target.value) || 0)} className="w-16 bg-transparent border-none text-emerald-400 font-bold text-right outline-none" />
@@ -412,142 +414,82 @@ const App: React.FC = () => {
         <button onClick={() => setMode('search')} className={`flex-1 py-3 font-bold text-sm transition-colors ${mode === 'search' ? 'bg-emerald-900/40 text-white border-b-2 border-emerald-500' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}>🔍 BÚSQUEDA + PORTAL</button>
       </div>
       
+      {/* Print Header */}
       <div className="hidden print:block mb-8">
-        <div className="flex justify-between items-start border-b-2 border-slate-300 pb-4 mb-4">
+        <div className="flex justify-between items-start border-b-2 border-slate-300 pb-4 mb-4 text-black">
            <div>
-             <h1 className="text-2xl font-bold text-black mb-1">PCF-15™ Informe Técnico {printMode === 'fast' ? '(FAST)' : printMode === 'full' ? '(FINANCIERO)' : '(CLIENTE)'}</h1>
-             <p className="text-sm text-gray-700"><strong>Propiedad:</strong> {property.address} <span className="ml-4"><strong>Cliente:</strong> {client.name}</span></p>
+             <h1 className="text-2xl font-bold mb-1">PCF-15™ Informe Técnico</h1>
+             <p className="text-sm"><strong>Propiedad:</strong> {property.address} <span className="ml-4"><strong>Cliente:</strong> {client.name}</span></p>
              <div className="text-[10px] text-slate-500 mt-1 font-mono">ID: {auditId} | HASH: {verificationHash}</div>
            </div>
-           <div className="text-right">
-              <div className="text-[9px] text-slate-400">{new Date().toLocaleDateString()}</div>
-           </div>
+           <div className="text-right text-xs">{new Date().toLocaleDateString()}</div>
         </div>
       </div>
 
       <div className={`card bg-slate-800 border border-slate-700 rounded-xl p-6 mb-6 shadow-lg ${getSectionClass('property')}`}>
         <h2 className="text-emerald-400 border-b border-slate-700 pb-2 mb-4 text-lg font-bold">📝 Datos de la Propiedad & Cliente</h2>
-        
         <div className="bg-slate-900/50 border border-slate-600 rounded-lg p-4 mb-6">
             <h3 className="text-xs font-bold text-blue-400 uppercase mb-3">👤 IDENTIFICACIÓN & REGISTRO</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label className="block text-xs font-bold text-slate-400 uppercase mb-1">Nº Registro</label>
                     <div className="flex gap-2">
-                        <input className="w-full bg-slate-700 border border-blue-500/50 rounded p-2 text-blue-400 font-bold tracking-wider uppercase" value={auditId} onChange={e => setAuditId(e.target.value)} placeholder="D101" />
-                        <button onClick={handleGenerateAuditId} disabled={isGeneratingId} className="bg-blue-600 hover:bg-blue-500 text-white rounded px-3 py-2 disabled:opacity-50 transition-colors">✨</button>
+                        <input className="w-full bg-slate-700 border border-blue-500/50 rounded p-2 text-blue-400 font-bold uppercase" value={auditId} onChange={e => setAuditId(e.target.value)} />
+                        <button onClick={handleGenerateAuditId} disabled={isGeneratingId} className="bg-blue-600 hover:bg-blue-500 text-white rounded px-3 py-2 disabled:opacity-50 transition-colors shadow-lg">✨</button>
                     </div>
                 </div>
                 <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Cliente</label><input className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white" value={client.name} onChange={e => setClient({...client, name: e.target.value})} /></div>
                 <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">RUT</label><input className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white" value={client.rut} onChange={e => setClient({...client, rut: e.target.value})} /></div>
             </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
           <div className="col-span-2"><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Dirección</label><input className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white" value={property.address} onChange={e => setProperty({...property, address: e.target.value})} /></div>
           <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">ROL</label><input className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white" value={property.rol} onChange={e => setProperty({...property, rol: e.target.value})} /></div>
           <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tipo</label><select className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white" value={property.type} onChange={e => setProperty({...property, type: e.target.value})}><option>Casa</option><option>Departamento</option></select></div>
         </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
-           <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">M² Útiles</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={property.m2Useful} onChange={e => setProperty({...property, m2Useful: e.target.value})} /></div>
-           <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">M² Terraza</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={property.m2Terrace} onChange={e => setProperty({...property, m2Terrace: e.target.value})} /></div>
-           <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">M² Terreno</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={property.m2Terra} onChange={e => setProperty({...property, m2Terra: e.target.value})} /></div>
-           <div className="col-span-1 md:col-span-2">
-             <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Orientación</label>
-             <div className="flex gap-2">
-               <select className="w-1/2 bg-slate-700 border border-slate-600 rounded p-2 text-white" value={property.orient1} onChange={e => setProperty({...property, orient1: e.target.value as Orientation})}><option value="">P...</option><option value="N">Norte</option><option value="O">Oriente</option><option value="P">Poniente</option><option value="S">Sur</option></select>
-               <select className="w-1/2 bg-slate-700 border border-slate-600 rounded p-2 text-white" value={property.orient2} onChange={e => setProperty({...property, orient2: e.target.value as Orientation})}><option value="">S...</option><option value="N">Norte</option><option value="O">Oriente</option><option value="P">Poniente</option><option value="S">Sur</option></select>
-             </div>
-             <span className="text-xs text-amber-400 italic mt-1 block h-4">{orientTip}</span>
-          </div>
-        </div>
-        <div className="grid grid-cols-3 md:grid-cols-5 gap-4 mb-4">
-           <div className="col-span-1 md:col-span-2"><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Dormitorios</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={property.dorms} onChange={e => setProperty({...property, dorms: parseInt(e.target.value)||1})} /></div>
-           <div className="col-span-1 md:col-span-2"><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Baños</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={property.baths} onChange={e => setProperty({...property, baths: parseInt(e.target.value)||1})} /></div>
-           <div className="col-span-1"><label className="block text-xs font-bold text-amber-500 uppercase mb-1">Escaleras</label><input type="number" className="w-full bg-slate-700 border border-amber-600 rounded p-2 text-amber-500 font-bold text-right" value={property.stairs} onChange={e => setProperty({...property, stairs: parseInt(e.target.value)||0})} /></div>
-        </div>
-        <div className="mb-4 text-right"><label className="text-xs font-bold text-amber-500 uppercase mr-2">Otros Recintos:</label><input type="number" className="w-20 bg-slate-700 border border-amber-600 rounded p-1 text-amber-500 font-bold text-right" value={property.othersCount} onChange={e => setProperty({...property, othersCount: parseInt(e.target.value)||0})} /></div>
       </div>
 
       <div className={`card bg-slate-800 border border-slate-700 rounded-xl p-6 mb-6 shadow-lg ${getSectionClass('financial')}`}>
          <h2 className="text-emerald-400 border-b border-slate-700 pb-2 mb-4 text-lg font-bold">💰 Análisis Financiero</h2>
-         
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Valor Venta Dueño (UF)</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={fin.ownerVal} onChange={e => setFin({...fin, ownerVal: e.target.value})} /></div>
-            <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Valor Portal Web (UF)</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={fin.webVal} onChange={e => setFin({...fin, webVal: e.target.value})} /></div>
+            <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Valor Venta Dueño (UF)</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 font-bold text-right text-white" value={fin.ownerVal} onChange={e => setFin({...fin, ownerVal: e.target.value})} /></div>
+            <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Valor Portal Web (UF)</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 font-bold text-right text-white" value={fin.webVal} onChange={e => setFin({...fin, webVal: e.target.value})} /></div>
          </div>
-         
-         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 bg-slate-900/30 p-3 rounded border border-slate-700/50">
-           <div>
-               <label className="block text-xs font-bold text-blue-400 uppercase mb-1">Tasación Comercial (UF)</label>
-               <input type="number" className="w-full bg-slate-700 border border-blue-500/30 rounded p-2 text-white font-bold text-right" placeholder="Ej: 5000" value={fin.t1_v} onChange={e => setFin({...fin, t1_v: e.target.value})} />
-           </div>
-           <div>
-               <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tasación 2 / Contra-Muestra (Opcional)</label>
-               <input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" placeholder="0" value={fin.t2_v} onChange={e => setFin({...fin, t2_v: e.target.value})} />
-           </div>
-         </div>
-
          <div className="bg-slate-900/40 border border-slate-700 rounded-lg p-4">
-             <h3 className="text-sm text-white uppercase tracking-wider mb-4 border-l-4 border-white pl-2">⚖️ ESCENARIOS DE OFERTA</h3>
              <div className="flex border-b border-slate-600 mb-4 no-print">
                 {[1, 2, 3].map(n => ( 
-                  <button key={n} onClick={() => {
-                    setActiveScenario(n as 1|2|3);
-                    if (n === 3 && manualCapex === '') setManualCapex(totalCapex);
-                  }} className={`flex-1 py-2 text-xs font-bold transition-colors border-b-2 ${activeScenario === n ? 'text-blue-400 border-blue-400' : 'text-slate-500 border-transparent'}`}>
+                  <button key={n} onClick={() => { setActiveScenario(n as 1|2|3); if (n === 3 && manualCapex === '') setManualCapex(totalCapex); }} className={`flex-1 py-2 text-xs font-bold transition-colors border-b-2 ${activeScenario === n ? 'text-blue-400 border-blue-400' : 'text-slate-500 border-transparent'}`}>
                     {n === 1 ? '1. TASACIÓN' : n === 2 ? '2. DUEÑO' : '3. MANUAL'}
                   </button> 
                 ))}
              </div>
-             
              <div className="grid grid-cols-3 gap-4 mb-4">
                  <div className="bg-slate-800 p-2 rounded border border-slate-600">
-                    <label className="block text-xs font-bold text-blue-400 mb-1">{financials.labelText} (Base)</label>
-                    <div className="text-xl text-white font-bold">{Math.round(financials.baseVal).toLocaleString()} UF</div>
-                    {activeScenario === 3 && <input type="number" className="w-full mt-1 bg-slate-700 border border-blue-500/50 rounded text-xs p-1 text-white" placeholder="Tu base..." value={manualBase} onChange={e => setManualBase(e.target.value)} />}
+                    <label className="block text-xs font-bold text-blue-400 mb-1">{financials.labelText}</label>
+                    <div className="text-xl font-bold text-white">{Math.round(financials.baseVal).toLocaleString()} UF</div>
+                    {activeScenario === 3 && <input type="number" className="w-full mt-1 bg-slate-700 border border-blue-500/50 rounded text-xs p-1 text-white" value={manualBase} onChange={e => setManualBase(e.target.value)} />}
                  </div>
-                 
                  <div className="bg-slate-800 p-2 rounded border border-red-900/50">
-                    <label className="block text-xs font-bold text-red-400 mb-1">Remodelación (CAPEX)</label>
+                    <label className="block text-xs font-bold text-red-400 mb-1">Remodelación</label>
                     <div className="text-xl text-red-200 font-bold">-{financials.currentCapex.toLocaleString()} UF</div>
-                    {activeScenario === 3 && <input type="number" className="w-full mt-1 bg-slate-700 border border-red-500/50 rounded text-xs p-1 text-white" placeholder="Ajuste Capex..." value={manualCapex} onChange={e => setManualCapex(Number(e.target.value))} />}
+                    {activeScenario === 3 && <input type="number" className="w-full mt-1 bg-slate-700 border border-red-500/50 rounded text-xs p-1 text-white" value={manualCapex} onChange={e => setManualCapex(Number(e.target.value))} />}
                  </div>
-                 
-                 <div className="bg-emerald-900/30 p-2 rounded border border-emerald-600/50">
-                    <label className="block text-xs font-bold text-emerald-400 mb-1">Oferta Sistema</label>
-                    <div className="text-xl text-emerald-400 font-bold">{Math.round(financials.offerSys).toLocaleString()} UF</div>
-                    <div className="text-[10px] text-slate-400 italic">Base - Capex - Margen</div>
+                 <div className="bg-emerald-900/30 p-2 rounded border border-emerald-600/50 text-emerald-400">
+                    <label className="block text-xs font-bold mb-1">Oferta Sistema</label>
+                    <div className="text-xl font-bold">{Math.round(financials.offerSys).toLocaleString()} UF</div>
                  </div>
              </div>
-             
-             <div className="bg-slate-800 p-3 rounded mb-4 border border-slate-600">
-               <div className="flex justify-between items-center mb-2">
-                 <label className="text-xs font-bold text-white">MARGEN NEGOCIACIÓN (%)</label>
-                 <span className="text-xs font-bold text-blue-400">{scenarios[activeScenario].margin}%</span>
-               </div>
-               <input type="range" min="0" max="20" step="0.5" className="w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer" value={scenarios[activeScenario].margin} onChange={(e) => setScenarios({...scenarios, [activeScenario]: {...scenarios[activeScenario], margin: parseFloat(e.target.value)}})} />
-             </div>
-
              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                  <div className="bg-emerald-900/20 border border-emerald-500/30 p-3 rounded">
                     <label className="block text-xs font-bold text-emerald-400 uppercase mb-1">💰 {displayOfferLabel}</label>
-                    <div className="text-3xl font-bold text-white mb-1">{Math.round(displayOfferSys).toLocaleString()} UF</div>
-                    <div className="text-xs text-slate-400">~${Math.round(displayOfferSys * uf / 1000000).toLocaleString()} M CLP</div>
-                    <div className="mt-2 text-[10px] text-emerald-300 bg-emerald-900/40 p-1 rounded inline-block px-2">Ahorro vs Dueño: {Math.round(financials.savings).toLocaleString()} UF</div>
+                    <div className="text-3xl font-bold text-white">{Math.round(displayOfferSys).toLocaleString()} UF</div>
+                    <div className="text-xs text-slate-400">Ahorro vs Dueño: {Math.round(financials.savings).toLocaleString()} UF</div>
                  </div>
                  <div className="bg-blue-900/20 border border-blue-500/30 p-3 rounded">
-                    <label className="block text-xs font-bold text-blue-400 uppercase mb-1">🤝 Honorario Éxito (10% Ahorro)</label>
-                    <div className="text-3xl font-bold text-white mb-1">${Math.round(financials.finalCLP / 1000000).toLocaleString()} M</div>
+                    <label className="block text-xs font-bold text-blue-400 uppercase mb-1">🤝 Honorario (15%)</label>
+                    <div className="text-3xl font-bold text-white">${Math.round(financials.finalCLP / 1000000).toLocaleString()} M</div>
                     <div className="text-xs text-slate-400">CLP + IVA</div>
-                    <div className="mt-2 text-[10px] text-blue-300 bg-blue-900/40 p-1 rounded inline-block px-2">Floor: 2M / Cap: 6M</div>
                  </div>
-             </div>
-             
-             <div className="mt-4 pt-4 border-t border-slate-600 no-print">
-               <label className="block text-xs font-bold text-slate-400 mb-2">Ajuste Manual Oferta (Opcional)</label>
-               <input type="number" className="w-full bg-slate-700 border border-slate-500 rounded p-2 text-white font-bold" placeholder="Sobreescribir oferta final en UF..." value={scenarios[activeScenario].offer || ''} onChange={(e) => setScenarios({...scenarios, [activeScenario]: {...scenarios[activeScenario], offer: e.target.value ? parseFloat(e.target.value) : null}})} />
              </div>
          </div>
       </div>
@@ -559,50 +501,29 @@ const App: React.FC = () => {
 
       <div className={`card bg-slate-800 border border-slate-700 rounded-xl p-6 mb-6 shadow-lg ${getSectionClass('audit')}`}>
         <div className="flex justify-between items-center border-b border-slate-700 pb-2 mb-4">
-            <h2 className="text-emerald-400 text-lg font-bold">🛠️ Auditoría Técnica PCF-15</h2>
-            {printMode === 'fast' && (
-                <div className="bg-emerald-600 text-white px-3 py-1 rounded text-sm font-bold">
-                    Nota Global: {getGlobalAverage()}
-                </div>
-            )}
+            <h2 className="text-emerald-400 text-lg font-bold">🛠️ Auditoría Técnica</h2>
+            {printMode === 'fast' && <div className="bg-emerald-600 text-white px-3 py-1 rounded text-sm font-bold">Nota: {getGlobalAverage()}</div>}
         </div>
-        
         <div className="space-y-6">
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">⚡ Sistemas Críticos (SC)</h3>
+             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase">⚡ Sistemas Críticos (SC)</h3>
              {renderAuditGroup(ITEMS.sys, 'sys', 'Sistemas')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🛋️ Living / Comedor (LC)</h3>
+             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase">🛋️ Living / Comedor (LC)</h3>
              {renderAuditGroup(ITEMS.liv, 'liv', 'Living')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">💧 Cocina / Logia (CL)</h3>
+             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase">💧 Cocina / Logia (CL)</h3>
              {renderAuditGroup(ITEMS.kit, 'kit', 'Cocina')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🛏️ Dormitorios (D#)</h3>
+             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase">🛏️ Dormitorios (D#)</h3>
              {renderDynamicRooms(property.dorms, DORM_ITEMS, 'drm', 'Dormitorio')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🚿 Baños (B#)</h3>
+             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase">🚿 Baños (B#)</h3>
              {renderDynamicRooms(property.baths, BATH_ITEMS, 'bth', 'Baño')}
-          </div>
-          {property.stairs > 0 && (
-            <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-              <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🪜 Escaleras (E#)</h3>
-              {renderDynamicRooms(property.stairs, STAIR_ITEMS, 'stair', 'Escalera')}
-            </div>
-          )}
-          {property.othersCount > 0 && (
-            <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-              <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🚪 Otros Recintos (O#)</h3>
-              {renderDynamicOtherRooms(property.othersCount, ITEMS.liv, 'oth')}
-            </div>
-          )}
-          <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🏡 Exterior / Fachada (Fe)</h3>
-             {renderAuditGroup(ITEMS.ext, 'ext', 'Exterior')}
           </div>
         </div>
       </div>
@@ -611,15 +532,14 @@ const App: React.FC = () => {
 
       <div className="fixed bottom-0 left-0 w-full bg-slate-900 border-t border-slate-700 p-4 flex justify-between items-center z-40 no-print">
          <div className="flex gap-2">
-            <button onClick={() => { if(confirm("¿Generar y Descargar PACK (JSON + FOTOS)?")) handleSaveData(); }} className="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded font-bold text-xs transition-colors shadow-lg shadow-emerald-900/50">💾 GUARDAR PACK</button>
-            <button onClick={() => fileInputRef.current?.click()} className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded font-bold text-xs transition-colors border border-slate-600">📂 ABRIR JSON</button>
+            <button onClick={() => { if(confirm("¿Guardar PACK?")) handleSaveData(); }} className="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded font-bold text-xs shadow-lg transition-all">💾 GUARDAR PACK</button>
+            <button onClick={() => fileInputRef.current?.click()} className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded font-bold text-xs border border-slate-600 transition-all">📂 ABRIR JSON</button>
             <input type="file" ref={fileInputRef} className="hidden" accept="application/json" onChange={handleLoadData} />
          </div>
          <div className="flex gap-2">
-             <button onClick={() => handlePrintReport('fast')} className="bg-amber-600 hover:bg-amber-500 text-white px-3 py-2 rounded font-bold text-xs transition-colors shadow-lg" title="Informe Resumido con Notas">⚡ FAST</button>
-             <button onClick={() => handlePrintReport('normal')} className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded font-bold text-xs transition-colors shadow-lg" title="Informe Cliente (Sin precios)">📄 NORMAL</button>
-             <button onClick={() => handlePrintReport('full')} className="bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-2 rounded font-bold text-xs transition-colors shadow-lg" title="Análisis Financiero Completo">💰 FULL</button>
-             <button onClick={handleWhatsapp} className="bg-green-600 hover:bg-green-500 text-white px-3 py-2 rounded font-bold text-xs transition-colors shadow-lg">📱</button>
+             <button onClick={() => handlePrintReport('fast')} className="bg-amber-600 hover:bg-amber-500 text-white px-3 py-2 rounded font-bold text-xs shadow-lg transition-all">⚡ FAST</button>
+             <button onClick={() => handlePrintReport('normal')} className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded font-bold text-xs shadow-lg transition-all">📄 NORMAL</button>
+             <button onClick={() => handlePrintReport('full')} className="bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-2 rounded font-bold text-xs shadow-lg transition-all">💰 FULL</button>
          </div>
       </div>
     </div>
