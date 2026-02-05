@@ -8,7 +8,7 @@ import { MapComponent } from './components/MapComponent';
 import { LoginScreen } from './components/LoginScreen';
 import { PortalSection } from './components/PortalSection';
 
-// const API_KEY_VAL = "AIzaSyDoaVm8Z-3qIrVg08sa0_HYctbdwwAdDnQ"; // IA DESACTIVADA TEMPORALMENTE
+const API_KEY_VAL = import.meta.env.VITE_GEMINI_API_KEY || "";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
