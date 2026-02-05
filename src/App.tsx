@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Problem from './components/Problem';
@@ -9,7 +9,6 @@ import Footer from './components/Footer';
 import { TabsProvider } from './context/TabsContext';
 
 // Importación del Portal Técnico PCF-15™
-// Nota: Importamos el App del portal desde su carpeta específica
 import PortalApp from './pcf-15tm/App';
 
 /**
@@ -42,19 +41,17 @@ const LandingPage = () => (
 /**
  * COMPONENTE MAESTRO: APP
  * Director de tráfico de domis.cl
+ * BrowserRouter ya está en index.tsx
  */
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* RUTA RAÍZ: Web de Ventas y Autoridad */}
-        <Route path="/" element={<LandingPage />} />
+    <Routes>
+      {/* RUTA RAÍZ: Web de Ventas y Autoridad */}
+      <Route path="/" element={<LandingPage />} />
 
-        {/* RUTA TÉCNICA: Portal PCF-15™ */}
-        {/* El asterisco (*) permite que el portal maneje sus propias rutas internas */}
-        <Route path="/pcf-15tm/*" element={<PortalApp />} />
-      </Routes>
-    </Router>
+      {/* RUTA TÉCNICA: Portal PCF-15™ */}
+      <Route path="/pcf-15tm" element={<PortalApp />} />
+    </Routes>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import type { AuditItemConfig, AuditScore } from '../types';
+import { AuditItemConfig, AuditScore } from '../types.ts';
 
 interface AuditRowProps {
   item: AuditItemConfig;
@@ -11,14 +11,7 @@ interface AuditRowProps {
   isListening?: boolean;
 }
 
-export const AuditRow: React.FC<AuditRowProps> = ({ 
-  item, 
-  state, 
-  onChange, 
-  showCosts = true, 
-  onMicClick, 
-  isListening 
-}) => {
+export const AuditRow: React.FC<AuditRowProps> = ({ item, state, onChange, prefix, showCosts = true, onMicClick, isListening }) => {
   const isSpec = item.t === 'spec';
   const showInput = item.t === 'm2' || item.t === 'cnt' || isSpec;
   const placeholder = item.ph || (item.t === 'm2' ? 'm²' : 'cant');
@@ -48,6 +41,7 @@ export const AuditRow: React.FC<AuditRowProps> = ({
       };
       reader.readAsDataURL(file);
     }
+    // Clear input so same file can be selected again if needed
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -134,6 +128,7 @@ export const AuditRow: React.FC<AuditRowProps> = ({
         )}
 
         <div className="relative w-8 h-7">
+          {/* Hidden File Input */}
           <input 
             type="file" 
             accept="image/*" 
