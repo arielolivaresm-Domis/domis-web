@@ -1,0 +1,8 @@
+{
+  "name": "PCF-15™ By Domis v4.1 (Stable)",
+  "description": "Advanced real-estate property calculator and audit tool. Stable Jan 30 Edition.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
