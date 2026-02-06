@@ -1,7 +1,7 @@
 "use client";
 import { motion, useTransform, MotionValue } from "framer-motion";
 
-// --- PARTE 1: EL GANCHO CON CAPTURA DINÁMICA (INICIO) ---
+// --- HOJA 1: EL GANCHO DE NEGOCIOS (ENTRADA) ---
 export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const y = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
@@ -12,7 +12,7 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
     const nombre = (document.getElementById('nombre') as HTMLInputElement)?.value || "Cliente Nuevo";
     const telefono = (document.getElementById('telefono') as HTMLInputElement)?.value || "No especificado";
     
-    const phoneNumber = "56929901343";
+    const phoneNumber = "56929901343"; //
     const baseMessage = `Hola, equipo DOMIS™. Soy ${nombre} (${telefono}). Estoy en la web y necesito Auditoría técnica profesional y generar Estrategia de negociación para una propiedad...`;
     
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(baseMessage)}`;
@@ -24,7 +24,7 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
       style={{ opacity, y, pointerEvents }} 
       className="absolute inset-0 z-10 flex flex-col justify-between px-6 max-w-7xl mx-auto h-screen py-20 pointer-events-none"
     >
-      {/* TEXTO DE IMPACTO IZQUIERDA */}
+      {/* TEXTO DE IMPACTO IZQUIERDA - HOJA 1 */}
       <div className="text-left relative z-10 pointer-events-auto max-w-3xl mt-10">
         <h1 className="text-5xl md:text-7xl font-black text-white leading-tight mb-4 uppercase tracking-tighter">
           NO COMPRES <br />
@@ -39,14 +39,6 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
           <p className="text-slate-200 text-xl md:text-2xl font-medium max-w-xl">
             en tu inversión con nuestro sistema de Auditoría Técnica y Estrategia de Negociación.
           </p>
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <span className="text-white font-bold text-lg">DOMIS<span className="text-cyan-500 text-xs relative -top-2 ml-0.5">™</span></span>
-            <span className="text-slate-600">|</span>
-            <span className="text-cyan-400 text-sm tracking-[0.2em] font-black uppercase">El primer Buyer's Agent técnico de Chile</span>
-          </div>
         </div>
       </div>
 
@@ -91,7 +83,7 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
   );
 }
 
-// --- PARTE 2: LOS DATOS (SIN CAMBIOS) ---
+// --- HOJA 2: EL INFORME TÉCNICO (POST-SCROLL) ---
 export function HeroSpecs({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
   const opacity = useTransform(scrollYProgress, [0.7, 0.9], [0, 1]);
   const x = useTransform(scrollYProgress, [0.7, 0.9], [50, 0]);
@@ -102,15 +94,22 @@ export function HeroSpecs({ scrollYProgress }: { scrollYProgress: MotionValue<nu
       className="absolute inset-0 z-20 flex flex-col justify-center items-end px-6 max-w-7xl mx-auto h-screen pointer-events-none"
     >
       <div className="bg-slate-950/80 backdrop-blur-md p-8 border-l-4 border-[#F59E0B] rounded-r-lg shadow-2xl pointer-events-auto max-w-xl w-full">
+        {/* IDENTIDAD DE MARCA MOVIDA A HOJA 2 */}
+        <p className="text-white text-sm mb-2 font-bold uppercase tracking-tight">
+          DOMIS™ | El primer Buyer's Agent técnico de Chile
+        </p>
+        
         <h3 className="text-2xl font-black text-white mb-6 uppercase tracking-tighter">
-          INFORME <span className="text-[#F59E0B]">PCF-15™</span>
+          INFORME <span className="text-[#F59E0B]">Domis™</span>
         </h3>
+
         <div className="space-y-4 text-white text-sm">
-          <p><span className="text-[#F59E0B] font-black">✓</span> Auditoría PCF-15™ con FLIR/Bosch | 0-7</p>
-          <p><span className="text-[#F59E0B] font-black">✓</span> Validación Normativa: OGUC, RIDAA y RIC</p>
-          <p><span className="text-[#F59E0B] font-black">✓</span> Poder de Cierre: 3 escenarios de negociación</p>
-          <p><span className="text-[#F59E0B] font-black">✓</span> Estrategia: Descuento directo sobre precio</p>
+          <p><span className="text-[#F59E0B] font-black mr-2">✓</span> Auditoría PCF-15™ | 0-7</p>
+          <p><span className="text-[#F59E0B] font-black mr-2">✓</span> Validación Normativa: OGUC, RIDAA y RIC</p>
+          <p><span className="text-[#F59E0B] font-black mr-2">✓</span> Poder de Cierre: 3 escenarios de negociación</p>
+          <p><span className="text-[#F59E0B] font-black mr-2">✓</span> Estrategia: Descuento directo sobre precio</p>
         </div>
+
         <button className="mt-8 w-full border-2 border-[#F59E0B] text-[#F59E0B] hover:bg-[#F59E0B] hover:text-slate-950 font-black py-4 uppercase tracking-widest transition-all">
           Ver detalle técnico
         </button>
