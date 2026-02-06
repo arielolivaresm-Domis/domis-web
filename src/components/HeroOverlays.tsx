@@ -1,12 +1,16 @@
 "use client";
 import { motion, useTransform, MotionValue } from "framer-motion";
 
-// --- PARTE 1: EL GANCHO (INICIO) ---
-// Modificado para incluir el impacto de ahorro y posicionar la acción abajo a la derecha
+// --- PARTE 1: EL GANCHO CON FORMULARIO (INICIO) ---
 export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const y = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
   const pointerEvents = useTransform(scrollYProgress, (v) => v > 0.2 ? "none" : "auto");
+
+  // Configuración técnica del enlace de WhatsApp
+  const phoneNumber = "56929901343";
+  const whatsappMessage = "Hola%2C%20equipo%20DOMIS%E2%84%A2.%20Estoy%20en%20la%20web%20y%20necesito%20Auditor%C3%ADa%20t%C3%A9cnica%20profesional%20y%20generar%20Estrategia%20de%20negociaci%C3%B3n%20para%20una%20propiedad...";
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
 
   return (
     <motion.div 
@@ -21,7 +25,6 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
           <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]">COMPRA DATOS.</span>
         </h1>
         
-        {/* NUEVA SECCIÓN DE AHORRO IMPACTANTE */}
         <div className="mb-10">
           <p className="text-4xl md:text-6xl font-black text-[#F59E0B] leading-none mb-4 uppercase italic">
             AHORRA MILLONES
@@ -40,20 +43,42 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
         </div>
       </div>
 
-      {/* TARJETA DE ACCIÓN - ABAJO DERECHA (Inspirada en tu referencia) */}
+      {/* TARJETA DE ACCIÓN - ABAJO DERECHA (Captura de Leads) */}
       <div className="flex justify-end items-end w-full">
-        <div className="bg-slate-900/90 backdrop-blur-xl p-8 border border-white/10 rounded-2xl shadow-2xl pointer-events-auto max-w-sm w-full">
+        <div className="bg-slate-950/90 backdrop-blur-xl p-8 border border-white/10 rounded-2xl shadow-2xl pointer-events-auto max-w-sm w-full relative z-20">
           <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">
-            ¿Listo para negociar?
+            COTIZA TU ESTRATEGIA
           </h3>
           <p className="text-slate-400 text-sm mb-6">
-            Activa tu auditoría técnica con instrumental de precisión y asegura tu patrimonio hoy.
+            Déjanos tus datos para auditar y negociar por ti.
           </p>
+          
+          <div className="space-y-4 mb-6">
+            <div>
+                <label htmlFor="nombre" className="sr-only">Tu nombre</label>
+                <input 
+                    type="text" 
+                    id="nombre" 
+                    placeholder="Tu nombre" 
+                    className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#F59E0B] transition-colors"
+                />
+            </div>
+            <div>
+                <label htmlFor="telefono" className="sr-only">Teléfono</label>
+                <input 
+                    type="tel" 
+                    id="telefono" 
+                    placeholder="+56 9 1234 5678" 
+                    className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#F59E0B] transition-colors"
+                />
+            </div>
+          </div>
+
           <button 
-            onClick={() => window.open('https://wa.me/tu_numero', '_blank')}
-            className="w-full bg-[#F59E0B] hover:bg-[#d98c08] text-slate-950 font-black py-4 rounded-xl uppercase tracking-tighter transition-all flex items-center justify-center gap-2 group"
+            onClick={() => window.open(whatsappUrl, '_blank')}
+            className="w-full bg-[#F59E0B] hover:bg-[#d98c08] text-slate-950 font-black py-4 rounded-xl uppercase tracking-tighter transition-all flex items-center justify-center gap-2 group text-[13px] leading-tight"
           >
-            QUIERO AHORRAR MILLONES
+            ACTIVA TU AUDITORÍA TÉCNICA Y PODER DE NEGOCIACIÓN
             <span className="group-hover:translate-x-1 transition-transform">→</span>
           </button>
           <p className="text-[10px] text-slate-500 mt-4 text-center uppercase tracking-widest">
@@ -66,7 +91,6 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
 }
 
 // --- PARTE 2: LOS DATOS (FINAL) ---
-// Mantenemos esta sección para el scroll profundo con el detalle técnico PCF-15
 export function HeroSpecs({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
   const opacity = useTransform(scrollYProgress, [0.7, 0.9], [0, 1]);
   const x = useTransform(scrollYProgress, [0.7, 0.9], [50, 0]);
