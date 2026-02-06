@@ -33,3 +33,7 @@ dist-ssr
 
 # Vite generated config
 vite.config.js
+
+# Environment variables
+.env.local
+.env*.local
