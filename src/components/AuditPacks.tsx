@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, CheckCircle2, MapPin, FileText } from 'lucide-react';
 import Section from './layout/Section';
 
 export default function AuditPacks({ onNext }: { onNext?: () => void }) {
@@ -57,13 +57,24 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                 </div>
                 <div className="text-right">
                   <h4 className="text-xl md:text-3xl font-black text-white uppercase italic tracking-tighter leading-none">
-                    PCF-15™ Engine
+                    PCF-15™ by Domis™
                   </h4>
-                  {discount > 0 && (
-                    <p className="text-cyan-400 text-[11px] font-black uppercase tracking-widest mt-1">
-                      {discount}% OFF Aplicado
-                    </p>
-                  )}
+                </div>
+              </div>
+
+              {/* NUEVO BLOQUE - Features */}
+              <div className="mb-8 space-y-3 px-1">
+                <div className="flex items-start gap-3 text-white/90 text-sm">
+                  <CheckCircle2 size={18} className="text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span>Análisis para 1 propiedad</span>
+                </div>
+                <div className="flex items-start gap-3 text-white/90 text-sm">
+                  <MapPin size={18} className="text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span>Escenario de entorno (Radio 3km) incluido</span>
+                </div>
+                <div className="flex items-start gap-3 text-white/90 text-sm">
+                  <FileText size={18} className="text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span>Entrega de Informe PCF-15™ en 72 horas hábiles</span>
                 </div>
               </div>
 
@@ -101,6 +112,13 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                       onChange={(e) => setMeters(Number(e.target.value))}
                       className="w-full bg-slate-950 border-2 border-white/10 rounded-xl px-4 py-4 text-white focus:border-cyan-400 outline-none transition-all"
                     />
+                  </div>
+
+                  {/* NUEVO - Aviso mínimo 100m² */}
+                  <div className="col-span-1 md:col-span-2 text-center -mt-4">
+                    <p className="text-amber-400/80 text-[10px] uppercase tracking-wide">
+                      ⚠️ Mínimo facturable: 100m² (Si ingresas menos, se cobra como 100m²)
+                    </p>
                   </div>
                 </div>
 
