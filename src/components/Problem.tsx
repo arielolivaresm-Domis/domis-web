@@ -3,17 +3,11 @@ import Section from './layout/Section';
 
 export default function Problem() {
   return (
-    // bg-slate-950 sólido para sellar el fondo definitivamente
     <Section id="problema" className="py-12 md:py-24 bg-slate-950 relative z-10">
       
-      {/* CONTENEDOR PRINCIPAL RECTIFICADO:
-          - rounded-none en móvil / md:rounded-[2.5rem] en escritorio.
-          - border-x-0 en móvil para que parezca una sección infinita lateralmente.
-          - p-4 en móvil para máxima amplitud de lectura.
-      */}
       <div className="relative rounded-none md:rounded-[2.5rem] overflow-hidden border-y md:border border-white/10 shadow-2xl min-h-[550px] md:min-h-[600px] flex items-center justify-center bg-slate-950">
         
-        {/* CAPA DE IMAGEN: SÓLIDA CON FILTROS */}
+        {/* CAPA DE IMAGEN */}
         <div className="absolute inset-0">
           <img 
             src="/DOMIS_error_mas_comun.webp" 
@@ -23,7 +17,7 @@ export default function Problem() {
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/40"></div>
         </div>
 
-        {/* CONTENIDO REACCIONARIO */}
+        {/* CONTENIDO */}
         <div className="relative z-10 p-4 md:p-16 text-center max-w-4xl">
           
           {/* BADGE TÉCNICO */}
@@ -52,24 +46,42 @@ export default function Problem() {
             {/* COMPARATIVA FINANCIERA */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-900/60 p-5 md:p-6 rounded-2xl border border-white/10 backdrop-blur-md shadow-xl">
               <div className="text-center md:text-right border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0 md:pr-6">
-                <p className="text-slate-400 text-[9px] uppercase tracking-widest mb-1">Cortesía de mercado</p>
+                <p className="text-slate-400 text-[9px] uppercase tracking-widest mb-1">Descuento Estándar</p>
                 <p className="text-xl md:text-2xl font-black text-slate-300">~6% Desc.</p>
               </div>
               <div className="text-center md:text-left pt-4 md:pt-0 md:pl-6">
-                <p className="text-cyan-400 text-[9px] uppercase tracking-widest mb-1 font-bold">Rescate con PCF-15™</p>
+                <p className="text-cyan-400 text-[9px] uppercase tracking-widest mb-1 font-bold">Rescate Domis™</p>
                 <p className="text-xl md:text-3xl font-black text-cyan-400">8% al 20%</p>
               </div>
             </div>
 
-            {/* CHECKPOINTS */}
+            {/* NUEVO - TEXTO EXPLICATIVO */}
+            <div className="bg-slate-900/40 p-4 md:p-5 rounded-xl border border-cyan-500/20 backdrop-blur-md">
+              <p className="text-cyan-400 text-[10px] md:text-xs font-black uppercase tracking-wide leading-relaxed">
+                +2 puntos porcentuales pueden significar<br />
+                millones de pesos en tu bolsillo
+              </p>
+            </div>
+
+            {/* NUEVO - CÓMO LO LOGRAMOS */}
             <div className="text-left space-y-4 bg-black/50 p-6 md:p-8 rounded-2xl md:rounded-3xl border border-white/10 backdrop-blur-md">
+              <h4 className="text-cyan-400 text-[11px] md:text-xs font-black uppercase tracking-widest mb-4 text-center">
+                Cómo Generamos Hasta 20% de Descuento:
+              </h4>
+              
               <div className="flex items-start gap-3 text-slate-200 text-xs md:text-sm">
                 <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-cyan-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white uppercase tracking-tight">Tasación IA:</strong> Sinceramos el valor real frente al emocional.</span>
+                <span><strong className="text-white uppercase tracking-tight">Auditoría física:</strong> Cuantificamos fallas en UF con instrumental profesional</span>
               </div>
+              
               <div className="flex items-start gap-3 text-slate-200 text-xs md:text-sm">
                 <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-cyan-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white uppercase tracking-tight">Fallas en UF:</strong> Cuantificamos vicios con instrumental FLIR.</span>
+                <span><strong className="text-white uppercase tracking-tight">Escáner 3km:</strong> Precios reales + competencia + tendencias del sector</span>
+              </div>
+              
+              <div className="flex items-start gap-3 text-slate-200 text-xs md:text-sm">
+                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-cyan-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white uppercase tracking-tight">Tasación IA:</strong> Valor técnico vs. emocional con datos del Conservador</span>
               </div>
             </div>
           </div>
