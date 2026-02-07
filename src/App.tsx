@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import Problem from './components/Problem';
 import AuditTechnicalDetails from './components/AuditTechnicalDetails';
 import PhasesTabs from './components/PhasesTabs';
+import RealCases from './components/RealCases';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
 import { TabsProvider } from './context/TabsContext';
