@@ -62,11 +62,11 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                 </div>
               </div>
 
-              {/* NUEVO BLOQUE - Features */}
+              {/* NUEVO BLOQUE - Features con cantidad dinámica */}
               <div className="mb-8 space-y-3 px-1">
                 <div className="flex items-start gap-3 text-white/90 text-sm">
                   <CheckCircle2 size={18} className="text-cyan-400 flex-shrink-0 mt-0.5" />
-                  <span>Análisis para 1 propiedad</span>
+                  <span>Análisis para {efectiveCantidad} {efectiveCantidad === 1 ? 'propiedad' : 'propiedades'}</span>
                 </div>
                 <div className="flex items-start gap-3 text-white/90 text-sm">
                   <MapPin size={18} className="text-cyan-400 flex-shrink-0 mt-0.5" />
