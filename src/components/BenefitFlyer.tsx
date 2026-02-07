@@ -111,6 +111,12 @@ export default function BenefitFlyer() {
                 <AlertCircle className="text-cyan-400 shrink-0" size={24} />
                 <h3 className="text-white font-black uppercase tracking-tighter text-lg md:text-2xl italic">Devolución Condicional</h3>
               </div>
+              
+              {/* NUEVO - Texto explicativo */}
+              <p className="text-slate-300 text-xs md:text-sm mb-6 leading-relaxed">
+                Esta garantía aplica exclusivamente si la operación se cae durante la firma de Promesa de Compraventa
+              </p>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
                   'Caída de operación documentada',
