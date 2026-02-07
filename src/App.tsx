@@ -31,6 +31,7 @@ const LandingPage = () => (
         <Problem />
         <AuditTechnicalDetails />
         <PhasesTabs />
+        <RealCases />
         <FinalCTA />
       </main>
 
