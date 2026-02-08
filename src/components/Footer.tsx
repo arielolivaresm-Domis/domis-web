@@ -72,7 +72,7 @@ export default function Footer() {
           </p>
         </div>
         <p className="text-slate-700 text-[9px] md:text-[10px] font-mono uppercase font-black tracking-[0.3em] hover:text-slate-500 transition-colors cursor-default">
-          Developed by ARAX™ Tech
+          Developed by OlvaiD™ Tech
         </p>
       </Section>
     </footer>
