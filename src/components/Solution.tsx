@@ -26,7 +26,7 @@ export default function Solution() {
           </div>
 
           {/* GRID DE 3 PASOS */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             
             {/* PASO 1 */}
             <div className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group">
@@ -135,28 +135,6 @@ export default function Solution() {
               </ul>
             </div>
 
-          </div>
-
-          {/* RESULTADO FINAL */}
-          <div className="bg-gradient-to-r from-cyan-500/10 to-slate-900/40 border border-cyan-500/20 p-8 md:p-12 rounded-2xl md:rounded-3xl backdrop-blur-md">
-            <h4 className="text-cyan-400 text-xs md:text-sm font-black uppercase tracking-widest mb-6 text-center">
-              Resultado Comprobado
-            </h4>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
-              <div>
-                <div className="text-4xl md:text-5xl font-black text-white mb-2">$48M - $142M</div>
-                <p className="text-slate-400 text-xs uppercase tracking-widest">Ahorro Promedio</p>
-              </div>
-              <div>
-                <div className="text-4xl md:text-5xl font-black text-cyan-400 mb-2">7x - 21x</div>
-                <p className="text-slate-400 text-xs uppercase tracking-widest">ROI Comprobado</p>
-              </div>
-              <div>
-                <div className="text-4xl md:text-5xl font-black text-white mb-2">72 horas</div>
-                <p className="text-slate-400 text-xs uppercase tracking-widest">Proceso Auditoría</p>
-              </div>
-            </div>
           </div>
 
           {/* MARCA TÉCNICA - IZQUIERDA ABAJO */}
