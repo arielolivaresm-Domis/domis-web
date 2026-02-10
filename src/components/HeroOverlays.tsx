@@ -3,7 +3,6 @@ import { motion, useTransform, MotionValue } from "framer-motion";
 
 // --- HOJA 1: EL GANCHO (TEXTO COMPACTO + MÓDULO ELEVADO) ---
 export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
-  // CAMBIO 3: Opacity desaparece más tarde (0.2 → 0.4)
   const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
   const y = useTransform(scrollYProgress, [0, 0.4], [0, -50]);
   const pointerEvents = useTransform(scrollYProgress, (v) => v > 0.4 ? "none" : "auto");
@@ -21,7 +20,6 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
       style={{ opacity, y, pointerEvents }} 
       className="absolute inset-0 z-10 flex flex-col justify-between px-6 max-w-7xl mx-auto h-screen pt-24 pb-40 md:pb-32 pointer-events-none"
     >
-      {/* BLOQUE DE TEXTO: INTERLINEADO JUNTADO (leading-[0.85]) */}
       <div className="text-left relative z-10 pointer-events-auto max-w-3xl mt-4 md:mt-10">
         <h1 className="text-5xl md:text-7xl font-black text-white leading-[0.85] mb-1 md:mb-4 uppercase tracking-tighter">
           NO COMPRES <br />
@@ -30,27 +28,45 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
         </h1>
         
         <div className="mb-6">
-          {/* AHORRA MILLONES CON FONDO OSCURO Y VERDE ESMERALDA */}
-          <div className="inline-block bg-slate-950/75 backdrop-blur-sm px-4 py-1.5 rounded-xl border border-white/10 mb-3">
+          {/* AHORRA MILLONES */}
+          <div className="inline-block bg-slate-950/75 backdrop-blur-sm px-4 py-1.5 rounded-xl border border-white/10 mb-4">
             <p className="text-4xl md:text-6xl font-black text-green-500 leading-none uppercase italic">AHORRA MILLONES</p>
           </div>
-          {/* CAMBIO 1: Texto actualizado */}
-          <p className="text-slate-200 text-xl md:text-2xl font-medium max-w-xl leading-tight">
-            en la compra de tu Propiedad
+          
+          {/* EN TU NUEVA PROPIEDAD - GRANDE Y DORADO */}
+          <p className="text-[#F59E0B] font-black text-4xl md:text-5xl uppercase tracking-tighter drop-shadow-[0_0_20px_rgba(245,158,11,0.3)] mb-4">
+            EN TU NUEVA PROPIEDAD
+          </p>
+
+          {/* TEXTO DESCRIPTIVO */}
+          <p className="text-slate-200 text-xl md:text-2xl font-medium max-w-2xl leading-tight">
+            en tu inversión con nuestro sistema de Auditoría Técnica y Estrategia de Negociación.
           </p>
         </div>
       </div>
 
-      {/* TARJETA DE ACCIÓN: ELEVADA EN WEB Y MÓVIL */}
-      {/* CAMBIO 2: Centrado en móvil con justify-center md:justify-end */}
+      {/* TARJETA COTIZA */}
       <div className="flex justify-center md:justify-end items-end w-full">
-        <div className="bg-slate-950/90 backdrop-blur-xl p-8 border border-white/10 rounded-2xl shadow-2xl pointer-events-auto max-w-sm w-full relative z-20">
+        <div className="bg-slate-950/90 backdrop-blur-xl p-8 border border-white/10 rounded-2xl shadow-2xl pointer-events-auto max-w-sm w-full md:w-auto relative z-20">
           <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">COTIZA TU ESTRATEGIA</h3>
           <div className="space-y-4 my-6">
-            <input type="text" id="nombre" placeholder="Tu nombre" className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#F59E0B] transition-colors" />
-            <input type="tel" id="telefono" placeholder="+56 9 1234 5678" className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#F59E0B] transition-colors" />
+            <input 
+              type="text" 
+              id="nombre" 
+              placeholder="Tu nombre" 
+              className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#F59E0B] transition-colors" 
+            />
+            <input 
+              type="tel" 
+              id="telefono" 
+              placeholder="+56 9 1234 5678" 
+              className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#F59E0B] transition-colors" 
+            />
           </div>
-          <button onClick={handleWhatsAppClick} className="w-full bg-[#F59E0B] hover:bg-[#d98c08] text-slate-950 font-black py-4 rounded-xl uppercase tracking-tighter transition-all flex items-center justify-center gap-2 group text-[13px] leading-tight">
+          <button 
+            onClick={handleWhatsAppClick} 
+            className="w-full bg-[#F59E0B] hover:bg-[#d98c08] text-slate-950 font-black py-4 rounded-xl uppercase tracking-tighter transition-all flex items-center justify-center gap-2 group text-[13px] leading-tight"
+          >
             ACTIVA TU AUDITORÍA TÉCNICA Y PODER DE NEGOCIACIÓN →
           </button>
         </div>
