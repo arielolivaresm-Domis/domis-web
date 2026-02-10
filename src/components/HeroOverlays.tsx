@@ -24,7 +24,7 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
       className="absolute inset-0 z-10 flex flex-col justify-between px-6 max-w-7xl mx-auto h-screen pt-24 pb-40 md:pb-32 pointer-events-none"
     >
       <div className="text-left relative z-10 pointer-events-auto max-w-3xl mt-4 md:mt-10">
-        <h1 className="text-5xl md:text-7xl font-black text-white leading-[0.85] mb-1 md:mb-4 uppercase tracking-tighter">
+        <h1 className="text-4xl md:text-7xl font-black text-white leading-[0.85] mb-1 md:mb-4 uppercase tracking-tighter">
           NO COMPRES <br />
           <span className="text-white">PROMESAS.</span> <br />
           <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]">COMPRA DATOS.</span>
@@ -32,14 +32,14 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
         
         <div className="mb-6">
           <div className="inline-block bg-slate-950/75 backdrop-blur-sm px-4 py-1.5 rounded-xl border border-white/10 mb-4">
-            <p className="text-4xl md:text-6xl font-black text-green-500 leading-none uppercase italic">AHORRA MILLONES</p>
+            <p className="text-2xl md:text-6xl font-black text-green-500 leading-none uppercase italic">AHORRA MILLONES</p>
           </div>
           
-          <p className="text-[#F59E0B] font-black text-4xl md:text-5xl uppercase tracking-tighter drop-shadow-[0_0_20px_rgba(245,158,11,0.3)] mb-4">
+          <p className="text-[#F59E0B] font-black text-2xl md:text-5xl uppercase tracking-tighter drop-shadow-[0_0_20px_rgba(245,158,11,0.3)] mb-4">
             EN TU NUEVA PROPIEDAD
           </p>
 
-          <p className="text-slate-200 text-xl md:text-2xl font-medium max-w-2xl leading-tight">
+          <p className="hidden md:block text-slate-200 text-xl md:text-2xl font-medium max-w-2xl leading-tight">
             en tu inversión con nuestro sistema de Auditoría Técnica y Estrategia de Negociación.
           </p>
         </div>
