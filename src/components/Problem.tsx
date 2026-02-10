@@ -33,7 +33,7 @@ export default function Problem() {
               EL 90%
             </span>
             <h2 className="text-[14px] md:text-xl font-bold text-white uppercase tracking-widest leading-relaxed max-w-2xl mx-auto drop-shadow-md">
-              de los compradores en Chile firma la promesa <br className="hidden md:block" />
+              de los compradores de <span className="text-[#F59E0B] font-black text-base md:text-2xl">PROPIEDADES</span> en Chile firma la promesa <br className="hidden md:block" />
               sin saber realmente qué está comprando.
             </h2>
           </div>
