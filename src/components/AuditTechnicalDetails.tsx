@@ -202,10 +202,12 @@ export default function AuditTechnicalDetails() {
               ¿Quieres ver el sistema en acción en tu propiedad?
             </p>
             <a 
-              href="#auditoria-directa"
-              className="inline-flex items-center justify-center gap-3 px-8 md:px-12 py-4 md:py-5 bg-cyan-500 hover:bg-white text-slate-950 font-black rounded-xl uppercase tracking-widest text-xs md:text-sm transition-all shadow-lg"
+              href="https://wa.me/56929901343?text=Hola%2C%20equipo%20DOMIS%E2%84%A2.%20Vi%20el%20sistema%20PCF-15%E2%84%A2%20y%20necesito%20Auditor%C3%ADa%20T%C3%A9cnica%20%2B%20Estrategia%20de%20Negociaci%C3%B3n%20para%20mi%20propiedad..."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 px-8 md:px-12 py-4 md:py-5 bg-cyan-500 hover:bg-white text-slate-950 font-black rounded-xl uppercase tracking-widest text-xs md:text-sm transition-all shadow-lg active:scale-95"
             >
-              Solicitar Auditoría PCF-15™
+              Solicitar Auditoría + Estrategia de Negociación
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </a>
           </div>
