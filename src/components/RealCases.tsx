@@ -203,29 +203,32 @@ export default function RealCases() {
   );
 }
 
-// COMPONENTE CARD
+// COMPONENTE CARD - CON FOTOS MUY SUTILES
 function CaseCard({ caso, onClick }: { caso: CaseData; onClick: () => void }) {
   return (
     <div 
       onClick={onClick}
       className="bg-slate-900/60 backdrop-blur-md border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl hover:border-cyan-500/50 transition-all duration-500 group cursor-pointer"
     >
-      {/* FOTO */}
-      <div className="relative h-64 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
+      {/* FOTO - MUY SUTIL: Pequeña + Overlay + Blur */}
+      <div className="relative h-40 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
+        {/* Overlay oscuro para hacer menos notoria la foto */}
+        <div className="absolute inset-0 bg-slate-950/50 z-10" />
+        
         <img 
           src={`/${caso.imageName}`}
           alt={caso.name}
-          className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+          className="w-full h-full object-cover object-top opacity-60 group-hover:scale-105 transition-transform duration-700 blur-[1.5px]"
         />
         
         {/* BADGE TIPO PROPIEDAD */}
-        <div className="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-2 border border-white/10">
+        <div className="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-2 border border-white/10 z-20">
           {caso.propertyType === 'casa' ? <Home size={14} className="text-cyan-400" /> : <Building2 size={14} className="text-cyan-400" />}
           <span className="text-white text-[10px] font-black uppercase tracking-widest">{caso.propertyType}</span>
         </div>
 
         {/* BADGE ROI */}
-        <div className="absolute top-4 left-4 bg-cyan-500 px-3 py-1.5 rounded-full shadow-lg">
+        <div className="absolute top-4 left-4 bg-cyan-500 px-3 py-1.5 rounded-full shadow-lg z-20">
           <span className="text-slate-950 text-[10px] font-black uppercase tracking-widest">ROI {caso.roi}</span>
         </div>
       </div>
