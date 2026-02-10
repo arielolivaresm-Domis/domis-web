@@ -1,11 +1,10 @@
 "use client";
 import { motion, useTransform, MotionValue } from "framer-motion";
 
-// --- HOJA 1: EL GANCHO (TEXTO COMPACTO + MÓDULO ELEVADO) ---
 export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
-  const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.4], [0, -50]);
-  const pointerEvents = useTransform(scrollYProgress, (v) => v > 0.4 ? "none" : "auto");
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, -50]);
+  const pointerEvents = useTransform(scrollYProgress, (v) => v > 0.5 ? "none" : "auto");
 
   const handleWhatsAppClick = () => {
     const nombre = (document.getElementById('nombre') as HTMLInputElement)?.value || "Cliente Nuevo";
@@ -28,25 +27,21 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
         </h1>
         
         <div className="mb-6">
-          {/* AHORRA MILLONES */}
           <div className="inline-block bg-slate-950/75 backdrop-blur-sm px-4 py-1.5 rounded-xl border border-white/10 mb-4">
             <p className="text-4xl md:text-6xl font-black text-green-500 leading-none uppercase italic">AHORRA MILLONES</p>
           </div>
           
-          {/* EN TU NUEVA PROPIEDAD - GRANDE Y DORADO */}
           <p className="text-[#F59E0B] font-black text-4xl md:text-5xl uppercase tracking-tighter drop-shadow-[0_0_20px_rgba(245,158,11,0.3)] mb-4">
             EN TU NUEVA PROPIEDAD
           </p>
 
-          {/* TEXTO DESCRIPTIVO */}
           <p className="text-slate-200 text-xl md:text-2xl font-medium max-w-2xl leading-tight">
             en tu inversión con nuestro sistema de Auditoría Técnica y Estrategia de Negociación.
           </p>
         </div>
       </div>
 
-      {/* TARJETA COTIZA */}
-      <div className="flex justify-center md:justify-end items-end w-full">
+      <div className="flex justify-center md:justify-end items-end w-full md:mt-[-120px]">
         <div className="bg-slate-950/90 backdrop-blur-xl p-8 border border-white/10 rounded-2xl shadow-2xl pointer-events-auto max-w-sm w-full md:w-auto relative z-20">
           <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">COTIZA TU ESTRATEGIA</h3>
           <div className="space-y-4 my-6">
@@ -75,7 +70,6 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
   );
 }
 
-// --- HOJA 2: EL INFORME (DESPLAZADO) ---
 export function HeroSpecs({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
   const opacity = useTransform(scrollYProgress, [0.85, 0.98], [0, 1]);
   const x = useTransform(scrollYProgress, [0.85, 0.98], [50, 0]);
