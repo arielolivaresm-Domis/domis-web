@@ -3,9 +3,10 @@ import { motion, useTransform, MotionValue } from "framer-motion";
 
 // --- HOJA 1: EL GANCHO (TEXTO COMPACTO + MÓDULO ELEVADO) ---
 export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
-  const pointerEvents = useTransform(scrollYProgress, (v) => v > 0.2 ? "none" : "auto");
+  // CAMBIO 3: Opacity desaparece más tarde (0.2 → 0.4)
+  const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.4], [0, -50]);
+  const pointerEvents = useTransform(scrollYProgress, (v) => v > 0.4 ? "none" : "auto");
 
   const handleWhatsAppClick = () => {
     const nombre = (document.getElementById('nombre') as HTMLInputElement)?.value || "Cliente Nuevo";
@@ -33,14 +34,16 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
           <div className="inline-block bg-slate-950/75 backdrop-blur-sm px-4 py-1.5 rounded-xl border border-white/10 mb-3">
             <p className="text-4xl md:text-6xl font-black text-green-500 leading-none uppercase italic">AHORRA MILLONES</p>
           </div>
+          {/* CAMBIO 1: Texto actualizado */}
           <p className="text-slate-200 text-xl md:text-2xl font-medium max-w-xl leading-tight">
-            en tu inversión con nuestro sistema de Auditoría Técnica y Estrategia de Negociación.
+            en la compra de tu Propiedad
           </p>
         </div>
       </div>
 
-      {/* TARJETA DE ACCIÓN: ELEVADA EN WEB Y MÓVIL (mb-0 por el pb del padre) */}
-      <div className="flex justify-end items-end w-full">
+      {/* TARJETA DE ACCIÓN: ELEVADA EN WEB Y MÓVIL */}
+      {/* CAMBIO 2: Centrado en móvil con justify-center md:justify-end */}
+      <div className="flex justify-center md:justify-end items-end w-full">
         <div className="bg-slate-950/90 backdrop-blur-xl p-8 border border-white/10 rounded-2xl shadow-2xl pointer-events-auto max-w-sm w-full relative z-20">
           <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">COTIZA TU ESTRATEGIA</h3>
           <div className="space-y-4 my-6">
