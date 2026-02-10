@@ -2,9 +2,13 @@
 import { motion, useTransform, MotionValue } from "framer-motion";
 
 export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, -50]);
-  const pointerEvents = useTransform(scrollYProgress, (v) => v > 0.5 ? "none" : "auto");
+  const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.4], [0, -50]);
+  const pointerEvents = useTransform(scrollYProgress, (v) => v > 0.4 ? "none" : "auto");
+
+  // Para móvil: la tarjeta permanece más tiempo
+  const cardOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const cardPointerEvents = useTransform(scrollYProgress, (v) => v > 0.8 ? "none" : "auto");
 
   const handleWhatsAppClick = () => {
     const nombre = (document.getElementById('nombre') as HTMLInputElement)?.value || "Cliente Nuevo";
@@ -42,7 +46,10 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
       </div>
 
       <div className="flex justify-center md:justify-end items-end w-full md:mt-[-120px]">
-        <div className="bg-slate-950/90 backdrop-blur-xl p-8 border border-white/10 rounded-2xl shadow-2xl pointer-events-auto max-w-sm w-full md:w-auto relative z-20">
+        <motion.div 
+          style={{ opacity: cardOpacity, pointerEvents: cardPointerEvents }} 
+          className="bg-slate-950/90 backdrop-blur-xl p-8 border border-white/10 rounded-2xl shadow-2xl pointer-events-auto max-w-sm w-full md:w-auto relative z-20"
+        >
           <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">COTIZA TU ESTRATEGIA</h3>
           <div className="space-y-4 my-6">
             <input 
@@ -64,7 +71,7 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
           >
             ACTIVA TU AUDITORÍA TÉCNICA Y PODER DE NEGOCIACIÓN →
           </button>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );
