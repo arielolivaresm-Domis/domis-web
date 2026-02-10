@@ -1,7 +1,22 @@
 import { Search, TrendingUp, Hammer } from 'lucide-react';
 import Section from './layout/Section';
+import { useTabs } from '../context/TabsContext';
 
 export default function Solution() {
+  const { setActiveTab } = useTabs();
+
+  const handlePhaseClick = (phase: 'fase1' | 'fase2' | 'fase3') => {
+    setActiveTab(phase);
+    setTimeout(() => {
+      const element = document.getElementById('proceso');
+      if (element) {
+        const yOffset = -140;
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   return (
     <Section id="solucion" className="py-12 md:py-24 bg-slate-950 relative z-10">
       
@@ -29,9 +44,9 @@ export default function Solution() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             
             {/* PASO 1 - CLICKEABLE */}
-            <a 
-              href="#auditoria-directa"
-              className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer"
+            <button 
+              onClick={() => handlePhaseClick('fase1')}
+              className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer text-left"
             >
               <div className="flex items-center justify-between mb-8">
                 <div className="p-4 bg-cyan-500/10 rounded-xl border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-all">
@@ -68,12 +83,12 @@ export default function Solution() {
                 <span>Ver Auditoría</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </div>
-            </a>
+            </button>
 
             {/* PASO 2 - CLICKEABLE */}
-            <a 
-              href="#beneficio-fase2"
-              className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer"
+            <button 
+              onClick={() => handlePhaseClick('fase2')}
+              className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer text-left"
             >
               <div className="flex items-center justify-between mb-8">
                 <div className="p-4 bg-cyan-500/10 rounded-xl border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-all">
@@ -114,12 +129,12 @@ export default function Solution() {
                 <span>Ver Negociación</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </div>
-            </a>
+            </button>
 
             {/* PASO 3 - CLICKEABLE */}
-            <a 
-              href="#fase3"
-              className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer"
+            <button 
+              onClick={() => handlePhaseClick('fase3')}
+              className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer text-left"
             >
               <div className="flex items-center justify-between mb-8">
                 <div className="p-4 bg-cyan-500/10 rounded-xl border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-all">
@@ -160,7 +175,7 @@ export default function Solution() {
                 <span>Ver Remodelación</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </div>
-            </a>
+            </button>
 
           </div>
 
