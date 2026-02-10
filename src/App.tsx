@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Problem from './components/Problem';
+import Solution from './components/Solution';
 import AuditTechnicalDetails from './components/AuditTechnicalDetails';
 import PhasesTabs from './components/PhasesTabs';
 import RealCases from './components/RealCases';
@@ -29,6 +30,7 @@ const LandingPage = () => (
       <main>
         <Hero />
         <Problem />
+        <Solution />
         <AuditTechnicalDetails />
         <PhasesTabs />
         <RealCases />
