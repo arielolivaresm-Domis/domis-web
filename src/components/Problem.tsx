@@ -1,4 +1,4 @@
-import { CheckCircle2, AlertTriangle } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import Section from './layout/Section';
 
 export default function Problem() {
@@ -55,34 +55,12 @@ export default function Problem() {
               </div>
             </div>
 
-            {/* NUEVO - TEXTO EXPLICATIVO */}
+            {/* TEXTO EXPLICATIVO */}
             <div className="bg-slate-900/40 p-4 md:p-5 rounded-xl border border-cyan-500/20 backdrop-blur-md">
               <p className="text-cyan-400 text-[10px] md:text-xs font-black uppercase tracking-wide leading-relaxed">
                 +2 puntos porcentuales pueden significar<br />
                 millones de pesos en tu bolsillo
               </p>
-            </div>
-
-            {/* NUEVO - CÓMO LO LOGRAMOS */}
-            <div className="text-left space-y-4 bg-black/50 p-6 md:p-8 rounded-2xl md:rounded-3xl border border-white/10 backdrop-blur-md">
-              <h4 className="text-cyan-400 text-[11px] md:text-xs font-black uppercase tracking-widest mb-4 text-center">
-                Cómo Generamos Hasta 20% de Descuento:
-              </h4>
-              
-              <div className="flex items-start gap-3 text-slate-200 text-xs md:text-sm">
-                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-cyan-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white uppercase tracking-tight">Auditoría física:</strong> Cuantificamos fallas en UF con instrumental profesional</span>
-              </div>
-              
-              <div className="flex items-start gap-3 text-slate-200 text-xs md:text-sm">
-                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-cyan-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white uppercase tracking-tight">Escáner 3km:</strong> Precios reales + competencia + tendencias del sector</span>
-              </div>
-              
-              <div className="flex items-start gap-3 text-slate-200 text-xs md:text-sm">
-                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-cyan-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white uppercase tracking-tight">Tasación IA:</strong> Valor técnico vs. emocional con datos del Conservador</span>
-              </div>
             </div>
           </div>
           
