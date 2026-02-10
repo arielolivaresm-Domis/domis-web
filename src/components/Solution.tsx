@@ -28,8 +28,11 @@ export default function Solution() {
           {/* GRID DE 3 PASOS */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             
-            {/* PASO 1 */}
-            <div className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group">
+            {/* PASO 1 - CLICKEABLE */}
+            <a 
+              href="#auditoria-directa"
+              className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer"
+            >
               <div className="flex items-center justify-between mb-8">
                 <div className="p-4 bg-cyan-500/10 rounded-xl border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-all">
                   <Search className="w-7 h-7 text-cyan-400" />
@@ -59,10 +62,19 @@ export default function Solution() {
                   <span>Te mostramos el <strong className="text-white">estado REAL,</strong> no promesas de vendedor</span>
                 </li>
               </ul>
-            </div>
 
-            {/* PASO 2 */}
-            <div className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group">
+              {/* INDICADOR CLICK */}
+              <div className="mt-6 pt-6 border-t border-white/5 flex items-center justify-center gap-2 text-cyan-400 text-xs font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                <span>Ver Auditoría</span>
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </a>
+
+            {/* PASO 2 - CLICKEABLE */}
+            <a 
+              href="#beneficio-fase2"
+              className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer"
+            >
               <div className="flex items-center justify-between mb-8">
                 <div className="p-4 bg-cyan-500/10 rounded-xl border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-all">
                   <TrendingUp className="w-7 h-7 text-cyan-400" />
@@ -96,10 +108,19 @@ export default function Solution() {
                   <span><strong className="text-white">Te acompañamos en la mesa:</strong> logras 8-20% descuento (vs 6% promedio del mercado)</span>
                 </li>
               </ul>
-            </div>
 
-            {/* PASO 3 */}
-            <div className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group">
+              {/* INDICADOR CLICK */}
+              <div className="mt-6 pt-6 border-t border-white/5 flex items-center justify-center gap-2 text-cyan-400 text-xs font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                <span>Ver Negociación</span>
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </a>
+
+            {/* PASO 3 - CLICKEABLE */}
+            <a 
+              href="#fase3"
+              className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer"
+            >
               <div className="flex items-center justify-between mb-8">
                 <div className="p-4 bg-cyan-500/10 rounded-xl border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-all">
                   <Hammer className="w-7 h-7 text-cyan-400" />
@@ -133,7 +154,13 @@ export default function Solution() {
                   <span><strong className="text-white">Valorizas tu inversión</strong> desde el día uno</span>
                 </li>
               </ul>
-            </div>
+
+              {/* INDICADOR CLICK */}
+              <div className="mt-6 pt-6 border-t border-white/5 flex items-center justify-center gap-2 text-cyan-400 text-xs font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                <span>Ver Remodelación</span>
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </a>
 
           </div>
 
