@@ -224,7 +224,7 @@ function CaseCard({ caso, onClick }: { caso: CaseData; onClick: () => void }) {
       className="bg-slate-900/60 backdrop-blur-md border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl hover:border-cyan-500/50 transition-all duration-500 group cursor-pointer"
     >
       <div className="relative h-40 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
-        <div className="absolute inset-0 bg-slate-950/50 z-10" />
+        <div className="absolute inset-0 bg-slate-950/50 z-10"></div>
         
         <img 
           src={`/${caso.imageName}`}
@@ -275,7 +275,7 @@ function CaseCard({ caso, onClick }: { caso: CaseData; onClick: () => void }) {
         </div>
 
         <blockquote className="mb-6 pl-4 border-l-2 border-cyan-500/30">
-          <p className="text-sm text-slate-300 italic leading-relaxed">"{caso.quote}"</p>
+          <p className="text-sm text-slate-300 italic leading-relaxed">&quot;{caso.quote}&quot;</p>
         </blockquote>
 
         <button
@@ -304,7 +304,7 @@ function CaseModal({ caso, onClose }: { caso: CaseData; onClose: () => void }) {
           onClick={onClose} 
           className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors z-10"
         >
-          <X size={24}/>
+          <X size={24} />
         </button>
 
         <div className="mb-8">
