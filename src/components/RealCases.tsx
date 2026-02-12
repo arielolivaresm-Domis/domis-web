@@ -10,9 +10,14 @@ interface CaseData {
   propertyType: 'casa' | 'depto';
   location: string;
   size: string;
-  savings: string;
+  priceListed: string;
+  priceListedUF: string;
+  priceNegotiated: string;
+  priceNegotiatedUF: string;
+  savingsGross: string;
   discount: string;
-  roi: string;
+  commissionDomis: string;
+  savingsNet: string;
   keyService: string;
   quote: string;
   problem: string;
@@ -30,10 +35,15 @@ const cases: CaseData[] = [
     propertyType: "casa",
     location: "La Reina",
     size: "263m² en 898m²",
-    savings: "$142M",
+    priceListed: "$828.471.488",
+    priceListedUF: "20.800 UF",
+    priceNegotiated: "$679.406.620",
+    priceNegotiatedUF: "17.056 UF",
+    savingsGross: "$149.064.868",
     discount: "18%",
-    roi: "21.5x",
-    keyService: "Pack 2 Propiedades",
+    commissionDomis: "$7.354.073",
+    savingsNet: "$141.710.795",
+    keyService: "Pack 2 Propiedades + Fase 2",
     quote: "Invertir $700M sin auditoría profesional era un riesgo que no podíamos tomar",
     problem: "Vivíamos en un departamento de 120m². Con el tercer hijo en camino, necesitábamos casa grande con jardín, cerca del colegio, en barrio familiar. Teníamos 2 opciones en La Reina pero no sabíamos cuál elegir sin datos técnicos reales.",
     findings: [
@@ -43,7 +53,7 @@ const cases: CaseData[] = [
       "Tasación IA reveló sobreprecio de 15.9% sobre valor real de mercado",
       "Total fallas cuantificadas: 220 UF ($8.7M)"
     ],
-    economicResult: "Negociamos de 20.800 a 17.056 UF (18% descuento vs. 12% del mercado). Ahorro total: $142M. Después de pagar DOMIS™: $142M netos. ROI: 21.50x - el más alto del año. Contratamos Fase 3 para remodelar antes de mudanza: $12.5M en 3 meses. Nos mudamos 2 semanas antes del nacimiento con casa impecable.",
+    economicResult: "Negociamos de 20.800 UF ($828.471.488) a 17.056 UF ($679.406.620). Descuento: 18% ($149.064.868). Después de pagar DOMIS™ ($7.354.073 que incluye descuentos: Fee -$400k + 40% Fase 1 -$245.927), el ahorro neto fue $141.710.795. Contratamos Fase 3 para remodelar antes de mudanza: $12.5M en 3 meses. Nos mudamos 2 semanas antes del nacimiento con casa impecable.",
     imageName: "carolina_roberto_familia.jpg"
   },
   {
@@ -54,9 +64,14 @@ const cases: CaseData[] = [
     propertyType: "casa",
     location: "Providencia",
     size: "151m² → 171m²",
-    savings: "$67M",
+    priceListed: "$669.150.048",
+    priceListedUF: "16.800 UF",
+    priceNegotiated: "$595.577.023",
+    priceNegotiatedUF: "14.952 UF",
+    savingsGross: "$73.573.025",
     discount: "11%",
-    roi: "10.5x",
+    commissionDomis: "$5.354.073",
+    savingsNet: "$68.218.952",
     keyService: "Pack 2 + Remodelación",
     quote: "Como arquitecta, creí que podía evaluarla yo misma. Sin instrumental profesional, estaba comprando a ciegas",
     problem: "Llevaba años buscando casa para mi familia de 5. Tenía 2 casas en vista pero no sabía cuál elegir. Como arquitecta, pensé que podía evaluarlas yo misma, pero me di cuenta que sin instrumental profesional solo veía por encima.",
@@ -67,7 +82,7 @@ const cases: CaseData[] = [
       "Tasación IA mostró sobreprecio de 9% sobre valor real",
       "Total fallas: 350 UF ($13.9M)"
     ],
-    economicResult: "Negocié de 16.800 a 14.952 UF (11% descuento vs. 8% típico). Ahorro: $67M. ROI: 10.52x. Contraté Fase 3 para remodelación completa: de 151m² a 171m², de 3D+3B a 4D+4B concepto abierto. Inversión remodelación: $70M en 5 meses. DOMIS™ no es un gasto, es la inversión más rentable del proyecto.",
+    economicResult: "Negocié de 16.800 UF ($669.150.048) a 14.952 UF ($595.577.023). Descuento: 11% ($73.573.025). Después de pagar DOMIS™ ($5.354.073 que incluye descuentos: Fee -$400k + 40% Fase 1 -$245.927), el ahorro neto fue $68.218.952. Contraté Fase 3 para remodelación completa: de 151m² a 171m², de 3D+3B a 4D+4B concepto abierto. Inversión remodelación: $70M en 5 meses. DOMIS™ no es un gasto, es la inversión más rentable del proyecto.",
     imageName: "andrea_arquitecta.jpg"
   },
   {
@@ -78,10 +93,15 @@ const cases: CaseData[] = [
     propertyType: "depto",
     location: "Las Condes",
     size: "180m²",
-    savings: "$37.8M",
+    priceListed: "$477.964.320",
+    priceListedUF: "12.000 UF",
+    priceNegotiated: "$435.059.532",
+    priceNegotiatedUF: "10.920 UF",
+    savingsGross: "$42.904.788",
     discount: "9%",
-    roi: "7.55x",
-    keyService: "Sourcing VIP",
+    commissionDomis: "$3.354.073",
+    savingsNet: "$39.550.715",
+    keyService: "Sourcing VIP + Fase 2",
     quote: "Con un hijo de 4 años y otro en camino, no tenía tiempo para buscar. DOMIS™ lo hizo por mí",
     problem: "Trabajo 10-12 horas al día en finanzas. Tengo un hijo de 4 años y mi mujer embarazada. Llevaba 8 años arrendando pero no tenía tiempo para buscar departamento cada fin de semana sin saber si valían la pena.",
     findings: [
@@ -91,7 +111,7 @@ const cases: CaseData[] = [
       "Cañerías galvanizadas corroídas con riesgo de rotura a corto plazo",
       "Tasación IA reveló sobreprecio de 6.85%"
     ],
-    economicResult: "Negocié de 12.000 a 10.920 UF (9% descuento). Ahorro: $37.8M. ROI: 7.55x. Ahorré meses de búsqueda, evité 3 malas opciones, y compré la indicada con $37.8M de descuento. El Sourcing VIP es para gente que valora su tiempo y quiere certeza total.",
+    economicResult: "Negocié de 12.000 UF ($477.964.320) a 10.920 UF ($435.059.532). Descuento: 9% ($42.904.788). Después de pagar DOMIS™ ($3.354.073 que incluye descuentos: Fee -$400k + 40% Fase 1 -$245.927), el ahorro neto fue $39.550.715. Ahorré meses de búsqueda, evité 3 malas opciones, y compré la indicada con casi $40M de ahorro neto. El Sourcing VIP es para gente que valora su tiempo y quiere certeza total.",
     imageName: "felipe_ejecutivo.jpg"
   }
 ];
@@ -112,7 +132,6 @@ export default function RealCases() {
     <Section id="casos-reales" className="py-12 md:py-24 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4">
         
-        {/* HEADER */}
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] md:text-[14px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg">
             Casos Reales Verificables
@@ -128,14 +147,12 @@ export default function RealCases() {
           </p>
         </div>
 
-        {/* DESKTOP: GRID 3 COLUMNAS */}
         <div className="hidden md:grid md:grid-cols-3 gap-6 md:gap-8">
           {cases.map((caso) => (
             <CaseCard key={caso.id} caso={caso} onClick={() => setSelectedCase(caso)} />
           ))}
         </div>
 
-        {/* MOBILE: CARRUSEL */}
         <div className="md:hidden relative">
           <div className="overflow-hidden">
             <div 
@@ -150,7 +167,6 @@ export default function RealCases() {
             </div>
           </div>
 
-          {/* CONTROLES CARRUSEL */}
           <div className="flex items-center justify-center gap-4 mt-6">
             <button
               onClick={prevSlide}
@@ -183,9 +199,8 @@ export default function RealCases() {
           </div>
         </div>
 
-        {/* CTA FINAL */}
         <div className="mt-16 text-center">
-          <a
+          
             href="#auditoria-directa"
             className="inline-flex items-center justify-center gap-3 px-8 md:px-12 py-4 md:py-6 bg-cyan-500 text-slate-950 font-black rounded-2xl uppercase tracking-widest text-[11px] md:text-sm hover:bg-white transition-all shadow-xl active:scale-95"
           >
@@ -195,7 +210,6 @@ export default function RealCases() {
         </div>
       </div>
 
-      {/* MODAL CASO COMPLETO */}
       {selectedCase && (
         <CaseModal caso={selectedCase} onClose={() => setSelectedCase(null)} />
       )}
@@ -203,16 +217,13 @@ export default function RealCases() {
   );
 }
 
-// COMPONENTE CARD - CON FOTOS MUY SUTILES
 function CaseCard({ caso, onClick }: { caso: CaseData; onClick: () => void }) {
   return (
     <div 
       onClick={onClick}
       className="bg-slate-900/60 backdrop-blur-md border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl hover:border-cyan-500/50 transition-all duration-500 group cursor-pointer"
     >
-      {/* FOTO - MUY SUTIL: Pequeña + Overlay + Blur */}
       <div className="relative h-40 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
-        {/* Overlay oscuro para hacer menos notoria la foto */}
         <div className="absolute inset-0 bg-slate-950/50 z-10" />
         
         <img 
@@ -221,21 +232,17 @@ function CaseCard({ caso, onClick }: { caso: CaseData; onClick: () => void }) {
           className="w-full h-full object-cover object-top opacity-60 group-hover:scale-105 transition-transform duration-700 blur-[1.5px]"
         />
         
-        {/* BADGE TIPO PROPIEDAD */}
         <div className="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-2 border border-white/10 z-20">
           {caso.propertyType === 'casa' ? <Home size={14} className="text-cyan-400" /> : <Building2 size={14} className="text-cyan-400" />}
           <span className="text-white text-[10px] font-black uppercase tracking-widest">{caso.propertyType}</span>
         </div>
 
-        {/* BADGE ROI */}
         <div className="absolute top-4 left-4 bg-cyan-500 px-3 py-1.5 rounded-full shadow-lg z-20">
-          <span className="text-slate-950 text-[10px] font-black uppercase tracking-widest">ROI {caso.roi}</span>
+          <span className="text-slate-950 text-[10px] font-black uppercase tracking-widest">{caso.discount} DCTO</span>
         </div>
       </div>
 
-      {/* CONTENIDO */}
       <div className="p-6">
-        {/* NOMBRE Y PROFESIÓN */}
         <div className="mb-4">
           <h3 className="text-2xl font-black text-white uppercase tracking-tight leading-tight">{caso.name}</h3>
           <p className="text-slate-400 text-[10px] uppercase tracking-widest mt-1">
@@ -244,7 +251,6 @@ function CaseCard({ caso, onClick }: { caso: CaseData; onClick: () => void }) {
           <p className="text-slate-500 text-[9px] mt-1">{caso.profession}</p>
         </div>
 
-        {/* UBICACIÓN */}
         <div className="mb-4 flex items-center gap-2 text-sm">
           <span className="text-cyan-400">📍</span>
           <span className="text-cyan-400 font-bold">{caso.location}</span>
@@ -252,32 +258,26 @@ function CaseCard({ caso, onClick }: { caso: CaseData; onClick: () => void }) {
           <span className="text-slate-400 text-xs">{caso.size}</span>
         </div>
 
-        {/* AHORRO DESTACADO */}
         <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-xl p-4 mb-4 backdrop-blur-sm">
           <div className="flex items-baseline justify-between mb-1">
-            <span className="text-cyan-400 text-[10px] uppercase tracking-widest font-black">Ahorro Total</span>
+            <span className="text-cyan-400 text-[10px] uppercase tracking-widest font-black">Ahorro Neto Final</span>
             <TrendingUp size={16} className="text-cyan-400" />
           </div>
-          <div className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-2">{caso.savings}</div>
+          <div className="text-3xl md:text-4xl font-black text-white tracking-tighter mb-2">{caso.savingsNet}</div>
           <div className="flex items-center gap-3 text-xs">
             <span className="text-slate-400">Descuento: <span className="text-white font-bold">{caso.discount}</span></span>
-            <span className="text-slate-600">·</span>
-            <span className="text-slate-400">ROI: <span className="text-cyan-400 font-bold">{caso.roi}</span></span>
           </div>
         </div>
 
-        {/* SERVICIO CLAVE */}
         <div className="mb-4 px-3 py-2 bg-slate-950/50 rounded-lg border border-white/5">
           <p className="text-[10px] text-cyan-400 uppercase tracking-widest font-black mb-1">Servicio Usado</p>
           <p className="text-xs text-slate-300 font-bold">{caso.keyService}</p>
         </div>
 
-        {/* QUOTE */}
         <blockquote className="mb-6 pl-4 border-l-2 border-cyan-500/30">
           <p className="text-sm text-slate-300 italic leading-relaxed">"{caso.quote}"</p>
         </blockquote>
 
-        {/* BOTÓN */}
         <button
           className="w-full flex items-center justify-center gap-2 bg-slate-950 border border-white/10 hover:border-cyan-500 hover:bg-cyan-500/10 text-white py-3 rounded-xl font-bold uppercase text-[11px] tracking-widest transition-all"
         >
@@ -289,7 +289,6 @@ function CaseCard({ caso, onClick }: { caso: CaseData; onClick: () => void }) {
   );
 }
 
-// COMPONENTE MODAL
 function CaseModal({ caso, onClose }: { caso: CaseData; onClose: () => void }) {
   return (
     <div 
@@ -308,7 +307,6 @@ function CaseModal({ caso, onClose }: { caso: CaseData; onClose: () => void }) {
           <X size={24}/>
         </button>
 
-        {/* HEADER */}
         <div className="mb-8">
           <div className="inline-block px-3 py-1 rounded-full bg-cyan-500 text-slate-950 text-[10px] font-black uppercase mb-4">
             Caso Real Verificable
@@ -318,7 +316,6 @@ function CaseModal({ caso, onClose }: { caso: CaseData; onClose: () => void }) {
           <p className="text-slate-400 text-xs mt-1">{caso.profession}</p>
         </div>
 
-        {/* MÉTRICAS */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-slate-950/50 p-4 rounded-xl border border-white/5">
             <p className="text-[10px] text-slate-400 uppercase mb-1 tracking-widest">Ubicación</p>
@@ -329,18 +326,16 @@ function CaseModal({ caso, onClose }: { caso: CaseData; onClose: () => void }) {
             <p className="text-white font-bold text-sm">{caso.size}</p>
           </div>
           <div className="bg-cyan-500/10 p-4 rounded-xl border border-cyan-500/20">
-            <p className="text-[10px] text-cyan-400 uppercase mb-1 tracking-widest">Ahorro</p>
-            <p className="text-white font-black text-lg">{caso.savings}</p>
+            <p className="text-[10px] text-cyan-400 uppercase mb-1 tracking-widest">Descuento</p>
+            <p className="text-white font-black text-lg">{caso.discount}</p>
           </div>
           <div className="bg-cyan-500/10 p-4 rounded-xl border border-cyan-500/20">
-            <p className="text-[10px] text-cyan-400 uppercase mb-1 tracking-widest">ROI</p>
-            <p className="text-cyan-400 font-black text-lg">{caso.roi}</p>
+            <p className="text-[10px] text-cyan-400 uppercase mb-1 tracking-widest">Ahorro Neto</p>
+            <p className="text-cyan-400 font-black text-sm">{caso.savingsNet}</p>
           </div>
         </div>
 
-        {/* HISTORIA COMPLETA */}
         <div className="space-y-8">
-          {/* PROBLEMA */}
           <div>
             <h4 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-3">
               <span className="text-red-500">⚠️</span> El Problema
@@ -350,7 +345,6 @@ function CaseModal({ caso, onClose }: { caso: CaseData; onClose: () => void }) {
             </div>
           </div>
 
-          {/* HALLAZGOS TÉCNICOS */}
           <div>
             <h4 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-3">
               <span className="text-cyan-400">🔍</span> Lo que Detectó PCF-15™ by DOMIS™
@@ -365,13 +359,51 @@ function CaseModal({ caso, onClose }: { caso: CaseData; onClose: () => void }) {
             </div>
           </div>
 
-          {/* RESULTADO ECONÓMICO */}
           <div>
             <h4 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-3">
               <span className="text-green-400">💰</span> Resultado Económico
             </h4>
-            <div className="bg-gradient-to-br from-cyan-500/10 to-green-500/10 p-6 rounded-xl border border-cyan-500/20">
-              <p className="text-slate-200 leading-relaxed font-medium">{caso.economicResult}</p>
+            <div className="bg-gradient-to-br from-slate-950/80 to-slate-900/80 p-6 rounded-xl border border-cyan-500/20">
+              
+              <div className="space-y-3 mb-6">
+                <div className="flex justify-between items-center pb-3 border-b border-white/5">
+                  <span className="text-slate-400 text-sm">Precio inicial:</span>
+                  <div className="text-right">
+                    <span className="text-white font-bold text-sm">{caso.priceListed}</span>
+                    <span className="text-slate-500 text-xs ml-2">({caso.priceListedUF})</span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center pb-3 border-b border-white/5">
+                  <span className="text-slate-400 text-sm">Precio negociado:</span>
+                  <div className="text-right">
+                    <span className="text-white font-bold text-sm">{caso.priceNegotiated}</span>
+                    <span className="text-slate-500 text-xs ml-2">({caso.priceNegotiatedUF})</span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center pb-3 border-b border-cyan-500/20">
+                  <span className="text-cyan-400 text-sm font-bold">Descuento logrado:</span>
+                  <div className="text-right">
+                    <span className="text-cyan-400 font-black text-lg">{caso.savingsGross}</span>
+                    <span className="text-cyan-500 text-sm ml-2">({caso.discount})</span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center pb-3 border-b border-white/5">
+                  <span className="text-slate-400 text-sm">Comisión DOMIS™:</span>
+                  <span className="text-white font-bold text-sm">-{caso.commissionDomis}</span>
+                </div>
+                <div className="text-xs text-slate-500 pl-4 pb-3 border-b border-white/5">
+                  (Incluye descuentos: Fee -$400.000 + 40% Fase 1 -$245.927)
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-cyan-500/20 to-green-500/20 p-4 rounded-xl border border-cyan-500/30">
+                <div className="flex justify-between items-center">
+                  <span className="text-white font-black text-base uppercase tracking-wide">Ahorro Neto Final:</span>
+                  <span className="text-cyan-400 font-black text-2xl md:text-3xl">{caso.savingsNet}</span>
+                </div>
+              </div>
+
+              <p className="text-slate-300 leading-relaxed font-medium mt-6 text-sm">{caso.economicResult}</p>
             </div>
           </div>
         </div>
