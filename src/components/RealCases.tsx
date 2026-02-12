@@ -31,7 +31,7 @@ const cases: CaseData[] = [
     id: 1,
     name: "Carolina & Roberto",
     age: "Pediatra & Empresario",
-    profession: "Familia con 2 hijos + bebé en camino",
+    profession: "Familia con 3 hijos",
     propertyType: "casa",
     location: "La Reina",
     size: "263m² en 898m²",
@@ -45,7 +45,7 @@ const cases: CaseData[] = [
     savingsNet: "$141.710.795",
     keyService: "Pack 2 Propiedades + Fase 2",
     quote: "Invertir $700M sin auditoría profesional era un riesgo que no podíamos tomar",
-    problem: "Vivíamos en un departamento de 120m². Con el tercer hijo en camino, necesitábamos casa grande con jardín, cerca del colegio, en barrio familiar. Teníamos 2 opciones en La Reina pero no sabíamos cuál elegir sin datos técnicos reales.",
+    problem: "Vivíamos en un departamento . y con 3 hijo , necesitábamos casa grande con jardín, cerca del colegio, en barrio familiar. Teníamos 2 opciones en La Reina pero no sabíamos cuál elegir sin datos técnicos reales.",
     findings: [
       "Casa 46 años con desgaste generalizado: pintura deteriorada, filtraciones por techumbre, sistemas obsoletos",
       "Sistema eléctrico antiguo: tablero sin protección diferencial, cableado de aluminio (no cumple norma actual)",
@@ -53,7 +53,7 @@ const cases: CaseData[] = [
       "Tasación IA reveló sobreprecio de 15.9% sobre valor real de mercado",
       "Total fallas cuantificadas: 220 UF ($8.7M)"
     ],
-    economicResult: "Negociamos de 20.800 UF ($828.471.488) a 17.056 UF ($679.406.620). Descuento: 18% ($149.064.868). Después de pagar DOMIS™ ($7.354.073 que incluye descuentos: Fee -$400k + 40% Fase 1 -$245.927), el ahorro neto fue $141.710.795. Contratamos Fase 3 para remodelar antes de mudanza: $12.5M en 3 meses. Nos mudamos 2 semanas antes del nacimiento con casa impecable.",
+    economicResult: "Negociamos de 20.800 UF ($828.471.488) a 17.056 UF ($679.406.620). Descuento: 18% ($149.064.868). Después de pagar DOMIS™ ($7.354.073 que incluye descuentos: Fee -$400k + 40% Fase 1 -$245.927), el ahorro neto fue $141.710.795. Contratamos Fase 3 para remodelar antes de mudanza: $12.5M. Nos mudamos y todo impecable.",
     imageName: "carolina_roberto_familia.jpg"
   },
   {
