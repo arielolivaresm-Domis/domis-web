@@ -60,7 +60,7 @@ const cases: CaseData[] = [
     id: 2,
     name: "Andrea",
     age: "38 años",
-    profession: "Arquitecta, Madre de 5",
+    profession: "Arquitecta",
     propertyType: "casa",
     location: "Providencia",
     size: "151m² → 171m²",
@@ -74,7 +74,7 @@ const cases: CaseData[] = [
     savingsNet: "$68.218.952",
     keyService: "Pack 2 + Remodelación",
     quote: "Como arquitecta, creí que podía evaluarla yo misma. Sin instrumental profesional, estaba comprando a ciegas",
-    problem: "Llevaba años buscando casa para mi familia de 5. Tenía 2 casas en vista pero no sabía cuál elegir. Como arquitecta, pensé que podía evaluarlas yo misma, pero me di cuenta que sin instrumental profesional solo veía por encima.",
+    problem: "Llevaba años buscando casa para mi familia. Tenía 2 casas en vista pero no sabía cuál elegir. Como arquitecta, pensé que podía evaluarlas yo misma, pero me di cuenta que sin instrumental profesional solo veía por encima.",
     findings: [
       "Termografía FLIR detectó infiltraciones invisibles: ΔT 22°C en muro poniente (humedad estructural oculta)",
       "Sistema eléctrico crítico: cableado aluminio antiguo, tablero sin protección diferencial, incumple SEC",
