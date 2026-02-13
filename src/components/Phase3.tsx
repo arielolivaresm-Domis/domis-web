@@ -1,9 +1,27 @@
 import { Hammer, Paintbrush, Ruler, ArrowRight } from 'lucide-react';
 import Section from './layout/Section';
 
+// Declaración para que TypeScript acepte el sensor de Google
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 export default function Phase3() {
   // URL de WhatsApp unificada para Upgrade
   const whatsappUrl = "https://wa.me/56929901343?text=Hola, equipo DOMIS™. Necesito información sobre el servicio de remodelación y Upgrade para mi propiedad.";
+
+  // Función para registrar el evento en Google Analytics
+  const trackUpgradeClick = () => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'contacto_whatsapp', {
+        'event_category': 'Conversion',
+        'event_label': 'Fase 3 Upgrade',
+        'value': 1
+      });
+    }
+  };
 
   return (
     <Section id="fase3" className="bg-slate-950 relative overflow-hidden">
@@ -62,6 +80,7 @@ export default function Phase3() {
               href={whatsappUrl}
               target="_blank"
               rel="noreferrer"
+              onClick={trackUpgradeClick}
               className="group px-8 md:px-12 py-5 md:py-6 bg-amber-500 hover:bg-white text-slate-950 font-black uppercase rounded-2xl transition-all duration-300 shadow-[0_20px_40px_rgba(245,158,11,0.2)] flex items-center gap-4 text-xs md:text-sm tracking-[0.2em] active:scale-95"
             >
               Solicitar Presupuesto Upgrade
