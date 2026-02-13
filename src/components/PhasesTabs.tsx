@@ -6,10 +6,26 @@ import Phase2 from './Phase2';
 import Phase3 from './Phase3';
 import { useTabs } from '../context/TabsContext';
 
+// Declaración para que TypeScript acepte el sensor de Google
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 export default function PhasesTabs() {
   const { activeTab, setActiveTab } = useTabs();
 
   const handleTabChange = (id: 'fase1' | 'fase2' | 'fase3') => {
+    // Sensor de Google Analytics para medir interés en cada fase
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'cambio_fase', {
+        'event_category': 'Navegacion',
+        'event_label': id,
+        'value': 1
+      });
+    }
+
     setActiveTab(id);
     const element = document.getElementById('proceso');
     if (element) {
