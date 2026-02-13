@@ -3,6 +3,13 @@ import { createPortal } from 'react-dom';
 import { MessageCircle, ArrowRight, X, Check, AlertCircle } from 'lucide-react';
 import Section from './layout/Section';
 
+// Declaración para que TypeScript acepte el sensor de Google
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 export default function BenefitFlyer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [nombre, setNombre] = useState('');
@@ -27,8 +34,31 @@ export default function BenefitFlyer() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // --- Sensor de Google Analytics: Conversión Fase 2 ---
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'solicitud_fase2', {
+        'event_category': 'Conversion',
+        'event_label': 'Formulario BenefitFlyer',
+        'user_name': nombre,
+        'value': 1
+      });
+    }
+
     window.open(whatsappUrl, '_blank');
     setIsModalOpen(false);
+  };
+
+  const handleOpenModal = () => {
+    // --- Sensor de Google Analytics: Intención Fase 2 ---
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'intencion_fase2', {
+        'event_category': 'Interes',
+        'event_label': 'Abrir Modal Negociacion',
+        'value': 1
+      });
+    }
+    setIsModalOpen(true);
   };
 
   const ModalPortal = (
@@ -112,7 +142,6 @@ export default function BenefitFlyer() {
                 <h3 className="text-white font-black uppercase tracking-tighter text-lg md:text-2xl italic">Devolución Condicional</h3>
               </div>
               
-              {/* NUEVO - Texto explicativo */}
               <p className="text-slate-300 text-xs md:text-sm mb-6 leading-relaxed">
                 Esta garantía aplica exclusivamente si la operación se cae durante la firma de Promesa de Compraventa
               </p>
@@ -140,7 +169,7 @@ export default function BenefitFlyer() {
               <p className="text-cyan-400 font-black text-[10px] md:text-[11px] uppercase tracking-[0.4em] mt-2">AUDITORÍA AL ACTIVAR FASE 2</p>
             </div>
             <button 
-              onClick={() => setIsModalOpen(true)}
+              onClick={handleOpenModal}
               className="group flex items-center justify-center gap-4 px-8 md:px-16 py-6 md:py-8 bg-cyan-500 text-slate-950 font-black rounded-[1.5rem] md:rounded-[2rem] uppercase tracking-[0.2em] text-[11px] md:text-sm hover:bg-white transition-all shadow-xl active:scale-95 w-full md:w-auto"
             >
               <MessageCircle size={20} className="fill-current" />
