@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useTabs } from '../context/TabsContext';
 
+// Declaración para que TypeScript acepte el sensor de Google
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 // Icono de Candado para el acceso privado
 const LockIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
@@ -13,6 +20,17 @@ export default function Header() {
   const [isScanning, setIsScanning] = useState(false);
   const [cycleCount, setCycleCount] = useState(0);
   const { setActiveTab } = useTabs();
+
+  // Función para registrar el evento en Google Analytics
+  const trackWhatsAppClick = () => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'contacto_whatsapp', {
+        'event_category': 'Conversion',
+        'event_label': 'Header Principal',
+        'value': 1
+      });
+    }
+  };
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -47,7 +65,7 @@ export default function Header() {
       <nav className="fixed top-0 w-full z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-900/80 px-4 md:px-6 py-4 transition-all duration-300 shadow-lg shadow-slate-950/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center relative">
          
-          {/* --- LOGO TRANSFORMER (Ajuste de visibilidad para la "M") --- */}
+          {/* --- LOGO TRANSFORMER --- */}
           <a href="#" className="relative w-32 md:w-48 h-12 md:h-16 flex items-center select-none z-50 group cursor-pointer" aria-label="Ir al inicio">
            
             <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-sm">
@@ -108,7 +126,6 @@ export default function Header() {
 
           {/* --- ACCIONES PRIMARIAS --- */}
           <div className="flex items-center gap-2 md:gap-3 relative z-10">
-            {/* PCF-15 Acceso (Puente directo al portal técnico) */}
             <a
               href="/pcf-15tm"
               target="_blank"
@@ -120,11 +137,12 @@ export default function Header() {
               <span className="text-[9px] md:text-[10px] font-bold tracking-wider">PCF-15™</span>
             </a>
 
-            {/* CTA Principal */}
+            {/* CTA Principal con sensor de WhatsApp */}
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={trackWhatsAppClick}
               className="bg-cyan-500 hover:bg-white text-slate-950 px-3 md:px-5 py-2 md:py-2.5 rounded-lg text-[10px] md:text-xs font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:scale-105 active:scale-95 whitespace-nowrap"
             >
               Solicitar Auditoría
