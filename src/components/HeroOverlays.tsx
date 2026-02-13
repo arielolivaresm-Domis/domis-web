@@ -1,6 +1,13 @@
 "use client";
 import { motion, useTransform, MotionValue } from "framer-motion";
 
+// Declaración para que TypeScript acepte el sensor de Google
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
   const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
   const y = useTransform(scrollYProgress, [0, 0.4], [0, -50]);
@@ -10,6 +17,15 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
   const cardPointerEvents = useTransform(scrollYProgress, (v) => v > 0.8 ? "none" : "auto");
 
   const handleWhatsAppClick = () => {
+    // --- Sensor de Google Analytics ---
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'contacto_whatsapp', {
+        'event_category': 'Conversion',
+        'event_label': 'Hero Card Principal',
+        'value': 1
+      });
+    }
+
     const nombre = (document.getElementById('nombre') as HTMLInputElement)?.value || "Cliente Nuevo";
     const telefono = (document.getElementById('telefono') as HTMLInputElement)?.value || "No especificado";
     const phoneNumber = "56929901343";
@@ -75,5 +91,3 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
     </motion.div>
   );
 }
-
-// HeroSpecs eliminado completamente - ya no existe
