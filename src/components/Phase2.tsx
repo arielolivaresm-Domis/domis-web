@@ -1,17 +1,38 @@
 import { Handshake, FileCheck, TrendingDown } from 'lucide-react';
 import Section from './layout/Section';
 
+// Declaración para que TypeScript acepte el sensor de Google
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 /**
  * COMPONENTE FASE 2: NEGOCIACIÓN TÉCNICA
  * Integrado con Molde Maestro para anchos de precisión.
  */
 export default function Phase2({ onNext }: { onNext: () => void }) {
+  
+  const handlePhaseClick = () => {
+    // Sensor: Registrar interés en la estrategia de cierre
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'interes_estrategia_cierre', {
+        'event_category': 'Navegacion',
+        'event_label': 'Card Negociacion Fase 2',
+        'value': 1
+      });
+    }
+    // Ejecutar la función original de navegación
+    onNext();
+  };
+
   return (
     <Section id="estrategia-cierre" className="py-12 md:py-24">
       
       {/* CONTENEDOR TIPO CARD - INTEGRADO */}
       <div 
-        onClick={() => onNext()}
+        onClick={handlePhaseClick}
         className="relative h-[450px] md:h-[550px] rounded-[2.5rem] md:rounded-[4rem] overflow-hidden border-2 border-slate-800 group transition-all duration-500 hover:border-cyan-500/50 shadow-2xl shadow-slate-950/50 cursor-pointer"
       >
         
