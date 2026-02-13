@@ -2,6 +2,13 @@ import { useState } from 'react';
 import { ChevronRight, X, TrendingUp, Home, Building2, ChevronLeft } from 'lucide-react';
 import Section from './layout/Section';
 
+// Declaración para que TypeScript acepte el sensor de Google
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 interface CaseData {
   id: number;
   name: string;
@@ -120,6 +127,29 @@ export default function RealCases() {
   const [selectedCase, setSelectedCase] = useState<CaseData | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  const handleSelectCase = (caso: CaseData) => {
+    // Sensor: Registrar qué caso se abre para leer
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'ver_caso_exito', {
+        'event_category': 'Interes',
+        'event_label': caso.name,
+        'value': 1
+      });
+    }
+    setSelectedCase(caso);
+  };
+
+  const trackCTAClick = () => {
+    // Sensor: Registrar clic en el botón de solicitar auditoría desde casos reales
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'click_cta_casos', {
+        'event_category': 'Conversion',
+        'event_label': 'Solicitar Mi Auditoria',
+        'value': 1
+      });
+    }
+  };
+
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % cases.length);
   };
@@ -149,7 +179,7 @@ export default function RealCases() {
 
         <div className="hidden md:grid md:grid-cols-3 gap-6 md:gap-8">
           {cases.map((caso) => (
-            <CaseCard key={caso.id} caso={caso} onClick={() => setSelectedCase(caso)} />
+            <CaseCard key={caso.id} caso={caso} onClick={() => handleSelectCase(caso)} />
           ))}
         </div>
 
@@ -161,7 +191,7 @@ export default function RealCases() {
             >
               {cases.map((caso) => (
                 <div key={caso.id} className="min-w-full px-2">
-                  <CaseCard caso={caso} onClick={() => setSelectedCase(caso)} />
+                  <CaseCard caso={caso} onClick={() => handleSelectCase(caso)} />
                 </div>
               ))}
             </div>
@@ -202,6 +232,7 @@ export default function RealCases() {
         <div className="mt-16 text-center">
           <a 
             href="#auditoria-directa"
+            onClick={trackCTAClick}
             className="inline-flex items-center justify-center gap-3 px-8 md:px-12 py-4 md:py-6 bg-cyan-500 text-slate-950 font-black rounded-2xl uppercase tracking-widest text-[11px] md:text-sm hover:bg-white transition-all shadow-xl active:scale-95"
           >
             Solicitar Mi Auditoría
