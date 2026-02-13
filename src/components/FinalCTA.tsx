@@ -1,6 +1,24 @@
+// Declaración para que TypeScript acepte el sensor de Google
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 export default function FinalCTA() {
   // URL de WhatsApp con tu mensaje exacto y número oficial de Ingeniería
   const whatsappUrl = "https://wa.me/56929901343?text=Hola, equipo DOMIS™.  necesito Auditoría técnica profesional + Estrategia de negociación para una propiedad...";
+
+  // Función para registrar el evento en Google Analytics
+  const trackFinalWhatsAppClick = () => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'contacto_whatsapp', {
+        'event_category': 'Conversion',
+        'event_label': 'Final CTA Cierre',
+        'value': 1
+      });
+    }
+  };
 
   return (
     <section id="contacto" className="py-0 md:py-24 px-0 md:px-6 bg-slate-950">
@@ -43,6 +61,7 @@ export default function FinalCTA() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={trackFinalWhatsAppClick}
                   className="group relative px-10 py-5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black uppercase rounded-2xl transition-all duration-300 text-center shadow-[0_0_30px_rgba(34,211,238,0.4)]"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-3">
