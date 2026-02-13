@@ -3,8 +3,26 @@ import { useState } from 'react';
 import { Search, Crown, Clock, MapPin, CheckCircle, FileText, Calculator, MessageCircle } from 'lucide-react';
 import Section from './layout/Section';
 
+// Declaración para que TypeScript acepte el sensor de Google
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 export default function Sourcing() {
   const handleWhatsApp = (tipo: string, cantidad: number, meters: number, total: number) => {
+    // --- Sensor de Google Analytics ---
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'cotizacion_sourcing', {
+        'event_category': 'Conversion',
+        'event_label': `Sourcing ${tipo}`,
+        'value': total,
+        'cantidad_propiedades': cantidad,
+        'metros_cuadrados': meters
+      });
+    }
+
     const telefono = "56929901343"; 
     const mensaje = `Hola DOMIS™, configuré un Pack Sourcing ${tipo} por ${cantidad} propiedades de ${meters}m². Inversión: $${total.toLocaleString()} + IVA. ¡Vamos por mí!`;
     window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
@@ -112,7 +130,7 @@ function SourcingVIP({ onSelect }: { onSelect: any }) {
   const [cantidadCustom, setCantidadCustom] = useState(3);
   const [meters, setMeters] = useState(100);
 
-  const efectiveCantidad = cantidad === 3 ? cantidadCustom : cantidad;
+  const efectiveCantidad = Math.max(1, cantidad === 3 ? cantidadCustom : cantidad);
   const effectiveMeters = Math.max(100, meters);
   const visitamos = efectiveCantidad === 1 ? 2 : efectiveCantidad === 2 ? 4 : 5;
   const labels = efectiveCantidad === 1 ? "2" : efectiveCantidad === 2 ? "3 a 4" : "4 a 5";
