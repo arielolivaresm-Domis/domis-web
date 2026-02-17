@@ -33,7 +33,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ password, setPassword,
         {loginError && <p className="text-red-500 font-bold mt-4">{loginError}</p>}
         
         <div className="mt-6 pt-6 border-t border-slate-700 w-full">
-          <a href="/" className="text-slate-500 hover:text-emerald-400 text-xs transition-colors flex items-center justify-center gap-2">
+          <a href="https://www.domis.cl" className="text-slate-500 hover:text-emerald-400 text-xs transition-colors flex items-center justify-center gap-2">
                ⬅ Volver a Sitio Web Domis.cl
           </a>
         </div>
