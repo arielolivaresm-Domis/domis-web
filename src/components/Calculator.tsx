@@ -43,7 +43,7 @@ const Calculator = () => {
                  `• *Inversión Est. F1:* $${calculations.totalConIva.toLocaleString()}\n\n` +
                  `*Deseo iniciar el protocolo de validación técnica.*`;
 
-    return `https://api.whatsapp.com/send?phone=56929901343&text=${encodeURIComponent(text)}`;
+    return `https://wa.me/56929901343?text=${encodeURIComponent(text)}`;
   }, [pack, meters, sourcing, calculations.totalConIva]);
 
   return (

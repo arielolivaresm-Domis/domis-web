@@ -29,7 +29,7 @@ export default function BenefitFlyer() {
   
   const whatsappUrl = useMemo(() => {
     const message = `💎 *SOLICITUD FASE 2 - DOMIS™*\n\n• *Nombre:* ${nombre}\n\nHola, quiero activar la negociación técnica con la estructura de pago por éxito (Fase 2).`;
-    return `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
+    return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   }, [nombre]);
 
   const handleSubmit = (e: React.FormEvent) => {
