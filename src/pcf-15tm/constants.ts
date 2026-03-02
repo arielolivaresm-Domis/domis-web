@@ -35,18 +35,64 @@ export const NORMATIVA_DB: Record<string, string> = {
   'nch_elec': 'NCh 4/2003 (Legacy) o RIC Actuales'
 };
 
-// Base de Datos Comunal
+// Base de Datos Comunal - RANKING PAES ACTUALIZADO
 export const COMMUNE_DB: CommuneDB = {
-  "LA REINA": { schools: ["Andree English School", "The Grange School", "British Royal School"], safe: "1419", trash: "Reciclaje Dom. / Trebila", benefits: "Tarjeta Ciudad, Parque Mahuida" },
-  "LAS CONDES": { schools: ["Verbo Divino", "Villa María Academy", "Cumbres"], safe: "1402", trash: "Puntos Limpios Móviles", benefits: "Tarjeta Vecino, Clínica Cordillera" },
-  "VITACURA": { schools: ["Saint George's", "Alianza Francesa", "Tabancura"], safe: "1403", trash: "Reciclaje Casa a Casa", benefits: "Tarjeta Mi Vita, Bicentenario" },
-  "LO BARNECHEA": { schools: ["Nido de Aguilas", "Santiago College", "Everest"], safe: "1405", trash: "Punto Limpio Móvil", benefits: "Club Preferente, Globo Vigilancia" },
-  "PROVIDENCIA": { schools: ["San Ignacio El Bosque", "Cambridge", "Saint Gabriel's"], safe: "1414", trash: "Recicla en Casa", benefits: "SoyProvidencia, Ciclovías" },
-  "NUNOA": { schools: ["Colegio Suizo", "Calasanz", "Manuel de Salas"], safe: "1445", trash: "Ñuñoa Recicla", benefits: "Tarjeta Vecino, Cultura" },
-  "PENALOLEN": { schools: ["Colegio Mayor", "Pedro de Valdivia", "Pumahue"], safe: "1461", trash: "Reciclaje Inclusivo", benefits: "Piscina Temperada" },
-  "PEÑALOLEN": { schools: ["Colegio Mayor", "Pedro de Valdivia", "Pumahue"], safe: "1461", trash: "Reciclaje Inclusivo", benefits: "Piscina Temperada" },
-  "SANTIAGO": { schools: ["Instituto Nacional", "Liceo 1", "San Ignacio"], safe: "1406", trash: "Retiro Diario", benefits: "Red Metro Total" },
-  "LA FLORIDA": { schools: ["American British", "Liceo Polivalente", "La Salle"], safe: "1416", trash: "Reciclaje Comunal", benefits: "Club Vive" }
+  "VITACURA": {
+      schools: ["Col. Los Alerces (Top 1)", "Saint George's College", "Colegio Tabancura", "Colegio Santa Úrsula"],
+      safe: "1403", trash: "Reciclaje Casa a Casa", benefits: "Tarjeta Mi Vita, Parque Bicentenario"
+  },
+  "LAS CONDES": {
+      schools: ["Col. Cordillera (Top PAES)", "Villa María Academy", "Colegio Los Andes", "Verbo Divino"],
+      safe: "1402", trash: "Puntos Limpios Móviles", benefits: "Tarjeta Vecino, Clínica Cordillera"
+  },
+  "LO BARNECHEA": {
+      schools: ["Instituto Hebreo", "The Int. School Nido de Águilas", "Colegio Everest", "Colegio Monte Tabor"],
+      safe: "1405", trash: "Punto Limpio Móvil", benefits: "Club Preferente, Globo Vigilancia"
+  },
+  "LA REINA": {
+      schools: ["The Grange School", "Andree English School", "British Royal School", "Colegio Madrigal"],
+      safe: "1419", trash: "Reciclaje Dom. / Trebila", benefits: "Tarjeta Ciudad, Parque Mahuida"
+  },
+  "PROVIDENCIA": {
+      schools: ["Col. San Ignacio El Bosque", "The English Institute", "Colegio Cambridge College", "Liceo Tajamar"],
+      safe: "1414", trash: "Recicla en Casa", benefits: "SoyProvidencia, Ciclovías"
+  },
+  "NUNOA": {
+      schools: ["Colegio Akros", "Liceo Augusto D'Halmar", "Colegio Suizo", "Manuel de Salas"],
+      safe: "1445", trash: "Ñuñoa Recicla", benefits: "Tarjeta Vecino, Cultura"
+  },
+  "PENALOLEN": {
+      schools: ["Colegio Pumahue", "Colegio Mayor", "Pedro de Valdivia", "Altamira"],
+      safe: "1461", trash: "Reciclaje Inclusivo", benefits: "Piscina Temperada"
+  },
+  "PEÑALOLEN": {
+      schools: ["Colegio Pumahue", "Colegio Mayor", "Pedro de Valdivia", "Altamira"],
+      safe: "1461", trash: "Reciclaje Inclusivo", benefits: "Piscina Temperada"
+  },
+  "SANTIAGO": {
+      schools: ["Instituto Nacional", "Liceo 1 Javiera Carrera", "San Ignacio (Alonso Ovalle)"],
+      safe: "1406", trash: "Retiro Diario", benefits: "Red Metro Total"
+  },
+  "LA FLORIDA": {
+      schools: ["Colegio American British", "Colegio Liahona", "Liceo Bicentenario"],
+      safe: "1416", trash: "Reciclaje Comunal", benefits: "Club Vive"
+  },
+  "MACUL": {
+      schools: ["Colegio San Marcos", "Liceo Juana de Ibarbourou"],
+      safe: "1444", trash: "Puntos verdes", benefits: "Tarjeta Vecino"
+  },
+  "HUECHURABA": {
+      schools: ["Lincoln College", "Boston College", "San Francisco Javier"],
+      safe: "1418", trash: "Puntos limpios", benefits: "Conectividad Vespucio"
+  },
+  "COLINA": {
+      schools: ["Colegio San Anselmo", "Colegio Alemán de Chicureo", "San José de Chicureo"],
+      safe: "1468", trash: "Reciclaje Chicureo", benefits: "Tarjeta Vecino Colina"
+  },
+  "MAIPU": {
+      schools: ["Colegio San Pedro Poveda", "Liceo Bicentenario de Maipú", "Alicante del Rosal"],
+      safe: "1418", trash: "Maipú Recicla", benefits: "SMAPA, Metro"
+  }
 };
 
 // Amenidades Portal
@@ -86,7 +132,7 @@ export const ITEMS = {
     {id:'ench', l:'Enchufes', t:'spec', norm: 'sec_ench'}
   ] as AuditItemConfig[],
   ext: [
-    {id:'fach', l:'Fachada', t:'fix', v:CFG.u.fach, norm: 'oguc_est'}, 
+    {id:'fach', l:'Fachada', t:'m2', v:CFG.u.fach, norm: 'oguc_est'},
     {id:'aseo', l:'Aseo/Escombros', t:'fix', v:CFG.u.aseo}, 
     {id:'luc', l:'Luces Ext.', t:'spec', norm: 'sec_ench'}, 
     {id:'ench', l:'Enchufes Ext.', t:'spec', norm: 'sec_ench'}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CHILEAN_NORMS } from '../normativeData';
+import { CHILEAN_NORMS } from '../normativeData.ts';
 
 export const NormativeAnnex: React.FC = () => {
   return (

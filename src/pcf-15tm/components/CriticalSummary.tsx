@@ -1,6 +1,6 @@
 import React from 'react';
-import { AuditState, AuditScore } from '../types';
-import { ITEMS, DORM_ITEMS, BATH_ITEMS, STAIR_ITEMS } from '../constants';
+import { AuditState, AuditScore } from '../types.ts';
+import { ITEMS, DORM_ITEMS, BATH_ITEMS, STAIR_ITEMS } from '../constants.ts';
 
 interface CriticalSummaryProps {
   auditState: AuditState;
@@ -36,7 +36,7 @@ export const CriticalSummary: React.FC<CriticalSummaryProps> = ({ auditState }) 
 
   return (
     <div className="hidden print:block break-after-page mb-8">
-      <div className="border-4 border-red-600 p-6 rounded-lg bg-white shadow-xl">
+      <div className="border-4 border-red-600 p-6 rounded-lg bg-white">
         <h1 className="text-3xl font-black text-red-600 uppercase text-center mb-2">
             🚨 RESUMEN EJECUTIVO DE CRITICIDAD
         </h1>
@@ -56,7 +56,7 @@ export const CriticalSummary: React.FC<CriticalSummaryProps> = ({ auditState }) 
             <tbody>
                 {redItems.map(([key, val], idx) => (
                     <tr key={key} className="border-b border-gray-200">
-                        <td className="p-2 font-bold text-gray-800 align-top uppercase">
+                        <td className="p-2 font-bold text-gray-800 align-top">
                             {findItemLabel(key)}
                         </td>
                         <td className="p-2 text-center align-top">
@@ -64,7 +64,7 @@ export const CriticalSummary: React.FC<CriticalSummaryProps> = ({ auditState }) 
                                 {val.score}
                             </span>
                         </td>
-                        <td className="p-2 text-gray-700 italic align-top text-justify">
+                        <td className="p-2 text-gray-700 italic align-top">
                             {val.observation || "Sin observación registrada."}
                         </td>
                         <td className="p-2 align-top text-center">
@@ -79,8 +79,8 @@ export const CriticalSummary: React.FC<CriticalSummaryProps> = ({ auditState }) 
             </tbody>
         </table>
 
-        <div className="mt-6 p-3 bg-gray-100 border-l-4 border-red-600 text-[10px] text-gray-600 italic leading-tight">
-            <strong>NOTA IMPORTANTE:</strong> Este resumen es un extracto técnico de la auditoría PCF-15. Solo incluye ítems calificados con nota 1.0 (Crítico) o 2.0 (Malo), los cuales representan riesgos funcionales, normativos o de seguridad inminente según estándares CDT.
+        <div className="mt-6 p-3 bg-gray-100 border-l-4 border-red-600 text-[10px] text-gray-600 italic">
+            <strong>NOTA IMPORTANTE:</strong> Este resumen solo incluye ítems calificados con nota 1.0 (Crítico) o 2.0 (Malo), los cuales representan riesgos funcionales, normativos o de seguridad que requieren presupuesto inmediato.
         </div>
       </div>
     </div>

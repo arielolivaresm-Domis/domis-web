@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface AuditItemConfig {
   id: string;
   l: string; // Label
@@ -18,6 +16,8 @@ export interface AuditScore {
   photos?: string[]; // Array of Base64 image strings
   cost: number;
   observation?: string; // Nota individual por ítem
+  measureW?: number; // Ancho en metros
+  measureL?: number; // Largo en metros
 }
 
 export interface AuditState {
@@ -68,6 +68,8 @@ export interface PlaceCategory {
   icon?: string;
   results?: PlaceResult[];
   totalCount?: number;
+  skipRating?: boolean; // Permitir mostrar resultados con bajo rating (ej: Comisarías)
+  radius?: number; // Radio de búsqueda personalizado en metros
 }
 
 export interface NormativeInfraction {

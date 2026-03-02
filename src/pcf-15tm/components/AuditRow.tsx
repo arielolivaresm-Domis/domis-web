@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { AuditItemConfig, AuditScore } from '../types';
-import { NORMATIVA_DB } from '../constants';
-import { CHILEAN_NORMS } from '../normativeData';
+import { AuditItemConfig, AuditScore } from '../types.ts';
+import { CHILEAN_NORMS } from '../normativeData.ts';
 
 // Ítems permitidos para marcar "Suministro Cortado" (N/A)
 const ALLOWED_NA_IDS = ['elec', 'agua', 'gas', 'luc', 'ench', 'art', 'wc', 'tin'];
+const MAX_PHOTOS = 10; // Límite aumentado a 10 fotos por módulo
 
 interface AuditRowProps {
   item: AuditItemConfig;
@@ -23,23 +23,41 @@ export const AuditRow: React.FC<AuditRowProps> = ({ item, state, onChange, prefi
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showThumbs, setShowThumbs] = useState(true);
   const [showNormModal, setShowNormModal] = useState(false);
-  
+
   // Verificar si este ítem permite N/A
   const canHaveNa = ALLOWED_NA_IDS.includes(item.id);
-  
+
+  // Verificar si el ítem permite calculadora de medidas (W x L)
+  const showCalculator = ['techo', 'p', 'm', 'c', 'v', 'mob', 'cub', 'cl', 'fach'].includes(item.id);
+
   const handleScoreClick = (s: number) => {
     // Si ponemos nota, quitamos el N/A automáticamente
     onChange({ score: s, isNa: false });
+  };
+
+  const handleMeasureChange = (field: 'measureW' | 'measureL', value: string) => {
+      const numVal = parseFloat(value);
+      const updates: Partial<AuditScore> = { [field]: isNaN(numVal) ? undefined : numVal };
+
+      // Calcular nueva cantidad si ambas medidas existen
+      const w = field === 'measureW' ? numVal : state.measureW;
+      const l = field === 'measureL' ? numVal : state.measureL;
+
+      if (w && l) {
+          updates.qty = parseFloat((w * l).toFixed(2));
+      }
+
+      onChange(updates);
   };
 
   const handleNaClick = () => {
     const newNa = !state.isNa;
     if (newNa) {
         // Lógica "Suministro Cortado": Anula nota y llena observación
-        onChange({ 
-            isNa: true, 
-            score: 0, 
-            observation: "No auditado por corte de suministro. Revisión solo visual." 
+        onChange({
+            isNa: true,
+            score: 0,
+            observation: "No auditado por corte de suministro. Revisión solo visual."
         });
     } else {
         onChange({ isNa: false, observation: "" });
@@ -76,8 +94,8 @@ export const AuditRow: React.FC<AuditRowProps> = ({ item, state, onChange, prefi
 
       // Filtrar y ordenar: Primero los que coinciden con tags, luego el resto
       return [...CHILEAN_NORMS].sort((a, b) => {
-          const aMatch = a.tags.some((t: string) => searchTags.includes(t));
-          const bMatch = b.tags.some((t: string) => searchTags.includes(t));
+          const aMatch = a.tags.some(t => searchTags.includes(t));
+          const bMatch = b.tags.some(t => searchTags.includes(t));
           if (aMatch && !bMatch) return -1;
           if (!aMatch && bMatch) return 1;
           return 0;
@@ -85,23 +103,66 @@ export const AuditRow: React.FC<AuditRowProps> = ({ item, state, onChange, prefi
   };
 
   const handleCameraClick = () => {
+    if ((state.photos?.length || 0) >= MAX_PHOTOS) {
+        alert(`Límite alcanzado: Máximo ${MAX_PHOTOS} fotos por ítem.`);
+        return;
+    }
     fileInputRef.current?.click();
+  };
+
+  const handleMicClickLocal = () => {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert("⚠️ Tu navegador no soporta dictado por voz nativo.\n\nTe recomendamos usar Google Chrome. En iPhone (Safari) esta función está limitada por Apple.");
+        return;
+    }
+    if (onMicClick) onMicClick();
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        const currentPhotos = state.photos || [];
-        const newPhotos = [...currentPhotos, base64String];
-        onChange({ 
-          hasPhoto: true, 
-          photoCount: newPhotos.length,
-          photos: newPhotos
-        });
-        setShowThumbs(true);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+            // Compresión de imagen usando Canvas
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 1024;
+            const MAX_HEIGHT = 1024;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+                if (width > MAX_WIDTH) {
+                    height *= MAX_WIDTH / width;
+                    width = MAX_WIDTH;
+                }
+            } else {
+                if (height > MAX_HEIGHT) {
+                    width *= MAX_HEIGHT / height;
+                    height = MAX_HEIGHT;
+                }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx?.drawImage(img, 0, 0, width, height);
+
+            // Exportar a JPEG con 70% de calidad
+            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+
+            const currentPhotos = state.photos || [];
+            if (currentPhotos.length >= MAX_PHOTOS) return;
+
+            const newPhotos = [...currentPhotos, compressedBase64];
+            onChange({
+              hasPhoto: true,
+              photoCount: newPhotos.length,
+              photos: newPhotos
+            });
+            setShowThumbs(true);
+        };
+        img.src = event.target?.result as string;
       };
       reader.readAsDataURL(file);
     }
@@ -114,19 +175,19 @@ export const AuditRow: React.FC<AuditRowProps> = ({ item, state, onChange, prefi
        onChange({ photoCount: 0, hasPhoto: false, photos: [] });
     }
   };
-  
+
   const photoCount = state.photoCount || (state.photos?.length || 0);
-  
+
   // --- LÓGICA DE SEMÁFORO HÍBRIDO ---
   let statusColor = "bg-slate-700"; // Default (Sin nota)
   let statusLabel = "PENDIENTE";
-  
+
   if (state.score > 0) {
       if (state.score <= 2) { statusColor = "bg-red-600"; statusLabel = "GRAVE (NO)"; }
       else if (state.score <= 5) { statusColor = "bg-amber-500"; statusLabel = "OBS (LEVE)"; }
       else { statusColor = "bg-emerald-500"; statusLabel = "OK"; }
   } else if (state.isNa) {
-      statusColor = "bg-blue-600"; 
+      statusColor = "bg-blue-600";
       statusLabel = "S. CORTADO";
   }
 
@@ -136,7 +197,7 @@ export const AuditRow: React.FC<AuditRowProps> = ({ item, state, onChange, prefi
       <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${statusColor} rounded-r`}></div>
 
       <div className="flex items-center justify-between">
-        
+
         {/* COLUMNA 1: ÍTEM Y NORMA */}
         <div className="flex-1 flex items-center gap-2 pl-1">
             <span className="text-sm text-slate-300 font-medium group-hover:text-white transition-colors print:text-black print:font-bold">{item.l}</span>
@@ -144,13 +205,42 @@ export const AuditRow: React.FC<AuditRowProps> = ({ item, state, onChange, prefi
                 📖 NORMA
             </button>
         </div>
-        
+
         {/* INPUT DE CANTIDAD / M2 */}
         {showInput && (
-          <div className="mr-2 no-print">
+          <div className="mr-2 no-print flex items-center gap-1">
+            {showCalculator && (
+                <div className="flex items-center gap-1 mr-2">
+                    <input
+                        type="number"
+                        placeholder="L"
+                        title="Largo (m)"
+                        className="w-12 h-7 text-center text-xs bg-slate-800 border border-slate-600 rounded text-slate-300 focus:border-emerald-500 outline-none"
+                        value={state.measureL || ''}
+                        onChange={(e) => handleMeasureChange('measureL', e.target.value)}
+                    />
+                    <span className="text-slate-500 text-[10px]">x</span>
+                    <input
+                        type="number"
+                        placeholder="A"
+                        title="Ancho (m)"
+                        className="w-12 h-7 text-center text-xs bg-slate-800 border border-slate-600 rounded text-slate-300 focus:border-emerald-500 outline-none"
+                        value={state.measureW || ''}
+                        onChange={(e) => handleMeasureChange('measureW', e.target.value)}
+                    />
+                    <span className="text-slate-500 text-[10px]">=</span>
+                    {(state.measureL || state.measureW) && (
+                        <button
+                            onClick={() => { handleMeasureChange('measureL', ''); handleMeasureChange('measureW', ''); onChange({qty: 0}); }}
+                            className="text-red-400 hover:text-red-300 ml-1 text-xs font-bold w-4 h-4 flex items-center justify-center rounded-full bg-red-900/30"
+                            title="Limpiar medidas"
+                        >×</button>
+                    )}
+                </div>
+            )}
             <input
               type="number"
-              className="w-14 h-7 text-center text-xs bg-slate-700 border border-slate-600 rounded text-white focus:border-emerald-500 outline-none transition-all"
+              className="w-14 h-7 text-center text-xs bg-slate-700 border border-slate-600 rounded text-white focus:border-emerald-500 outline-none transition-all font-bold"
               placeholder={placeholder}
               value={state.qty || ''}
               onChange={(e) => onChange({ qty: parseFloat(e.target.value) || 0 })}
@@ -188,7 +278,7 @@ export const AuditRow: React.FC<AuditRowProps> = ({ item, state, onChange, prefi
                     [1, 2, 3, 4, 5, 6, 7].map(n => {
                     const isActive = state.score === n;
                     let colorClass = 'bg-slate-700 border-slate-600 text-slate-400';
-                    
+
                     if (isActive) {
                         if (n <= 2) colorClass = 'bg-red-600 text-white border-red-500';
                         else if (n <= 5) colorClass = 'bg-amber-500 text-slate-900 border-amber-400';
@@ -203,7 +293,7 @@ export const AuditRow: React.FC<AuditRowProps> = ({ item, state, onChange, prefi
                     })
                 )}
             </div>
-            
+
             {state.isNa && (
                 <div className="text-[9px] text-blue-400 font-bold mt-1 bg-blue-900/30 px-1 rounded animate-pulse whitespace-nowrap">
                    ⚠️ Suministro Cortado
@@ -235,13 +325,13 @@ export const AuditRow: React.FC<AuditRowProps> = ({ item, state, onChange, prefi
         {/* BOTÓN CÁMARA */}
         <div className="relative w-8 h-7 no-print">
           <input type="file" accept="image/*" capture="environment" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-          <button onClick={handleCameraClick} className={`w-full h-full flex items-center justify-center rounded border transition-colors relative ${photoCount > 0 ? 'bg-emerald-500/20 text-emerald-500 border-emerald-500' : 'bg-transparent text-slate-500 border-slate-600'}`}>
+          <button onClick={handleCameraClick} className={`w-full h-full flex items-center justify-center rounded border transition-colors relative ${photoCount > 0 ? (photoCount >= MAX_PHOTOS ? 'bg-amber-500/20 text-amber-500 border-amber-500' : 'bg-emerald-500/20 text-emerald-500 border-emerald-500') : 'bg-transparent text-slate-500 border-slate-600'}`} title={`Adjuntar Fotos (${photoCount}/${MAX_PHOTOS})`}>
             📷
             {photoCount > 0 && <span onClick={handleResetPhotos} className="absolute -top-2 -right-2 bg-emerald-500 text-slate-900 text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-slate-900 shadow-sm cursor-pointer hover:bg-red-500 hover:text-white">{photoCount}</span>}
           </button>
         </div>
       </div>
-      
+
       {/* THUMBNAILS FOTOS */}
       {photoCount > 0 && showThumbs && (
         <div className="flex gap-2 mt-2 px-1 overflow-x-auto pb-2 print:flex-wrap print:overflow-visible">
@@ -259,20 +349,20 @@ export const AuditRow: React.FC<AuditRowProps> = ({ item, state, onChange, prefi
       {/* TEXTAREA OBSERVACIÓN (PANTALLA) */}
       <div className="mt-2 pl-1 pr-2 no-print">
         <div className="flex gap-2 items-start bg-slate-900/30 p-1.5 rounded border border-slate-700/30 focus-within:border-slate-600 transition-colors">
-            <textarea 
-              className="w-full bg-transparent text-[11px] text-slate-300 placeholder-slate-600 outline-none resize-none overflow-hidden" 
-              placeholder={`Observación técnica ${item.l}...`} 
-              rows={1} 
+            <textarea
+              className="w-full bg-transparent text-[11px] text-slate-300 placeholder-slate-600 outline-none resize-none overflow-hidden"
+              placeholder={`Observación técnica ${item.l}...`}
+              rows={1}
               style={{minHeight: '20px'}}
-              value={state.observation || ''} 
+              value={state.observation || ''}
               onChange={(e) => {
                 onChange({ observation: e.target.value });
                 e.target.style.height = 'auto';
                 e.target.style.height = e.target.scrollHeight + 'px';
-              }} 
+              }}
             />
             {onMicClick && (
-              <button onClick={onMicClick} className={`p-1 rounded-full transition-all text-[10px] ${isListening ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'}`}>🎤</button>
+              <button onClick={handleMicClickLocal} className={`p-1 rounded-full transition-all text-[10px] ${isListening ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'}`}>🎤</button>
             )}
         </div>
       </div>
