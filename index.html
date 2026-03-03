@@ -43,6 +43,167 @@
         input, select, textarea { border: 1px solid #ccc; background: white !important; color: black !important; }
       }
     </style>
+    <!-- DOMIS™ Schema JSON-LD -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://www.domis.cl/#business",
+      "name": "DOMIS™ Property Audit",
+      "legalName": "ARAX SpA",
+      "brand": {
+        "@type": "Brand",
+        "name": "DOMIS™",
+        "slogan": "Compra con certeza, no con esperanza."
+      },
+      "description": "El primer Buyer's Agent Técnico de Chile. Auditamos técnicamente propiedades usadas con metodología PCF-15™, valorizamos cada hallazgo en UF y negociamos el mejor precio exclusivamente a favor del comprador.",
+      "url": "https://www.domis.cl",
+      "logo": "https://www.domis.cl/logo.png",
+      "image": "https://www.domis.cl/og-image.jpg",
+      "telephone": ["+56929901343", "+56982348089"],
+      "email": "ariel@domis.cl",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Santiago",
+        "addressRegion": "Región Metropolitana",
+        "addressCountry": "CL"
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Las Condes" },
+        { "@type": "City", "name": "Providencia" },
+        { "@type": "City", "name": "La Reina" },
+        { "@type": "City", "name": "Vitacura" },
+        { "@type": "City", "name": "Lo Barnechea" },
+        { "@type": "City", "name": "Ñuñoa" },
+        { "@type": "City", "name": "Macul" },
+        { "@type": "City", "name": "La Florida" },
+        { "@type": "City", "name": "Peñalolén" },
+        { "@type": "State", "name": "Región Metropolitana" }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/domis.chile",
+        "https://www.facebook.com/domispropertychile"
+      ],
+      "priceRange": "$$",
+      "currenciesAccepted": "CLP",
+      "paymentAccepted": "Transferencia bancaria",
+      "openingHours": "Mo-Fr 09:00-18:00",
+      "keywords": "auditoría técnica inmobiliaria, inspección propiedad Santiago, buyer's agent Chile, vicio oculto propiedad, negociar precio propiedad, PCF-15, auditoría antes de comprar"
+    },
+
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.domis.cl/#service-f1",
+      "name": "Auditoría Técnica PCF-15™ — Fase 1",
+      "description": "Inspección técnica completa de propiedades usadas con cámara térmica FLIR, dron DJI, detector de gas RIDGID Professional, nivelador Bosch y medidor láser. Incluye informe técnico con hallazgos valorizados en UF y análisis de entorno en radio de 3 km: colegios PAES, metro, paraderos, seguridad, parques, servicios y plusvalía real.",
+      "provider": { "@id": "https://www.domis.cl/#business" },
+      "areaServed": "Región Metropolitana, Chile",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "CLP",
+        "price": "190000",
+        "description": "Precio base para 100m² + IVA. Mínimo facturable 100m².",
+        "eligibleRegion": "Chile"
+      },
+      "serviceType": "Inspección técnica inmobiliaria",
+      "url": "https://www.domis.cl/#proceso"
+    },
+
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.domis.cl/#service-f2",
+      "name": "Negociación Técnica — Fase 2",
+      "description": "Valorización en UF de cada hallazgo detectado en Fase 1, cruzada con tasación de mercado HousPricing y comparables CBR. Genera 3 informes de negociación con el rango real (valor máximo y mínimo) que el comprador puede ofrecer al vendedor con respaldo técnico y de mercado documentado.",
+      "provider": { "@id": "https://www.domis.cl/#business" },
+      "areaServed": "Región Metropolitana, Chile",
+      "offers": {
+        "@type": "Offer",
+        "description": "Fee de activación $400.000 + comisión del 10% sobre el ahorro logrado (success fee). Sin ahorro, sin comisión.",
+        "priceCurrency": "CLP"
+      },
+      "serviceType": "Asesoría de negociación inmobiliaria",
+      "url": "https://www.domis.cl/#proceso"
+    },
+
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.domis.cl/#service-f3",
+      "name": "Remodelación Llave en Mano — Fase 3",
+      "description": "Remodelación completa de la propiedad adquirida. Al conocer cada detalle técnico desde la Fase 1, DOMIS™ ejecuta sin sorpresas ni costos ocultos. Presupuesto real y ejecutable independiente de la valorización referencial de Fase 2.",
+      "provider": { "@id": "https://www.domis.cl/#business" },
+      "serviceType": "Remodelación inmobiliaria",
+      "url": "https://www.domis.cl/#proceso"
+    },
+
+    {
+      "@type": "Person",
+      "@id": "https://www.domis.cl/#founder",
+      "name": "Ariel",
+      "jobTitle": "Fundador y Constructor Civil",
+      "description": "Constructor Civil con más de 15 años de experiencia en construcción. Fundador de DOMIS™, el primer Buyer's Agent Técnico de Chile.",
+      "worksFor": { "@id": "https://www.domis.cl/#business" },
+      "url": "https://www.domis.cl"
+    },
+
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.domis.cl/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué es una auditoría técnica inmobiliaria?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Es una inspección profesional no destructiva que evalúa el estado real de una propiedad antes de comprarla. DOMIS™ usa cámara térmica FLIR, dron DJI, detector de gas RIDGID y medidor láser Bosch para detectar fallas ocultas, valorizarlas en UF y convertirlas en argumentos de negociación reales." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué es un vicio oculto en una propiedad?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Un vicio oculto es una falla o defecto de la propiedad que no es visible al ojo humano durante una visita normal. Puede ser humedad detrás de los muros, instalaciones eléctricas deficientes, fugas de gas invisibles o problemas estructurales. La auditoría PCF-15™ de DOMIS™ los detecta con herramientas profesionales antes de que firmes la promesa de compra." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto puedo negociar al comprar una propiedad en Santiago?",
+          "acceptedAnswer": { "@type": "Answer", "text": "El mercado promedio sin asesoría técnica logra descuentos de 5 a 7%. Con DOMIS™, que cruza hallazgos técnicos valorizados en UF con tasaciones de mercado reales, los casos documentados muestran descuentos de 9% en Las Condes ($39.5M ahorrados), 11% en Providencia ($68M ahorrados) y 18% en La Reina ($141M ahorrados)." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Vale la pena contratar inspección técnica antes de comprar una propiedad?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Sí. El precio publicado de una propiedad usada en Santiago viene inflado entre 5% y 10% sobre el valor real de cierre. Sin una inspección técnica profesional, el comprador no tiene argumentos para negociar. DOMIS™ no solo detecta las fallas, sino que las valoriza en UF y genera una estrategia de negociación documentada para lograr el mejor precio posible." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué incluye el análisis de entorno de DOMIS™?",
+          "acceptedAnswer": { "@type": "Answer", "text": "DOMIS™ incluye en cada auditoría un análisis completo del entorno en radio de 3 km: colegios con puntaje PAES, estaciones de metro, paraderos, servicios de seguridad, bancos, parques, supermercados, malls, farmacias, centros médicos y urgencias. Toda esta información se entrega en el informe para que el comprador evalúe no solo la propiedad sino el barrio completo." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto cuesta una auditoría técnica de propiedad en Santiago?",
+          "acceptedAnswer": { "@type": "Answer", "text": "La auditoría PCF-15™ de DOMIS™ parte desde $190.000 + IVA para propiedades de 100m² en la Región Metropolitana. El mínimo facturable es 100m². El precio varía según la superficie total de la propiedad." }
+        }
+      ]
+    },
+
+    {
+      "@type": "Review",
+      "reviewBody": "Con un hijo de 4 años y otro en camino, no tenía tiempo para buscar. DOMIS™ lo hizo por mí.",
+      "author": { "@type": "Person", "name": "Felipe" },
+      "itemReviewed": { "@id": "https://www.domis.cl/#business" },
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+    },
+
+    {
+      "@type": "Review",
+      "reviewBody": "Como arquitecta, creí que podía evaluarla yo misma. Sin instrumental profesional, estaba comprando a ciegas.",
+      "author": { "@type": "Person", "name": "Andrea" },
+      "itemReviewed": { "@id": "https://www.domis.cl/#business" },
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+    }
+
+  ]
+}
+    </script>
   </head>
   <body>
     <div id="root"></div>
