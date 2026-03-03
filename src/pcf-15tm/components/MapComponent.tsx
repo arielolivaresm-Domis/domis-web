@@ -4,9 +4,10 @@ import { PlaceCategory } from '../types.ts';
 
 interface MapComponentProps {
   address: string;
+  isOnline?: boolean;
 }
 
-export const MapComponent: React.FC<MapComponentProps> = ({ address }) => {
+export const MapComponent: React.FC<MapComponentProps> = ({ address, isOnline = true }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapError, setMapError] = useState<string | null>(null);
   const [communeInfo, setCommuneInfo] = useState<{name: string, data: any} | null>(null);
@@ -180,6 +181,16 @@ export const MapComponent: React.FC<MapComponentProps> = ({ address }) => {
 
   // Obtener colegios dinámicos para respaldo (Google Maps)
   const dynamicSchools = places.find(p => p.key === 'Colegio')?.results || [];
+
+  if (!isOnline) {
+    return (
+      <div className="mt-4 bg-slate-800/60 border border-amber-500/40 rounded-lg p-6 text-center">
+        <div className="text-3xl mb-2">📵</div>
+        <div className="text-amber-400 font-bold text-sm mb-1">Sin conexión — Mapa no disponible</div>
+        <div className="text-slate-400 text-xs">El análisis de entorno requiere internet. El resto de la auditoría funciona normalmente.</div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-4 animate-fade-in">

@@ -63,6 +63,19 @@ export const App: React.FC = () => {
   const [portalDesc, setPortalDesc] = useState('');
   const [aiGenerating, setAiGenerating] = useState(false);
   const [isGeneratingId, setIsGeneratingId] = useState(false);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  // Detección de conectividad
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   // Tools
   const [tools, setTools] = useState<ToolData[]>([{ id: '1', name: 'Nivel Láser', model: 'Genérico', verified: true }]);
@@ -594,7 +607,12 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen p-4 md:p-8 max-w-6xl mx-auto">
-      <div className="flex justify-between items-center mb-6 no-print">
+      {!isOnline && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-amber-500 text-slate-900 text-xs font-bold text-center py-2 flex items-center justify-center gap-2 no-print">
+          <span>📵</span> Sin conexión — Modo offline activo. Mapa y Gemini AI no disponibles. El formulario funciona normalmente.
+        </div>
+      )}
+      <div className={`flex justify-between items-center mb-6 no-print ${!isOnline ? 'mt-8' : ''}`}>
         <h1 className="text-2xl font-bold flex items-center gap-2 text-white">PCF-15™ <span className="font-light text-emerald-400">By Domis v5.1</span></h1>
         <div className="flex items-center gap-3">
             <a href="https://www.domis.cl" className="flex items-center gap-1 px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded border border-slate-500 transition-colors" title="Volver al sitio principal">
@@ -839,7 +857,7 @@ export const App: React.FC = () => {
 
       <div className={`card bg-slate-800 border border-slate-700 rounded-xl p-6 mb-6 shadow-lg ${getSectionClass('map')}`}>
         <h2 className="text-emerald-400 border-b border-slate-700 pb-2 mb-4 text-lg font-bold">📍 Entorno & Plusvalía</h2>
-        <MapComponent address={property.address} />
+        <MapComponent address={property.address} isOnline={isOnline} />
       </div>
 
       <div className={`card bg-slate-800 border border-slate-700 rounded-xl p-6 mb-6 shadow-lg ${getSectionClass('audit')}`}>
@@ -915,7 +933,7 @@ export const App: React.FC = () => {
         </div>
       </div>
 
-      <PortalSection toggles={portalToggles} setToggles={setPortalToggles} desc={portalDesc} setDesc={setPortalDesc} onGenerateAi={generateDescription} isGenerating={aiGenerating} className={getSectionClass('portal')} />
+      <PortalSection toggles={portalToggles} setToggles={setPortalToggles} desc={portalDesc} setDesc={setPortalDesc} onGenerateAi={generateDescription} isGenerating={aiGenerating} isOnline={isOnline} className={getSectionClass('portal')} />
 
       {/* TECHNICAL LEGEND */}
       <div className={getSectionClass('guide')}>
