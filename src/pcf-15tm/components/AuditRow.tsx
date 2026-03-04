@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { AuditScore } from '../types.ts';
 import { ItemCosto, Escala, getClpByEscala } from '../costos';
 import { CHILEAN_NORMS } from '../normativeData.ts';
@@ -24,7 +24,7 @@ interface AuditRowProps {
   isListening?: boolean;
 }
 
-export const AuditRow: React.FC<AuditRowProps> = ({
+const AuditRowInner: React.FC<AuditRowProps> = ({
   item, state, onChange, prefix, uf, showCosts = true, onMicClick, isListening
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -38,14 +38,12 @@ export const AuditRow: React.FC<AuditRowProps> = ({
 
   // ---- handlers ----
 
-  const handleToggle = () => {
+  const handleToggle = useCallback(() => {
     const newActive = !active;
     const updates: Partial<AuditScore> = { active: newActive };
-    // Al activar por primera vez, poner escala Estándar
     if (newActive && !state.escala) {
       updates.escala = 2;
     }
-    // Recalculate cost
     const newEscala = (updates.escala ?? (state.escala as Escala) ?? 2) as Escala;
     const qty = state.qty || 0;
     const costClp = newActive && newEscala > 0 && qty > 0
@@ -54,22 +52,22 @@ export const AuditRow: React.FC<AuditRowProps> = ({
     updates.costClp = costClp;
     updates.cost = costClp / uf;
     onChange(updates);
-  };
+  }, [active, state.escala, state.qty, item, uf, onChange]);
 
-  const handleEscalaClick = (e: Escala) => {
+  const handleEscalaClick = useCallback((e: Escala) => {
     if (!active) return;
     const qty = state.qty || 0;
     const costClp = qty > 0 ? qty * getClpByEscala(item, e) : 0;
     onChange({ escala: e, costClp, cost: costClp / uf });
-  };
+  }, [active, state.qty, item, uf, onChange]);
 
-  const handleQtyChange = (val: number) => {
+  const handleQtyChange = useCallback((val: number) => {
     const e = (escala > 0 ? escala : 2) as Escala;
     const costClp = active && val > 0 ? val * getClpByEscala(item, e) : 0;
     onChange({ qty: val, costClp, cost: costClp / uf });
-  };
+  }, [escala, active, item, uf, onChange]);
 
-  const handleMeasureChange = (field: 'measureW' | 'measureL', value: string) => {
+  const handleMeasureChange = useCallback((field: 'measureW' | 'measureL', value: string) => {
     const numVal = parseFloat(value);
     const updates: Partial<AuditScore> = { [field]: isNaN(numVal) ? undefined : numVal };
     const w = field === 'measureW' ? numVal : state.measureW;
@@ -83,9 +81,9 @@ export const AuditRow: React.FC<AuditRowProps> = ({
       updates.cost = costClp / uf;
     }
     onChange(updates);
-  };
+  }, [state.measureW, state.measureL, escala, active, item, uf, onChange]);
 
-  const handleNaClick = () => {
+  const handleNaClick = useCallback(() => {
     const newNa = !state.isNa;
     if (newNa) {
       onChange({ isNa: true, active: false, costClp: 0, cost: 0,
@@ -93,9 +91,9 @@ export const AuditRow: React.FC<AuditRowProps> = ({
     } else {
       onChange({ isNa: false, observation: '' });
     }
-  };
+  }, [state.isNa, onChange]);
 
-  const handleApplyNorm = (normId: string) => {
+  const handleApplyNorm = useCallback((normId: string) => {
     const norm = CHILEAN_NORMS.find(n => n.id === normId);
     if (norm) {
       onChange({
@@ -105,9 +103,9 @@ export const AuditRow: React.FC<AuditRowProps> = ({
       });
     }
     setShowNormModal(false);
-  };
+  }, [item, onChange]);
 
-  const getFilteredNorms = () => {
+  const getFilteredNorms = useCallback(() => {
     let searchTags: string[] = [];
     if (prefix.includes('sys')) searchTags = ['sys', 'elec', 'gas', 'agua'];
     else if (prefix.includes('bth')) searchTags = ['bth', 'wet', 'agua'];
@@ -123,25 +121,25 @@ export const AuditRow: React.FC<AuditRowProps> = ({
       if (!aMatch && bMatch) return 1;
       return 0;
     });
-  };
+  }, [prefix]);
 
-  const handleCameraClick = () => {
+  const handleCameraClick = useCallback(() => {
     if ((state.photos?.length || 0) >= MAX_PHOTOS) {
       alert(`Límite alcanzado: Máximo ${MAX_PHOTOS} fotos por ítem.`);
       return;
     }
     fileInputRef.current?.click();
-  };
+  }, [state.photos]);
 
-  const handleMicClickLocal = () => {
+  const handleMicClickLocal = useCallback(() => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       alert('⚠️ Tu navegador no soporta dictado por voz nativo.\n\nTe recomendamos usar Google Chrome.');
       return;
     }
     if (onMicClick) onMicClick();
-  };
+  }, [onMicClick]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -167,14 +165,14 @@ export const AuditRow: React.FC<AuditRowProps> = ({
       reader.readAsDataURL(file);
     }
     if (fileInputRef.current) fileInputRef.current.value = '';
-  };
+  }, [state.photos, onChange]);
 
-  const handleResetPhotos = (e: React.MouseEvent) => {
+  const handleResetPhotos = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     if (confirm('¿Borrar todas las fotos de este ítem?')) {
       onChange({ photoCount: 0, hasPhoto: false, photos: [] });
     }
-  };
+  }, [onChange]);
 
   const photoCount = state.photoCount || (state.photos?.length || 0);
   const costClp = state.costClp || 0;
@@ -418,3 +416,5 @@ export const AuditRow: React.FC<AuditRowProps> = ({
     </div>
   );
 };
+
+export const AuditRow = React.memo(AuditRowInner);
