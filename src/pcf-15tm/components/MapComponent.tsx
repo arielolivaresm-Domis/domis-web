@@ -53,24 +53,26 @@ export const MapComponent: React.FC<MapComponentProps> = ({ address, isOnline = 
 
     setMapError(null);
 
-    let attempts = 0;
-    const maxAttempts = 50;
-
-    const checkGoogle = setInterval(() => {
-        const g = (window as any).google;
-        if (g && g.maps) {
-            clearInterval(checkGoogle);
-            initMap(g, debouncedAddress);
-        } else {
-            attempts++;
-            if (attempts >= maxAttempts) {
-                clearInterval(checkGoogle);
-                setMapError(prev => prev || "Google Maps no responde.");
-            }
+    const g = (window as any).google;
+    if (g && g.maps) {
+        initMap(g, debouncedAddress);
+    } else {
+        const script = document.querySelector('script[src*="maps.googleapis"]') as HTMLScriptElement | null;
+        if (!script) {
+            setMapError("Script de Google Maps no encontrado.");
+            return;
         }
-    }, 100);
-
-    return () => clearInterval(checkGoogle);
+        const handleLoad = () => {
+            const g2 = (window as any).google;
+            if (g2 && g2.maps) {
+                initMap(g2, debouncedAddress);
+            } else {
+                setMapError("Google Maps no responde.");
+            }
+        };
+        script.addEventListener('load', handleLoad);
+        return () => script.removeEventListener('load', handleLoad);
+    }
   }, [debouncedAddress]);
 
   const initMap = (g: any, searchAddr: string) => {
