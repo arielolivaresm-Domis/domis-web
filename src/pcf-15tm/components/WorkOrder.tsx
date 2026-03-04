@@ -1,35 +1,49 @@
 import React from 'react';
-import { AuditState, AuditItemConfig, AuditScore } from '../types.ts';
-import { ITEMS, DORM_ITEMS, BATH_ITEMS, STAIR_ITEMS } from '../constants.ts';
+import { AuditState, AuditScore } from '../types.ts';
+import { GRUPOS_SC_COMPLETO, GRUPOS_EXTERIOR_COMPLETO, getGruposByRecinto, GrupoCosto } from '../constants.ts';
 
 interface WorkOrderProps {
   auditState: AuditState;
   propertyAddress: string;
 }
 
+// All groups used to look up item labels
+const ALL_GROUPS: GrupoCosto[] = [
+  ...GRUPOS_SC_COMPLETO,
+  ...getGruposByRecinto('living_comedor'),
+  ...getGruposByRecinto('cocina'),
+  ...getGruposByRecinto('dormitorio'),
+  ...getGruposByRecinto('bano'),
+  ...getGruposByRecinto('otro'),
+  ...GRUPOS_EXTERIOR_COMPLETO,
+];
+
 export const WorkOrder: React.FC<WorkOrderProps> = ({ auditState, propertyAddress }) => {
-  // Filtramos items que tengan observaciones (Notas 1-5)
-  const workItems = (Object.entries(auditState) as [string, AuditScore][]).filter(([key, val]) => val.score > 0 && val.score <= 5);
+  // Show active items (those requiring work)
+  const workItems = (Object.entries(auditState) as [string, AuditScore][]).filter(
+    ([, val]) => val.active === true
+  );
 
   const findItemLabel = (key: string): string => {
-      const parts = key.split('_');
-      const prefix = parts[0]; 
-      const id = parts[1];
+    const parts = key.split('_');
+    const itemKey = parts[parts.length - 1];
+    const prefix = parts[0];
 
-      let itemList: AuditItemConfig[] = [];
-      let roomLabel = "";
+    let roomLabel = '';
+    if (prefix === 'sys') roomLabel = 'Sistemas Generales';
+    else if (prefix === 'liv') roomLabel = 'Living / Comedor';
+    else if (prefix === 'kit') roomLabel = 'Cocina / Logia';
+    else if (prefix === 'ext') roomLabel = 'Exterior';
+    else if (prefix.startsWith('drm')) roomLabel = `Dormitorio ${prefix.replace('drm', '')}`;
+    else if (prefix.startsWith('bth')) roomLabel = `Baño ${prefix.replace('bth', '')}`;
+    else if (prefix.startsWith('stair')) roomLabel = `Escalera ${prefix.replace('stair', '')}`;
+    else if (prefix.startsWith('oth')) roomLabel = `Otro Recinto ${prefix.replace('oth', '')}`;
 
-      if (prefix === 'sys') { itemList = ITEMS.sys; roomLabel = "Sistemas Generales"; }
-      else if (prefix === 'liv') { itemList = ITEMS.liv; roomLabel = "Living / Comedor"; }
-      else if (prefix === 'kit') { itemList = ITEMS.kit; roomLabel = "Cocina / Logia"; }
-      else if (prefix === 'ext') { itemList = ITEMS.ext; roomLabel = "Exterior"; }
-      else if (prefix.startsWith('drm')) { itemList = DORM_ITEMS; roomLabel = `Dormitorio ${prefix.replace('drm','')}`; }
-      else if (prefix.startsWith('bth')) { itemList = BATH_ITEMS; roomLabel = `Baño ${prefix.replace('bth','')}`; }
-      else if (prefix.startsWith('stair')) { itemList = STAIR_ITEMS; roomLabel = `Escalera ${prefix.replace('stair','')}`; }
-      else if (prefix.startsWith('oth')) { itemList = ITEMS.liv; roomLabel = `Otro Recinto ${prefix.replace('oth','')}`; }
-
-      const config = itemList.find((i) => i.id === id);
-      return `${roomLabel} > ${config ? config.l : id}`;
+    for (const grupo of ALL_GROUPS) {
+      const found = grupo.items.find(i => i.key === itemKey);
+      if (found) return `${roomLabel} > ${found.label}`;
+    }
+    return `${roomLabel} > ${itemKey}`;
   };
 
   return (
@@ -75,7 +89,7 @@ export const WorkOrder: React.FC<WorkOrderProps> = ({ auditState, propertyAddres
                     ))
                 ) : (
                     <tr>
-                        <td colSpan={4} className="p-8 text-center italic text-gray-500">No hay observaciones pendientes para esta propiedad.</td>
+                        <td colSpan={4} className="p-8 text-center italic text-gray-500">No hay ítems activos para esta propiedad.</td>
                     </tr>
                 )}
             </tbody>

@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import JSZip from 'jszip';
-import { CFG, ITEMS, DORM_ITEMS, BATH_ITEMS, STAIR_ITEMS, DOMIS_SYSTEM_PROMPT, NORMATIVA_DB } from './constants';
-import { AuditItemConfig, AuditScore, AuditState, Orientation, Scenarios, ToolData } from './types';
+import {
+  DOMIS_SYSTEM_PROMPT,
+  GRUPOS_SC_COMPLETO, GRUPOS_EXTERIOR_COMPLETO, ITEM_NORM_MAP,
+  getGruposByRecinto, GrupoCosto, ItemCosto, TipoRecinto,
+  getClpByEscala, Escala,
+} from './constants';
+import { AuditScore, AuditState, Orientation, Scenarios, ToolData } from './types';
 import { AuditRow } from './components/AuditRow';
 import { MapComponent } from './components/MapComponent';
 import { LoginScreen } from './components/LoginScreen';
@@ -21,7 +26,7 @@ export const App: React.FC = () => {
   const [printMode, setPrintMode] = useState<'none' | 'fast' | 'normal' | 'full' | 'investor' | 'work_order'>('none');
 
   const [uf, setUf] = useState(39700.00);
-  const [ufInputValue, setUfInputValue] = useState('39700.00'); // Estado local para edición de input sin conflictos de parsing
+  const [ufInputValue, setUfInputValue] = useState('39700.00');
   const [ufStatus, setUfStatus] = useState('(Cargando...)');
 
   const [auditId, setAuditId] = useState('D101');
@@ -29,7 +34,7 @@ export const App: React.FC = () => {
   const [client, setClient] = useState({ name: '', rut: '' });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // v5.1 Property State
+  // v5.2 Property State
   const [property, setProperty] = useState({
     address: '', rol: '', type: 'Casa',
     m2Useful: '',
@@ -39,7 +44,7 @@ export const App: React.FC = () => {
     othersCount: 0
   });
 
-  const [orientTip, setOrientTip] = useState('');
+  const [, setOrientTip] = useState('');
   const [fin, setFin] = useState({
     ownerVal: '', webVal: '', t1_v: '', t1_r: '', t2_v: '', t2_r: '', avgAppraisal: 0
   });
@@ -50,15 +55,15 @@ export const App: React.FC = () => {
     4: { offer: null, margin: 15 },
   });
   const [activeScenario, setActiveScenario] = useState<1 | 2 | 3 | 4>(1);
-  const [manualBase, setManualBase] = useState<string>('');
   const [manualCapex, setManualCapex] = useState<number | ''>('');
-  const [successFeePct, setSuccessFeePct] = useState(10); // Nuevo estado para honorario
+  const [successFeePct, setSuccessFeePct] = useState(10);
   const [auditState, setAuditState] = useState<AuditState>({});
 
   const [auditNotes, setAuditNotes] = useState<Record<string, string>>({});
   const [otherLabels, setOtherLabels] = useState<Record<string, string>>({});
   const [listeningKey, setListeningKey] = useState<string | null>(null);
   const [totalCapex, setTotalCapex] = useState(0);
+  const [totalCapexClp, setTotalCapexClp] = useState(0);
   const [portalToggles, setPortalToggles] = useState<Record<string, boolean>>({});
   const [portalDesc, setPortalDesc] = useState('');
   const [aiGenerating, setAiGenerating] = useState(false);
@@ -81,7 +86,7 @@ export const App: React.FC = () => {
   const [tools, setTools] = useState<ToolData[]>([{ id: '1', name: 'Nivel Láser', model: 'Genérico', verified: true }]);
   const [checklistImg, setChecklistImg] = useState<string | null>(null);
 
-  // Helper: Procesar el string JSON y cargar estado (Movido arriba para poder usarlo en Auto-save)
+  // Helper: Procesar el string JSON y cargar estado
   const processJsonData = useCallback((jsonStr: string) => {
       try {
           const data = JSON.parse(jsonStr);
@@ -125,7 +130,7 @@ export const App: React.FC = () => {
   useEffect(() => {
     if (!isAuthenticated) return;
     const dataToSave = {
-        meta: { version: '5.1', date: new Date().toISOString(), id: auditId, hash: verificationHash },
+        meta: { version: '5.2', date: new Date().toISOString(), id: auditId, hash: verificationHash },
         client, property, financials: fin, scenarios, activeScenario, auditState, auditNotes, otherLabels,
         portal: { toggles: portalToggles, desc: portalDesc }, costs: { uf, totalCapex, manualCapex },
         tools, checklistImg, successFeePct
@@ -144,17 +149,14 @@ export const App: React.FC = () => {
   const fetchUfValue = async () => {
     setUfStatus('...');
     try {
-      // Usamos cache: 'no-store' para evitar datos antiguos
       const res = await fetch('https://mindicador.cl/api/uf', { cache: 'no-store' });
       const data = await res.json();
 
       if (data.serie && data.serie.length > 0) {
-         // Tomamos siempre el PRIMER valor (el más reciente publicado por la API)
          const latest = data.serie[0];
          setUf(latest.valor);
-         setUfInputValue(latest.valor.toString()); // Sincronizamos el input visual
+         setUfInputValue(latest.valor.toString());
 
-         // Verificamos si corresponde a hoy para el status
          const today = new Date();
          const latestDate = new Date(latest.fecha);
 
@@ -178,7 +180,7 @@ export const App: React.FC = () => {
 
   const handleUfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const val = e.target.value;
-      setUfInputValue(val); // Permitir escritura libre (ej: "39000.") sin parseo inmediato que borre el punto
+      setUfInputValue(val);
       const num = parseFloat(val);
       if (!isNaN(num)) {
           setUf(num);
@@ -188,7 +190,6 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     fetchUfValue();
-    // Generar Hash inicial
     setVerificationHash(Math.random().toString(36).substring(2, 10).toUpperCase());
   }, []);
 
@@ -213,31 +214,43 @@ export const App: React.FC = () => {
 
   useEffect(() => { updateOrientTip(); }, [updateOrientTip]);
 
-  const updateAuditScore = (id: string, updates: Partial<AuditScore>, itemConfig: AuditItemConfig) => {
+  // v5.2 — CLP-based cost calculation
+  const updateAuditScore = (id: string, updates: Partial<AuditScore>, item: ItemCosto) => {
     setAuditState(prev => {
-      const current = prev[id] || { score: 0, isNa: false, qty: itemConfig.t === 'spec' ? 0 : 1, hasPhoto: false, photoCount: 0, photos: [], cost: 0, observation: '' };
+      const current = prev[id] || { active: false, escala: 0, qty: 1, score: 0, hasPhoto: false, photoCount: 0, photos: [], cost: 0, observation: '' };
       const next = { ...current, ...updates };
-      let cost = 0;
-      if (itemConfig.t === 'spec') {
-        if (next.score === 1) cost = (CFG.elec_spec.cambio / uf) * next.qty;
-        else if (next.score === 2) cost = (CFG.elec_spec.mant / uf) * next.qty;
-      } else {
-        if (next.score > 0 && next.score < 6) {
-          const factor = next.score <= 3 ? 1.0 : 0.5;
-          cost = (itemConfig.v || 0) * next.qty * factor;
-        }
+      let costClp = 0;
+      if (next.active && !next.isNa && next.escala && next.escala > 0 && next.qty > 0) {
+        costClp = next.qty * getClpByEscala(item, next.escala as Escala);
       }
-      next.cost = cost;
+      next.costClp = costClp;
+      next.cost = uf > 0 ? costClp / uf : 0;
       return { ...prev, [id]: next };
     });
   };
 
-  const handleFastCheck = (prefix: string, items: AuditItemConfig[]) => {
+  // Activate all inactive items in a group with Estándar scale
+  const handleActivarGrupo = (prefixBase: string, items: ItemCosto[]) => {
     const updates: AuditState = {};
     items.forEach(item => {
-        const key = `${prefix}_${item.id}`;
-        if (!auditState[key] || auditState[key].score === 0) {
-            updates[key] = { score: 7, isNa: false, qty: item.t === 'spec' ? 0 : 1, hasPhoto: false, photoCount: 0, photos: [], cost: 0, observation: '' };
+        const key = `${prefixBase}_${item.key}`;
+        const current = auditState[key];
+        if (!current?.active) {
+            const escala: Escala = 2;
+            const qty = 1;
+            const costClp = qty * getClpByEscala(item, escala);
+            updates[key] = {
+              score: 0,
+              active: true,
+              escala,
+              qty,
+              hasPhoto: false,
+              photoCount: 0,
+              photos: [],
+              cost: uf > 0 ? costClp / uf : 0,
+              costClp,
+              observation: '',
+            };
         }
     });
     setAuditState(prev => ({ ...prev, ...updates }));
@@ -287,14 +300,14 @@ export const App: React.FC = () => {
 
   const handleSaveData = async () => {
     const dataToSave = {
-        meta: { version: '5.1', date: new Date().toISOString(), id: auditId, hash: verificationHash },
+        meta: { version: '5.2', date: new Date().toISOString(), id: auditId, hash: verificationHash },
         client, property, financials: fin, scenarios, activeScenario, auditState, auditNotes, otherLabels,
         portal: { toggles: portalToggles, desc: portalDesc }, costs: { uf, totalCapex, manualCapex },
         tools, checklistImg, successFeePct
     };
 
     const zip = new JSZip();
-    zip.file(`${auditId}_${client.rut || 'DATA'}_v5.1.json`, JSON.stringify(dataToSave, null, 2));
+    zip.file(`${auditId}_${client.rut || 'DATA'}_v5.2.json`, JSON.stringify(dataToSave, null, 2));
 
     let photoCount = 0;
     Object.entries(auditState).forEach(([key, value]) => {
@@ -325,9 +338,9 @@ export const App: React.FC = () => {
         const content = await zip.generateAsync({ type: 'blob' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(content);
-        link.download = photoCount > 0 ? `PACK_PCF15_${auditId}_v5.1.zip` : `${auditId}_${client.rut}_v5.1.json`;
+        link.download = photoCount > 0 ? `PACK_PCF15_${auditId}_v5.2.zip` : `${auditId}_${client.rut}_v5.2.json`;
         link.click();
-        if (photoCount > 0) alert(`✅ Pack v5.1 descargado con éxito.\n📄 1 Informe JSON\n📷 ${photoCount} Fotos renombradas.`);
+        if (photoCount > 0) alert(`✅ Pack v5.2 descargado con éxito.\n📄 1 Informe JSON\n📷 ${photoCount} Fotos renombradas.`);
     } catch (e) {
         console.error(e);
         alert("Error al generar el archivo ZIP.");
@@ -338,11 +351,9 @@ export const App: React.FC = () => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Si es ZIP (PACK), extraemos el JSON interno
     if (file.name.toLowerCase().endsWith('.zip')) {
         try {
             const zip = await JSZip.loadAsync(file);
-            // Buscar archivo JSON dentro del ZIP
             const jsonFileName = Object.keys(zip.files).find(name => name.toLowerCase().endsWith('.json'));
 
             if (jsonFileName) {
@@ -356,34 +367,12 @@ export const App: React.FC = () => {
             alert("Error al leer el archivo ZIP. Asegúrate de que no esté corrupto.");
         }
     } else {
-        // Carga normal de JSON (Legacy)
         const reader = new FileReader();
         reader.onload = (e) => processJsonData(e.target?.result as string);
         reader.readAsText(file);
     }
 
     if (fileInputRef.current) fileInputRef.current.value = '';
-  };
-
-  const getGroupAverage = (prefix: string, items: AuditItemConfig[]): string | null => {
-    let totalScore = 0; let count = 0;
-    items.forEach(item => {
-        const itemState = auditState[`${prefix}_${item.id}`];
-        if (itemState && itemState.score > 0 && !itemState.isNa) {
-            totalScore += itemState.score;
-            count++;
-        }
-    });
-    return count > 0 ? (totalScore / count).toFixed(1) : null;
-  };
-
-  // Calculate Global Average for Fast Report
-  const getGlobalAverage = (): string => {
-    let totalScore = 0; let count = 0;
-    (Object.values(auditState) as AuditScore[]).forEach(item => {
-        if (item.score > 0 && !item.isNa) { totalScore += item.score; count++; }
-    });
-    return count > 0 ? (totalScore / count).toFixed(1) : "0.0";
   };
 
   // --- IA FUNCTIONS ---
@@ -426,11 +415,13 @@ export const App: React.FC = () => {
     } finally { setAiGenerating(false); }
   };
 
+  // v5.2 — totalCapex recalc from CLP
   useEffect(() => {
-    const scores = Object.values(auditState) as AuditScore[];
-    const total = scores.reduce((acc, curr) => acc + curr.cost, 0);
-    setTotalCapex(Math.round(total));
-  }, [auditState]);
+    const totalClp = (Object.values(auditState) as AuditScore[])
+      .reduce((acc, curr) => acc + (curr.costClp || 0), 0);
+    setTotalCapexClp(totalClp);
+    setTotalCapex(uf > 0 ? Math.round(totalClp / uf) : 0);
+  }, [auditState, uf]);
 
   useEffect(() => {
     const v1 = parseFloat(fin.t1_v) || 0; const v2 = parseFloat(fin.t2_v) || 0;
@@ -503,33 +494,28 @@ export const App: React.FC = () => {
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
   };
 
-  // --- UPDATED VISIBILITY LOGIC ---
+  // --- VISIBILITY LOGIC ---
   const isVisible = (section: 'property' | 'financial' | 'map' | 'audit' | 'portal' | 'guide') => {
     if (printMode === 'none') {
         if (section === 'portal') return mode === 'search';
         return true;
     }
 
-    // WORK ORDER: Only audit content (filtered internally), hide others
     if (printMode === 'work_order') return false;
 
-    // FAST: Only Show Summary Score (Special Component inside Audit)
     if (printMode === 'fast') {
         return section === 'audit';
     }
 
-    // NORMAL: Show Technical, Hide Financials
     if (printMode === 'normal') {
         if (section === 'financial') return false;
         return true;
     }
 
-    // FULL: Show Financials
     if (printMode === 'full') {
         return true;
     }
 
-    // INVESTOR: Show Everything
     if (printMode === 'investor') {
         return true;
     }
@@ -539,64 +525,122 @@ export const App: React.FC = () => {
 
   const getSectionClass = (section: 'property' | 'financial' | 'map' | 'audit' | 'portal' | 'guide') => isVisible(section) ? '' : 'hidden';
 
-  const renderAuditGroup = (items: AuditItemConfig[], prefix: string, label?: string) => {
-    const avg = getGroupAverage(prefix, items);
-    const sectionCost = items.reduce((acc, item) => {
-        const key = `${prefix}_${item.id}`;
-        return acc + (auditState[key]?.cost || 0);
-    }, 0);
+  // v5.2 — Render groups from GrupoCosto[]
+  const renderRecintoGrupos = (grupos: GrupoCosto[], prefixBase: string) => {
+    return grupos.map(grupo => {
+      // Sort: active items first, inactive at bottom
+      const sorted = [...grupo.items].sort((a, b) => {
+        const aOn = auditState[`${prefixBase}_${a.key}`]?.active ?? false;
+        const bOn = auditState[`${prefixBase}_${b.key}`]?.active ?? false;
+        if (aOn === bOn) return 0;
+        return aOn ? -1 : 1;
+      });
 
-    return (
+      const grupoClp = grupo.items.reduce((acc, item) =>
+        acc + (auditState[`${prefixBase}_${item.key}`]?.costClp || 0), 0);
+
+      return (
+        <div key={`${prefixBase}_${grupo.key}`} className="mb-4">
+          <div className="flex justify-between items-center mb-2 border-b border-amber-500/20 pb-1">
+            <div className="flex gap-4 items-center">
+              <span className="text-xs font-bold text-amber-400 uppercase">{grupo.label}</span>
+              {grupoClp > 0 && (
+                <span className="text-xs text-red-400 font-bold">
+                  Subtotal: <span className="text-white">{grupoClp.toLocaleString('es-CL')} CLP</span>
+                  <span className="text-slate-500 ml-1">≈ {uf > 0 ? (grupoClp / uf).toFixed(1) : '0'} UF</span>
+                </span>
+              )}
+            </div>
+            <button
+              onClick={() => handleActivarGrupo(prefixBase, grupo.items)}
+              className="text-[10px] bg-emerald-900/50 hover:bg-emerald-800 text-emerald-400 px-2 py-0.5 rounded border border-emerald-800 transition-colors ml-auto no-print"
+            >
+              ✓ Activar Grupo Estándar
+            </button>
+          </div>
+          {sorted.map(item => {
+            const key = `${prefixBase}_${item.key}`;
+            const itemWithNorm = { ...item, norm: ITEM_NORM_MAP[item.key] };
+            return (
+              <div key={key} className={printMode === 'fast' ? 'hidden' : ''}>
+                <AuditRow
+                  item={itemWithNorm}
+                  state={auditState[key] || { score: 0, active: false, escala: 0, qty: 1, hasPhoto: false, photoCount: 0, photos: [], cost: 0, observation: '' }}
+                  onChange={(u) => updateAuditScore(key, u, item)}
+                  prefix={prefixBase}
+                  uf={uf}
+                  showCosts={printMode === 'full' || printMode === 'investor' || printMode === 'none'}
+                  onMicClick={() => handleMicClick(key, true)}
+                  isListening={listeningKey === key}
+                />
+              </div>
+            );
+          })}
+        </div>
+      );
+    });
+  };
+
+  const renderSectionWithNotes = (grupos: GrupoCosto[], prefixBase: string, noteLabel: string) => (
     <div className="space-y-0">
-      <div className="flex justify-between items-end mb-2 border-b border-amber-500/20 pb-1">
-        <div className="flex gap-4 items-end">
-             {avg && ( <div className="text-xs text-amber-400 font-bold">Nota Promedio {label}: <span className="text-white text-sm">{avg}</span></div> )}
-             <div className="text-xs text-red-400 font-bold">Subtotal: <span className="text-white text-sm">{Math.round(sectionCost)} UF</span></div>
-        </div>
-        <button onClick={() => handleFastCheck(prefix, items)} className="text-[10px] bg-emerald-900/50 hover:bg-emerald-800 text-emerald-400 px-2 py-0.5 rounded border border-emerald-800 transition-colors ml-auto no-print">✓ Fast-Track 7</button>
-      </div>
-      {items.map(item => (
-        <div key={`${prefix}_${item.id}`} className={printMode === 'fast' ? 'hidden' : ''}>
-           <AuditRow
-             item={item}
-             state={auditState[`${prefix}_${item.id}`] || { score: 0, isNa: false, qty: item.t === 'spec' ? 0 : 1, hasPhoto: false, photoCount: 0, photos: [], cost: 0, observation: '' }}
-             onChange={(u) => updateAuditScore(`${prefix}_${item.id}`, u, item)}
-             prefix={prefix}
-             showCosts={printMode === 'full' || printMode === 'investor' || printMode === 'none'}
-             onMicClick={() => handleMicClick(`${prefix}_${item.id}`, true)}
-             isListening={listeningKey === `${prefix}_${item.id}`}
-           />
-        </div>
-      ))}
+      {renderRecintoGrupos(grupos, prefixBase)}
       <div className={`mt-2 pl-1 pr-2 pb-2 ${printMode === 'fast' ? 'hidden' : ''}`}>
         <div className="flex gap-2 items-start bg-slate-900/50 p-2 rounded border border-slate-700/50 focus-within:border-slate-500 transition-colors">
-            <textarea className="w-full bg-transparent text-sm text-slate-300 placeholder-slate-600 outline-none resize-none" placeholder={`Observaciones Globales ${label}...`} rows={2} value={auditNotes[prefix] || ''} onChange={(e) => setAuditNotes(prev => ({...prev, [prefix]: e.target.value}))} />
-            <button onClick={() => handleMicClick(prefix)} className={`p-2 rounded-full transition-all ${listeningKey === prefix ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'}`} title="Dictar nota global">🎤</button>
+            <textarea
+              className="w-full bg-transparent text-sm text-slate-300 placeholder-slate-600 outline-none resize-none"
+              placeholder={`Observaciones Globales ${noteLabel}...`}
+              rows={2}
+              value={auditNotes[prefixBase] || ''}
+              onChange={(e) => setAuditNotes(prev => ({...prev, [prefixBase]: e.target.value}))}
+            />
+            <button
+              onClick={() => handleMicClick(prefixBase)}
+              className={`p-2 rounded-full transition-all ${listeningKey === prefixBase ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'}`}
+              title="Dictar nota global"
+            >
+              🎤
+            </button>
         </div>
       </div>
     </div>
-  )};
+  );
 
-  const renderDynamicRooms = (count: number, items: AuditItemConfig[], prefixBase: string, label: string) => {
+  const renderDynamicRooms = (count: number, tipo: TipoRecinto, prefixBase: string, label: string) => {
     const rooms = [];
     for (let i = 1; i <= count; i++) {
-      rooms.push(<div key={`${prefixBase}${i}`} className="mb-4 pl-3 border-l-2 border-slate-600"><div className="flex justify-between items-center mb-2"><strong className="text-sm text-slate-300">{label} #{i}</strong></div>{renderAuditGroup(items, `${prefixBase}${i}`, `${label} #${i}`)}</div>);
+      const prefix = `${prefixBase}${i}`;
+      const grupos = getGruposByRecinto(tipo);
+      rooms.push(
+        <div key={prefix} className="mb-4 pl-3 border-l-2 border-slate-600">
+          <div className="flex justify-between items-center mb-2">
+            <strong className="text-sm text-slate-300">{label} #{i}</strong>
+          </div>
+          {renderSectionWithNotes(grupos, prefix, `${label} #${i}`)}
+        </div>
+      );
     }
     return rooms;
   };
 
-  const renderDynamicOtherRooms = (count: number, items: AuditItemConfig[], prefixBase: string) => {
+  const renderDynamicOtherRooms = (count: number, tipo: TipoRecinto, prefixBase: string) => {
     const rooms = [];
     for (let i = 1; i <= count; i++) {
       const key = `${prefixBase}${i}`;
       const labelName = otherLabels[key] || `Recinto #${i}`;
+      const grupos = getGruposByRecinto(tipo);
       rooms.push(
         <div key={key} className="mb-4 pl-3 border-l-2 border-slate-600">
           <div className="mb-2 flex items-center gap-2">
              <strong className="text-sm text-slate-300"># {i}</strong>
-             <input type="text" className="bg-transparent border-b border-slate-600 text-amber-400 font-bold text-sm focus:border-amber-400 outline-none w-full placeholder-slate-600" placeholder="Nombre..." value={otherLabels[key] || ''} onChange={(e) => setOtherLabels(prev => ({...prev, [key]: e.target.value}))} />
+             <input
+               type="text"
+               className="bg-transparent border-b border-slate-600 text-amber-400 font-bold text-sm focus:border-amber-400 outline-none w-full placeholder-slate-600"
+               placeholder="Nombre..."
+               value={otherLabels[key] || ''}
+               onChange={(e) => setOtherLabels(prev => ({...prev, [key]: e.target.value}))}
+             />
           </div>
-          {renderAuditGroup(items, key, labelName)}
+          {renderSectionWithNotes(grupos, key, labelName)}
         </div>
       );
     }
@@ -613,7 +657,7 @@ export const App: React.FC = () => {
         </div>
       )}
       <div className={`flex justify-between items-center mb-6 no-print ${!isOnline ? 'mt-8' : ''}`}>
-        <h1 className="text-2xl font-bold flex items-center gap-2 text-white">PCF-15™ <span className="font-light text-emerald-400">By Domis v5.1</span></h1>
+        <h1 className="text-2xl font-bold flex items-center gap-2 text-white">PCF-15™ <span className="font-light text-emerald-400">By Domis v5.2</span></h1>
         <div className="flex items-center gap-3">
             <a href="https://www.domis.cl" className="flex items-center gap-1 px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded border border-slate-500 transition-colors" title="Volver al sitio principal">
               ⬅ Domis.cl
@@ -634,14 +678,13 @@ export const App: React.FC = () => {
         <button onClick={() => setMode('search')} className={`flex-1 py-3 font-bold text-sm transition-colors ${mode === 'search' ? 'bg-emerald-900/40 text-white border-b-2 border-emerald-500' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}>🔍 BÚSQUEDA + PORTAL</button>
       </div>
 
-      {/* v5.1 Print Header & Disclaimer */}
+      {/* v5.2 Print Header & Disclaimer */}
       <div className={`hidden print:block mb-8 ${printMode === 'work_order' ? 'hidden' : ''}`}>
         <div className="flex justify-between items-start border-b-2 border-slate-300 pb-4 mb-4">
            <div>
              <h1 className="text-2xl font-bold text-black mb-1">PCF-15™ Informe Técnico {printMode === 'fast' ? '(FAST)' : printMode === 'full' ? '(FINANCIERO)' : printMode === 'investor' ? '(ESTRATÉGICO)' : '(CLIENTE)'}</h1>
              <p className="text-sm text-gray-700"><strong>Propiedad:</strong> {property.address} <span className="ml-4"><strong>Cliente:</strong> {client.name}</span></p>
              <div className="text-[10px] text-slate-500 mt-1 font-mono">ID: {auditId} | HASH: {verificationHash}</div>
-             {/* LEGAL DISCLAIMER */}
              <div className="mt-2 text-[9px] text-gray-400 italic bg-gray-50 p-1 border border-gray-200 inline-block">
                 Inspección bajo estándares del Manual de Tolerancia CDT y Ley 20.016 (Garantías: 3, 5 y 10 años).
              </div>
@@ -651,7 +694,7 @@ export const App: React.FC = () => {
            </div>
         </div>
 
-        {/* PRINT-ONLY TOOL LIST (NOT IN WORK ORDER) */}
+        {/* PRINT-ONLY TOOL LIST */}
         <div className="mb-6 border-b border-gray-300 pb-4">
             <h3 className="text-xs font-bold text-black uppercase mb-2">INSTRUMENTAL TÉCNICO Y CALIBRACIÓN</h3>
             <table className="w-full text-[10px] text-left">
@@ -796,7 +839,6 @@ export const App: React.FC = () => {
                                  className="w-full bg-slate-900/50 border border-red-500/50 rounded px-2 py-1 text-xl text-red-200 font-bold outline-none focus:border-red-500"
                                  value={manualCapex}
                                  onChange={(e) => setManualCapex(e.target.value === '' ? '' : parseFloat(e.target.value))}
-                                 placeholder={totalCapex.toString()}
                              />
                          ) : (
                              <div className="text-xl text-red-200 font-bold">-{financials.currentCapex.toLocaleString()} UF</div>
@@ -812,7 +854,6 @@ export const App: React.FC = () => {
                                  onChange={(e) => {
                                      const val = parseFloat(e.target.value);
                                      if (!isNaN(val)) {
-                                         // Reverse calc: Offer = Base - Capex => Capex = Base - Offer
                                          setManualCapex(financials.baseVal - val);
                                      }
                                  }}
@@ -866,18 +907,28 @@ export const App: React.FC = () => {
             {printMode === 'fast' && <div className="bg-emerald-600 text-white px-3 py-1 rounded text-sm font-bold">RESUMEN EJECUTIVO</div>}
         </div>
 
-        {/* --- FAST TRACK SCORE DISPLAY --- */}
+        {/* --- FAST TRACK CAPEX DISPLAY --- */}
         {printMode === 'fast' && (
              <div className="flex flex-col items-center justify-center py-8 bg-slate-900/50 rounded-lg border border-slate-600 animate-fade-in">
                  <div className="text-center mb-6">
-                     <h3 className="text-slate-400 uppercase text-sm font-bold tracking-widest mb-2">CALIFICACIÓN GLOBAL DE LA PROPIEDAD</h3>
-                     <div className="text-6xl font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-                         {getGlobalAverage()} <span className="text-2xl text-slate-500 font-normal">/ 7.0</span>
+                     <h3 className="text-slate-400 uppercase text-sm font-bold tracking-widest mb-2">COSTO TOTAL INTERVENCIÓN</h3>
+                     <div className="text-5xl font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                         {totalCapexClp.toLocaleString('es-CL')}
+                         <span className="text-xl text-slate-400 font-normal"> CLP</span>
+                     </div>
+                     <div className="text-xl text-amber-400 mt-1 font-bold">
+                         ≈ {totalCapex.toLocaleString()} UF
                      </div>
                  </div>
                  <div className="w-full max-w-md px-6">
                      <div className="h-4 bg-slate-700 rounded-full overflow-hidden relative border border-slate-600">
-                         <div className={`h-full absolute left-0 top-0 transition-all duration-1000 ${parseFloat(getGlobalAverage()) >= 6 ? 'bg-emerald-500' : parseFloat(getGlobalAverage()) >= 4 ? 'bg-amber-500' : 'bg-red-500'}`} style={{width: `${(parseFloat(getGlobalAverage()) / 7) * 100}%`}}></div>
+                         <div
+                           className={`h-full absolute left-0 top-0 transition-all duration-1000 ${totalCapexClp === 0 ? 'bg-emerald-500' : totalCapexClp < 10000000 ? 'bg-amber-500' : 'bg-red-500'}`}
+                           style={{width: `${Math.min(100, (totalCapexClp / 50000000) * 100)}%`}}
+                         />
+                     </div>
+                     <div className="flex justify-between text-[9px] text-slate-500 mt-1">
+                       <span>$0</span><span>$25M</span><span>$50M+</span>
                      </div>
                  </div>
              </div>
@@ -891,44 +942,51 @@ export const App: React.FC = () => {
 
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
              <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">⚡ Sistemas Críticos (SC)</h3>
-             {renderAuditGroup(ITEMS.sys, 'sys', 'Sistemas')}
+             {renderSectionWithNotes(GRUPOS_SC_COMPLETO, 'sys', 'Sistemas')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
              <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🛋️ Living / Comedor (LC)</h3>
-             {renderAuditGroup(ITEMS.liv, 'liv', 'Living')}
+             {renderSectionWithNotes(getGruposByRecinto('living_comedor'), 'liv', 'Living')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
              <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">💧 Cocina / Logia (CL)</h3>
-             {renderAuditGroup(ITEMS.kit, 'kit', 'Cocina')}
+             {renderSectionWithNotes(getGruposByRecinto('cocina'), 'kit', 'Cocina')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
              <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🛏️ Dormitorios (D#)</h3>
-             {renderDynamicRooms(property.dorms, DORM_ITEMS, 'drm', 'Dormitorio')}
+             {renderDynamicRooms(property.dorms, 'dormitorio', 'drm', 'Dormitorio')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
              <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🚿 Baños (B#)</h3>
-             {renderDynamicRooms(property.baths, BATH_ITEMS, 'bth', 'Baño')}
+             {renderDynamicRooms(property.baths, 'bano', 'bth', 'Baño')}
           </div>
           {property.stairs > 0 && (
             <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
               <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🪜 Escaleras (E#)</h3>
-              {renderDynamicRooms(property.stairs, STAIR_ITEMS, 'stair', 'Escalera')}
+              {renderDynamicRooms(property.stairs, 'otro', 'stair', 'Escalera')}
             </div>
           )}
           {property.othersCount > 0 && (
             <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
               <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🚪 Otros Recintos (O#)</h3>
-              {renderDynamicOtherRooms(property.othersCount, ITEMS.liv, 'oth')}
+              {renderDynamicOtherRooms(property.othersCount, 'otro', 'oth')}
             </div>
           )}
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
              <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🏡 Exterior / Fachada (Fe)</h3>
-             {renderAuditGroup(ITEMS.ext, 'ext', 'Exterior')}
+             {renderSectionWithNotes(GRUPOS_EXTERIOR_COMPLETO, 'ext', 'Exterior')}
           </div>
 
           <div className="mt-6 border-t border-slate-600 pt-4 bg-red-900/10 p-4 rounded-lg flex justify-between items-center">
             <h3 className="text-red-400 font-bold uppercase text-sm md:text-base">🚨 Costo Total Remodelación (Capex)</h3>
-            <div className="text-xl md:text-2xl font-bold text-white">{totalCapex.toLocaleString()} UF</div>
+            <div className="flex flex-col items-end">
+              <div className="text-xl md:text-2xl font-bold text-white">
+                {totalCapexClp.toLocaleString('es-CL')} CLP
+              </div>
+              <div className="text-base text-amber-400">
+                ≈ {totalCapex.toLocaleString()} UF
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -940,10 +998,10 @@ export const App: React.FC = () => {
         <TechnicalGuide />
       </div>
 
-      {/* NEW: NORMATIVE ANNEX (VISIBLE IN ALL PRINTS EXCEPT WORK ORDER) */}
+      {/* NORMATIVE ANNEX (VISIBLE IN ALL PRINTS EXCEPT WORK ORDER) */}
       {printMode !== 'work_order' && printMode !== 'none' && <NormativeAnnex />}
 
-      {/* NEW: WORK ORDER COMPONENT (ONLY VISIBLE IN WORK_ORDER MODE) */}
+      {/* WORK ORDER COMPONENT (ONLY VISIBLE IN WORK_ORDER MODE) */}
       {printMode === 'work_order' && <WorkOrder auditState={auditState} propertyAddress={property.address} />}
 
       <div className="fixed bottom-0 left-0 w-full bg-slate-900 border-t border-slate-700 p-4 flex justify-between items-center z-40 no-print">
