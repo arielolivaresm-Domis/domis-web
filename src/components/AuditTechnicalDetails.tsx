@@ -84,6 +84,15 @@ const auditCategories = [
   }
 ];
 
+const COLOR_CLASSES: Record<string, { icon: string; iconHover: string }> = {
+  cyan:   { icon: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400',       iconHover: 'group-hover:bg-cyan-500/20'   },
+  orange: { icon: 'bg-orange-500/10 border-orange-500/20 text-orange-400', iconHover: 'group-hover:bg-orange-500/20' },
+  blue:   { icon: 'bg-blue-500/10 border-blue-500/20 text-blue-400',       iconHover: 'group-hover:bg-blue-500/20'   },
+  red:    { icon: 'bg-red-500/10 border-red-500/20 text-red-400',          iconHover: 'group-hover:bg-red-500/20'    },
+  purple: { icon: 'bg-purple-500/10 border-purple-500/20 text-purple-400', iconHover: 'group-hover:bg-purple-500/20' },
+  green:  { icon: 'bg-green-500/10 border-green-500/20 text-green-400',    iconHover: 'group-hover:bg-green-500/20'  },
+};
+
 export default function AuditTechnicalDetails() {
   const [openCategory, setOpenCategory] = useState<string | null>(null);
 
@@ -175,7 +184,7 @@ export default function AuditTechnicalDetails() {
                     className="w-full flex items-center justify-between p-4 md:p-6 text-left group"
                   >
                     <div className="flex items-center gap-3 md:gap-4">
-                      <div className={`p-2 md:p-3 bg-${category.color}-500/10 rounded-lg border border-${category.color}-500/20 text-${category.color}-400 group-hover:bg-${category.color}-500/20 transition-all`}>
+                      <div className={`p-2 md:p-3 rounded-lg border transition-all ${COLOR_CLASSES[category.color].icon} ${COLOR_CLASSES[category.color].iconHover}`}>
                         {category.icon}
                       </div>
                       <span className="text-base md:text-lg font-black text-white uppercase tracking-tight group-hover:text-cyan-400 transition-colors">
