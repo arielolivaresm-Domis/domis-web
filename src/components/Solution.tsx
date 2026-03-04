@@ -23,7 +23,7 @@ export default function Solution() {
       <div className="relative rounded-none md:rounded-[2.5rem] overflow-hidden border-y md:border border-white/10 shadow-2xl bg-slate-950">
         
         {/* TEXTURA DE FONDO */}
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.webp')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
         <div className="relative z-10 p-6 md:p-16">
           

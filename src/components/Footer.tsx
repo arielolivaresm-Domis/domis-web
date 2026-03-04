@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="relative z-20 bg-slate-950 border-t border-white/5 pt-12 md:pt-24 pb-8 md:pb-12 font-sans overflow-hidden">
       
       {/* Capa de textura sutil opcional (puedes comentarla si quieres negro puro) */}
-      <div className="absolute inset-0 bg-[url('/wireframe.png')] opacity-[0.02] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[url('/wireframe.webp')] opacity-[0.02] pointer-events-none"></div>
 
       <Section className="relative z-10 mb-12 md:mb-20 px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-16">

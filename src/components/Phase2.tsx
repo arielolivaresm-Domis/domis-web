@@ -46,7 +46,7 @@ export default function Phase2({ onNext }: { onNext: () => void }) {
 
         {/* OVERLAY TÉCNICO Y GRADIENTES */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-cyan-900/20 opacity-95"></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.08] bg-repeat pointer-events-none mix-blend-overlay"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.webp')] opacity-[0.08] bg-repeat pointer-events-none mix-blend-overlay"></div>
 
         {/* CONTENIDO INTERNO */}
         <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-16 text-left">

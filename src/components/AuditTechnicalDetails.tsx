@@ -117,7 +117,7 @@ export default function AuditTechnicalDetails() {
       <div className="relative rounded-none md:rounded-[2.5rem] overflow-hidden border-y md:border border-white/10 bg-slate-950 shadow-2xl">
         
         {/* TEXTURA DE FONDO */}
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.webp')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
         <div className="p-6 md:p-16 relative z-10">
           

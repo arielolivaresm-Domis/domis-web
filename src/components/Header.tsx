@@ -101,7 +101,7 @@ export default function Header() {
               >
                 <div className="relative h-10 md:h-[76px] w-full flex flex-col justify-center items-start -ml-2 md:-ml-5 top-1 md:top-3">
                   <img
-                    src="/wireframe.png"
+                    src="/wireframe.webp"
                     alt="System Scan"
                     className="h-full w-auto object-contain object-left drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] block"
                   />

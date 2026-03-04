@@ -30,7 +30,7 @@ export default function Sourcing() {
 
   return (
     <Section id="sourcing" className="py-0 md:py-12 lg:py-24 px-0 md:px-6 bg-slate-950 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.png')] opacity-[0.03] bg-repeat pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.webp')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
       <div className="text-center mb-8 md:mb-16 relative z-10 px-4">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
