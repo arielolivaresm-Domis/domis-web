@@ -35,7 +35,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({ address, isOnline = 
     }
     const timer = setTimeout(() => {
       setDebouncedAddress(address);
-    }, 1500);
+    }, 600);
     return () => clearTimeout(timer);
   }, [address]);
 
