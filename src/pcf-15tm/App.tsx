@@ -199,7 +199,7 @@ export const App: React.FC = () => {
   };
 
   const handleLogin = () => {
-    if (password === 'D2026s') setIsAuthenticated(true);
+    if (password === import.meta.env.VITE_ACCESS_PASSWORD) setIsAuthenticated(true);
     else setLoginError('CLAVE INCORRECTA');
   };
 
