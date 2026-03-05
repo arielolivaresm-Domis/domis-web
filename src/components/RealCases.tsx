@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronRight, X, TrendingUp, Home, Building2, ChevronLeft } from 'lucide-react';
 import Section from './layout/Section';
 
@@ -257,9 +257,10 @@ function CaseCard({ caso, onClick }: { caso: CaseData; onClick: () => void }) {
       <div className="relative h-40 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
         <div className="absolute inset-0 bg-slate-950/50 z-10"></div>
         
-        <img 
+        <img
           src={`/${caso.imageName}`}
           alt={caso.name}
+          loading="lazy"
           className="w-full h-full object-cover object-top opacity-60 group-hover:scale-105 transition-transform duration-700 blur-[1.5px]"
         />
         
@@ -321,6 +322,14 @@ function CaseCard({ caso, onClick }: { caso: CaseData; onClick: () => void }) {
 }
 
 function CaseModal({ caso, onClose }: { caso: CaseData; onClose: () => void }) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   return (
     <div 
       className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-md" 
