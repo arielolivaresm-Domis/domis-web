@@ -1,8 +1,0 @@
-{
-  "name": "PCF-15™ By Domis v3",
-  "description": "Advanced real-estate property calculator, audit tool, and financial analyzer with Google Maps integration.",
-  "requestFramePermissions": [
-    "camera",
-    "geolocation"
-  ]
-}

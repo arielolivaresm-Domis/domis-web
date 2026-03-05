@@ -1,8 +1,0 @@
-{
-  "name": "PCF-15™ By Domis v5.1 (Normative Edition)",
-  "description": "Advanced real-estate property calculator with Chilean Normative Context and Contractor Work Orders.",
-  "requestFramePermissions": [
-    "camera",
-    "geolocation"
-  ]
-}
