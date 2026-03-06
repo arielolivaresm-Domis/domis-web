@@ -30,10 +30,10 @@ const LandingPage = () => (
       <main>
         <Hero />
         <Problem />
+        <RealCases />
         <Solution />
         <AuditTechnicalDetails />
         <PhasesTabs />
-        <RealCases />
         <FinalCTA />
       </main>
 
