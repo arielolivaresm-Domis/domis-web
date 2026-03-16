@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /pcf-15tm
+
+Sitemap: https://www.domis.cl/sitemap.xml
