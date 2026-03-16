@@ -13,6 +13,11 @@ import { TabsProvider } from './context/TabsContext';
 // Importación del Portal Técnico PCF-15™
 import PortalApp from './pcf-15tm/App';
 
+// Páginas de casos reales
+import CasoCarolinaLaReina from './components/casos/CasoCarolinaLaReina';
+import CasoAndreaProvidencia from './components/casos/CasoAndreaProvidencia';
+import CasoFelipeLasCondes from './components/casos/CasoFelipeLasCondes';
+
 /**
  * COMPONENTE: LANDING PAGE DOMIS™
  * Encapsula toda la experiencia de usuario y autoridad de la web principal.
@@ -55,6 +60,11 @@ function App() {
 
       {/* RUTA TÉCNICA: Portal PCF-15™ */}
       <Route path="/pcf-15tm" element={<PortalApp />} />
+
+      {/* RUTAS DE CASOS REALES */}
+      <Route path="/casos/carolina-la-reina" element={<CasoCarolinaLaReina />} />
+      <Route path="/casos/andrea-providencia" element={<CasoAndreaProvidencia />} />
+      <Route path="/casos/felipe-las-condes" element={<CasoFelipeLasCondes />} />
     </Routes>
   );
 }
