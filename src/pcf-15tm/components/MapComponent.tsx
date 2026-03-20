@@ -5,9 +5,10 @@ import { PlaceCategory } from '../types.ts';
 interface MapComponentProps {
   address: string;
   isOnline?: boolean;
+  onPlacesLoaded?: (places: PlaceCategory[], communeInfo: { name: string; data: any } | null) => void;
 }
 
-export const MapComponent: React.FC<MapComponentProps> = ({ address, isOnline = true }) => {
+export const MapComponent: React.FC<MapComponentProps> = ({ address, isOnline = true, onPlacesLoaded }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapError, setMapError] = useState<string | null>(null);
   const [communeInfo, setCommuneInfo] = useState<{name: string, data: any} | null>(null);
@@ -26,6 +27,10 @@ export const MapComponent: React.FC<MapComponentProps> = ({ address, isOnline = 
     { type: 'hospital', label: 'Urgencias', skipRating: true, radius: 4000 }, // Radio ampliado para Hospitales
     { type: 'doctor', label: 'Médicos' }
   ]);
+
+  useEffect(() => {
+    if (onPlacesLoaded) onPlacesLoaded(places, communeInfo);
+  }, [places, communeInfo]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!address) {

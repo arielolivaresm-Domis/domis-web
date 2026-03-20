@@ -20,6 +20,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ password, setPassword,
           className="w-full p-4 bg-slate-700 border border-slate-600 rounded-lg text-white text-center text-xl tracking-[0.3em] mb-4 focus:border-emerald-500 outline-none"
           placeholder="Contraseña"
           value={password}
+          autoComplete="new-password"
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
         />

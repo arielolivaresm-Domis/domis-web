@@ -299,6 +299,20 @@ export const VENTANAS: GrupoCosto = {
       unidad: 'm²',
       clp: { premium: 350000, estandar: 220000, basico: 150000 }
     },
+    {
+      key: 'ventana_aluminio',
+      cod: 'V-02',
+      label: 'Ventana aluminio',
+      unidad: 'm²',
+      clp: { premium: 350000, estandar: 220000, basico: 150000 }
+    },
+    {
+      key: 'ventana_clasica',
+      cod: 'V-03',
+      label: 'Ventana clásica (madera)',
+      unidad: 'm²',
+      clp: { premium: 350000, estandar: 220000, basico: 150000 }
+    },
   ]
 }
 
@@ -512,6 +526,41 @@ export const ARTEFACTOS_BANO: GrupoCosto = {
       clp: { premium: 150000, estandar: 80000, basico: 50000 }
     },
     {
+      key: 'otro_bano_1',
+      cod: 'BA-91',
+      label: 'Otro 1',
+      unidad: 'Uni',
+      clp: { premium: 300000, estandar: 150000, basico: 80000 }
+    },
+    {
+      key: 'otro_bano_2',
+      cod: 'BA-92',
+      label: 'Otro 2',
+      unidad: 'Uni',
+      clp: { premium: 300000, estandar: 150000, basico: 80000 }
+    },
+    {
+      key: 'otro_bano_3',
+      cod: 'BA-93',
+      label: 'Otro 3',
+      unidad: 'Uni',
+      clp: { premium: 300000, estandar: 150000, basico: 80000 }
+    },
+    {
+      key: 'otro_bano_4',
+      cod: 'BA-94',
+      label: 'Otro 4',
+      unidad: 'Uni',
+      clp: { premium: 300000, estandar: 150000, basico: 80000 }
+    },
+    {
+      key: 'otro_bano_5',
+      cod: 'BA-95',
+      label: 'Otro 5',
+      unidad: 'Uni',
+      clp: { premium: 300000, estandar: 150000, basico: 80000 }
+    },
+    {
       key: 'ceramica_muro_bano',
       cod: 'B-01',
       label: 'Cerámica muro baño',
@@ -584,6 +633,41 @@ export const ARTEFACTOS_COCINA: GrupoCosto = {
       label: 'Llave de paso y fitting cocina',
       unidad: 'Uni',
       clp: { premium: 60000, estandar: 35000, basico: 28000 }
+    },
+    {
+      key: 'otro_cocina_1',
+      cod: 'KA-91',
+      label: 'Otro 1',
+      unidad: 'Uni',
+      clp: { premium: 300000, estandar: 150000, basico: 80000 }
+    },
+    {
+      key: 'otro_cocina_2',
+      cod: 'KA-92',
+      label: 'Otro 2',
+      unidad: 'Uni',
+      clp: { premium: 300000, estandar: 150000, basico: 80000 }
+    },
+    {
+      key: 'otro_cocina_3',
+      cod: 'KA-93',
+      label: 'Otro 3',
+      unidad: 'Uni',
+      clp: { premium: 300000, estandar: 150000, basico: 80000 }
+    },
+    {
+      key: 'otro_cocina_4',
+      cod: 'KA-94',
+      label: 'Otro 4',
+      unidad: 'Uni',
+      clp: { premium: 300000, estandar: 150000, basico: 80000 }
+    },
+    {
+      key: 'otro_cocina_5',
+      cod: 'KA-95',
+      label: 'Otro 5',
+      unidad: 'Uni',
+      clp: { premium: 300000, estandar: 150000, basico: 80000 }
     },
   ]
 }
@@ -860,6 +944,28 @@ export const MANO_DE_OBRA: GrupoCosto = {
   ]
 }
 
+
+// ============================================================================
+// ÍNDICE PLANO — todos los ítems para búsqueda por referencia
+// ============================================================================
+export const ALL_ITEMS: ItemCosto[] = [
+  ...DEMOLICION.items,
+  ...TABIQUERIA.items,
+  ...PISO.items,
+  ...MURO.items,
+  ...CIELO.items,
+  ...VENTANAS.items,
+  ...PUERTAS.items,
+  ...CLOSETS.items,
+  ...MUEBLES.items,
+  ...ARTEFACTOS_BANO.items,
+  ...ARTEFACTOS_COCINA.items,
+  ...SC_TECHOS.items,
+  ...SC_INSTALACIONES_ELECTRICAS.items,
+  ...SC_INSTALACIONES_ESPECIALES.items,
+  ...EXTERIOR_FACHADA.items,
+  ...MANO_DE_OBRA.items,
+];
 
 // ============================================================================
 // MAPA COMPLETO — todos los grupos por módulo

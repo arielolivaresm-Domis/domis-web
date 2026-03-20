@@ -23,8 +23,19 @@ export interface AuditScore {
   measureL?: number; // Largo en metros
   // v2: cost tier system
   active?: boolean;        // toggle ON (needs work) / OFF (no action)
-  escala?: 0 | 1 | 2 | 3; // 0=not set, 1=Premium, 2=Estándar, 3=Básico
+  escala?: 0 | 1 | 2 | 3; // 0=buenas condiciones/off, 1=Premium, 2=Estándar, 3=Básico
   costClp?: number;        // calculated CLP subtotal
+  // v3: composite item sub-selections (simplified UX)
+  subGroups?: {
+    [groupKey: string]: {
+      active?: boolean;         // ON/OFF for groups with toggle (demolicion, tabiqueria)
+      selected?: string;        // exclusive single-select (terminacion, tipo techo)
+      selectedMulti?: string[]; // multi-select (artefactos, muebles)
+      selectedQtys?: Record<string, number>;   // per-item quantities (artefactos baño/cocina)
+      itemLabels?: Record<string, string>;    // custom labels for editable items (Otro 1-5)
+      priceOverrides?: Record<string, { premium: number; estandar: number; basico: number }>; // precio resuelto desde referencia (ej: "(wc)")
+    };
+  };
 }
 
 export interface AuditState {

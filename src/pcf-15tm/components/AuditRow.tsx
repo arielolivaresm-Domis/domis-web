@@ -55,11 +55,10 @@ const AuditRowInner: React.FC<AuditRowProps> = ({
   }, [active, state.escala, state.qty, item, uf, onChange]);
 
   const handleEscalaClick = useCallback((e: Escala) => {
-    if (!active) return;
     const qty = state.qty || 0;
     const costClp = qty > 0 ? qty * getClpByEscala(item, e) : 0;
-    onChange({ escala: e, costClp, cost: costClp / uf });
-  }, [active, state.qty, item, uf, onChange]);
+    onChange({ active: true, escala: e, costClp, cost: costClp / uf });
+  }, [state.qty, item, uf, onChange]);
 
   const handleQtyChange = useCallback((val: number) => {
     const e = (escala > 0 ? escala : 2) as Escala;
@@ -179,11 +178,14 @@ const AuditRowInner: React.FC<AuditRowProps> = ({
 
   // Semáforo
   let barColor = 'bg-slate-700';
-  if (state.isNa) barColor = 'bg-blue-600';
-  else if (active) barColor = 'bg-amber-500';
+  if (state.isNa) barColor = 'bg-slate-500';
+  else if (active && escala === 1) barColor = 'bg-red-500';
+  else if (active && escala === 2) barColor = 'bg-amber-400';
+  else if (active && escala === 3) barColor = 'bg-emerald-500';
+  else if (!active) barColor = 'bg-blue-600/70';
 
   // Escala label para impresión
-  const escalaLabel = escala === 1 ? 'PREMIUM' : escala === 2 ? 'ESTÁNDAR' : escala === 3 ? 'BÁSICO' : '-';
+  const escalaLabel = escala === 1 ? 'URGENTE' : escala === 2 ? 'MODERADO' : escala === 3 ? 'NORMAL' : 'ÓPTIMO';
 
   return (
     <div className={`flex flex-col border-b border-slate-700/50 transition-colors group py-2 relative pl-3 break-inside-avoid
@@ -194,18 +196,16 @@ const AuditRowInner: React.FC<AuditRowProps> = ({
 
       <div className="flex items-center justify-between gap-1 flex-wrap">
 
-        {/* TOGGLE ON/OFF */}
+        {/* BOTÓN O — Óptimo (toggle on/off) */}
         <button
           onClick={handleToggle}
-          className={`w-10 h-7 flex items-center justify-center text-[10px] font-black rounded border transition-all no-print shrink-0 ${
-            active
-              ? 'bg-amber-500 text-slate-900 border-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.4)]'
-              : 'bg-slate-800 border-slate-600 text-slate-500 hover:border-slate-400'
+          className={`w-7 h-7 flex items-center justify-center text-[10px] font-bold rounded border transition-all no-print shrink-0 ${
+            !active
+              ? 'bg-blue-600 text-white border-blue-400'
+              : 'bg-slate-800 border-slate-600 text-blue-400/50 hover:border-blue-500'
           }`}
-          title={active ? 'Desactivar ítem' : 'Activar ítem (requiere intervención)'}
-        >
-          {active ? 'ON' : 'OFF'}
-        </button>
+          title={active ? 'Marcar como Óptimo' : 'Óptimo'}
+        >O</button>
 
         {/* LABEL + CÓDIGO + NORMA */}
         <div className="flex-1 flex items-center gap-1 min-w-0">
@@ -268,24 +268,23 @@ const AuditRowInner: React.FC<AuditRowProps> = ({
           >N/A</button>
         )}
 
-        {/* ESCALA 1 / 2 / 3 */}
+        {/* ESCALA U / M / N — U=Rojo(1) · M=Amarillo(2) · N=Verde(3) */}
         <div className="flex gap-[2px] no-print shrink-0">
           {([1, 2, 3] as Escala[]).map(e => {
             const isActiveScale = escala === e;
             const colorMap: Record<number, string> = {
-              1: isActiveScale ? 'bg-amber-500 text-slate-900 border-amber-400' : 'bg-slate-800 border-slate-600 text-amber-500/50',
-              2: isActiveScale ? 'bg-blue-500 text-white border-blue-400'       : 'bg-slate-800 border-slate-600 text-blue-400/50',
-              3: isActiveScale ? 'bg-slate-500 text-white border-slate-400'     : 'bg-slate-800 border-slate-600 text-slate-500/50',
+              1: isActiveScale ? 'bg-red-500 text-white border-red-400'               : 'bg-slate-800 border-slate-600 text-red-400/50 hover:border-red-500/50',
+              2: isActiveScale ? 'bg-amber-400 text-slate-900 border-amber-300'       : 'bg-slate-800 border-slate-600 text-amber-400/50 hover:border-amber-400/50',
+              3: isActiveScale ? 'bg-emerald-500 text-white border-emerald-400'       : 'bg-slate-800 border-slate-600 text-emerald-400/50 hover:border-emerald-500/50',
             };
-            const label = e === 1 ? '1P' : e === 2 ? '2E' : '3B';
+            const label = e === 1 ? 'U' : e === 2 ? 'M' : 'N';
             return (
               <button
                 key={e}
                 onClick={() => handleEscalaClick(e)}
-                disabled={!active}
-                className={`w-7 h-7 flex items-center justify-center text-[10px] font-bold rounded border transition-all
-                  ${colorMap[e]} ${!active ? 'cursor-not-allowed opacity-30' : 'hover:opacity-80'}`}
-                title={e === 1 ? 'Premium' : e === 2 ? 'Estándar' : 'Básico'}
+                className={`w-7 h-7 flex items-center justify-center text-[10px] font-bold rounded border transition-all hover:opacity-90
+                  ${colorMap[e]}`}
+                title={e === 1 ? 'Urgente' : e === 2 ? 'Moderado' : 'Normal'}
               >
                 {label}
               </button>
