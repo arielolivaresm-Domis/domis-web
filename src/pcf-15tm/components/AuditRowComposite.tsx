@@ -90,13 +90,15 @@ const AuditRowComposite: React.FC<Props> = ({
     const q  = newQty      !== undefined ? newQty      : (state.qty      || 0);
     const ml = newMeasureL !== undefined ? newMeasureL : (state.measureL || 0);
     const sg = newSG       !== undefined ? newSG       : subGroups;
-    const { costClp: c, cost } = calcCompositeCostClp(config, { subGroups: sg, measureL: ml }, e, q, uf);
-    const customTotal = (sg['_custom']?.customList || []).reduce((sum, item) => sum + (item.costClp || 0), 0);
-    const calcTotal = c + customTotal;
+    const { costClp: c } = calcCompositeCostClp(config, { subGroups: sg, measureL: ml }, e, q, uf);
+    const customList = sg['_custom']?.customList || [];
+    const customTotal = customList.reduce((sum, item) => sum + (item.costClp || 0), 0);
+    // Custom items REEMPLAZAN el calculado; si no hay, usa el calculado
+    const calcFinal = customList.length > 0 ? customTotal : c;
     // Si el usuario cambió la escala → limpiar override y usar valor calculado
     const escalaChanged = newEscala !== undefined && newEscala !== escala;
     const override = escalaChanged ? undefined : state.costOverride;
-    const finalClp = override !== undefined ? override : calcTotal;
+    const finalClp = override !== undefined ? override : calcFinal;
     onChange({ ...extras, subGroups: sg, costClp: finalClp, costOverride: override, cost: uf > 0 ? finalClp / uf : 0, active: e > 0, escala: e });
   }, [escala, state.qty, state.measureL, state.costOverride, subGroups, config, uf, onChange]);
 

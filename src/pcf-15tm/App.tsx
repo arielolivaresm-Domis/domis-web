@@ -586,11 +586,29 @@ export const App: React.FC = () => {
   ) => {
     setAuditState(prev => {
       const current = prev[key] || { score: 0, active: false, escala: 0, qty: 0, hasPhoto: false, photoCount: 0, photos: [], cost: 0, observation: '', subGroups: {} };
+      // Si cambia escala, limpiar override manual
+      if (updates.escala !== undefined && updates.escala !== current.escala) updates = { ...updates, costOverride: undefined };
       const merged  = { ...current, ...updates };
       const escala  = (merged.escala || 0) as 0 | 1 | 2 | 3;
       const qty     = merged.qty || 0;
-      const { costClp, cost } = calcCompositeCostClp(config, merged, escala, qty, uf);
-      const newState = { ...prev, [key]: { ...merged, costClp, cost, active: escala > 0 } };
+
+      let finalClp: number;
+      let finalCost: number;
+
+      if (merged.costOverride !== undefined) {
+        // Usuario editó el valor manualmente → respetar
+        finalClp = merged.costOverride;
+        finalCost = uf > 0 ? finalClp / uf : 0;
+      } else {
+        const { costClp: c } = calcCompositeCostClp(config, merged, escala, qty, uf);
+        const customList = merged.subGroups?.['_custom']?.customList || [];
+        const customTotal = customList.reduce((sum, item) => sum + (item.costClp || 0), 0);
+        // Custom items REEMPLAZAN el calculado si existen; si no, se usa el calculado
+        finalClp = customList.length > 0 ? customTotal : c;
+        finalCost = uf > 0 ? finalClp / uf : 0;
+      }
+
+      const newState = { ...prev, [key]: { ...merged, costClp: finalClp, cost: finalCost, active: escala > 0 } };
 
       // Auto-copy Muro measureL → Piso (para cálculo de Guardapolvo)
       if (config.key === 'muro' && updates.measureL !== undefined) {
