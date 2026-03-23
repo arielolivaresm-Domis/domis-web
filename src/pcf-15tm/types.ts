@@ -25,6 +25,7 @@ export interface AuditScore {
   active?: boolean;        // toggle ON (needs work) / OFF (no action)
   escala?: 0 | 1 | 2 | 3; // 0=buenas condiciones/off, 1=Premium, 2=Estándar, 3=Básico
   costClp?: number;        // calculated CLP subtotal
+  costOverride?: number;   // manual override — respetado hasta que cambie escala
   // v3: composite item sub-selections (simplified UX)
   subGroups?: {
     [groupKey: string]: {

@@ -92,8 +92,13 @@ const AuditRowComposite: React.FC<Props> = ({
     const sg = newSG       !== undefined ? newSG       : subGroups;
     const { costClp: c, cost } = calcCompositeCostClp(config, { subGroups: sg, measureL: ml }, e, q, uf);
     const customTotal = (sg['_custom']?.customList || []).reduce((sum, item) => sum + (item.costClp || 0), 0);
-    onChange({ ...extras, subGroups: sg, costClp: c + customTotal, cost: cost + (uf > 0 ? customTotal / uf : 0), active: e > 0, escala: e });
-  }, [escala, state.qty, state.measureL, subGroups, config, uf, onChange]);
+    const calcTotal = c + customTotal;
+    // Si el usuario cambió la escala → limpiar override y usar valor calculado
+    const escalaChanged = newEscala !== undefined && newEscala !== escala;
+    const override = escalaChanged ? undefined : state.costOverride;
+    const finalClp = override !== undefined ? override : calcTotal;
+    onChange({ ...extras, subGroups: sg, costClp: finalClp, costOverride: override, cost: uf > 0 ? finalClp / uf : 0, active: e > 0, escala: e });
+  }, [escala, state.qty, state.measureL, state.costOverride, subGroups, config, uf, onChange]);
 
   // ── Custom items ──────────────────────────────────────────────────────────
 
@@ -343,11 +348,33 @@ const AuditRowComposite: React.FC<Props> = ({
           </div>
         )}
 
-        {/* COST */}
-        {showCosts && costClp > 0 && (
+        {/* COST — editable */}
+        {showCosts && isActive && (
           <div className="text-right shrink-0 no-print">
-            <div className="text-amber-400 font-bold text-xs tabular-nums">
-              ${costClp.toLocaleString('es-CL')}
+            <div className="flex items-center gap-0.5 justify-end">
+              <span className="text-amber-400 font-bold text-[10px]">$</span>
+              <input
+                type="number"
+                title="Valor referencial (editable)"
+                className={`w-24 text-right text-xs font-bold tabular-nums bg-transparent border-b outline-none transition-colors ${
+                  state.costOverride !== undefined
+                    ? 'text-amber-300 border-amber-500'
+                    : 'text-amber-400 border-transparent hover:border-amber-500/40 focus:border-amber-400'
+                }`}
+                value={costClp || ''}
+                placeholder="0"
+                onChange={e => {
+                  const val = parseInt(e.target.value) || 0;
+                  onChange({ costClp: val, costOverride: val, cost: uf > 0 ? val / uf : 0 });
+                }}
+              />
+              {state.costOverride !== undefined && (
+                <button
+                  title="Restaurar valor calculado"
+                  className="text-slate-500 hover:text-amber-400 text-[10px] ml-0.5"
+                  onClick={() => onChange({ costOverride: undefined })}
+                >↺</button>
+              )}
             </div>
             <div className="text-slate-500 text-[9px] tabular-nums">
               {uf > 0 ? (costClp / uf).toFixed(1) : '0'} UF

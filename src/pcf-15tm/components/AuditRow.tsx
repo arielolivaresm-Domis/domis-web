@@ -57,7 +57,7 @@ const AuditRowInner: React.FC<AuditRowProps> = ({
   const handleEscalaClick = useCallback((e: Escala) => {
     const qty = state.qty || 0;
     const costClp = qty > 0 ? qty * getClpByEscala(item, e) : 0;
-    onChange({ active: true, escala: e, costClp, cost: costClp / uf });
+    onChange({ active: true, escala: e, costClp, costOverride: undefined, cost: costClp / uf });
   }, [state.qty, item, uf, onChange]);
 
   const handleQtyChange = useCallback((val: number) => {
@@ -292,14 +292,41 @@ const AuditRowInner: React.FC<AuditRowProps> = ({
           })}
         </div>
 
-        {/* COSTO CLP */}
-        {showCosts && costClp > 0 && (
+        {/* COSTO CLP — editable */}
+        {showCosts && active && (
           <div className="w-28 text-right shrink-0 no-print">
-            <div className="text-amber-400 font-bold text-xs tabular-nums">
-              ${costClp.toLocaleString('es-CL')}
+            <div className="flex items-center gap-0.5 justify-end">
+              <span className="text-amber-400 font-bold text-[10px]">$</span>
+              <input
+                type="number"
+                title="Valor referencial (editable)"
+                className={`w-24 text-right text-xs font-bold tabular-nums bg-transparent border-b outline-none transition-colors ${
+                  state.costOverride !== undefined
+                    ? 'text-amber-300 border-amber-500'
+                    : 'text-amber-400 border-transparent hover:border-amber-500/40 focus:border-amber-400'
+                }`}
+                value={costClp || ''}
+                placeholder="0"
+                onChange={e => {
+                  const val = parseInt(e.target.value) || 0;
+                  onChange({ costClp: val, costOverride: val, cost: uf > 0 ? val / uf : 0 });
+                }}
+              />
+              {state.costOverride !== undefined && (
+                <button
+                  title="Restaurar valor calculado"
+                  className="text-slate-500 hover:text-amber-400 text-[10px] ml-0.5"
+                  onClick={() => {
+                    const e = (escala > 0 ? escala : 2) as Escala;
+                    const qty = state.qty || 0;
+                    const calc = active && qty > 0 ? qty * getClpByEscala(item, e) : 0;
+                    onChange({ costClp: calc, costOverride: undefined, cost: uf > 0 ? calc / uf : 0 });
+                  }}
+                >↺</button>
+              )}
             </div>
             <div className="text-slate-500 text-[9px] tabular-nums">
-              {(costClp / uf).toFixed(1)} UF
+              {uf > 0 ? (costClp / uf).toFixed(1) : '0'} UF
             </div>
           </div>
         )}

@@ -243,12 +243,20 @@ export const App: React.FC = () => {
     setAuditState(prev => {
       const current = prev[id] || { active: false, escala: 0, qty: 1, score: 0, hasPhoto: false, photoCount: 0, photos: [], cost: 0, observation: '' };
       const next = { ...current, ...updates };
-      let costClp = 0;
-      if (next.active && !next.isNa && next.escala && next.escala > 0 && next.qty > 0) {
-        costClp = next.qty * getClpByEscala(item, next.escala as Escala);
+      // Si el usuario tiene un override manual y NO cambió la escala, respetar el override
+      const escalaChanged = updates.escala !== undefined && updates.escala !== current.escala;
+      if (escalaChanged) next.costOverride = undefined;
+      if (next.costOverride !== undefined) {
+        next.costClp = next.costOverride;
+        next.cost = uf > 0 ? next.costOverride / uf : 0;
+      } else {
+        let costClp = 0;
+        if (next.active && !next.isNa && next.escala && next.escala > 0 && next.qty > 0) {
+          costClp = next.qty * getClpByEscala(item, next.escala as Escala);
+        }
+        next.costClp = costClp;
+        next.cost = uf > 0 ? costClp / uf : 0;
       }
-      next.costClp = costClp;
-      next.cost = uf > 0 ? costClp / uf : 0;
       return { ...prev, [id]: next };
     });
   };
