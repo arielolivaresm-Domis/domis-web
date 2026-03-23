@@ -135,7 +135,10 @@ export const App: React.FC = () => {
           if(data.sectionLabels) setSectionLabels(data.sectionLabels);
 
           console.log(`✅ Ficha ${data.meta.id} (v${data.meta.version || '?'}) cargada exitosamente.`);
-      } catch (err) { alert("Error crítico al procesar los datos."); }
+      } catch (err) {
+          console.error("❌ processJsonData error:", err);
+          alert(`Error al cargar la ficha:\n${(err as Error)?.message || String(err)}`);
+      }
   }, []);
 
   // --- AUTO-SAVE LOGIC ---
@@ -375,9 +378,9 @@ export const App: React.FC = () => {
         const content = await zip.generateAsync({ type: 'blob' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(content);
-        link.download = photoCount > 0 ? `PCF15_${safeName}_${safeId}.zip` : `PCF15_${safeName}_${safeId}.json`;
+        link.download = `PCF15_${safeName}_${safeId}.zip`;
         link.click();
-        if (photoCount > 0) alert(`✅ Pack v5.2 descargado con éxito.\n📄 1 Informe JSON\n📷 ${photoCount} Fotos renombradas.`);
+        alert(`✅ Pack guardado.\n📄 1 Informe JSON${photoCount > 0 ? `\n📷 ${photoCount} foto${photoCount !== 1 ? 's' : ''}` : ''}`);
     } catch (e) {
         console.error(e);
         alert("Error al generar el archivo ZIP.");
