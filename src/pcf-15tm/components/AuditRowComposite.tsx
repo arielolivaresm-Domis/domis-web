@@ -91,8 +91,31 @@ const AuditRowComposite: React.FC<Props> = ({
     const ml = newMeasureL !== undefined ? newMeasureL : (state.measureL || 0);
     const sg = newSG       !== undefined ? newSG       : subGroups;
     const { costClp: c, cost } = calcCompositeCostClp(config, { subGroups: sg, measureL: ml }, e, q, uf);
-    onChange({ ...extras, subGroups: sg, costClp: c, cost, active: e > 0, escala: e });
+    const customTotal = (sg['_custom']?.customList || []).reduce((sum, item) => sum + (item.costClp || 0), 0);
+    onChange({ ...extras, subGroups: sg, costClp: c + customTotal, cost: cost + (uf > 0 ? customTotal / uf : 0), active: e > 0, escala: e });
   }, [escala, state.qty, state.measureL, subGroups, config, uf, onChange]);
+
+  // ── Custom items ──────────────────────────────────────────────────────────
+
+  const handleAddCustomItem = useCallback(() => {
+    const current = subGroups['_custom']?.customList || [];
+    const newItem = { id: Date.now().toString(), label: '', costClp: 0 };
+    const newSG = { ...subGroups, _custom: { ...subGroups['_custom'], customList: [...current, newItem] } };
+    recalcAndSave({}, undefined, undefined, undefined, newSG);
+  }, [subGroups, recalcAndSave]);
+
+  const handleCustomItemChange = useCallback((id: string, field: 'label' | 'costClp', value: string | number) => {
+    const current = subGroups['_custom']?.customList || [];
+    const updated = current.map(item => item.id === id ? { ...item, [field]: value } : item);
+    const newSG = { ...subGroups, _custom: { ...subGroups['_custom'], customList: updated } };
+    recalcAndSave({}, undefined, undefined, undefined, newSG);
+  }, [subGroups, recalcAndSave]);
+
+  const handleRemoveCustomItem = useCallback((id: string) => {
+    const current = subGroups['_custom']?.customList || [];
+    const newSG = { ...subGroups, _custom: { ...subGroups['_custom'], customList: current.filter(item => item.id !== id) } };
+    recalcAndSave({}, undefined, undefined, undefined, newSG);
+  }, [subGroups, recalcAndSave]);
 
   // ── Escala 0/1P/2E/3B ────────────────────────────────────────────────────
 
@@ -305,12 +328,20 @@ const AuditRowComposite: React.FC<Props> = ({
           </div>
         )}
 
-        {/* QTY DISPLAY (m²) */}
-        {showCalculator && state.qty ? (
-          <span className="text-xs text-slate-500 font-mono no-print shrink-0">
-            {state.qty} m²
-          </span>
-        ) : null}
+        {/* QTY DISPLAY (m²) — editable para ajuste manual */}
+        {showCalculator && (
+          <div className="flex items-center gap-0.5 no-print shrink-0">
+            <input
+              type="number"
+              title="M² calculado (editable)"
+              className="w-14 h-7 text-center text-xs bg-slate-800 border border-slate-700 rounded text-slate-400 focus:border-emerald-500 focus:text-white outline-none font-mono"
+              value={state.qty || ''}
+              placeholder="m²"
+              onChange={e => handleQtyChange(e.target.value)}
+            />
+            <span className="text-slate-600 text-[9px]">m²</span>
+          </div>
+        )}
 
         {/* COST */}
         {showCosts && costClp > 0 && (
@@ -384,6 +415,50 @@ const AuditRowComposite: React.FC<Props> = ({
               Selecciona N / M / U para activar sub-ítems.
             </p>
           )}
+          {/* ── ÍTEMS ADICIONALES (custom) ── */}
+          {isActive && (() => {
+            const customList = subGroups['_custom']?.customList || [];
+            return (
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Ítems Adicionales</span>
+                  <button
+                    onClick={handleAddCustomItem}
+                    className="text-[10px] px-2 py-0.5 rounded border bg-slate-700 border-slate-500 text-slate-300 hover:bg-emerald-900/40 hover:border-emerald-500 hover:text-emerald-300 transition-colors"
+                  >➕ Agregar</button>
+                </div>
+                {customList.length > 0 && (
+                  <div className="space-y-1.5 mb-2">
+                    {customList.map(item => (
+                      <div key={item.id} className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          placeholder="Nombre del ítem"
+                          className="flex-1 text-[11px] bg-slate-800 border border-slate-600 rounded px-2 py-1 text-white outline-none focus:border-amber-400"
+                          value={item.label}
+                          onChange={e => handleCustomItemChange(item.id, 'label', e.target.value)}
+                        />
+                        <input
+                          type="number"
+                          placeholder="CLP"
+                          className="w-24 text-[11px] bg-slate-800 border border-slate-600 rounded px-2 py-1 text-amber-300 text-right outline-none focus:border-amber-400 font-mono"
+                          value={item.costClp || ''}
+                          onChange={e => handleCustomItemChange(item.id, 'costClp', parseInt(e.target.value) || 0)}
+                        />
+                        <span className="text-slate-600 text-[9px] shrink-0">CLP</span>
+                        <button
+                          onClick={() => handleRemoveCustomItem(item.id)}
+                          className="text-red-500 hover:text-red-300 text-[11px] font-bold px-1"
+                          title="Eliminar"
+                        >✕</button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+
           {isActive && config.groups.map(group => {
             const gs          = subGroups[group.key] || {};
             const groupActive = !group.hasOnOff || gs.active;

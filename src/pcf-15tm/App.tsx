@@ -76,6 +76,8 @@ export const App: React.FC = () => {
 
   const [auditNotes, setAuditNotes] = useState<Record<string, string>>({});
   const [otherLabels, setOtherLabels] = useState<Record<string, string>>({});
+  const [roomLabels, setRoomLabels] = useState<Record<string, string>>({}); // drm1, drm2, bth1... → nombre personalizado
+  const [sectionLabels, setSectionLabels] = useState<Record<string, string>>({}); // liv, kit, sc, ext → nombre personalizado
   const [listeningKey, setListeningKey] = useState<string | null>(null);
   const [totalCapex, setTotalCapex] = useState(0);
   const [totalCapexClp, setTotalCapexClp] = useState(0);
@@ -129,6 +131,8 @@ export const App: React.FC = () => {
           if(data.checklistImg) setChecklistImg(data.checklistImg);
           if(data.propertyPhoto) setPropertyPhoto(data.propertyPhoto);
           if(data.successFeePct !== undefined) setSuccessFeePct(data.successFeePct);
+          if(data.roomLabels) setRoomLabels(data.roomLabels);
+          if(data.sectionLabels) setSectionLabels(data.sectionLabels);
 
           console.log(`✅ Ficha ${data.meta.id} (v${data.meta.version || '?'}) cargada exitosamente.`);
       } catch (err) { alert("Error crítico al procesar los datos."); }
@@ -151,11 +155,12 @@ export const App: React.FC = () => {
     const dataToSave = {
         meta: { version: '5.2', date: new Date().toISOString(), id: auditId, hash: verificationHash },
         client, property, financials: fin, scenarios, activeScenario, auditState, auditNotes, otherLabels,
+        roomLabels, sectionLabels,
         portal: { toggles: portalToggles, desc: portalDesc }, costs: { uf, totalCapex, manualCapex },
         tools, checklistImg, propertyPhoto, successFeePct
     };
     localStorage.setItem('pcf15_autosave', JSON.stringify(dataToSave));
-  }, [client, property, fin, scenarios, activeScenario, auditState, auditNotes, otherLabels, portalToggles, portalDesc, uf, totalCapex, manualCapex, tools, checklistImg, successFeePct, auditId, verificationHash, isAuthenticated]);
+  }, [client, property, fin, scenarios, activeScenario, auditState, auditNotes, otherLabels, roomLabels, sectionLabels, portalToggles, portalDesc, uf, totalCapex, manualCapex, tools, checklistImg, successFeePct, auditId, verificationHash, isAuthenticated]);
 
   const handleClearForm = () => {
       if (window.confirm("⚠️ ¿Estás seguro de borrar toda la ficha actual? Se perderán todos los datos no exportados.")) {
@@ -321,6 +326,7 @@ export const App: React.FC = () => {
     const dataToSave = {
         meta: { version: '5.2', date: new Date().toISOString(), id: auditId, hash: verificationHash },
         client, property, financials: fin, scenarios, activeScenario, auditState, auditNotes, otherLabels,
+        roomLabels, sectionLabels,
         portal: { toggles: portalToggles, desc: portalDesc }, costs: { uf, totalCapex, manualCapex },
         tools, checklistImg, propertyPhoto, successFeePct
     };
@@ -751,9 +757,15 @@ export const App: React.FC = () => {
         rooms.push(
           <div key={prefix} className="mb-4 pl-3 border-l-2 border-slate-600">
             <div className="flex justify-between items-center mb-2">
-              <strong className="text-sm text-slate-300">{label} #{i}</strong>
+              <input
+                type="text"
+                value={roomLabels[prefix] || `${label} ${i}`}
+                onChange={e => setRoomLabels(p => ({...p, [prefix]: e.target.value}))}
+                className="text-sm text-slate-200 font-semibold bg-transparent border-b border-transparent hover:border-slate-500 focus:border-emerald-500 outline-none"
+                placeholder={`${label} ${i}`}
+              />
             </div>
-            {renderSectionComposite(tipo as 'dormitorio' | 'bano', prefix, `${label} #${i}`, extraGrupos)}
+            {renderSectionComposite(tipo as 'dormitorio' | 'bano', prefix, roomLabels[prefix] || `${label} ${i}`, extraGrupos)}
           </div>
         );
       } else {
@@ -761,9 +773,15 @@ export const App: React.FC = () => {
         rooms.push(
           <div key={prefix} className="mb-4 pl-3 border-l-2 border-slate-600">
             <div className="flex justify-between items-center mb-2">
-              <strong className="text-sm text-slate-300">{label} #{i}</strong>
+              <input
+                type="text"
+                value={roomLabels[prefix] || `${label} ${i}`}
+                onChange={e => setRoomLabels(p => ({...p, [prefix]: e.target.value}))}
+                className="text-sm text-slate-200 font-semibold bg-transparent border-b border-transparent hover:border-slate-500 focus:border-emerald-500 outline-none"
+                placeholder={`${label} ${i}`}
+              />
             </div>
-            {renderSectionWithNotes(grupos, prefix, `${label} #${i}`)}
+            {renderSectionWithNotes(grupos, prefix, roomLabels[prefix] || `${label} ${i}`)}
           </div>
         );
       }
@@ -1045,6 +1063,16 @@ export const App: React.FC = () => {
           1: { letter: 'U', name: 'Urgente',  lbg: '#ef4444', lc: '#fff',     bg: '#fef2f2', border: '#fca5a5', tc: '#b91c1c' },
         };
 
+        const displaySectionName = (canonical: string): string => {
+          const dm = canonical.match(/^Dormitorio (\d+)/); if (dm) return roomLabels[`drm${dm[1]}`] || canonical;
+          const bm = canonical.match(/^Baño (\d+)/);       if (bm) return roomLabels[`bth${bm[1]}`] || canonical;
+          if (canonical === 'Living / Comedor')  return sectionLabels['liv'] || canonical;
+          if (canonical === 'Cocina / Logia')    return sectionLabels['kit'] || canonical;
+          if (canonical === 'Sistemas Críticos') return sectionLabels['sc']  || canonical;
+          if (canonical === 'Exterior / Fachada') return sectionLabels['ext'] || canonical;
+          return canonical;
+        };
+
         // Agrupar ítems evaluados por sección
         const grouped: Record<string, { key: string; state: AuditScore; label: string; norm?: string }[]> = {};
         Object.entries(auditState).forEach(([key, state]) => {
@@ -1167,7 +1195,7 @@ export const App: React.FC = () => {
                   <div key={section} style={{ border: `2px solid ${sectionColor}20`, borderRadius: 10, overflow: 'hidden' }}>
                     {/* Cabecera sección */}
                     <div style={{ background: sectionColor, padding: '6px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ color: '#fff', fontWeight: 900, fontSize: 12 }}>{section}</span>
+                      <span style={{ color: '#fff', fontWeight: 900, fontSize: 12 }}>{displaySectionName(section)}</span>
                       <span style={{ color: '#ffffff99', fontSize: 9 }}>{items.length} ítem{items.length !== 1 ? 's' : ''} evaluado{items.length !== 1 ? 's' : ''}</span>
                     </div>
 
@@ -1278,6 +1306,15 @@ export const App: React.FC = () => {
           3: { letter: 'N', lbg: '#22c55e', lc: '#fff',     bg: '#f0fdf4', border: '#86efac', tc: '#15803d' },
           2: { letter: 'M', lbg: '#f59e0b', lc: '#1e293b', bg: '#fffbeb', border: '#fcd34d', tc: '#b45309' },
           1: { letter: 'U', lbg: '#ef4444', lc: '#fff',     bg: '#fef2f2', border: '#fca5a5', tc: '#b91c1c' },
+        };
+        const displaySectionName = (canonical: string): string => {
+          const dm = canonical.match(/^Dormitorio (\d+)/); if (dm) return roomLabels[`drm${dm[1]}`] || canonical;
+          const bm = canonical.match(/^Baño (\d+)/);       if (bm) return roomLabels[`bth${bm[1]}`] || canonical;
+          if (canonical === 'Living / Comedor')  return sectionLabels['liv'] || canonical;
+          if (canonical === 'Cocina / Logia')    return sectionLabels['kit'] || canonical;
+          if (canonical === 'Sistemas Críticos') return sectionLabels['sc']  || canonical;
+          if (canonical === 'Exterior / Fachada') return sectionLabels['ext'] || canonical;
+          return canonical;
         };
         const grouped: Record<string, { key: string; state: AuditScore; label: string; norm?: string }[]> = {};
         Object.entries(auditState).forEach(([key, state]) => {
@@ -1401,7 +1438,7 @@ export const App: React.FC = () => {
                 return (
                   <div key={section} style={{ border: `2px solid ${sectionColor}30`, borderRadius: 10, overflow: 'hidden' }}>
                     <div style={{ background: sectionColor, padding: '6px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ color: '#fff', fontWeight: 900, fontSize: 12 }}>{section}</span>
+                      <span style={{ color: '#fff', fontWeight: 900, fontSize: 12 }}>{displaySectionName(section)}</span>
                       <div style={{ textAlign: 'right' }}>
                         {sectionTotal > 0 && (
                           <span style={{ color: '#ffffffcc', fontSize: 10, fontWeight: 700 }}>
@@ -1837,19 +1874,19 @@ export const App: React.FC = () => {
              {renderSectionWithNotes(GRUPOS_SC_COMPLETO.filter(g => g.key !== 'sc_techos'), 'sys', 'Sistemas')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🛋️ Living / Comedor (LC)</h3>
+             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-1">🛋️ <input type="text" value={sectionLabels['liv'] || 'Living / Comedor'} onChange={e => setSectionLabels(p => ({...p, liv: e.target.value}))} className="bg-transparent text-amber-500 font-bold uppercase outline-none border-b border-transparent hover:border-amber-500/40 focus:border-amber-400 text-sm w-44" placeholder="Living / Comedor" /></h3>
              {renderSectionComposite('living_comedor', 'liv', 'Living')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">💧 Cocina / Logia (CL)</h3>
+             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-1">💧 <input type="text" value={sectionLabels['kit'] || 'Cocina / Logia'} onChange={e => setSectionLabels(p => ({...p, kit: e.target.value}))} className="bg-transparent text-amber-500 font-bold uppercase outline-none border-b border-transparent hover:border-amber-500/40 focus:border-amber-400 text-sm w-44" placeholder="Cocina / Logia" /></h3>
              {renderSectionComposite('cocina', 'kit', 'Cocina')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🛏️ Dormitorios (D#)</h3>
+             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🛏️ Dormitorios</h3>
              {renderDynamicRooms(property.dorms, 'dormitorio', 'drm', 'Dormitorio')}
           </div>
           <div className="bg-slate-900/50 p-4 rounded-lg border border-slate-600">
-             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🚿 Baños (B#)</h3>
+             <h3 className="text-sm font-bold text-amber-500 mb-3 uppercase flex items-center gap-2">🚿 Baños</h3>
              {renderDynamicRooms(property.baths, 'bano', 'bth', 'Baño')}
           </div>
           {property.stairs > 0 && (

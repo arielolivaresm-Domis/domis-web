@@ -34,6 +34,7 @@ export interface AuditScore {
       selectedQtys?: Record<string, number>;   // per-item quantities (artefactos baño/cocina)
       itemLabels?: Record<string, string>;    // custom labels for editable items (Otro 1-5)
       priceOverrides?: Record<string, { premium: number; estandar: number; basico: number }>; // precio resuelto desde referencia (ej: "(wc)")
+      customList?: { id: string; label: string; costClp: number }[]; // ítems adicionales libres
     };
   };
 }
