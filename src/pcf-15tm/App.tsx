@@ -62,6 +62,7 @@ export const App: React.FC = () => {
   const [fin, setFin] = useState({
     ownerVal: '', webVal: '', t1_v: '', t1_r: '', t2_v: '', t2_r: '', avgAppraisal: 0
   });
+  const [appraisalSource, setAppraisalSource] = useState<'t1' | 't2' | 'avg'>('t1');
   const [scenarios, setScenarios] = useState<Scenarios>({
     1: { offer: null, margin: 10 },
     2: { offer: null, margin: 10 },
@@ -462,8 +463,12 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     const v1 = parseFloat(fin.t1_v) || 0; const v2 = parseFloat(fin.t2_v) || 0;
-    setFin(f => ({ ...f, avgAppraisal: (v1 && v2) ? (v1 + v2) / 2 : (v1 || v2) }));
-  }, [fin.t1_v, fin.t2_v]);
+    let computed = 0;
+    if (appraisalSource === 't1') computed = v1;
+    else if (appraisalSource === 't2') computed = v2 || v1;
+    else computed = (v1 && v2) ? (v1 + v2) / 2 : (v1 || v2);
+    setFin(f => ({ ...f, avgAppraisal: computed }));
+  }, [fin.t1_v, fin.t2_v, appraisalSource]);
 
   const getFinancials = () => {
     const appraisal = fin.avgAppraisal || 0;
@@ -1665,8 +1670,20 @@ export const App: React.FC = () => {
             <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Valor Portal Web (UF)</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={fin.webVal} onChange={e => setFin({...fin, webVal: e.target.value})} /></div>
          </div>
          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 bg-slate-900/30 p-3 rounded border border-slate-700/50">
-           <div><label className="block text-xs font-bold text-blue-400 uppercase mb-1">Tasación Comercial (UF)</label><input type="number" className="w-full bg-slate-700 border border-blue-500/30 rounded p-2 text-white font-bold text-right" placeholder="Ej: 5000" value={fin.t1_v} onChange={e => setFin({...fin, t1_v: e.target.value})} /></div>
-           <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tasación 2 (Opcional)</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" placeholder="0" value={fin.t2_v} onChange={e => setFin({...fin, t2_v: e.target.value})} /></div>
+           <div>
+             <div className="flex items-center justify-between mb-1">
+               <label className="text-xs font-bold text-blue-400 uppercase">Tasación 1 (UF)</label>
+               <button onClick={() => setAppraisalSource('t1')} className={`text-[10px] font-bold px-2 py-0.5 rounded transition-colors ${appraisalSource === 't1' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'}`}>USAR</button>
+             </div>
+             <input type="number" className={`w-full bg-slate-700 rounded p-2 text-white font-bold text-right border ${appraisalSource === 't1' ? 'border-blue-500' : 'border-slate-600'}`} placeholder="Ej: 5000" value={fin.t1_v} onChange={e => setFin({...fin, t1_v: e.target.value})} />
+           </div>
+           <div>
+             <div className="flex items-center justify-between mb-1">
+               <label className="text-xs font-bold text-slate-400 uppercase">Tasación 2 (Opcional)</label>
+               <button onClick={() => setAppraisalSource('t2')} className={`text-[10px] font-bold px-2 py-0.5 rounded transition-colors ${appraisalSource === 't2' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'}`}>USAR</button>
+             </div>
+             <input type="number" className={`w-full bg-slate-700 rounded p-2 text-white font-bold text-right border ${appraisalSource === 't2' ? 'border-blue-500' : 'border-slate-600'}`} placeholder="0" value={fin.t2_v} onChange={e => setFin({...fin, t2_v: e.target.value})} />
+           </div>
            <div className="bg-red-900/20 border border-red-800 rounded p-2 flex flex-col justify-center"><label className="block text-[10px] font-bold text-red-400 uppercase mb-0.5">Valor Liquidación (80%)</label><div className="text-lg font-bold text-red-200 text-right">{Math.round(financials.liquidationVal).toLocaleString()} UF</div><div className="text-[9px] text-red-500 font-bold text-right">⚠️ Zona Riesgo Banco</div></div>
          </div>
          <div className="bg-slate-900/40 border border-slate-700 rounded-lg p-4">
