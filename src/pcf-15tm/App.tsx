@@ -391,26 +391,24 @@ export const App: React.FC = () => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    if (file.name.toLowerCase().endsWith('.zip')) {
-        try {
-            const zip = await JSZip.loadAsync(file);
-            const jsonFileName = Object.keys(zip.files).find(name => name.toLowerCase().endsWith('.json'));
-
-            if (jsonFileName) {
-                const jsonStr = await zip.files[jsonFileName].async("string");
-                processJsonData(jsonStr);
-            } else {
-                alert("❌ El archivo ZIP no contiene un archivo .json válido.");
-            }
-        } catch (e) {
-            console.error(e);
-            alert("Error al leer el archivo ZIP. Asegúrate de que no esté corrupto.");
+    // Intentar siempre como ZIP primero (funciona aunque el archivo tenga extensión .json)
+    try {
+        const zip = await JSZip.loadAsync(file);
+        const jsonFileName = Object.keys(zip.files).find(name => name.toLowerCase().endsWith('.json'));
+        if (jsonFileName) {
+            const jsonStr = await zip.files[jsonFileName].async("string");
+            processJsonData(jsonStr);
+            if (fileInputRef.current) fileInputRef.current.value = '';
+            return;
         }
-    } else {
-        const reader = new FileReader();
-        reader.onload = (e) => processJsonData(e.target?.result as string);
-        reader.readAsText(file);
+    } catch {
+        // No era ZIP — continuar a lectura como JSON puro
     }
+
+    // Fallback: leer como texto JSON plano
+    const reader = new FileReader();
+    reader.onload = (e) => processJsonData(e.target?.result as string);
+    reader.readAsText(file);
 
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
