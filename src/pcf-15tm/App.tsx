@@ -772,69 +772,52 @@ export const App: React.FC = () => {
 
   const renderDynamicRooms = (count: number, tipo: TipoRecinto, prefixBase: string, label: string) => {
     const rooms = [];
-    const isComposite = tipo === 'dormitorio' || tipo === 'bano';
     for (let i = 1; i <= count; i++) {
       const prefix = `${prefixBase}${i}`;
-      if (isComposite) {
-        // dormitorios: composite + closets con AuditRow legacy
-        // baños: composite (artefactos ya incluido en getCompositeItemsByRecinto)
-        const extraGrupos = tipo === 'dormitorio'
-          ? getGruposByRecinto('dormitorio').filter(g => g.key === 'closets')
-          : undefined;
-        rooms.push(
-          <div key={prefix} className="mb-4 pl-3 border-l-2 border-slate-600">
-            <div className="flex justify-between items-center mb-2">
-              <input
-                type="text"
-                value={roomLabels[prefix] || `${label} ${i}`}
-                onChange={e => setRoomLabels(p => ({...p, [prefix]: e.target.value}))}
-                className="text-sm text-slate-200 font-semibold bg-transparent border-b border-transparent hover:border-slate-500 focus:border-emerald-500 outline-none"
-                placeholder={`${label} ${i}`}
-              />
-            </div>
-            {renderSectionComposite(tipo as 'dormitorio' | 'bano', prefix, roomLabels[prefix] || `${label} ${i}`, extraGrupos)}
+      const roomName = roomLabels[prefix] || `${label} ${i}`;
+      // Mapear tipo a composite — dormitorio y bano tienen sus propios configs, el resto usa living_comedor como base
+      const compositeType: 'dormitorio' | 'bano' | 'living_comedor' =
+        tipo === 'dormitorio' ? 'dormitorio' :
+        tipo === 'bano'       ? 'bano'       :
+        'living_comedor';
+      const extraGrupos = tipo === 'dormitorio'
+        ? getGruposByRecinto('dormitorio').filter(g => g.key === 'closets')
+        : undefined;
+      rooms.push(
+        <div key={prefix} className="mb-4 pl-3 border-l-2 border-slate-600">
+          <div className="flex justify-between items-center mb-2">
+            <input
+              type="text"
+              value={roomName}
+              onChange={e => setRoomLabels(p => ({...p, [prefix]: e.target.value}))}
+              className="text-sm text-slate-200 font-semibold bg-transparent border-b border-transparent hover:border-slate-500 focus:border-emerald-500 outline-none"
+              placeholder={`${label} ${i}`}
+            />
           </div>
-        );
-      } else {
-        const grupos = getGruposByRecinto(tipo);
-        rooms.push(
-          <div key={prefix} className="mb-4 pl-3 border-l-2 border-slate-600">
-            <div className="flex justify-between items-center mb-2">
-              <input
-                type="text"
-                value={roomLabels[prefix] || `${label} ${i}`}
-                onChange={e => setRoomLabels(p => ({...p, [prefix]: e.target.value}))}
-                className="text-sm text-slate-200 font-semibold bg-transparent border-b border-transparent hover:border-slate-500 focus:border-emerald-500 outline-none"
-                placeholder={`${label} ${i}`}
-              />
-            </div>
-            {renderSectionWithNotes(grupos, prefix, roomLabels[prefix] || `${label} ${i}`)}
-          </div>
-        );
-      }
+          {renderSectionComposite(compositeType, prefix, roomName, extraGrupos)}
+        </div>
+      );
     }
     return rooms;
   };
 
-  const renderDynamicOtherRooms = (count: number, tipo: TipoRecinto, prefixBase: string) => {
+  const renderDynamicOtherRooms = (count: number, _tipo: TipoRecinto, prefixBase: string) => {
     const rooms = [];
     for (let i = 1; i <= count; i++) {
       const key = `${prefixBase}${i}`;
-      const labelName = otherLabels[key] || `Recinto #${i}`;
-      const grupos = getGruposByRecinto(tipo);
+      const labelName = otherLabels[key] || `Recinto ${i}`;
       rooms.push(
         <div key={key} className="mb-4 pl-3 border-l-2 border-slate-600">
           <div className="mb-2 flex items-center gap-2">
-             <strong className="text-sm text-slate-300"># {i}</strong>
-             <input
-               type="text"
-               className="bg-transparent border-b border-slate-600 text-amber-400 font-bold text-sm focus:border-amber-400 outline-none w-full placeholder-slate-600"
-               placeholder="Nombre..."
-               value={otherLabels[key] || ''}
-               onChange={(e) => setOtherLabels(prev => ({...prev, [key]: e.target.value}))}
-             />
+            <input
+              type="text"
+              className="bg-transparent border-b border-slate-600 text-slate-200 font-semibold text-sm focus:border-emerald-500 outline-none w-full placeholder-slate-600"
+              placeholder={`Recinto ${i}`}
+              value={otherLabels[key] || ''}
+              onChange={(e) => setOtherLabels(prev => ({...prev, [key]: e.target.value}))}
+            />
           </div>
-          {renderSectionWithNotes(grupos, key, labelName)}
+          {renderSectionComposite('living_comedor', key, labelName)}
         </div>
       );
     }
