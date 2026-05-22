@@ -76,6 +76,10 @@ export type Scenarios = {
 
 export type Orientation = 'N' | 'S' | 'O' | 'P' | '';
 
+export type WallBreakdown = { count: number; scores: number[]; notes: string[] };
+// scores[i]: 0=sin asignar · 1=U(Urgente) · 2=M(Moderado) · 3=N(Normal)
+// notes[i]:  observación libre por muro individual
+
 export interface PlaceResult {
   name: string;
   rating?: number;

@@ -10,7 +10,7 @@
  */
 
 import React, { useRef, useState, useCallback } from 'react';
-import { AuditScore } from '../types.ts';
+import { AuditScore, WallBreakdown } from '../types.ts';
 import { Escala, getClpByEscala, ALL_ITEMS } from '../costos';
 import { CompositeItemConfig, calcCompositeCostClp } from '../compositeItems';
 
@@ -52,22 +52,28 @@ function resolveFromLabel(label: string): { clp: ClpTiers; hint: string } | null
 const MAX_PHOTOS = 10;
 
 interface Props {
-  config:       CompositeItemConfig;
-  state:        AuditScore;
-  onChange:     (updates: Partial<AuditScore>) => void;
-  prefix:       string;
-  uf:           number;
-  showCosts?:   boolean;
-  fieldMode?:   'terreno' | 'oficina';
-  onMicClick?:  () => void;
-  isListening?: boolean;
+  config:              CompositeItemConfig;
+  state:               AuditScore;
+  onChange:            (updates: Partial<AuditScore>) => void;
+  prefix:              string;
+  uf:                  number;
+  showCosts?:          boolean;
+  fieldMode?:          'terreno' | 'oficina';
+  onMicClick?:         () => void;
+  isListening?:        boolean;
+  wallState?:          WallBreakdown;
+  onWallStateChange?:  (ws: WallBreakdown) => void;
 }
+
+const EMPTY_WALL = (n = 4): WallBreakdown => ({ count: n, scores: Array(n).fill(0), notes: Array(n).fill('') });
 
 const AuditRowComposite: React.FC<Props> = ({
   config, state, onChange, uf, showCosts = true, fieldMode = 'oficina', onMicClick, isListening,
+  wallState, onWallStateChange,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [expanded, setExpanded] = useState(false);
+  const [showWallBreakdown, setShowWallBreakdown] = useState(false);
 
   const escala     = (state.escala ?? 0) as 0 | 1 | 2 | 3;
   const isActive   = escala > 0;
@@ -612,6 +618,87 @@ const AuditRowComposite: React.FC<Props> = ({
               </div>
             );
           })}
+        </div>
+      )}
+
+      {/* ── DESGLOSE POR MURO ── */}
+      {config.key === 'muro' && (
+        <div className="mt-2 pl-1 pr-2 no-print">
+          <button
+            onClick={() => setShowWallBreakdown(v => !v)}
+            className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 hover:text-cyan-400 transition-colors mb-1"
+          >
+            <span>🧱</span>
+            <span>Desglosar por muro</span>
+            <span className="text-[9px]">{showWallBreakdown ? '▲' : '▼'}</span>
+            {wallState?.scores.some(s => s > 0) && (
+              <span className="ml-1 px-1.5 py-0.5 rounded bg-slate-700 border border-slate-600 text-cyan-400 text-[9px]">
+                {wallState.scores.filter(s => s > 0).length}/{wallState.count}
+              </span>
+            )}
+          </button>
+
+          {showWallBreakdown && (
+            <div className="bg-slate-900/60 border border-slate-700/60 rounded-lg p-3 space-y-3">
+              {/* Selector cantidad de muros */}
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider w-16">Nº Muros</span>
+                <div className="flex gap-1">
+                  {[2, 3, 4].map(n => {
+                    const isSel = (wallState?.count ?? 4) === n;
+                    return (
+                      <button key={n} onClick={() => {
+                        const cur = wallState ?? EMPTY_WALL();
+                        onWallStateChange?.({ count: n, scores: Array(n).fill(0).map((_, i) => cur.scores[i] ?? 0), notes: Array(n).fill('').map((_, i) => cur.notes?.[i] ?? '') });
+                      }} className={`w-7 h-6 text-[10px] font-bold rounded border transition-all ${isSel ? 'bg-cyan-500 text-slate-900 border-cyan-400' : 'bg-slate-800 border-slate-600 text-slate-400 hover:border-cyan-500/50'}`}>{n}</button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Fila por muro */}
+              {Array.from({ length: wallState?.count ?? 4 }).map((_, i) => {
+                const ws = wallState?.scores[i] ?? 0;
+                const wn = wallState?.notes?.[i] ?? '';
+                const colorMap: Record<number, string> = {
+                  1: ws === 1 ? 'bg-red-500 text-white border-red-400'       : 'bg-slate-800 border-slate-600 text-red-400/50 hover:border-red-500/50',
+                  2: ws === 2 ? 'bg-amber-400 text-slate-900 border-amber-300' : 'bg-slate-800 border-slate-600 text-amber-400/50 hover:border-amber-400/50',
+                  3: ws === 3 ? 'bg-emerald-500 text-white border-emerald-400' : 'bg-slate-800 border-slate-600 text-emerald-400/50 hover:border-emerald-500/50',
+                };
+                return (
+                  <div key={i} className="space-y-1 pb-2 border-b border-slate-800 last:border-0 last:pb-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-bold text-slate-300 w-16">Muro {i + 1}</span>
+                      <div className="flex gap-[2px]">
+                        {([1, 2, 3] as Escala[]).map(e => (
+                          <button key={e} onClick={() => {
+                            const cur = wallState ?? EMPTY_WALL();
+                            const newScores = [...cur.scores];
+                            newScores[i] = newScores[i] === e ? 0 : e;
+                            onWallStateChange?.({ ...cur, scores: newScores });
+                          }} className={`w-7 h-6 flex items-center justify-center text-[10px] font-bold rounded border transition-all ${colorMap[e]}`} title={e === 1 ? 'Urgente' : e === 2 ? 'Moderado' : 'Normal'}>
+                            {e === 1 ? 'U' : e === 2 ? 'M' : 'N'}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder={`Observación Muro ${i + 1}...`}
+                      className="w-full bg-slate-800/50 border border-slate-700/50 rounded px-2 py-1 text-[11px] text-slate-300 placeholder-slate-600 outline-none focus:border-slate-500 transition-colors"
+                      value={wn}
+                      onChange={ev => {
+                        const cur = wallState ?? EMPTY_WALL();
+                        const newNotes = [...(cur.notes ?? Array(cur.count).fill(''))];
+                        newNotes[i] = ev.target.value;
+                        onWallStateChange?.({ ...cur, notes: newNotes });
+                      }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
 

@@ -7,7 +7,7 @@ import {
   getClpByEscala, Escala,
 } from './constants';
 import { ALL_ITEMS } from './costos';
-import { AuditScore, AuditState, Orientation, PlaceCategory, Scenarios, ToolData } from './types';
+import { AuditScore, AuditState, Orientation, PlaceCategory, Scenarios, ToolData, WallBreakdown } from './types';
 import { AuditRow } from './components/AuditRow';
 import AuditRowComposite from './components/AuditRowComposite';
 import {
@@ -53,9 +53,11 @@ export const App: React.FC = () => {
     address: '', rol: '', type: 'Casa',
     m2Useful: '',
     m2Municipal: '',
-    m2Terrace: '', m2Terra: '',
+    m2Terrace: '', m2Terra: '', m2Total: '',
     orient1: '' as Orientation, orient2: '' as Orientation, dorms: 3, baths: 2, stairs: 0,
-    othersCount: 0
+    othersCount: 0,
+    yearBuilt: '', totalFloors: 0, aptFloor: 0,
+    commonExpenses: '', parkingCount: 0, storageCount: 0
   });
 
   const [, setOrientTip] = useState('');
@@ -73,6 +75,7 @@ export const App: React.FC = () => {
   const [manualCapex, setManualCapex] = useState<number | ''>('');
   const [successFeePct, setSuccessFeePct] = useState(10);
   const [auditState, setAuditState] = useState<AuditState>({});
+  const [wallStates, setWallStates] = useState<Record<string, WallBreakdown>>({});
 
   const [auditNotes, setAuditNotes] = useState<Record<string, string>>({});
   const [otherLabels, setOtherLabels] = useState<Record<string, string>>({});
@@ -133,6 +136,7 @@ export const App: React.FC = () => {
           if(data.successFeePct !== undefined) setSuccessFeePct(data.successFeePct);
           if(data.roomLabels) setRoomLabels(data.roomLabels);
           if(data.sectionLabels) setSectionLabels(data.sectionLabels);
+          if(data.wallStates) setWallStates(data.wallStates);
 
           console.log(`✅ Ficha ${data.meta.id} (v${data.meta.version || '?'}) cargada exitosamente.`);
       } catch (err) {
@@ -158,12 +162,12 @@ export const App: React.FC = () => {
     const dataToSave = {
         meta: { version: '5.2', date: new Date().toISOString(), id: auditId, hash: verificationHash },
         client, property, financials: fin, scenarios, activeScenario, auditState, auditNotes, otherLabels,
-        roomLabels, sectionLabels,
+        roomLabels, sectionLabels, wallStates,
         portal: { toggles: portalToggles, desc: portalDesc }, costs: { uf, totalCapex, manualCapex },
         tools, checklistImg, propertyPhoto, successFeePct
     };
     localStorage.setItem('pcf15_autosave', JSON.stringify(dataToSave));
-  }, [client, property, fin, scenarios, activeScenario, auditState, auditNotes, otherLabels, roomLabels, sectionLabels, portalToggles, portalDesc, uf, totalCapex, manualCapex, tools, checklistImg, successFeePct, auditId, verificationHash, isAuthenticated]);
+  }, [client, property, fin, scenarios, activeScenario, auditState, auditNotes, otherLabels, roomLabels, sectionLabels, wallStates, portalToggles, portalDesc, uf, totalCapex, manualCapex, tools, checklistImg, successFeePct, auditId, verificationHash, isAuthenticated]);
 
   const handleClearForm = () => {
       if (window.confirm("⚠️ ¿Estás seguro de borrar toda la ficha actual? Se perderán todos los datos no exportados.")) {
@@ -649,6 +653,8 @@ export const App: React.FC = () => {
                 fieldMode={fieldMode}
                 onMicClick={() => handleMicClick(key, true)}
                 isListening={listeningKey === key}
+                wallState={wallStates[key]}
+                onWallStateChange={ws => setWallStates(prev => ({ ...prev, [key]: ws }))}
               />
             </div>
           );
@@ -704,6 +710,15 @@ export const App: React.FC = () => {
                   showCosts={printMode === 'full' || printMode === 'investor' || printMode === 'none'}
                   onMicClick={() => handleMicClick(key, true)}
                   isListening={listeningKey === key}
+                  wallState={wallStates[key]}
+                  onWallStateChange={(ws) => {
+                    setWallStates(prev => ({ ...prev, [key]: ws }));
+                    const set = ws.scores.filter(s => s > 0);
+                    if (set.length > 0) {
+                      const worst = Math.min(...set) as 1 | 2 | 3;
+                      updateAuditScore(key, { active: true, escala: worst }, item);
+                    }
+                  }}
                 />
               </div>
             );
@@ -942,8 +957,12 @@ export const App: React.FC = () => {
                     ['RUT', client.rut || '—'],
                     ['Tipo', property.type],
                     ['Superficie útil', `${property.m2Useful || '—'} m²`],
+                    ['M² Totales', ((parseFloat(property.m2Useful) || 0) + (parseFloat(property.m2Terrace) || 0)) > 0 ? `${(parseFloat(property.m2Useful) || 0) + (parseFloat(property.m2Terrace) || 0)} m²` : '—'],
                     ['Dormitorios', String(property.dorms)],
                     ['Baños', String(property.baths)],
+                    ['Año Construcción', property.yearBuilt || '—'],
+                    ['Estacionamientos', String(property.parkingCount)],
+                    ['Bodegas', String(property.storageCount)],
                   ].map(([label, val]) => (
                     <div key={label} style={{ marginBottom: 3 }}>
                       <span style={{ color: '#94a3b8', fontSize: 8, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</span>
@@ -1142,9 +1161,16 @@ export const App: React.FC = () => {
                     ['Tipo', property.type],
                     ['Superficie útil', `${property.m2Useful || '—'} m²`],
                     ['M² Municipal', `${property.m2Municipal || '—'} m²`],
+                    ['M² Totales', ((parseFloat(property.m2Useful) || 0) + (parseFloat(property.m2Terrace) || 0)) > 0 ? `${(parseFloat(property.m2Useful) || 0) + (parseFloat(property.m2Terrace) || 0)} m²` : '—'],
                     ['Orientación', [property.orient1, property.orient2].filter(Boolean).join(' / ') || '—'],
                     ['Dormitorios', String(property.dorms)],
                     ['Baños', String(property.baths)],
+                    ['Año Construcción', property.yearBuilt || '—'],
+                    ['Pisos Edificio', property.totalFloors > 0 ? String(property.totalFloors) : '—'],
+                    ['Piso Depto', property.aptFloor > 0 ? String(property.aptFloor) : '—'],
+                    ['Gastos Comunes', property.commonExpenses ? `$${Number(property.commonExpenses).toLocaleString('es-CL')}` : '—'],
+                    ['Estacionamientos', String(property.parkingCount)],
+                    ['Bodegas', String(property.storageCount)],
                   ].map(([label, val]) => (
                     <div key={label}>
                       <span style={{ color: '#94a3b8', fontSize: 8, fontWeight: 700, textTransform: 'uppercase' }}>{label}</span>
@@ -1388,8 +1414,12 @@ export const App: React.FC = () => {
                     ['Dirección', property.address || '—'], ['Cliente', client.name || '—'],
                     ['ROL SII', property.rol || '—'],       ['RUT', client.rut || '—'],
                     ['Tipo', property.type],                ['Superficie útil', `${property.m2Useful || '—'} m²`],
-                    ['M² Municipal', `${property.m2Municipal || '—'} m²`], ['Orientación', [property.orient1, property.orient2].filter(Boolean).join(' / ') || '—'],
+                    ['M² Municipal', `${property.m2Municipal || '—'} m²`], ['M² Totales', ((parseFloat(property.m2Useful) || 0) + (parseFloat(property.m2Terrace) || 0)) > 0 ? `${(parseFloat(property.m2Useful) || 0) + (parseFloat(property.m2Terrace) || 0)} m²` : '—'],
+                    ['Terreno', property.m2Terra ? `${property.m2Terra} m²` : '—'], ['Orientación', [property.orient1, property.orient2].filter(Boolean).join(' / ') || '—'],
                     ['Dormitorios', String(property.dorms)], ['Baños', String(property.baths)],
+                    ['Año Construcción', property.yearBuilt || '—'], ['Pisos Edificio', property.totalFloors > 0 ? String(property.totalFloors) : '—'],
+                    ['Piso Depto', property.aptFloor > 0 ? String(property.aptFloor) : '—'], ['Gastos Comunes', property.commonExpenses ? `$${Number(property.commonExpenses).toLocaleString('es-CL')}` : '—'],
+                    ['Estacionamientos', String(property.parkingCount)], ['Bodegas', String(property.storageCount)],
                   ].map(([label, val]) => (
                     <div key={label}>
                       <span style={{ color: '#94a3b8', fontSize: 8, fontWeight: 700, textTransform: 'uppercase' }}>{label}</span>
@@ -1627,11 +1657,12 @@ export const App: React.FC = () => {
         </div>
 
         {/* SURFACE AREA & ALERTS */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-4">
            <div><label className="block text-xs font-bold text-emerald-400 uppercase mb-1">M² Reales (Útil)</label><input type="number" className="w-full bg-slate-700 border border-emerald-600/50 rounded p-2 text-white font-bold text-right" value={property.m2Useful} onChange={e => setProperty({...property, m2Useful: e.target.value})} /></div>
            <div><label className="block text-xs font-bold text-blue-400 uppercase mb-1">M² Municipal (SII)</label><input type="number" className="w-full bg-slate-700 border border-blue-600/50 rounded p-2 text-white font-bold text-right" value={property.m2Municipal} onChange={e => setProperty({...property, m2Municipal: e.target.value})} /></div>
            <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">M² Terraza</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={property.m2Terrace} onChange={e => setProperty({...property, m2Terrace: e.target.value})} /></div>
            <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">M² Terreno</label><input type="number" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={property.m2Terra} onChange={e => setProperty({...property, m2Terra: e.target.value})} /></div>
+           <div><label className="block text-xs font-bold text-emerald-400 uppercase mb-1">M² Totales</label><input type="number" className="w-full bg-slate-700 border border-emerald-600/50 rounded p-2 text-white font-bold text-right" value={property.m2Total} onChange={e => setProperty({...property, m2Total: e.target.value})} /></div>
            <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Orientación</label>
              <div className="flex gap-2">
                <select className="w-1/2 bg-slate-700 border border-slate-600 rounded p-2 text-white text-xs" value={property.orient1} onChange={e => setProperty({...property, orient1: e.target.value as Orientation})}><option value="">P...</option><option value="N">N</option><option value="O">O</option><option value="P">P</option><option value="S">S</option></select>
@@ -1673,6 +1704,50 @@ export const App: React.FC = () => {
              </div>
            </div>
         </div>
+        {/* EDIFICIO & EXTRAS */}
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-4">
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Año Construcción</label>
+            <input type="number" placeholder="Ej: 2005" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={property.yearBuilt} onChange={e => setProperty({...property, yearBuilt: e.target.value})} />
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Pisos Edificio</label>
+            <div className="flex items-center bg-slate-700 rounded border border-slate-600 overflow-hidden">
+              <button className="px-2 py-2 text-slate-300 hover:bg-slate-600 font-bold transition-colors" onClick={() => setProperty({...property, totalFloors: Math.max(0, property.totalFloors - 1)})}>-</button>
+              <input type="number" className="w-full bg-transparent text-center text-white font-bold outline-none appearance-none m-0" value={property.totalFloors} onChange={e => setProperty({...property, totalFloors: Math.max(0, parseInt(e.target.value)||0)})} />
+              <button className="px-2 py-2 text-slate-300 hover:bg-slate-600 font-bold transition-colors" onClick={() => setProperty({...property, totalFloors: property.totalFloors + 1})}>+</button>
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Piso Depto</label>
+            <div className="flex items-center bg-slate-700 rounded border border-slate-600 overflow-hidden">
+              <button className="px-2 py-2 text-slate-300 hover:bg-slate-600 font-bold transition-colors" onClick={() => setProperty({...property, aptFloor: Math.max(0, property.aptFloor - 1)})}>-</button>
+              <input type="number" className="w-full bg-transparent text-center text-white font-bold outline-none appearance-none m-0" value={property.aptFloor} onChange={e => setProperty({...property, aptFloor: Math.max(0, parseInt(e.target.value)||0)})} />
+              <button className="px-2 py-2 text-slate-300 hover:bg-slate-600 font-bold transition-colors" onClick={() => setProperty({...property, aptFloor: property.aptFloor + 1})}>+</button>
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Gastos Comunes $</label>
+            <input type="number" placeholder="Mensual CLP" className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-white font-bold text-right" value={property.commonExpenses} onChange={e => setProperty({...property, commonExpenses: e.target.value})} />
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Estacionamientos</label>
+            <div className="flex items-center bg-slate-700 rounded border border-slate-600 overflow-hidden">
+              <button className="px-2 py-2 text-slate-300 hover:bg-slate-600 font-bold transition-colors" onClick={() => setProperty({...property, parkingCount: Math.max(0, property.parkingCount - 1)})}>-</button>
+              <input type="number" className="w-full bg-transparent text-center text-white font-bold outline-none appearance-none m-0" value={property.parkingCount} onChange={e => setProperty({...property, parkingCount: Math.max(0, parseInt(e.target.value)||0)})} />
+              <button className="px-2 py-2 text-slate-300 hover:bg-slate-600 font-bold transition-colors" onClick={() => setProperty({...property, parkingCount: property.parkingCount + 1})}>+</button>
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Bodegas</label>
+            <div className="flex items-center bg-slate-700 rounded border border-slate-600 overflow-hidden">
+              <button className="px-2 py-2 text-slate-300 hover:bg-slate-600 font-bold transition-colors" onClick={() => setProperty({...property, storageCount: Math.max(0, property.storageCount - 1)})}>-</button>
+              <input type="number" className="w-full bg-transparent text-center text-white font-bold outline-none appearance-none m-0" value={property.storageCount} onChange={e => setProperty({...property, storageCount: Math.max(0, parseInt(e.target.value)||0)})} />
+              <button className="px-2 py-2 text-slate-300 hover:bg-slate-600 font-bold transition-colors" onClick={() => setProperty({...property, storageCount: property.storageCount + 1})}>+</button>
+            </div>
+          </div>
+        </div>
+
         {/* FOTO DE PROPIEDAD */}
         <div className="mb-4 flex items-center gap-3">
           <button

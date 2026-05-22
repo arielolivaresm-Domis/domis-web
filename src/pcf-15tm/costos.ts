@@ -14,7 +14,7 @@ export const clpToUf = (clp: number): number =>
 // ----------------------------------------------------------------------------
 
 export type Escala = 1 | 2 | 3 // 1=Premium · 2=Estándar · 3=Básico
-export type Unidad = 'm²' | 'ml' | 'Uni' | 'GL' | 'Viaje' | 'Mes' | 'Set' | 'Día' | 'cant'
+export type Unidad = 'm²' | 'ml' | 'Uni' | 'GL' | 'Viaje' | 'Mes' | 'Set' | 'Día' | 'cant' | 'L'
 
 export interface ClpEscala {
   premium:  number  // escala 1
@@ -23,11 +23,12 @@ export interface ClpEscala {
 }
 
 export interface ItemCosto {
-  key:     string
-  cod:     string
-  label:   string
-  unidad:  Unidad
-  clp:     ClpEscala
+  key:           string
+  cod:           string
+  label:         string
+  unidad:        Unidad
+  clp:           ClpEscala
+  wallBreakdown?: boolean
 }
 
 export interface GrupoCosto {
@@ -219,28 +220,32 @@ export const MURO: GrupoCosto = {
       cod: 'M-01',
       label: 'Solo pintura (base en buen estado)',
       unidad: 'm²',
-      clp: { premium: 9000, estandar: 7000, basico: 5000 }
+      clp: { premium: 9000, estandar: 7000, basico: 5000 },
+      wallBreakdown: true
     },
     {
       key: 'empaste_pintura_muro',
       cod: 'M-02',
       label: 'Empaste + aparejo + pintura',
       unidad: 'm²',
-      clp: { premium: 16000, estandar: 13000, basico: 10500 }
+      clp: { premium: 16000, estandar: 13000, basico: 10500 },
+      wallBreakdown: true
     },
     {
       key: 'empaste_total_muro',
       cod: 'M-03',
       label: 'Empaste total + 3 manos (base deteriorada)',
       unidad: 'm²',
-      clp: { premium: 22000, estandar: 17000, basico: 14000 }
+      clp: { premium: 22000, estandar: 17000, basico: 14000 },
+      wallBreakdown: true
     },
     {
       key: 'impermeabilizante_muro',
       cod: 'M-04',
       label: 'Impermeabilizante de muro (zona húmeda)',
       unidad: 'm²',
-      clp: { premium: 7000, estandar: 5000, basico: 4000 }
+      clp: { premium: 7000, estandar: 5000, basico: 4000 },
+      wallBreakdown: true
     },
   ]
 }
@@ -772,7 +777,7 @@ export const SC_INSTALACIONES_ELECTRICAS: GrupoCosto = {
       key: 'cambio_cableado',
       cod: 'IS-05',
       label: 'Cambio cableado eléctrico completo',
-      unidad: 'm²',
+      unidad: 'L',
       clp: { premium: 40000, estandar: 25000, basico: 15000 }
     },
     {
@@ -813,6 +818,20 @@ export const SC_INSTALACIONES_ESPECIALES: GrupoCosto = {
       label: 'Calefón eléctrico / termo acumulador',
       unidad: 'Uni',
       clp: { premium: 700000, estandar: 350000, basico: 180000 }
+    },
+    {
+      key: 'termo_electrico',
+      cod: 'IS-09',
+      label: 'Termo eléctrico (equipo + instalación gasfitería)',
+      unidad: 'Uni',
+      clp: { premium: 450000, estandar: 220000, basico: 130000 }
+    },
+    {
+      key: 'inst_electrica_termo',
+      cod: 'IS-10',
+      label: 'Instalación eléctrica termo eléctrico (punto 220V dedicado)',
+      unidad: 'Uni',
+      clp: { premium: 180000, estandar: 90000, basico: 50000 }
     },
     {
       key: 'caldera_calefaccion',

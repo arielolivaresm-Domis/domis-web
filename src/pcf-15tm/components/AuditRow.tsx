@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { AuditScore } from '../types.ts';
+import { AuditScore, WallBreakdown } from '../types.ts';
 import { ItemCosto, Escala, getClpByEscala } from '../costos';
 import { CHILEAN_NORMS } from '../normativeData.ts';
 
@@ -22,14 +22,18 @@ interface AuditRowProps {
   showCosts?: boolean;
   onMicClick?: () => void;
   isListening?: boolean;
+  wallState?: WallBreakdown;
+  onWallStateChange?: (ws: WallBreakdown) => void;
 }
 
 const AuditRowInner: React.FC<AuditRowProps> = ({
-  item, state, onChange, prefix, uf, showCosts = true, onMicClick, isListening
+  item, state, onChange, prefix, uf, showCosts = true, onMicClick, isListening,
+  wallState, onWallStateChange
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showThumbs, setShowThumbs] = useState(true);
   const [showNormModal, setShowNormModal] = useState(false);
+  const [showWallBreakdown, setShowWallBreakdown] = useState(false);
 
   const active = state.active ?? false;
   const escala = (state.escala ?? 0) as 0 | Escala;
@@ -412,6 +416,87 @@ const AuditRowInner: React.FC<AuditRowProps> = ({
           )}
         </div>
       </div>
+
+      {/* DESGLOSE POR MURO */}
+      {item.wallBreakdown && active && (
+        <div className="mt-1 pl-1 pr-2 no-print">
+          <button
+            onClick={() => setShowWallBreakdown(v => !v)}
+            className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 hover:text-cyan-400 transition-colors mb-1"
+          >
+            <span>🧱</span>
+            <span>Desglosar por muro</span>
+            <span className="text-[9px]">{showWallBreakdown ? '▲' : '▼'}</span>
+            {wallState?.scores.some(s => s > 0) && (
+              <span className="ml-1 px-1.5 py-0.5 rounded bg-slate-700 border border-slate-600 text-cyan-400 text-[9px]">
+                {wallState.scores.filter(s => s > 0).length}/{wallState.count}
+              </span>
+            )}
+          </button>
+
+          {showWallBreakdown && (
+            <div className="bg-slate-900/60 border border-slate-700/60 rounded-lg p-3 space-y-2">
+              {/* Selector de cantidad de muros */}
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider w-16">Nº Muros</span>
+                <div className="flex gap-1">
+                  {[2, 3, 4].map(n => {
+                    const isSelected = (wallState?.count ?? 4) === n;
+                    return (
+                      <button
+                        key={n}
+                        onClick={() => {
+                          const cur = wallState ?? { count: 4, scores: [0, 0, 0, 0], notes: ['', '', '', ''] };
+                          const newScores = Array(n).fill(0).map((_, i) => cur.scores[i] ?? 0);
+                          const newNotes  = Array(n).fill('').map((_, i) => cur.notes?.[i] ?? '');
+                          onWallStateChange?.({ count: n, scores: newScores, notes: newNotes });
+                        }}
+                        className={`w-7 h-6 text-[10px] font-bold rounded border transition-all ${
+                          isSelected ? 'bg-cyan-500 text-slate-900 border-cyan-400' : 'bg-slate-800 border-slate-600 text-slate-400 hover:border-cyan-500/50'
+                        }`}
+                      >{n}</button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Fila por muro */}
+              {Array.from({ length: wallState?.count ?? 4 }).map((_, i) => {
+                const wallScore = wallState?.scores[i] ?? 0;
+                return (
+                  <div key={i} className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold text-slate-400 w-16">Muro {i + 1}</span>
+                    <div className="flex gap-[2px]">
+                      {([1, 2, 3] as Escala[]).map(e => {
+                        const isActive = wallScore === e;
+                        const colorMap: Record<number, string> = {
+                          1: isActive ? 'bg-red-500 text-white border-red-400' : 'bg-slate-800 border-slate-600 text-red-400/50 hover:border-red-500/50',
+                          2: isActive ? 'bg-amber-400 text-slate-900 border-amber-300' : 'bg-slate-800 border-slate-600 text-amber-400/50 hover:border-amber-400/50',
+                          3: isActive ? 'bg-emerald-500 text-white border-emerald-400' : 'bg-slate-800 border-slate-600 text-emerald-400/50 hover:border-emerald-500/50',
+                        };
+                        const label = e === 1 ? 'U' : e === 2 ? 'M' : 'N';
+                        return (
+                          <button
+                            key={e}
+                            onClick={() => {
+                              const cur = wallState ?? { count: 4, scores: [0, 0, 0, 0], notes: ['', '', '', ''] };
+                              const newScores = [...cur.scores];
+                              newScores[i] = newScores[i] === e ? 0 : e;
+                              onWallStateChange?.({ ...cur, scores: newScores });
+                            }}
+                            className={`w-7 h-6 flex items-center justify-center text-[10px] font-bold rounded border transition-all ${colorMap[e]}`}
+                            title={e === 1 ? 'Urgente' : e === 2 ? 'Moderado' : 'Normal'}
+                          >{label}</button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* MODAL NORMATIVO */}
       {showNormModal && (
