@@ -145,13 +145,16 @@ export default function AuditTechnicalDetails() {
               <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border border-cyan-500/20 shadow-2xl shadow-cyan-500/10 group">
                 {/* Badge flotante */}
                 <div className="absolute top-4 left-4 z-10 bg-cyan-500 text-slate-950 px-4 py-2 rounded-xl font-black text-xs uppercase tracking-widest shadow-lg">
-                  Sistema Real PCF-15™
+                  Plataforma PCF-15™
+                </div>
+                <div className="absolute top-4 right-4 z-10 bg-slate-950/80 backdrop-blur-sm text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-lg font-black text-[10px] uppercase tracking-widest">
+                  Generado por IA · Entrega en 72h
                 </div>
                 
                 {/* Screenshot */}
                 <img 
                   src="/PHOTO-2026-02-05-16-15-46.jpg"
-                  alt="Sistema PCF-15 en acción"
+                  alt="Plataforma PCF-15 en acción"
                   className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 

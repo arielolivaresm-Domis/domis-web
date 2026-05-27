@@ -5,7 +5,7 @@ import Problem from './components/Problem';
 import Solution from './components/Solution';
 import AuditTechnicalDetails from './components/AuditTechnicalDetails';
 import PhasesTabs from './components/PhasesTabs';
-import RealCases from './components/RealCases';
+// import RealCases from './components/RealCases'; // CORFO — oculto hasta agosto 2026
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
 import { TabsProvider } from './context/TabsContext';
@@ -35,7 +35,8 @@ const LandingPage = () => (
       <main>
         <Hero />
         <Problem />
-        <RealCases />
+        {/* CORFO — casos reales ocultos hasta agosto 2026 */}
+        {/* <RealCases /> */}
         <Solution />
         <AuditTechnicalDetails />
         <PhasesTabs />

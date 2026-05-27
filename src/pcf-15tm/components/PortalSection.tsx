@@ -34,7 +34,7 @@ export const PortalSection: React.FC<PortalSectionProps> = ({ toggles, setToggle
       })}
       <h4 className="text-sky-400 text-sm font-bold border-b border-slate-700 border-dashed pb-1 mb-3 mt-6">📝 DESCRIPCIÓN</h4>
       <div className="relative">
-         <textarea rows={6} className="w-full bg-slate-700 border border-slate-600 rounded p-3 text-white focus:border-emerald-500" value={desc} onChange={(e) => setDesc(e.target.value)}></textarea>
+         <textarea rows={6} className="w-full bg-slate-700 border border-slate-600 rounded p-3 text-white focus:border-emerald-500" spellCheck={true} autoCorrect="on" autoCapitalize="sentences" value={desc} onChange={(e) => setDesc(e.target.value)}></textarea>
          <button onClick={onGenerateAi} disabled={isGenerating || !isOnline} title={!isOnline ? 'Sin conexión — Gemini no disponible offline' : ''} className="absolute bottom-4 right-4 bg-purple-600 hover:bg-purple-700 text-white text-xs px-3 py-1 rounded flex items-center gap-2 disabled:opacity-50">{isGenerating ? 'Generando...' : !isOnline ? '📵 Sin conexión' : '✨ Mejorar con Gemini AI'}</button>
       </div>
     </div>

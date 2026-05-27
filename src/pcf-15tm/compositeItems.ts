@@ -49,6 +49,8 @@ const SL: Record<string, string> = {
   demolicion_tabique:          'Tabique',
   demolicion_muro_estructural: 'Muro estructural',
   retiro_piso:                 'Retiro piso',
+  retiro_ceramica_muro:        'Cerámico/Porcelanato',
+  retiro_ceramica_piso:        'Cerámico/Porcelanato',
   // Tabiqueria
   tabique_completo:    'Tabique completo',
   estructura_metalcon: 'Solo estructura',
@@ -60,6 +62,8 @@ const SL: Record<string, string> = {
   empaste_pintura_muro:   'Empaste + pintura',
   empaste_total_muro:     'Empaste total',
   impermeabilizante_muro: 'Impermeabilizante',
+  ceramica_muro:          'Cerámica',
+  porcelanato_muro:       'Porcelanato',
   // Piso terminación
   nivelacion_piso:     'Nivelación',
   piso_vinilico:       'Vinílico',
@@ -171,7 +175,7 @@ export const COMPOSITE_MURO: CompositeItemConfig = {
       label: 'Terminación',
       hasOnOff: false,
       multiSelect: false,
-      items: toSubItems(MURO.items),
+      items: toSubItems(MURO.items, ['pintura_muro', 'empaste_pintura_muro', 'empaste_total_muro', 'impermeabilizante_muro']),
     },
   ],
 };
@@ -188,6 +192,59 @@ export const COMPOSITE_PISO: CompositeItemConfig = {
       hasOnOff: true,
       multiSelect: false,
       items: toSubItems(DEMOLICION.items, ['retiro_piso']),
+    },
+    {
+      key: 'terminacion',
+      label: 'Terminación',
+      hasOnOff: false,
+      multiSelect: false,
+      items: toSubItems(PISO.items),
+    },
+  ],
+};
+
+// Variantes para recintos húmedos (baño / cocina) — demolición + terminación de cerámico/porcelanato
+export const COMPOSITE_MURO_HUMEDO: CompositeItemConfig = {
+  key: 'muro',
+  label: 'Muro',
+  mainUnidad: 'm²',
+  groups: [
+    {
+      key: 'demolicion',
+      label: 'Demolición',
+      hasOnOff: true,
+      multiSelect: false,
+      items: toSubItems(DEMOLICION.items, ['demolicion_tabique', 'demolicion_muro_estructural', 'retiro_ceramica_muro']),
+    },
+    {
+      key: 'tabiqueria',
+      label: 'Tabiquería',
+      hasOnOff: true,
+      multiSelect: false,
+      items: toSubItems(TABIQUERIA.items),
+    },
+    {
+      key: 'terminacion',
+      label: 'Terminación',
+      hasOnOff: false,
+      multiSelect: false,
+      items: toSubItems(MURO.items, ['pintura_muro', 'empaste_pintura_muro', 'empaste_total_muro', 'impermeabilizante_muro', 'ceramica_muro', 'porcelanato_muro']),
+    },
+  ],
+};
+
+export const COMPOSITE_PISO_HUMEDO: CompositeItemConfig = {
+  key: 'piso',
+  label: 'Piso',
+  mainUnidad: 'm²',
+  autoFromKey: 'muro',
+  groups: [
+    {
+      key: 'demolicion',
+      label: 'Demolición',
+      hasOnOff: true,
+      multiSelect: false,
+      items: toSubItems(DEMOLICION.items, ['retiro_piso', 'retiro_ceramica_piso']),
     },
     {
       key: 'terminacion',
@@ -333,10 +390,15 @@ const COMPOSITE_BASE_RECINTO: CompositeItemConfig[] = [
 export type TipoRecintoComposite = 'living_comedor' | 'dormitorio' | 'bano' | 'cocina';
 
 export function getCompositeItemsByRecinto(tipo: TipoRecintoComposite): CompositeItemConfig[] {
-  const base = [...COMPOSITE_BASE_RECINTO];
-  if (tipo === 'bano')   return [...base, COMPOSITE_ARTEFACTOS_BANO];
-  if (tipo === 'cocina') return [...base, COMPOSITE_MUEBLES, COMPOSITE_ARTEFACTOS_COCINA];
-  return base; // living_comedor, dormitorio (closets se renderizan aparte con AuditRow)
+  if (tipo === 'bano') {
+    const base = [COMPOSITE_MURO_HUMEDO, COMPOSITE_PISO_HUMEDO, COMPOSITE_CIELO, COMPOSITE_VENTANA, COMPOSITE_PUERTA];
+    return [...base, COMPOSITE_ARTEFACTOS_BANO];
+  }
+  if (tipo === 'cocina') {
+    const base = [COMPOSITE_MURO_HUMEDO, COMPOSITE_PISO_HUMEDO, COMPOSITE_CIELO, COMPOSITE_VENTANA, COMPOSITE_PUERTA];
+    return [...base, COMPOSITE_MUEBLES, COMPOSITE_ARTEFACTOS_COCINA];
+  }
+  return [...COMPOSITE_BASE_RECINTO]; // living_comedor, dormitorio
 }
 
 // ── Cost calculation ──────────────────────────────────────────────────────────

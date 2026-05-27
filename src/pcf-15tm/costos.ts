@@ -78,6 +78,20 @@ export const DEMOLICION: GrupoCosto = {
       clp: { premium: 6000, estandar: 3500, basico: 2000 }
     },
     {
+      key: 'retiro_ceramica_muro',
+      cod: 'D-06',
+      label: 'Retiro cerámico / porcelanato muro',
+      unidad: 'm²',
+      clp: { premium: 12000, estandar: 8000, basico: 5000 }
+    },
+    {
+      key: 'retiro_ceramica_piso',
+      cod: 'D-07',
+      label: 'Retiro cerámico / porcelanato piso',
+      unidad: 'm²',
+      clp: { premium: 10000, estandar: 6000, basico: 3500 }
+    },
+    {
       key: 'camion_demolicion',
       cod: 'D-01',
       label: 'Camión demolición / retiro escombros',
@@ -246,6 +260,20 @@ export const MURO: GrupoCosto = {
       unidad: 'm²',
       clp: { premium: 7000, estandar: 5000, basico: 4000 },
       wallBreakdown: true
+    },
+    {
+      key: 'ceramica_muro',
+      cod: 'M-05',
+      label: 'Cerámica muro (instalación + material)',
+      unidad: 'm²',
+      clp: { premium: 35000, estandar: 22000, basico: 15000 }
+    },
+    {
+      key: 'porcelanato_muro',
+      cod: 'M-06',
+      label: 'Porcelanato muro (instalación + material)',
+      unidad: 'm²',
+      clp: { premium: 50000, estandar: 35000, basico: 22000 }
     },
   ]
 }

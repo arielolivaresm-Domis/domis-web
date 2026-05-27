@@ -399,6 +399,9 @@ const AuditRowInner: React.FC<AuditRowProps> = ({
             placeholder={`Observación técnica ${item.label}...`}
             rows={1}
             style={{ minHeight: '20px' }}
+            spellCheck={true}
+            autoCorrect="on"
+            autoCapitalize="sentences"
             value={state.observation || ''}
             onChange={(e) => {
               onChange({ observation: e.target.value });

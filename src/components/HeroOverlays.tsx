@@ -44,7 +44,11 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
           <span className="text-white">PROMESAS.</span> <br />
           <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]">COMPRA DATOS.</span>
         </h1>
-        
+
+        <p className="text-cyan-400/80 text-sm md:text-base font-mono uppercase tracking-[0.2em] mb-4">
+          Plataforma Proptech de evaluación inmobiliaria con IA
+        </p>
+
         <div className="mb-6">
           <div className="inline-block bg-slate-950/75 backdrop-blur-sm px-4 py-1.5 rounded-xl border border-white/10 mb-4">
             <p className="text-2xl md:text-6xl font-black text-green-500 leading-none uppercase italic">AHORRA MILLONES</p>

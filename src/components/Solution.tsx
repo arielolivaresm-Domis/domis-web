@@ -31,7 +31,7 @@ export default function Solution() {
           <div className="text-center mb-12 md:mb-16">
             <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-6">
               <span className="text-[11px] font-mono text-cyan-400 uppercase tracking-[0.3em] font-black">
-                La Solución DOMIS™
+                Proptech · IA · Datos de mercado en tiempo real
               </span>
             </div>
             <h2 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter leading-none mb-4">
@@ -104,11 +104,11 @@ export default function Solution() {
               <ul className="space-y-4 text-slate-300 text-sm md:text-base leading-relaxed">
                 <li className="flex items-start gap-3">
                   <span className="text-cyan-400 text-xl shrink-0">•</span>
-                  <span><strong className="text-white">Cuantificamos costo de reparaciones</strong> (convertimos fallas a UF)</span>
+                  <span>El <strong className="text-white">sistema PCF-15™ valoriza cada hallazgo en UF</strong> automáticamente</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-cyan-400 text-xl shrink-0">•</span>
-                  <span>Consultamos <strong className="text-white">precios reales del mercado y datos oficiales CBR</strong></span>
+                  <span>Cruzamos datos con <strong className="text-white">IA + CBR + HousPricing</strong> en tiempo real</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-cyan-400 text-xl shrink-0">•</span>
@@ -116,7 +116,7 @@ export default function Solution() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-cyan-400 text-xl shrink-0">•</span>
-                  <span>Generamos <strong className="text-white">3 estrategias de negociación</strong> con evidencia técnica</span>
+                  <span>El <strong className="text-white">algoritmo genera 3 escenarios de negociación</strong> con respaldo técnico</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-cyan-400 text-xl shrink-0">•</span>
@@ -188,7 +188,9 @@ export default function Solution() {
             </div>
             
             <a 
-              href="#casos-reales"
+              href="https://www.instagram.com/domis.chile"
+              target="_blank"
+              rel="noreferrer"
               className="group px-6 md:px-8 py-3 md:py-4 bg-cyan-500 hover:bg-white text-slate-950 font-black rounded-xl uppercase tracking-widest text-xs md:text-sm transition-all shadow-lg flex items-center gap-3"
             >
               Ver Casos Reales

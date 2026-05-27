@@ -686,6 +686,9 @@ const AuditRowComposite: React.FC<Props> = ({
                       type="text"
                       placeholder={`Observación Muro ${i + 1}...`}
                       className="w-full bg-slate-800/50 border border-slate-700/50 rounded px-2 py-1 text-[11px] text-slate-300 placeholder-slate-600 outline-none focus:border-slate-500 transition-colors"
+                      spellCheck={true}
+                      autoCorrect="on"
+                      autoCapitalize="sentences"
                       value={wn}
                       onChange={ev => {
                         const cur = wallState ?? EMPTY_WALL();
@@ -727,6 +730,9 @@ const AuditRowComposite: React.FC<Props> = ({
             placeholder={`Observación ${config.label}${!isActive ? ' — buenas condiciones, documenta igualmente' : ''}...`}
             rows={1}
             style={{ minHeight: '20px' }}
+            spellCheck={true}
+            autoCorrect="on"
+            autoCapitalize="sentences"
             value={state.observation || ''}
             onChange={e => {
               onChange({ observation: e.target.value });

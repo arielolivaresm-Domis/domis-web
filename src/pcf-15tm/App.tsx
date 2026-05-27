@@ -29,7 +29,7 @@ export const App: React.FC = () => {
   const [loginError, setLoginError] = useState('');
   const [mode, setMode] = useState<'audit' | 'search'>('audit');
   // MODES: 'none' (screen), 'fast' (score only), 'normal' (client/tech), 'full' (negotiation), 'investor' (internal), 'work_order' (contractor)
-  const [printMode, setPrintMode] = useState<'none' | 'fast' | 'normal' | 'full' | 'investor' | 'work_order'>('none');
+  const [printMode, setPrintMode] = useState<'none' | 'fast' | 'normal' | 'full' | 'vendedor' | 'investor' | 'work_order'>('none');
   // TERRENO / OFICINA — persiste en localStorage
   const [fieldMode, setFieldMode] = useState<'terreno' | 'oficina'>(() => {
     return (localStorage.getItem('pcf15_fieldMode') as 'terreno' | 'oficina') || 'terreno';
@@ -320,7 +320,7 @@ export const App: React.FC = () => {
     recognition.start();
   };
 
-  const handlePrintReport = (reportType: 'fast' | 'normal' | 'full' | 'investor' | 'work_order') => {
+  const handlePrintReport = (reportType: 'fast' | 'normal' | 'full' | 'vendedor' | 'investor' | 'work_order') => {
     setPrintMode(reportType);
     setTimeout(() => { window.print(); setTimeout(() => setPrintMode('none'), 500); }, 100);
   };
@@ -566,6 +566,7 @@ export const App: React.FC = () => {
     if (printMode === 'fast') return false;
     if (printMode === 'normal') return false;
     if (printMode === 'full') return false;
+    if (printMode === 'vendedor') return false;
     if (printMode === 'investor') return false;
 
 
@@ -737,6 +738,9 @@ export const App: React.FC = () => {
               className="w-full bg-transparent text-sm text-slate-300 placeholder-slate-600 outline-none resize-none"
               placeholder={`Observaciones Globales ${noteLabel}...`}
               rows={2}
+              spellCheck={true}
+              autoCorrect="on"
+              autoCapitalize="sentences"
               value={auditNotes[prefixBase] || ''}
               onChange={(e) => setAuditNotes(prev => ({...prev, [prefixBase]: e.target.value}))}
             />
@@ -771,6 +775,9 @@ export const App: React.FC = () => {
               className="w-full bg-transparent text-sm text-slate-300 placeholder-slate-600 outline-none resize-none"
               placeholder={`Observaciones Globales ${noteLabel}...`}
               rows={2}
+              spellCheck={true}
+              autoCorrect="on"
+              autoCapitalize="sentences"
               value={auditNotes[prefixBase] || ''}
               onChange={(e) => setAuditNotes(prev => ({...prev, [prefixBase]: e.target.value}))}
             />
@@ -1305,8 +1312,9 @@ export const App: React.FC = () => {
       })()}
 
       {/* ── FULL / INVESTOR PRINT BLOCK ── */}
-      {(printMode === 'full' || printMode === 'investor') && (() => {
+      {(printMode === 'full' || printMode === 'vendedor' || printMode === 'investor') && (() => {
         const showInvestor = printMode === 'investor';
+        const showVendedor = printMode === 'vendedor';
         const allItemsMap = new Map(ALL_ITEMS.map(i => [i.key, i.label]));
         const compositeLabels: Record<string, string> = {
           muro: 'Muro', piso: 'Piso', cielo: 'Cielo', ventana: 'Ventana',
@@ -1395,7 +1403,7 @@ export const App: React.FC = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '4px solid #0f172a', paddingBottom: 10, marginBottom: 16 }}>
               <div>
                 <div style={{ fontSize: 22, fontWeight: 900, color: '#0f172a' }}>
-                  PCF-15™ <span style={{ fontWeight: 400, color: '#64748b', fontSize: 14 }}>{showInvestor ? 'Informe Estratégico (Inversionista)' : 'Informe Financiero Completo'}</span>
+                  PCF-15™ <span style={{ fontWeight: 400, color: '#64748b', fontSize: 14 }}>{showInvestor ? 'Informe Estratégico (Inversionista)' : showVendedor ? 'Informe Técnico (Presentación Vendedor)' : 'Informe Financiero Completo'}</span>
                 </div>
                 <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 2 }}>DOMIS™ — Sistema de Evaluación Inmobiliaria</div>
               </div>
@@ -1540,7 +1548,7 @@ export const App: React.FC = () => {
             </div>
 
             {/* ── ANÁLISIS FINANCIERO ── */}
-            {appraisal > 0 && (
+            {appraisal > 0 && !showVendedor && (
               <div style={{ marginBottom: 20 }}>
                 <div style={{ fontSize: 10, fontWeight: 900, color: '#0f172a', textTransform: 'uppercase', letterSpacing: '0.08em', borderBottom: '2px solid #0f172a', paddingBottom: 4, marginBottom: 14 }}>
                   Análisis Financiero
@@ -1621,7 +1629,7 @@ export const App: React.FC = () => {
 
             {/* ── PIE ── */}
             <div style={{ borderTop: '2px solid #e2e8f0', paddingTop: 10, fontSize: 8, color: '#94a3b8', display: 'flex', justifyContent: 'space-between' }}>
-              <span>PCF-15™ by DOMIS™ — {showInvestor ? 'Informe Estratégico' : 'Informe Financiero Completo'}</span>
+              <span>PCF-15™ by DOMIS™ — {showInvestor ? 'Informe Estratégico' : showVendedor ? 'Informe Técnico (Vendedor)' : 'Informe Financiero Completo'}</span>
               <span>Bajo estándares CDT y Ley 20.016 · {new Date().toLocaleDateString('es-CL')}</span>
             </div>
 
@@ -2030,6 +2038,7 @@ export const App: React.FC = () => {
              <button onClick={() => handlePrintReport('fast')} className="bg-amber-600 hover:bg-amber-500 text-white px-3 py-2 rounded font-bold text-xs transition-colors shadow-lg" title="Ficha rápida con nota /1000">⚡ FAST</button>
              <button onClick={() => handlePrintReport('normal')} className="bg-slate-600 hover:bg-slate-500 text-white px-3 py-2 rounded font-bold text-xs transition-colors shadow-lg" title="Auditoría completa sin precios">📄 NORMAL</button>
              <button onClick={() => handlePrintReport('full')} className="bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-2 rounded font-bold text-xs transition-colors shadow-lg" title="Auditoría + costos + análisis financiero">💰 FULL</button>
+             <button onClick={() => handlePrintReport('vendedor')} className="bg-orange-700 hover:bg-orange-600 text-white px-3 py-2 rounded font-bold text-xs transition-colors shadow-lg" title="Informe técnico completo sin análisis financiero — para presentar al vendedor">🤝 VENDEDOR</button>
              <button onClick={() => handlePrintReport('investor')} className="bg-purple-700 hover:bg-purple-600 text-white px-3 py-2 rounded font-bold text-xs transition-colors shadow-lg" title="Informe estratégico con análisis inversionista">📊 INVESTOR</button>
              <button onClick={() => handlePrintReport('work_order')} className="bg-slate-100 hover:bg-white text-black border border-slate-400 px-3 py-2 rounded font-bold text-xs transition-colors shadow-lg" title="Orden de Trabajo para Contratista">👷 WORK ORDER</button>
              <button onClick={handleWhatsapp} className="bg-green-600 hover:bg-green-500 text-white px-3 py-2 rounded font-bold text-xs transition-colors shadow-lg">📱</button>
