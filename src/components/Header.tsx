@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useTabs } from '../context/TabsContext';
 
 // Declaración para que TypeScript acepte el sensor de Google
 declare global {
@@ -19,7 +18,6 @@ export default function Header() {
   const whatsappUrl = "https://wa.me/56929901343?text=Hola, equipo de Ingeniería DOMIS™. Estoy en la web y necesito Auditoría técnica profesional + Estrategia de negociación para una propiedad...";
   const [isScanning, setIsScanning] = useState(false);
   const [cycleCount, setCycleCount] = useState(0);
-  const { setActiveTab } = useTabs();
 
   // Función para registrar el evento en Google Analytics
   const trackWhatsAppClick = () => {
@@ -113,13 +111,13 @@ export default function Header() {
           {/* --- MENÚ DE FASES --- */}
           <div className="hidden lg:flex items-center gap-10 text-base font-bold text-slate-400 uppercase tracking-wide relative z-10">
             <a href="#problema" className="hover:text-white transition-colors">El Problema</a>
-            <a href="#proceso" onClick={() => setActiveTab('fase1')} className="hover:text-cyan-400 transition-colors flex items-center gap-1">
+            <a href="#auditoria-directa" className="hover:text-cyan-400 transition-colors flex items-center gap-1">
               Auditoría <span className="text-[10px] text-slate-500 font-medium normal-case border border-slate-800 px-1.5 rounded">(Fase 1)</span>
             </a>
-            <a href="#proceso" onClick={() => setActiveTab('fase2')} className="hover:text-cyan-400 transition-colors flex items-center gap-1">
+            <a href="#beneficio-fase2" className="hover:text-cyan-400 transition-colors flex items-center gap-1">
               Negociación <span className="text-[10px] text-slate-500 font-medium normal-case border border-slate-800 px-1.5 rounded">(Fase 2)</span>
             </a>
-            <a href="#proceso" onClick={() => setActiveTab('fase3')} className="hover:text-cyan-400 transition-colors flex items-center gap-1">
+            <a href="#fase3" className="hover:text-cyan-400 transition-colors flex items-center gap-1">
               Remodelación <span className="text-[10px] text-slate-500 font-medium normal-case border border-slate-800 px-1.5 rounded">(Fase 3)</span>
             </a>
           </div>

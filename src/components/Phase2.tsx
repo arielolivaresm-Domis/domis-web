@@ -12,7 +12,7 @@ declare global {
  * COMPONENTE FASE 2: NEGOCIACIÓN TÉCNICA
  * Integrado con Molde Maestro para anchos de precisión.
  */
-export default function Phase2({ onNext }: { onNext: () => void }) {
+export default function Phase2({ onNext }: { onNext?: () => void }) {
   
   const handlePhaseClick = () => {
     // Sensor: Registrar interés en la estrategia de cierre
@@ -24,7 +24,7 @@ export default function Phase2({ onNext }: { onNext: () => void }) {
       });
     }
     // Ejecutar la función original de navegación
-    onNext();
+    onNext?.();
   };
 
   return (

@@ -1,20 +1,13 @@
 import { Search, TrendingUp, Hammer } from 'lucide-react';
 import Section from './layout/Section';
-import { useTabs } from '../context/TabsContext';
 
 export default function Solution() {
-  const { setActiveTab } = useTabs();
-
-  const handlePhaseClick = (phase: 'fase1' | 'fase2' | 'fase3') => {
-    setActiveTab(phase);
-    setTimeout(() => {
-      const element = document.getElementById('proceso');
-      if (element) {
-        const yOffset = -140;
-        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    }, 100);
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.pageYOffset - 100;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -45,7 +38,7 @@ export default function Solution() {
             
             {/* PASO 1 - CLICKEABLE */}
             <button 
-              onClick={() => handlePhaseClick('fase1')}
+              onClick={() => scrollToSection('auditoria-directa')}
               className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer text-left"
             >
               <div className="flex items-center justify-between mb-8">
@@ -87,7 +80,7 @@ export default function Solution() {
 
             {/* PASO 2 - CLICKEABLE */}
             <button 
-              onClick={() => handlePhaseClick('fase2')}
+              onClick={() => scrollToSection('beneficio-fase2')}
               className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer text-left"
             >
               <div className="flex items-center justify-between mb-8">
@@ -133,7 +126,7 @@ export default function Solution() {
 
             {/* PASO 3 - CLICKEABLE */}
             <button 
-              onClick={() => handlePhaseClick('fase3')}
+              onClick={() => scrollToSection('fase3')}
               className="relative bg-slate-900/40 border border-white/5 p-8 md:p-10 rounded-2xl md:rounded-3xl hover:border-cyan-500/30 transition-all duration-500 group cursor-pointer text-left"
             >
               <div className="flex items-center justify-between mb-8">
