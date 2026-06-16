@@ -21,9 +21,9 @@ export default function FinalCTA() {
   };
 
   return (
-    <section id="contacto" className="py-0 md:py-14 px-0 md:px-6 bg-slate-950">
+    <section id="contacto" className="pt-12 pb-0 px-0 md:px-6 bg-slate-950">
       <div className="max-w-7xl mx-auto">
-        <div className="relative rounded-none md:rounded-[3rem] overflow-hidden border-y-2 md:border-2 border-cyan-500/30 shadow-[0_0_50px_rgba(34,211,238,0.15)] min-h-[600px] flex items-center justify-center">
+        <div className="relative rounded-none md:rounded-[3rem] overflow-hidden border-y-2 md:border-2 border-cyan-500/30 shadow-[0_0_50px_rgba(34,211,238,0.15)] min-h-[400px] flex items-center justify-center">
           
           {/* IMAGEN DE FONDO: LA SOLUCIÓN Y TRANQUILIDAD */}
           <div className="absolute inset-0">
@@ -39,20 +39,20 @@ export default function FinalCTA() {
           {/* CONTENIDO DE CONVERSIÓN */}
           <div className="relative z-10 p-4 md:p-8 lg:p-20 w-full">
             <div className="max-w-2xl text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-4">
                 <span className="text-[10px] md:text-xs font-mono text-cyan-400 uppercase tracking-[0.3em] font-black">
                   Tu tranquilidad es nuestra métrica
                 </span>
               </div>
 
               {/* Título: El Gancho de Datos Reales */}
-              <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-8 leading-tight">
+              <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4 leading-tight">
                 CONSTRUYE TU <span className="text-cyan-400">FUTURO</span> SOBRE <br />
                 DATOS REALES
               </h2>
 
               {/* Descripción: Blindaje de Patrimonio */}
-              <p className="text-slate-200 text-lg md:text-xl leading-relaxed mb-12 font-medium max-w-xl">
+              <p className="text-slate-200 text-base md:text-lg leading-relaxed mb-6 font-medium max-w-xl">
                 No dejes tu patrimonio al azar. Blindamos la inversión más importante de tu vida con la claridad técnica del <strong className="text-white">Protocolo PCF-15™</strong> para que compres, negocies o remodeles con total seguridad.
               </p>
 

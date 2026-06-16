@@ -26,12 +26,12 @@ export default function GarantiaFAQ() {
     'https://wa.me/56929901343?text=Hola, equipo DOMIS™. Quiero revisar mi propiedad antes de firmar el acta de entrega.';
 
   return (
-    <section className="py-10 px-6 bg-slate-950 border-t border-slate-900">
-      <div className="max-w-5xl mx-auto">
+    <section className="py-8 px-0 md:px-6 bg-slate-950">
+      <div className="max-w-5xl mx-auto rounded-none md:rounded-[2.5rem] border border-white/15 bg-slate-900 shadow-2xl px-6 py-10">
 
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-black uppercase tracking-[0.3em] mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/20 border border-cyan-500/50 text-cyan-400 text-[10px] font-black uppercase tracking-[0.3em] mb-6">
             <ShieldCheck size={12} />
             Ley de Calidad de la Vivienda
           </div>
@@ -52,12 +52,12 @@ export default function GarantiaFAQ() {
           {garantias.map((g) => (
             <div
               key={g.tipo}
-              className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4"
+              className="bg-slate-800 border border-slate-600 rounded-2xl p-6 flex flex-col gap-4"
             >
               <div>
                 <div className="text-4xl font-black font-mono text-cyan-400 mb-1">{g.plazo}</div>
                 <div className="text-white font-black uppercase tracking-widest text-sm">{g.tipo}</div>
-                <p className="text-slate-500 text-[11px] mt-1 leading-relaxed">{g.detalle}</p>
+                <p className="text-slate-400 text-[11px] mt-1 leading-relaxed">{g.detalle}</p>
               </div>
               <ul className="space-y-1.5">
                 {g.items.map((item) => (
@@ -72,7 +72,7 @@ export default function GarantiaFAQ() {
         </div>
 
         {/* Alerta DOMIS */}
-        <div className="bg-amber-500/5 border border-amber-500/20 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row gap-6 items-start mb-6">
+        <div className="bg-amber-500/10 border border-amber-500/40 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row gap-6 items-start mb-6">
           <AlertTriangle className="text-amber-400 shrink-0 mt-1" size={28} />
           <div>
             <h3 className="text-white font-black uppercase tracking-tighter text-lg md:text-xl mb-3">
@@ -98,7 +98,7 @@ export default function GarantiaFAQ() {
           >
             Revisar antes de firmar →
           </a>
-          <p className="text-slate-600 text-[11px] mt-4 uppercase tracking-widest">
+          <p className="text-slate-400 text-[11px] mt-4 uppercase tracking-widest">
             Auditoría técnica desde $1.800/m² + IVA · Mínimo 100m²
           </p>
         </div>
