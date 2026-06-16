@@ -119,16 +119,16 @@ export default function AuditTechnicalDetails() {
         {/* TEXTURA DE FONDO */}
         <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.webp')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
-        <div className="p-6 md:p-16 relative z-10">
-          
+        <div className="p-5 md:p-8 relative z-10">
+
           {/* HEADER */}
-          <div className="text-center mb-12 md:mb-16">
+          <div className="text-center mb-6 md:mb-8">
             <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-6">
               <span className="text-[11px] font-mono text-cyan-400 uppercase tracking-[0.3em] font-black">
                 Sistema Profesional
               </span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter leading-none mb-4">
+            <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter leading-none mb-3">
               Protocolo de <br />
               <span className="text-cyan-400">Auditoría PCF-15™</span>
             </h2>
@@ -138,7 +138,7 @@ export default function AuditTechnicalDetails() {
           </div>
 
           {/* LAYOUT: SCREENSHOT + ACORDEÓN */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             
             {/* COLUMNA IZQUIERDA - SCREENSHOT */}
             <div className="relative md:sticky md:top-24 md:self-start">
@@ -172,7 +172,7 @@ export default function AuditTechnicalDetails() {
 
             {/* COLUMNA DERECHA - ACORDEÓN */}
             <div className="space-y-3">
-              <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight mb-6">
+              <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight mb-3">
                 🔍 Sistemas que Auditamos:
               </h3>
 
@@ -227,7 +227,7 @@ export default function AuditTechnicalDetails() {
           </div>
 
           {/* FOOTER - CTA */}
-          <div className="mt-12 md:mt-16 pt-8 border-t border-white/5 text-center">
+          <div className="mt-6 md:mt-8 pt-6 border-t border-white/5 text-center">
             <p className="text-slate-400 text-sm md:text-base mb-6">
               ¿Quieres ver el sistema en acción en tu propiedad?
             </p>

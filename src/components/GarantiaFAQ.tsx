@@ -30,7 +30,7 @@ export default function GarantiaFAQ() {
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-black uppercase tracking-[0.3em] mb-6">
             <ShieldCheck size={12} />
             Ley de Calidad de la Vivienda
@@ -48,7 +48,7 @@ export default function GarantiaFAQ() {
         </div>
 
         {/* Tabla de plazos */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           {garantias.map((g) => (
             <div
               key={g.tipo}
@@ -72,7 +72,7 @@ export default function GarantiaFAQ() {
         </div>
 
         {/* Alerta DOMIS */}
-        <div className="bg-amber-500/5 border border-amber-500/20 rounded-2xl p-6 md:p-10 flex flex-col md:flex-row gap-6 items-start mb-10">
+        <div className="bg-amber-500/5 border border-amber-500/20 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row gap-6 items-start mb-6">
           <AlertTriangle className="text-amber-400 shrink-0 mt-1" size={28} />
           <div>
             <h3 className="text-white font-black uppercase tracking-tighter text-lg md:text-xl mb-3">

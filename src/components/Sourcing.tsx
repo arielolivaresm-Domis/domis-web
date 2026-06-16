@@ -43,24 +43,24 @@ export default function Sourcing() {
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.webp')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
       {/* HEADER */}
-      <div className="text-center mb-8 md:mb-16 relative z-10 px-4">
+      <div className="text-center mb-5 md:mb-8 relative z-10 px-4">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
           <Search size={16} className="text-cyan-400" />
           <span className="text-[11px] md:text-[13px] font-mono text-cyan-400 uppercase tracking-widest font-black">
             Inteligencia de Mercado
           </span>
         </div>
-        <h2 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter mb-4 leading-none">
+        <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter mb-3 leading-none">
           Buscamos <span className="text-cyan-400">por ti</span>
         </h2>
-        <p className="text-lg md:text-2xl text-slate-300 font-light uppercase tracking-wide">
+        <p className="text-base md:text-lg text-slate-300 font-light uppercase tracking-wide">
           Tu tiempo es <span className="text-cyan-500 font-bold italic">Dinero</span>
         </p>
       </div>
 
       {/* TARJETA ÚNICA */}
-      <div className="max-w-2xl mx-auto relative z-10 px-4 md:px-0 mb-12 md:mb-20">
-        <div className="bg-gradient-to-b from-slate-900 to-slate-950 border-y-2 md:border-2 border-cyan-500/30 p-6 md:p-10 rounded-none md:rounded-[2.5rem] relative shadow-2xl">
+      <div className="max-w-2xl mx-auto relative z-10 px-4 md:px-0 mb-6 md:mb-8">
+        <div className="bg-gradient-to-b from-slate-900 to-slate-950 border-y-2 md:border-2 border-cyan-500/30 p-4 md:p-7 rounded-none md:rounded-[2.5rem] relative shadow-2xl">
 
           <div className="flex items-center gap-4 mb-6">
             <div className="p-3 bg-cyan-500/10 rounded-xl">
@@ -76,7 +76,7 @@ export default function Sourcing() {
             No tienes propiedad aún. <span className="text-white italic">DOMIS™ busca, filtra y pre-audita las mejores opciones del mercado. Tú solo eliges.</span>
           </p>
 
-          <div className="bg-slate-950/80 rounded-xl md:rounded-[2rem] p-5 md:p-8 border border-cyan-900/30 mb-8 shadow-inner space-y-6">
+          <div className="bg-slate-950/80 rounded-xl md:rounded-[2rem] p-4 md:p-5 border border-cyan-900/30 mb-5 shadow-inner space-y-5">
 
             {/* ¿Cuántas quieres evaluar? */}
             <div>
