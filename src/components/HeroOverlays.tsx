@@ -64,7 +64,7 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
         </div>
       </div>
 
-      <div className="flex justify-center md:justify-end items-end w-full md:mt-[-120px]">
+      <div className="flex justify-center md:justify-end items-end w-full md:mt-[-195px]">
         <motion.div 
           style={{ opacity: cardOpacity, pointerEvents: cardPointerEvents }} 
           className="bg-slate-950/90 backdrop-blur-xl p-8 border border-white/10 rounded-2xl shadow-2xl max-w-sm w-full md:w-auto relative z-20"

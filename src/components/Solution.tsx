@@ -21,7 +21,7 @@ export default function Solution() {
         <div className="relative z-10 p-6 md:p-16">
           
           {/* HEADER */}
-          <div className="text-center mb-12 md:mb-16">
+          <div className="text-center mb-4 md:mb-4">
             <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-6">
               <span className="text-[11px] font-mono text-cyan-400 uppercase tracking-[0.3em] font-black">
                 Proptech · IA · Datos de mercado en tiempo real

@@ -5,23 +5,8 @@
  */
 export default function Deliverable() {
   return (
-    <section id="negociacion" className="py-24 bg-slate-950 px-6 border-t border-slate-900">
+    <section id="negociacion" className="pt-2 pb-10 bg-slate-950 px-6 border-t border-slate-900">
       <div className="max-w-7xl mx-auto text-center">
-        
-        {/* ETIQUETA DE FASE 2 */}
-        <div className="inline-block px-8 py-2.5 rounded-full border-2 border-cyan-500 bg-cyan-500/20 text-cyan-400 text-sm font-black uppercase tracking-[0.4em] mb-12 shadow-[0_0_30px_rgba(34,211,238,0.3)]">
-          Fase 2: Negociación Técnica
-        </div>
-          
-        <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-6 tracking-tighter leading-tight">
-          Tu Poder en la Mesa de <br className="hidden md:block" />
-          <span className="text-cyan-400">Negociación</span>
-        </h2>
-        
-        {/* Subtítulo: Actualizado con Inteligencia de Mercado */}
-        <p className="text-slate-400 italic max-w-3xl mx-auto mb-16 leading-relaxed">
-          Cruzamos el <strong>Scoring PCF-15™</strong> con inteligencia de mercado real para proyectar escenarios de ahorro basados en evidencia técnica, transacciones del CBR y algoritmos de IA.
-        </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
