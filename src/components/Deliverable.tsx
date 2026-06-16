@@ -5,7 +5,7 @@
  */
 export default function Deliverable() {
   return (
-    <section id="negociacion" className="pt-2 pb-10 bg-slate-950 px-6 border-t border-slate-900">
+    <section id="negociacion" className="pt-2 pb-16 bg-slate-950 px-6 border-t border-slate-900">
       <div className="max-w-7xl mx-auto text-center">
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -39,6 +39,11 @@ export default function Deliverable() {
             </p>
           </div>
         </div>
+
+        <p className="text-white/90 italic text-sm text-center mt-12 max-w-2xl mx-auto leading-relaxed relative z-20">
+          DOMIS™ define un rango táctico de negociación respaldado por datos reales. Dentro de ese rango entregamos 3 escenarios: tú eliges cuál usar según tu estrategia y tolerancia al riesgo.
+        </p>
+
       </div>
     </section>
   );
