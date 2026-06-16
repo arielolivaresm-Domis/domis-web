@@ -18,7 +18,7 @@ export default function Solution() {
   };
 
   return (
-    <Section id="solucion" className="py-12 md:py-24 bg-slate-950 relative z-10">
+    <Section id="solucion" className="py-8 md:py-14 bg-slate-950 relative z-10">
       
       <div className="relative rounded-none md:rounded-[2.5rem] overflow-hidden border-y md:border border-white/10 shadow-2xl bg-slate-950">
         

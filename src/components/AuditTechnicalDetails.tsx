@@ -112,7 +112,7 @@ export default function AuditTechnicalDetails() {
   };
 
   return (
-    <Section id="auditoria-tecnica" className="py-12 md:py-24 bg-slate-950">
+    <Section id="auditoria-tecnica" className="py-8 md:py-14 bg-slate-950">
       
       <div className="relative rounded-none md:rounded-[2.5rem] overflow-hidden border-y md:border border-white/10 bg-slate-950 shadow-2xl">
         

@@ -83,7 +83,7 @@ export default function BenefitFlyer() {
   );
 
   return (
-    <Section id="beneficio-fase2" className="py-0 md:py-24 bg-slate-950">
+    <Section id="beneficio-fase2" className="py-0 md:py-14 bg-slate-950">
       <div className="relative rounded-none md:rounded-[4rem] overflow-hidden border-y-2 md:border-2 border-cyan-500 shadow-[0_0_50px_rgba(34,211,238,0.15)] bg-slate-900 min-h-[700px] md:min-h-[850px] flex items-center justify-center">
         
         {/* BACKGROUND LAYER */}

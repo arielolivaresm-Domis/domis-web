@@ -59,7 +59,7 @@ export default function PhasesTabs() {
   );
 
   return (
-    <section className="py-12 md:py-20 bg-transparent relative z-10" id="proceso">
+    <section className="py-8 md:py-12 bg-transparent relative z-10" id="proceso">
       <div className="max-w-7xl mx-auto px-0 md:px-6">
         
         <div className="bg-slate-950 border-y md:border border-white/5 rounded-none md:rounded-[2.5rem] relative overflow-hidden shadow-2xl">

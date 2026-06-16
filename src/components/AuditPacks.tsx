@@ -22,7 +22,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <Section id="auditoria-directa" className="py-0 md:py-24 bg-slate-950 relative z-30">
+    <Section id="auditoria-directa" className="py-0 md:py-14 bg-slate-950 relative z-30">
 
       <div className="relative overflow-hidden w-full rounded-none md:rounded-[4rem] bg-slate-950 border-y md:border border-white/10 shadow-2xl">
 

@@ -1,6 +1,6 @@
 export default function Process() {
   return (
-    <section id="protocolo" className="py-24 bg-slate-950 px-6 border-t border-slate-900">
+    <section id="protocolo" className="py-10 bg-slate-950 px-6 border-t border-slate-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-black text-white uppercase mb-4 tracking-tight">

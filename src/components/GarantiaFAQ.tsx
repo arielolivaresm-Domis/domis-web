@@ -26,7 +26,7 @@ export default function GarantiaFAQ() {
     'https://wa.me/56929901343?text=Hola, equipo DOMIS™. Quiero revisar mi propiedad antes de firmar el acta de entrega.';
 
   return (
-    <section className="py-24 px-6 bg-slate-950 border-t border-slate-900">
+    <section className="py-10 px-6 bg-slate-950 border-t border-slate-900">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}

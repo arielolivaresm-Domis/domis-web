@@ -21,7 +21,7 @@ export default function FinalCTA() {
   };
 
   return (
-    <section id="contacto" className="py-0 md:py-24 px-0 md:px-6 bg-slate-950">
+    <section id="contacto" className="py-0 md:py-14 px-0 md:px-6 bg-slate-950">
       <div className="max-w-7xl mx-auto">
         <div className="relative rounded-none md:rounded-[3rem] overflow-hidden border-y-2 md:border-2 border-cyan-500/30 shadow-[0_0_50px_rgba(34,211,238,0.15)] min-h-[600px] flex items-center justify-center">
           

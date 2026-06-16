@@ -28,7 +28,7 @@ export default function Phase2({ onNext }: { onNext: () => void }) {
   };
 
   return (
-    <Section id="estrategia-cierre" className="py-12 md:py-24">
+    <Section id="estrategia-cierre" className="py-8 md:py-14">
       
       {/* CONTENEDOR TIPO CARD - INTEGRADO */}
       <div 
