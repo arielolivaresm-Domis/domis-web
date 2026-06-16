@@ -6,6 +6,7 @@ import Solution from './components/Solution';
 import AuditTechnicalDetails from './components/AuditTechnicalDetails';
 import PhasesTabs from './components/PhasesTabs';
 // import RealCases from './components/RealCases'; // CORFO — oculto hasta agosto 2026
+import GarantiaFAQ from './components/GarantiaFAQ';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
 import { TabsProvider } from './context/TabsContext';
@@ -40,6 +41,7 @@ const LandingPage = () => (
         <Solution />
         <AuditTechnicalDetails />
         <PhasesTabs />
+        <GarantiaFAQ />
         <FinalCTA />
       </main>
 
