@@ -108,14 +108,14 @@ export default function BenefitFlyer() {
             <div className="bg-slate-950/40 backdrop-blur-2xl border border-white/10 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                 <div>
-                  <h4 className="text-cyan-500 font-black text-[10px] md:text-xs uppercase tracking-widest mb-4">Fee Activación</h4>
+                  <h4 className="text-cyan-500 font-black text-[10px] md:text-xs uppercase tracking-widest mb-4">Anticipo — se descuenta del 10%</h4>
                   <div className="text-4xl md:text-5xl font-mono text-white font-black mb-4">$400.000</div>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-[10px] md:text-[11px] text-slate-200 font-bold uppercase tracking-widest">
                       <Check size={14} className="text-cyan-500 shrink-0"/> No reembolsable
                     </li>
                     <li className="flex items-center gap-2 text-[10px] md:text-[11px] text-slate-200 font-bold uppercase tracking-widest">
-                      <Check size={14} className="text-cyan-500 shrink-0"/> Descontable del total
+                      <Check size={14} className="text-cyan-500 shrink-0"/> Se descuenta del total al cierre
                     </li>
                   </ul>
                 </div>
