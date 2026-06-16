@@ -22,7 +22,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <Section id="auditoria-directa" className="py-0 md:py-14 bg-slate-950 relative z-30">
+    <Section id="auditoria-directa" className="py-0 bg-slate-950 relative z-30">
 
       <div className="relative overflow-hidden w-full rounded-none md:rounded-[4rem] bg-slate-950 border-y md:border border-white/10 shadow-2xl">
 
@@ -37,13 +37,14 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950 to-slate-950"></div>
         </div>
 
-        <div className="relative z-10 py-8 px-0 md:p-8">
+        <div className="relative z-10 py-6 px-0 md:p-6">
 
           <div className="text-center mb-6 px-4">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] md:text-[14px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] md:text-[14px] font-black uppercase tracking-[0.3em] mb-3 shadow-lg">
               Fase 1: Auditoría Técnica PCF-15™
             </div>
-            <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter leading-none mb-4">
+
+            <h2 className="text-2xl md:text-4xl font-black text-white uppercase italic tracking-tighter leading-none mb-3">
               ¿Ya elegiste propiedad? <br/>
               <span className="text-cyan-400">Nosotros la Auditamos</span>
             </h2>

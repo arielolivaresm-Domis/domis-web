@@ -83,7 +83,7 @@ export default function BenefitFlyer() {
   );
 
   return (
-    <Section id="beneficio-fase2" className="py-0 md:py-14 bg-slate-950">
+    <Section id="beneficio-fase2" className="py-0 bg-slate-950">
       <div className="relative rounded-none md:rounded-[4rem] overflow-hidden border-y-2 md:border-2 border-cyan-500 shadow-[0_0_50px_rgba(34,211,238,0.15)] bg-slate-900 flex items-center justify-center">
         
         {/* BACKGROUND LAYER */}
@@ -95,15 +95,15 @@ export default function BenefitFlyer() {
         <div className="relative z-10 p-4 md:p-8 w-full max-w-4xl">
           {/* HEADER */}
           <div className="text-center mb-6 md:mb-8">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] font-black uppercase tracking-[0.3em] mb-6 shadow-lg shadow-cyan-500/20">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500 text-slate-950 text-[10px] font-black uppercase tracking-[0.3em] mb-3 shadow-lg shadow-cyan-500/20">
               Fase 2: Negociación Técnica
             </div>
-            <h2 className="text-3xl md:text-6xl font-black text-white uppercase tracking-tighter drop-shadow-2xl leading-none">
+            <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter drop-shadow-2xl leading-none">
               Estructura de Pago <br/><span className="text-cyan-400 italic text-2xl md:text-5xl">por Éxito</span>
             </h2>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* BLOQUE DE PAGOS (CRYSTAL GLASS) */}
             <div className="bg-slate-950/40 backdrop-blur-2xl border border-white/10 p-5 md:p-7 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -165,7 +165,7 @@ export default function BenefitFlyer() {
           {/* BOTÓN FINAL */}
           <div className="mt-6 md:mt-8 flex flex-col items-center">
             <div className="mb-4 text-center">
-              <span className="text-4xl md:text-6xl font-black text-white italic tracking-tighter drop-shadow-lg">40% OFF</span>
+              <span className="text-3xl md:text-4xl font-black text-white italic tracking-tighter drop-shadow-lg">40% OFF</span>
               <p className="text-cyan-400 font-black text-[10px] md:text-[11px] uppercase tracking-[0.4em] mt-2">AUDITORÍA AL ACTIVAR FASE 2</p>
             </div>
             <button 
