@@ -26,7 +26,7 @@ export default function GarantiaFAQ() {
     'https://wa.me/56929901343?text=Hola, equipo DOMIS™. Quiero revisar mi propiedad antes de firmar el acta de entrega.';
 
   return (
-    <section className="py-8 px-0 md:px-6 bg-slate-950">
+    <section className="relative z-10 py-8 px-0 md:px-6 bg-slate-950 border-t border-white/10">
       <div className="max-w-5xl mx-auto rounded-none md:rounded-[2.5rem] border border-white/15 bg-slate-900 shadow-2xl px-6 py-6">
 
         {/* Header */}
@@ -99,7 +99,7 @@ export default function GarantiaFAQ() {
             Revisar antes de firmar →
           </a>
           <p className="text-slate-400 text-[11px] mt-4 uppercase tracking-widest">
-            Auditoría técnica desde $1.800/m² + IVA · Mínimo 100m²
+            Cotiza tu caso en ariel@domis.cl o @domis.chile
           </p>
         </div>
 
