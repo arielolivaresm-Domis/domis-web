@@ -27,7 +27,7 @@ export default function GarantiaFAQ() {
 
   return (
     <section className="py-8 px-0 md:px-6 bg-slate-950">
-      <div className="max-w-5xl mx-auto rounded-none md:rounded-[2.5rem] border border-white/15 bg-slate-900 shadow-2xl px-6 py-10">
+      <div className="max-w-5xl mx-auto rounded-none md:rounded-[2.5rem] border border-white/15 bg-slate-900 shadow-2xl px-6 py-6">
 
         {/* Header */}
         <div className="text-center mb-8">

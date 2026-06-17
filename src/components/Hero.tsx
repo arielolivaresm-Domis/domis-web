@@ -13,7 +13,7 @@ export default function Hero() {
   });
 
   return (
-    <section ref={containerRef} className="relative h-[400vh] bg-slate-950">
+    <section ref={containerRef} className="relative h-[250vh] bg-slate-950">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <HeroCanvas progress={scrollYProgress} />
         <HeroHook scrollYProgress={scrollYProgress} />

@@ -3,7 +3,7 @@ import Section from './layout/Section';
 export default function Footer() {
   return (
     // CAMBIO CLAVE: relative z-20 y bg-slate-950 sólido para cortar el wireframe
-    <footer className="relative z-20 bg-slate-950 border-t border-white/5 pt-12 md:pt-24 pb-8 md:pb-12 font-sans overflow-hidden">
+    <footer className="relative z-20 bg-slate-950 border-t border-white/5 pt-8 md:pt-12 pb-8 md:pb-10 font-sans overflow-hidden">
       
       {/* Capa de textura sutil opcional (puedes comentarla si quieres negro puro) */}
       <div className="absolute inset-0 bg-[url('/wireframe.webp')] opacity-[0.02] pointer-events-none"></div>
@@ -42,9 +42,10 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3 md:space-y-4 text-[13px] md:text-[14px] text-slate-400 font-bold uppercase tracking-tight">
               <li><a href="#problema" className="hover:text-cyan-400 transition-colors flex items-center gap-2">○ El Problema</a></li>
-              <li><a href="#fase1" className="hover:text-cyan-400 transition-colors flex items-center gap-2">○ Sourcing (Fase 1)</a></li>
+              <li><a href="#fase1" className="hover:text-cyan-400 transition-colors flex items-center gap-2">○ Auditoría Técnica (Fase 1)</a></li>
               <li><a href="#fase2" className="hover:text-cyan-400 transition-colors flex items-center gap-2">○ Negociación (Fase 2)</a></li>
-              <li><a href="#fase3" className="hover:text-cyan-400 transition-colors flex items-center gap-2">○ Upgrade (Fase 3)</a></li>
+              <li><a href="#fase3" className="hover:text-cyan-400 transition-colors flex items-center gap-2">○ Remodelación (Fase 3)</a></li>
+              <li><a href="/blog" className="hover:text-cyan-400 transition-colors flex items-center gap-2">○ Blog</a></li>
             </ul>
           </div>
 

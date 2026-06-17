@@ -109,7 +109,7 @@ export default function Header() {
           </a>
          
           {/* --- MENÚ DE FASES --- */}
-          <div className="hidden lg:flex items-center gap-10 text-base font-bold text-slate-400 uppercase tracking-wide relative z-10">
+          <div className="hidden lg:flex items-center gap-6 text-sm font-bold text-slate-400 uppercase tracking-wide relative z-10">
             <a href="#problema" className="hover:text-white transition-colors">El Problema</a>
             <a href="#auditoria-directa" className="hover:text-cyan-400 transition-colors flex items-center gap-1">
               Auditoría <span className="text-[10px] text-slate-500 font-medium normal-case border border-slate-800 px-1.5 rounded">(Fase 1)</span>
@@ -120,6 +120,7 @@ export default function Header() {
             <a href="#fase3" className="hover:text-cyan-400 transition-colors flex items-center gap-1">
               Remodelación <span className="text-[10px] text-slate-500 font-medium normal-case border border-slate-800 px-1.5 rounded">(Fase 3)</span>
             </a>
+            <a href="/blog" className="hover:text-cyan-400 transition-colors">Blog</a>
           </div>
 
           {/* --- ACCIONES PRIMARIAS --- */}

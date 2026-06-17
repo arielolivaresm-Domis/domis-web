@@ -39,7 +39,7 @@ export default function Sourcing() {
   };
 
   return (
-    <Section id="sourcing" className="py-0 md:py-8 lg:py-14 px-0 md:px-6 bg-slate-950 relative overflow-hidden">
+    <Section id="sourcing" className="py-0 md:py-5 lg:py-8 px-0 md:px-6 bg-slate-950 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/wireframe.webp')] opacity-[0.03] bg-repeat pointer-events-none"></div>
 
       {/* HEADER */}

@@ -28,7 +28,7 @@ export default function Phase2({ onNext }: { onNext?: () => void }) {
   };
 
   return (
-    <Section id="estrategia-cierre" className="py-8 md:py-14">
+    <Section id="estrategia-cierre" className="py-5 md:py-8">
       
       {/* CONTENEDOR TIPO CARD - INTEGRADO */}
       <div 
@@ -39,7 +39,7 @@ export default function Phase2({ onNext }: { onNext?: () => void }) {
         {/* IMAGEN DE FONDO CON EFECTO ZOOM */}
         <img 
           src="/DOMIS_Final_Optimized.webp" 
-          alt="Negociación Técnica DOMIS" 
+          alt="Auditoría técnica de propiedad en Santiago — DOMIS™ Buyer's Agent"
           className="absolute inset-0 w-full h-full object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-1000 filter saturate-[0.8] brightness-[0.7]" 
           loading="eager"
         />
