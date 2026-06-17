@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -15,13 +16,11 @@ import GarantiaFAQ from './components/GarantiaFAQ';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
 
-// Importación del Portal Técnico PCF-15™
-import PortalApp from './pcf-15tm/App';
-
-// Páginas de casos reales
-import CasoCarolinaLaReina from './components/casos/CasoCarolinaLaReina';
-import CasoAndreaProvidencia from './components/casos/CasoAndreaProvidencia';
-import CasoFelipeLasCondes from './components/casos/CasoFelipeLasCondes';
+// Lazy loading — rutas secundarias no bloquean la landing
+const PortalApp = lazy(() => import('./pcf-15tm/App'));
+const CasoCarolinaLaReina = lazy(() => import('./components/casos/CasoCarolinaLaReina'));
+const CasoAndreaProvidencia = lazy(() => import('./components/casos/CasoAndreaProvidencia'));
+const CasoFelipeLasCondes = lazy(() => import('./components/casos/CasoFelipeLasCondes'));
 
 const LandingPage = () => (
   <div className="min-h-screen bg-slate-950 relative font-sans scroll-smooth">
@@ -61,13 +60,15 @@ const LandingPage = () => (
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/pcf-15tm" element={<PortalApp />} />
-      <Route path="/casos/carolina-la-reina" element={<CasoCarolinaLaReina />} />
-      <Route path="/casos/andrea-providencia" element={<CasoAndreaProvidencia />} />
-      <Route path="/casos/felipe-las-condes" element={<CasoFelipeLasCondes />} />
-    </Routes>
+    <Suspense fallback={<div className="min-h-screen bg-slate-950" />}>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/pcf-15tm" element={<PortalApp />} />
+        <Route path="/casos/carolina-la-reina" element={<CasoCarolinaLaReina />} />
+        <Route path="/casos/andrea-providencia" element={<CasoAndreaProvidencia />} />
+        <Route path="/casos/felipe-las-condes" element={<CasoFelipeLasCondes />} />
+      </Routes>
+    </Suspense>
   );
 }
 
