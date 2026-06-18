@@ -21,6 +21,10 @@ const PortalApp = lazy(() => import('./pcf-15tm/App'));
 const CasoCarolinaLaReina = lazy(() => import('./components/casos/CasoCarolinaLaReina'));
 const CasoAndreaProvidencia = lazy(() => import('./components/casos/CasoAndreaProvidencia'));
 const CasoFelipeLasCondes = lazy(() => import('./components/casos/CasoFelipeLasCondes'));
+const CotizacionRecibida = lazy(() => import('./components/CotizacionRecibida'));
+const ArticuloChecklistUsada = lazy(() => import('./components/blog/ArticuloChecklistUsada'));
+const ArticuloGarantias = lazy(() => import('./components/blog/ArticuloGarantias'));
+const BlogIndex = lazy(() => import('./components/blog/BlogIndex'));
 
 const LandingPage = () => (
   <div className="min-h-screen bg-slate-950 relative font-sans scroll-smooth">
@@ -67,6 +71,10 @@ function App() {
         <Route path="/casos/carolina-la-reina" element={<CasoCarolinaLaReina />} />
         <Route path="/casos/andrea-providencia" element={<CasoAndreaProvidencia />} />
         <Route path="/casos/felipe-las-condes" element={<CasoFelipeLasCondes />} />
+        <Route path="/cotizacion-recibida" element={<CotizacionRecibida />} />
+        <Route path="/blog" element={<BlogIndex />} />
+        <Route path="/blog/que-revisar-al-comprar-propiedad-usada-santiago" element={<ArticuloChecklistUsada />} />
+        <Route path="/blog/garantia-propiedades-nuevas-chile" element={<ArticuloGarantias />} />
       </Routes>
     </Suspense>
   );
