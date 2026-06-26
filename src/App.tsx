@@ -26,6 +26,7 @@ const ArticuloChecklistUsada = lazy(() => import('./components/blog/ArticuloChec
 const ArticuloGarantias = lazy(() => import('./components/blog/ArticuloGarantias'));
 const ArticuloBuyerAgent = lazy(() => import('./components/blog/ArticuloBuyerAgent'));
 const BlogIndex = lazy(() => import('./components/blog/BlogIndex'));
+const BuyerAgentLanding = lazy(() => import('./components/BuyerAgentLanding'));
 
 const LandingPage = () => (
   <div className="min-h-screen bg-slate-950 relative font-sans scroll-smooth">
@@ -77,6 +78,7 @@ function App() {
         <Route path="/blog/que-revisar-al-comprar-propiedad-usada-santiago" element={<ArticuloChecklistUsada />} />
         <Route path="/blog/garantia-propiedades-nuevas-chile" element={<ArticuloGarantias />} />
         <Route path="/blog/buyer-agent-chile" element={<ArticuloBuyerAgent />} />
+        <Route path="/buyer-agent-chile" element={<BuyerAgentLanding />} />
       </Routes>
     </Suspense>
   );
