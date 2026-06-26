@@ -3,6 +3,13 @@ import { ArrowRight, BookOpen } from 'lucide-react';
 
 const articulos = [
   {
+    slug: '/blog/cuanto-cuesta-auditoria-tecnica-propiedad-santiago',
+    badge: 'Precios · Auditoría técnica',
+    titulo: 'Cuánto cuesta una auditoría técnica de propiedad en Santiago: precios, qué incluye y si vale la pena',
+    resumen: 'Respuesta directa: $1.900/m² + IVA propiedad usada, $1.800/m² + IVA propiedad nueva. Mínimo 100m². Y por qué la matemática dice que siempre vale la pena.',
+    tiempo: '5 min lectura',
+  },
+  {
     slug: '/blog/como-negociar-precio-propiedad-usada-santiago',
     badge: 'Negociación · Propiedades usadas',
     titulo: 'Cómo negociar el precio de una propiedad usada en Santiago (con evidencia técnica)',
