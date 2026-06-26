@@ -5,8 +5,8 @@ import Section from './layout/Section';
 type Modalidad = 'nueva' | 'usada';
 
 const MODALIDADES = [
-  { key: 'nueva' as Modalidad, label: 'Propiedad Nueva', desc: 'Pre-recepción / garantía', price: 1800 },
-  { key: 'usada' as Modalidad, label: 'Propiedad Usada', desc: 'Compra / venta',           price: 1900 },
+  { key: 'nueva' as Modalidad, label: 'Propiedad Nueva', desc: 'Pre-recepción / garantía' },
+  { key: 'usada' as Modalidad, label: 'Propiedad Usada', desc: 'Compra / venta' },
 ];
 
 export default function AuditPacks({ onNext }: { onNext?: () => void }) {
@@ -14,11 +14,8 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const [meters, setMeters]       = useState(100);
 
   const effectiveMeters = Math.max(100, meters);
-  const currentMod      = MODALIDADES.find(m => m.key === modalidad)!;
-  const totalCost       = effectiveMeters * currentMod.price;
 
-  const whatsappMessage = `Hola, equipo DOMIS™. Tengo una propiedad ${modalidad === 'nueva' ? 'nueva (pre-recepción/garantía)' : 'usada'} de ~${effectiveMeters}m² y quiero auditarla. Total estimado: $${totalCost.toLocaleString()} + IVA`;
-
+  const whatsappMessage = `Hola, equipo DOMIS™. Tengo una propiedad ${modalidad === 'nueva' ? 'nueva (pre-recepción/garantía)' : 'usada'} de ~${effectiveMeters}m² y quiero cotizar la auditoría técnica.`;
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
@@ -97,38 +94,23 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                       >
                         <span className="font-black text-xs leading-tight text-center">{m.label}</span>
                         <span className={`text-[10px] leading-tight text-center ${modalidad === m.key ? 'text-slate-600' : 'text-slate-400'}`}>
-                          ${m.price.toLocaleString()}/m²
+                          {m.desc}
                         </span>
                       </button>
                     ))}
                   </div>
                 </div>
 
-                {/* M² + INFO */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="px-1">
-                    <label className="block text-[11px] uppercase text-cyan-500 mb-2 font-black tracking-widest">Superficie Total m²:</label>
-                    <input
-                      type="number"
-                      value={meters}
-                      onChange={(e) => setMeters(Number(e.target.value))}
-                      className="w-full bg-slate-950 border-2 border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 outline-none transition-all"
-                    />
-                  </div>
-                  <div className="px-1 flex flex-col justify-end pb-1 gap-1">
-                    <p className="text-amber-400/80 text-[10px] uppercase tracking-wide">⚠️ Mínimo facturable: 100m²</p>
-                    <p className="text-slate-500 text-[10px]">${currentMod.price.toLocaleString()}/m² + IVA — {currentMod.desc}</p>
-                  </div>
-                </div>
-
-                {/* TOTAL */}
-                <div className="bg-cyan-500/10 rounded-2xl p-4 border border-cyan-500/20 text-center">
-                  <span className="text-[9px] uppercase text-cyan-400 font-black tracking-[0.2em] mb-1 block">
-                    Inversión Estimada
-                  </span>
-                  <div className="text-3xl font-mono text-white font-black tracking-tighter">
-                    ${totalCost.toLocaleString()} <span className="text-xs opacity-50 ml-1">+ IVA</span>
-                  </div>
+                {/* M² */}
+                <div className="px-1">
+                  <label className="block text-[11px] uppercase text-cyan-500 mb-2 font-black tracking-widest">Superficie Total m²:</label>
+                  <input
+                    type="number"
+                    value={meters}
+                    onChange={(e) => setMeters(Number(e.target.value))}
+                    className="w-full bg-slate-950 border-2 border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 outline-none transition-all"
+                  />
+                  <p className="text-amber-400/80 text-[10px] uppercase tracking-wide mt-1">⚠️ Mínimo facturable: 100m²</p>
                 </div>
 
                 <a
@@ -138,14 +120,14 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                   className="flex items-center justify-center gap-4 w-full py-4 font-black uppercase rounded-2xl text-[13px] bg-cyan-500 text-slate-950 hover:bg-white transition-all shadow-xl tracking-widest active:scale-95"
                   onClick={() => onNext && onNext()}
                 >
-                  Agendar Auditoría Técnica
+                  Cotizar Auditoría Técnica
                   <ArrowRight size={20} />
                 </a>
               </div>
             </div>
 
             <p className="mt-8 text-center text-white/30 text-[10px] uppercase font-bold tracking-widest px-4">
-              * Valores referenciales para Región Metropolitana.
+              * Cotización personalizada vía WhatsApp según superficie y tipo de propiedad.
             </p>
           </div>
         </div>
