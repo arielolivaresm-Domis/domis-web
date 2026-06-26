@@ -29,6 +29,10 @@ const BlogIndex = lazy(() => import('./components/blog/BlogIndex'));
 const BuyerAgentLanding = lazy(() => import('./components/BuyerAgentLanding'));
 const ArticuloNegociacion = lazy(() => import('./components/blog/ArticuloNegociacion'));
 const ArticuloCuantoCuesta = lazy(() => import('./components/blog/ArticuloCuantoCuesta'));
+const ArticuloFallasOcultas = lazy(() => import('./components/blog/ArticuloFallasOcultas'));
+const ArticuloAmpliacione = lazy(() => import('./components/blog/ArticuloAmpliacione'));
+const ArticuloCamaraTermica = lazy(() => import('./components/blog/ArticuloCamaraTermica'));
+const ArticuloErrores = lazy(() => import('./components/blog/ArticuloErrores'));
 
 const LandingPage = () => (
   <div className="min-h-screen bg-slate-950 relative font-sans scroll-smooth">
@@ -83,6 +87,10 @@ function App() {
         <Route path="/buyer-agent-chile" element={<BuyerAgentLanding />} />
         <Route path="/blog/como-negociar-precio-propiedad-usada-santiago" element={<ArticuloNegociacion />} />
         <Route path="/blog/cuanto-cuesta-auditoria-tecnica-propiedad-santiago" element={<ArticuloCuantoCuesta />} />
+        <Route path="/blog/fallas-ocultas-casas-usadas-santiago" element={<ArticuloFallasOcultas />} />
+        <Route path="/blog/ampliaciones-sin-permiso-chile" element={<ArticuloAmpliacione />} />
+        <Route path="/blog/camara-termica-inspeccion-inmobiliaria" element={<ArticuloCamaraTermica />} />
+        <Route path="/blog/errores-comprar-propiedad-usada-santiago" element={<ArticuloErrores />} />
       </Routes>
     </Suspense>
   );

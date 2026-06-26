@@ -3,6 +3,34 @@ import { ArrowRight, BookOpen } from 'lucide-react';
 
 const articulos = [
   {
+    slug: '/blog/errores-comprar-propiedad-usada-santiago',
+    badge: 'Guía comprador · Riesgos',
+    titulo: '7 errores al comprar propiedad usada en Santiago y cómo evitar cada uno',
+    resumen: 'Desde firmar la promesa antes de inspeccionar hasta creerle al corredor del vendedor — los errores más costosos del mercado y el orden correcto para comprar con certeza.',
+    tiempo: '8 min lectura',
+  },
+  {
+    slug: '/blog/fallas-ocultas-casas-usadas-santiago',
+    badge: 'Fallas ocultas · Propiedades usadas',
+    titulo: 'Fallas ocultas en casas usadas: lo que no ves en la visita puede costarte millones',
+    resumen: 'Humedad activa detrás de muros recién pintados, electricidad fuera de norma, techumbre deteriorada. Las 6 fallas más frecuentes y cómo la cámara térmica FLIR las detecta.',
+    tiempo: '7 min lectura',
+  },
+  {
+    slug: '/blog/camara-termica-inspeccion-inmobiliaria',
+    badge: 'Termografía · Instrumentos',
+    titulo: 'Cámara térmica en inspección de propiedades: qué detecta que el ojo humano no puede ver',
+    resumen: 'La FLIR convierte diferencias de temperatura en evidencia técnica: filtraciones activas, sobrecarga eléctrica, puentes térmicos. Todo sin tocar ni romper nada.',
+    tiempo: '6 min lectura',
+  },
+  {
+    slug: '/blog/ampliaciones-sin-permiso-chile',
+    badge: 'Permisos · Irregularidades',
+    titulo: 'Ampliaciones sin permiso en Chile: qué pasa si compras metros ilegales sin saberlo',
+    resumen: 'Crédito hipotecario reducido, tasación inferior al precio pagado, multas y posible demolición. Cómo detectar metros no declarados antes de firmar la promesa.',
+    tiempo: '6 min lectura',
+  },
+  {
     slug: '/blog/cuanto-cuesta-auditoria-tecnica-propiedad-santiago',
     badge: 'Precios · Auditoría técnica',
     titulo: 'Cuánto cuesta una auditoría técnica de propiedad en Santiago: precios, qué incluye y si vale la pena',
@@ -108,7 +136,7 @@ export default function BlogIndex() {
         {/* Próximamente */}
         <div className="mt-10 p-5 border border-white/5 rounded-2xl text-center">
           <p className="text-slate-600 text-xs uppercase tracking-widest">Próximamente</p>
-          <p className="text-slate-500 text-sm mt-1">Vicios ocultos y la ley · Cómo leer un estudio de títulos · Propiedades en verde: riesgos reales</p>
+          <p className="text-slate-500 text-sm mt-1">Vicios ocultos y la ley · Cómo leer un estudio de títulos · Propiedades en verde: riesgos reales · Remodelación después de comprar</p>
         </div>
       </main>
 
