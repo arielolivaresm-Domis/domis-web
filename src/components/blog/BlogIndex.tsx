@@ -3,6 +3,13 @@ import { ArrowRight, BookOpen } from 'lucide-react';
 
 const articulos = [
   {
+    slug: '/blog/buyer-agent-chile',
+    badge: 'Buyer\'s Agent · Mercado inmobiliario',
+    titulo: 'Buyer\'s agent en Chile: qué es, cómo funciona y por qué el mercado lo necesitaba',
+    resumen: 'En Chile todos los corredores trabajan para el vendedor. Un buyer\'s agent trabaja exclusivamente para ti: audita la propiedad, detecta fallas y negocia el precio a tu favor.',
+    tiempo: '7 min lectura',
+  },
+  {
     slug: '/blog/garantia-propiedades-nuevas-chile',
     badge: 'Guía técnica · Propiedades nuevas',
     titulo: 'Garantía de 3, 5 y 10 años en propiedades nuevas: qué cubre y cómo hacerla valer',

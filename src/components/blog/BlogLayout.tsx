@@ -5,6 +5,7 @@ interface BlogMeta {
   title: string;
   description: string;
   url: string;
+  datePublished?: string;
 }
 
 interface BlogLayoutProps {
@@ -19,6 +20,43 @@ export default function BlogLayout({ children, meta }: BlogLayoutProps) {
     if (desc) desc.setAttribute('content', meta.description);
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', meta.url);
+
+    // Article + BreadcrumbList schema
+    const prev = document.getElementById('blog-article-schema');
+    if (prev) prev.remove();
+    const script = document.createElement('script');
+    script.id = 'blog-article-schema';
+    script.type = 'application/ld+json';
+    const headline = meta.title.split('|')[0].trim();
+    script.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Article',
+          '@id': `${meta.url}#article`,
+          headline,
+          description: meta.description,
+          url: meta.url,
+          datePublished: meta.datePublished ?? '2026-06-17',
+          dateModified: meta.datePublished ?? '2026-06-17',
+          inLanguage: 'es-CL',
+          author: { '@id': 'https://www.domis.cl/#founder' },
+          publisher: { '@id': 'https://www.domis.cl/#business' },
+          mainEntityOfPage: { '@type': 'WebPage', '@id': meta.url },
+          image: 'https://www.domis.cl/og-image.jpg',
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://www.domis.cl' },
+            { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.domis.cl/blog' },
+            { '@type': 'ListItem', position: 3, name: headline, item: meta.url },
+          ],
+        },
+      ],
+    });
+    document.head.appendChild(script);
+    return () => { document.getElementById('blog-article-schema')?.remove(); };
   }, [meta]);
 
   return (

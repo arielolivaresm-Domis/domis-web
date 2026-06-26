@@ -24,6 +24,7 @@ const CasoFelipeLasCondes = lazy(() => import('./components/casos/CasoFelipeLasC
 const CotizacionRecibida = lazy(() => import('./components/CotizacionRecibida'));
 const ArticuloChecklistUsada = lazy(() => import('./components/blog/ArticuloChecklistUsada'));
 const ArticuloGarantias = lazy(() => import('./components/blog/ArticuloGarantias'));
+const ArticuloBuyerAgent = lazy(() => import('./components/blog/ArticuloBuyerAgent'));
 const BlogIndex = lazy(() => import('./components/blog/BlogIndex'));
 
 const LandingPage = () => (
@@ -75,6 +76,7 @@ function App() {
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/que-revisar-al-comprar-propiedad-usada-santiago" element={<ArticuloChecklistUsada />} />
         <Route path="/blog/garantia-propiedades-nuevas-chile" element={<ArticuloGarantias />} />
+        <Route path="/blog/buyer-agent-chile" element={<ArticuloBuyerAgent />} />
       </Routes>
     </Suspense>
   );
