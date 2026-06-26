@@ -27,6 +27,7 @@ const ArticuloGarantias = lazy(() => import('./components/blog/ArticuloGarantias
 const ArticuloBuyerAgent = lazy(() => import('./components/blog/ArticuloBuyerAgent'));
 const BlogIndex = lazy(() => import('./components/blog/BlogIndex'));
 const BuyerAgentLanding = lazy(() => import('./components/BuyerAgentLanding'));
+const ArticuloNegociacion = lazy(() => import('./components/blog/ArticuloNegociacion'));
 
 const LandingPage = () => (
   <div className="min-h-screen bg-slate-950 relative font-sans scroll-smooth">
@@ -79,6 +80,7 @@ function App() {
         <Route path="/blog/garantia-propiedades-nuevas-chile" element={<ArticuloGarantias />} />
         <Route path="/blog/buyer-agent-chile" element={<ArticuloBuyerAgent />} />
         <Route path="/buyer-agent-chile" element={<BuyerAgentLanding />} />
+        <Route path="/blog/como-negociar-precio-propiedad-usada-santiago" element={<ArticuloNegociacion />} />
       </Routes>
     </Suspense>
   );

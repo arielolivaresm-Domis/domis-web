@@ -3,6 +3,13 @@ import { ArrowRight, BookOpen } from 'lucide-react';
 
 const articulos = [
   {
+    slug: '/blog/como-negociar-precio-propiedad-usada-santiago',
+    badge: 'Negociación · Propiedades usadas',
+    titulo: 'Cómo negociar el precio de una propiedad usada en Santiago (con evidencia técnica)',
+    resumen: 'Los consejos genéricos dejan dinero sobre la mesa. La palanca real es llevar un informe técnico con hallazgos valorizados en UF antes de la promesa — no una oferta baja sin respaldo.',
+    tiempo: '7 min lectura',
+  },
+  {
     slug: '/blog/buyer-agent-chile',
     badge: 'Buyer\'s Agent · Mercado inmobiliario',
     titulo: 'Buyer\'s agent en Chile: qué es, cómo funciona y por qué el mercado lo necesitaba',
@@ -94,7 +101,7 @@ export default function BlogIndex() {
         {/* Próximamente */}
         <div className="mt-10 p-5 border border-white/5 rounded-2xl text-center">
           <p className="text-slate-600 text-xs uppercase tracking-widest">Próximamente</p>
-          <p className="text-slate-500 text-sm mt-1">Buyer's agent en Chile · Negociar el precio de una propiedad · Vicios ocultos y la ley</p>
+          <p className="text-slate-500 text-sm mt-1">Vicios ocultos y la ley · Cómo leer un estudio de títulos · Propiedades en verde: riesgos reales</p>
         </div>
       </main>
 
