@@ -157,7 +157,7 @@ export default function BuyerAgentLanding() {
         },
         {
           '@type': 'FAQPage',
-          mainEntity: content.en.faq.items.map(f => ({
+          mainEntity: [...content.es.faq.items, ...content.en.faq.items].map(f => ({
             '@type': 'Question',
             name: f.q,
             acceptedAnswer: { '@type': 'Answer', text: f.a },

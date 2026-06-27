@@ -1,5 +1,32 @@
+import { useEffect } from 'react';
 import { Building, CheckCircle, ArrowRight, AlertTriangle } from 'lucide-react';
 import BlogLayout from './BlogLayout';
+
+function HowToSchema() {
+  useEffect(() => {
+    const prev = document.getElementById('howto-departamento');
+    if (prev) prev.remove();
+    const s = document.createElement('script');
+    s.id = 'howto-departamento';
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      name: 'Cómo inspeccionar un departamento antes de comprarlo en Santiago',
+      description: 'Proceso técnico paso a paso para inspeccionar un departamento usado en Santiago antes de firmar la promesa.',
+      step: [
+        { '@type': 'HowToStep', position: 1, name: 'Solicita documentación legal antes de la visita', text: 'Pide escritura, certificado de dominio CBR, planos DOM aprobados, certificado de recepción final, certificado de no deuda de gastos comunes y avalúo fiscal SII.' },
+        { '@type': 'HowToStep', position: 2, name: 'Mide la superficie real con medidor láser', text: 'Compara los metros medidos físicamente contra lo declarado en escritura y avalúo SII. Logias o terrazas cerradas sin permiso inflan la superficie declarada sin existir legalmente.' },
+        { '@type': 'HowToStep', position: 3, name: 'Inspecciona con cámara térmica FLIR', text: 'La cámara térmica detecta humedad oculta en muros y techo aunque la superficie parezca seca. Imprescindible para filtración desde el piso superior.' },
+        { '@type': 'HowToStep', position: 4, name: 'Revisa instalaciones eléctricas y tablero del edificio', text: 'Verifica el tablero interior del departamento y el tablero del edificio. Un departamento con instalación correcta puede tener problemas si el tablero del edificio está subdimensionado.' },
+        { '@type': 'HowToStep', position: 5, name: 'Verifica niveles y fisuras con nivelador láser Bosch', text: 'Detecta hundimientos, desplomes o fisuras estructurales no visibles a simple vista. El nivelador Bosch confirma si hay movimiento diferencial en la losa.' },
+      ],
+    });
+    document.head.appendChild(s);
+    return () => { document.getElementById('howto-departamento')?.remove(); };
+  }, []);
+  return null;
+}
 
 const meta = {
   title: 'Cómo inspeccionar un departamento antes de comprarlo en Santiago: guía técnica 2026 | DOMIS™',
@@ -67,6 +94,7 @@ const faqs = [
 export default function ArticuloDepartamento() {
   return (
     <BlogLayout meta={meta}>
+      <HowToSchema />
 
       <div className="flex items-center gap-3 mb-6">
         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 text-[10px] font-black uppercase tracking-widest">

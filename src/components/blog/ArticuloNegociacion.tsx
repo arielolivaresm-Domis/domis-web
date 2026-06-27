@@ -1,5 +1,32 @@
+import { useEffect } from 'react';
 import { TrendingDown, AlertTriangle, CheckCircle, ArrowRight, DollarSign } from 'lucide-react';
 import BlogLayout from './BlogLayout';
+
+function HowToSchema() {
+  useEffect(() => {
+    const prev = document.getElementById('howto-negociacion');
+    if (prev) prev.remove();
+    const s = document.createElement('script');
+    s.id = 'howto-negociacion';
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      name: 'Cómo negociar el precio de una propiedad usada en Santiago',
+      description: 'Proceso paso a paso para negociar con evidencia técnica documentada antes de firmar la promesa.',
+      step: [
+        { '@type': 'HowToStep', position: 1, name: 'Auditoría técnica antes de cualquier oferta', text: 'Contrata una inspección técnica PCF-15™ antes de negociar. Sin evidencia técnica, cualquier rebaja es especulación.' },
+        { '@type': 'HowToStep', position: 2, name: 'Valoriza cada hallazgo en UF', text: 'Cada falla detectada se valoriza según costo real de reparación. Convierte problemas en argumentos con cifras concretas que el vendedor no puede refutar.' },
+        { '@type': 'HowToStep', position: 3, name: 'Cruza con tasación de mercado', text: 'Compara el precio publicado contra avalúo fiscal, datos catastrales y operaciones cerradas reales en la zona. Identifica la brecha entre precio pedido y valor de mercado.' },
+        { '@type': 'HowToStep', position: 4, name: 'Define 3 escenarios de negociación', text: 'Prepara oferta agresiva, moderada y conservadora. Nunca entres con una sola cifra — la contraparte siempre tiene margen de respuesta.' },
+        { '@type': 'HowToStep', position: 5, name: 'Presenta el informe antes de la promesa', text: 'Entrega el informe técnico firmado por Constructor Civil antes de firmar. Tiene peso legal y comercial que una opinión verbal no puede refutar.' },
+      ],
+    });
+    document.head.appendChild(s);
+    return () => { document.getElementById('howto-negociacion')?.remove(); };
+  }, []);
+  return null;
+}
 
 const meta = {
   title: 'Cómo negociar el precio de una propiedad usada en Santiago | DOMIS™',
@@ -56,6 +83,7 @@ const faqs = [
 export default function ArticuloNegociacion() {
   return (
     <BlogLayout meta={meta}>
+      <HowToSchema />
 
       {/* Badge + fecha */}
       <div className="flex items-center gap-3 mb-6">
