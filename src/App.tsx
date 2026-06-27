@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -74,6 +74,17 @@ const LandingPage = () => (
 );
 
 function App() {
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement).closest('a');
+      if (anchor?.href?.includes('wa.me')) {
+        if (typeof window.fbq === 'function') window.fbq('track', 'Lead');
+      }
+    };
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
+
   return (
     <Suspense fallback={<div className="min-h-screen bg-slate-950" />}>
       <Routes>

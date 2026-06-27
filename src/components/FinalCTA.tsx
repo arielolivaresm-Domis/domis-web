@@ -1,4 +1,3 @@
-// Declaración para que TypeScript acepte el sensor de Google
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
@@ -17,6 +16,9 @@ export default function FinalCTA() {
         'event_label': 'Final CTA Cierre',
         'value': 1
       });
+    }
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead', { content_name: 'FinalCTA' });
     }
   };
 

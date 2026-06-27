@@ -21,6 +21,15 @@ export default function BlogLayout({ children, meta }: BlogLayoutProps) {
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', meta.url);
 
+    // Meta Pixel — ViewContent por artículo
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'ViewContent', {
+        content_name: meta.title,
+        content_category: 'Blog',
+        content_ids: [meta.url],
+      });
+    }
+
     // Article + BreadcrumbList schema
     const prev = document.getElementById('blog-article-schema');
     if (prev) prev.remove();
