@@ -3,6 +3,27 @@ import { ArrowRight, BookOpen } from 'lucide-react';
 
 const articulos = [
   {
+    slug: '/blog/inspector-de-propiedades-santiago',
+    badge: 'Inspector de propiedades · Santiago',
+    titulo: 'Inspector de propiedades en Santiago: qué hace, cuánto cuesta y cómo elegir uno confiable',
+    resumen: 'Inspector de propiedades, auditor técnico, inspección técnica inmobiliaria — mismo servicio, distinto alcance. PCF-15™ incluye FLIR, dron y detector gas. Desde $1.800/m² + IVA.',
+    tiempo: '6 min lectura',
+  },
+  {
+    slug: '/blog/vicios-ocultos-propiedad-chile',
+    badge: 'Vicios ocultos · Ley Chile',
+    titulo: 'Vicios ocultos en propiedad Chile: qué son, plazo legal para reclamar y cómo detectarlos antes de comprar',
+    resumen: 'El Código Civil te protege — pero tienes 1 año para reclamar desde la entrega. Qué dice el artículo 1860, quién paga y por qué detectarlos antes de comprar siempre es mejor que demandar después.',
+    tiempo: '7 min lectura',
+  },
+  {
+    slug: '/blog/como-inspeccionar-departamento-antes-de-comprar-santiago',
+    badge: 'Departamentos · Inspección técnica',
+    titulo: 'Cómo inspeccionar un departamento antes de comprarlo en Santiago: guía técnica 2026',
+    resumen: 'Humedad de losa compartida, logia cerrada sin permiso, deuda de gastos comunes heredada. Los 5 riesgos específicos de departamentos usados y cómo detectarlos antes de firmar.',
+    tiempo: '6 min lectura',
+  },
+  {
     slug: '/blog/errores-comprar-propiedad-usada-santiago',
     badge: 'Guía comprador · Riesgos',
     titulo: '7 errores al comprar propiedad usada en Santiago y cómo evitar cada uno',
