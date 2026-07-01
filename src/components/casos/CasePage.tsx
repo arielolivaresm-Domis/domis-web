@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
 export interface CaseData {
@@ -17,24 +17,28 @@ export interface CaseData {
 }
 
 export default function CasePage({ data }: { data: CaseData }) {
-  useEffect(() => {
-    document.title = data.metaTitle;
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', data.metaDescription);
-
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.id = `schema-caso-${data.slug}`;
-    script.text = JSON.stringify(data.schemaJson);
-    document.head.appendChild(script);
-
-    return () => {
-      document.title = 'DOMIS™ | Negociación Técnica Inmobiliaria';
-      document.getElementById(`schema-caso-${data.slug}`)?.remove();
-    };
-  }, [data]);
+  const caseUrl = `https://www.domis.cl/casos/${data.slug}`;
+  const image = 'https://www.domis.cl/og-image.jpg';
 
   return (
+    <>
+      <Helmet>
+        <title>{data.metaTitle}</title>
+        <meta name="description" content={data.metaDescription} />
+        <link rel="canonical" href={caseUrl} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={data.metaTitle} />
+        <meta property="og:description" content={data.metaDescription} />
+        <meta property="og:url" content={caseUrl} />
+        <meta property="og:image" content={image} />
+        <meta property="og:locale" content="es_CL" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={data.metaTitle} />
+        <meta name="twitter:description" content={data.metaDescription} />
+        <meta name="twitter:image" content={image} />
+        <script type="application/ld+json">{JSON.stringify(data.schemaJson)}</script>
+      </Helmet>
+
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans">
       <div className="max-w-3xl mx-auto px-6 py-16">
 
@@ -147,5 +151,6 @@ export default function CasePage({ data }: { data: CaseData }) {
 
       </div>
     </div>
+    </>
   );
 }

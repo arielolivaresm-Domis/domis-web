@@ -1,7 +1,7 @@
 import { DollarSign, CheckCircle, ArrowRight, TrendingDown } from 'lucide-react';
 import BlogLayout from './BlogLayout';
 
-const meta = {
+export const meta = {
   title: 'Cuánto cuesta una auditoría técnica de propiedad en Santiago | DOMIS™',
   description: 'Precio de la auditoría técnica PCF-15™ de DOMIS™: $1.900/m² + IVA propiedad usada, $1.800/m² + IVA propiedad nueva. Mínimo 100m². ¿Vale la pena? Los números hablan solos.',
   url: 'https://www.domis.cl/blog/cuanto-cuesta-auditoria-tecnica-propiedad-santiago',

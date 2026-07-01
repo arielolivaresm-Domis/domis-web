@@ -28,7 +28,7 @@ function HowToSchema() {
   return null;
 }
 
-const meta = {
+export const meta = {
   title: 'Cómo negociar el precio de una propiedad usada en Santiago | DOMIS™',
   description: 'Los consejos genéricos de negociación (5-10% menos, comparables, tiempo en mercado) dejan dinero sobre la mesa. La palanca real es la evidencia técnica documentada antes de la promesa.',
   url: 'https://www.domis.cl/blog/como-negociar-precio-propiedad-usada-santiago',

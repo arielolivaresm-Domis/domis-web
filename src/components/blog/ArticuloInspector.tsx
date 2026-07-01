@@ -1,7 +1,7 @@
 import { Search, CheckCircle, ArrowRight, Shield } from 'lucide-react';
 import BlogLayout from './BlogLayout';
 
-const meta = {
+export const meta = {
   title: 'Inspector de propiedades en Santiago: qué hace, cuánto cuesta y cómo elegir uno | DOMIS™',
   description: 'Inspector de propiedades en Santiago: qué incluye una inspección técnica, cuánto cuesta, diferencia entre inspector y auditor técnico PCF-15™, y cómo contratar uno antes de comprar.',
   url: 'https://www.domis.cl/blog/inspector-de-propiedades-santiago',

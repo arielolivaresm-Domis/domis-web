@@ -1,7 +1,7 @@
 import { ShieldCheck, Users, TrendingDown, AlertTriangle, CheckCircle, ArrowRight } from 'lucide-react';
 import BlogLayout from './BlogLayout';
 
-const meta = {
+export const meta = {
   title: 'Buyer\'s agent en Chile: qué es, cómo funciona y por qué el mercado lo necesitaba | DOMIS™',
   description: 'En Chile todos los corredores trabajan para el vendedor. Un buyer\'s agent trabaja exclusivamente para ti: audita la propiedad, detecta fallas y negocia el precio a tu favor.',
   url: 'https://www.domis.cl/blog/buyer-agent-chile',

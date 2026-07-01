@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { ArrowRight, BookOpen } from 'lucide-react';
 
 const articulos = [
@@ -88,15 +88,29 @@ const articulos = [
   },
 ];
 
-export default function BlogIndex() {
-  useEffect(() => {
-    document.title = 'Blog DOMIS™ — Guías técnicas para comprar propiedades en Santiago';
-    const desc = document.querySelector('meta[name="description"]');
-    if (desc) desc.setAttribute('content', 'Guías técnicas de DOMIS™ para comprar propiedades usadas en Santiago con certeza: checklist de inspección, negociación, vicios ocultos y más.');
-  }, []);
+const BLOG_URL = 'https://www.domis.cl/blog';
+const BLOG_TITLE = 'Blog DOMIS™ — Guías técnicas para comprar propiedades en Santiago';
+const BLOG_DESCRIPTION = 'Guías técnicas de DOMIS™ para comprar propiedades usadas en Santiago con certeza: checklist de inspección, negociación, vicios ocultos y más.';
+const BLOG_IMAGE = 'https://www.domis.cl/og-image.jpg';
 
+export default function BlogIndex() {
   return (
     <div className="min-h-screen bg-slate-950 font-sans">
+      <Helmet>
+        <title>{BLOG_TITLE}</title>
+        <meta name="description" content={BLOG_DESCRIPTION} />
+        <link rel="canonical" href={BLOG_URL} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={BLOG_TITLE} />
+        <meta property="og:description" content={BLOG_DESCRIPTION} />
+        <meta property="og:url" content={BLOG_URL} />
+        <meta property="og:image" content={BLOG_IMAGE} />
+        <meta property="og:locale" content="es_CL" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={BLOG_TITLE} />
+        <meta name="twitter:description" content={BLOG_DESCRIPTION} />
+        <meta name="twitter:image" content={BLOG_IMAGE} />
+      </Helmet>
       {/* Nav */}
       <nav className="border-b border-white/10 px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">

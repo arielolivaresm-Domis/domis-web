@@ -1,7 +1,7 @@
 import { Thermometer, CheckCircle, ArrowRight, Eye } from 'lucide-react';
 import BlogLayout from './BlogLayout';
 
-const meta = {
+export const meta = {
   title: 'Cámara térmica en inspección de propiedades: qué detecta y por qué es esencial | DOMIS™',
   description: 'La cámara térmica FLIR detecta humedad oculta, filtraciones activas y problemas eléctricos invisibles al ojo humano. Guía completa sobre termografía en inspección inmobiliaria en Santiago.',
   url: 'https://www.domis.cl/blog/camara-termica-inspeccion-inmobiliaria',

@@ -28,7 +28,7 @@ function HowToSchema() {
   return null;
 }
 
-const meta = {
+export const meta = {
   title: 'Cómo inspeccionar un departamento antes de comprarlo en Santiago: guía técnica 2026 | DOMIS™',
   description: 'Inspeccionar un departamento antes de comprar en Santiago requiere más que una visita visual. Guía completa: qué revisar, cómo verificar la legalidad, servicios de inspección técnica disponibles.',
   url: 'https://www.domis.cl/blog/como-inspeccionar-departamento-antes-de-comprar-santiago',

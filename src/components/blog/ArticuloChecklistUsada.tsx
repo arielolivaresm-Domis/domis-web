@@ -1,7 +1,7 @@
 import { CheckCircle, AlertTriangle, Thermometer, Zap, Droplets, Wind, Ruler, FileText, MapPin } from 'lucide-react';
 import BlogLayout from './BlogLayout';
 
-const meta = {
+export const meta = {
   title: 'Qué revisar al comprar una propiedad usada en Santiago: checklist técnico completo | DOMIS™',
   description: 'Guía técnica completa para inspeccionar una propiedad usada en Santiago antes de firmar. Los 15 puntos del PCF-15™, instrumentos profesionales y cómo usar los hallazgos para negociar el precio.',
   url: 'https://www.domis.cl/blog/que-revisar-al-comprar-propiedad-usada-santiago',

@@ -1,7 +1,7 @@
 import { AlertTriangle, CheckCircle, ArrowRight, Eye } from 'lucide-react';
 import BlogLayout from './BlogLayout';
 
-const meta = {
+export const meta = {
   title: 'Fallas ocultas en casas usadas: qué son, cómo detectarlas y qué cuestan | DOMIS™',
   description: 'Las fallas ocultas en casas usadas son invisibles en una visita normal pero pueden costar millones en reparaciones. Guía completa: tipos, cómo detectarlas con cámara térmica y qué hacer antes de firmar.',
   url: 'https://www.domis.cl/blog/fallas-ocultas-casas-usadas-santiago',

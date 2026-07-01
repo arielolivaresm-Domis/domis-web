@@ -1,7 +1,7 @@
 import { AlertTriangle, Shield, CheckCircle, FileText } from 'lucide-react';
 import BlogLayout from './BlogLayout';
 
-const meta = {
+export const meta = {
   title: 'Garantía de 3, 5 y 10 años en propiedades nuevas: qué cubre y cómo hacerla valer | DOMIS™',
   description: 'La ley te da garantía de hasta 10 años en propiedades nuevas en Chile. Pero activarla es más difícil de lo que parece. Esto es lo que necesitas saber antes de firmar.',
   url: 'https://www.domis.cl/blog/garantia-propiedades-nuevas-chile',

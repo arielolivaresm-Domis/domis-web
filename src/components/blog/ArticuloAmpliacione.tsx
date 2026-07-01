@@ -1,7 +1,7 @@
 import { AlertTriangle, CheckCircle, ArrowRight, FileX } from 'lucide-react';
 import BlogLayout from './BlogLayout';
 
-const meta = {
+export const meta = {
   title: 'Ampliaciones sin permiso en Chile: qué pasa si compras una propiedad con metros ilegales | DOMIS™',
   description: 'Comprar una propiedad con ampliaciones sin permiso en Chile puede costarte la demolición, problemas en el crédito hipotecario y multas. Guía completa: riesgos, cómo detectarlas y qué hacer.',
   url: 'https://www.domis.cl/blog/ampliaciones-sin-permiso-chile',

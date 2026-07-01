@@ -1,7 +1,7 @@
 import { Scale, CheckCircle, ArrowRight, AlertTriangle, Clock } from 'lucide-react';
 import BlogLayout from './BlogLayout';
 
-const meta = {
+export const meta = {
   title: 'Vicios ocultos en propiedad Chile: qué son, plazo legal para reclamar y cómo detectarlos antes de comprar | DOMIS™',
   description: 'Vicios ocultos en propiedades en Chile: qué dice el Código Civil (art. 1860), cuánto tiempo tienes para reclamar, quién paga y cómo detectarlos con inspección técnica antes de firmar.',
   url: 'https://www.domis.cl/blog/vicios-ocultos-propiedad-chile',

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { ArrowLeft } from 'lucide-react';
 
 interface BlogMeta {
@@ -14,14 +15,11 @@ interface BlogLayoutProps {
 }
 
 export default function BlogLayout({ children, meta }: BlogLayoutProps) {
-  useEffect(() => {
-    document.title = meta.title;
-    const desc = document.querySelector('meta[name="description"]');
-    if (desc) desc.setAttribute('content', meta.description);
-    const canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) canonical.setAttribute('href', meta.url);
+  const headline = meta.title.split('|')[0].trim();
+  const image = 'https://www.domis.cl/og-image.jpg';
 
-    // Meta Pixel — ViewContent por artículo
+  useEffect(() => {
+    // Meta Pixel — ViewContent por artículo (efecto de tracking, no de SEO — se mantiene client-only)
     if (typeof window.fbq === 'function') {
       window.fbq('track', 'ViewContent', {
         content_name: meta.title,
@@ -29,47 +27,54 @@ export default function BlogLayout({ children, meta }: BlogLayoutProps) {
         content_ids: [meta.url],
       });
     }
-
-    // Article + BreadcrumbList schema
-    const prev = document.getElementById('blog-article-schema');
-    if (prev) prev.remove();
-    const script = document.createElement('script');
-    script.id = 'blog-article-schema';
-    script.type = 'application/ld+json';
-    const headline = meta.title.split('|')[0].trim();
-    script.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@graph': [
-        {
-          '@type': 'Article',
-          '@id': `${meta.url}#article`,
-          headline,
-          description: meta.description,
-          url: meta.url,
-          datePublished: meta.datePublished ?? '2026-06-17',
-          dateModified: meta.datePublished ?? '2026-06-17',
-          inLanguage: 'es-CL',
-          author: { '@id': 'https://www.domis.cl/#founder' },
-          publisher: { '@id': 'https://www.domis.cl/#business' },
-          mainEntityOfPage: { '@type': 'WebPage', '@id': meta.url },
-          image: 'https://www.domis.cl/og-image.jpg',
-        },
-        {
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://www.domis.cl' },
-            { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.domis.cl/blog' },
-            { '@type': 'ListItem', position: 3, name: headline, item: meta.url },
-          ],
-        },
-      ],
-    });
-    document.head.appendChild(script);
-    return () => { document.getElementById('blog-article-schema')?.remove(); };
   }, [meta]);
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': `${meta.url}#article`,
+        headline,
+        description: meta.description,
+        url: meta.url,
+        datePublished: meta.datePublished ?? '2026-06-17',
+        dateModified: meta.datePublished ?? '2026-06-17',
+        inLanguage: 'es-CL',
+        author: { '@id': 'https://www.domis.cl/#founder' },
+        publisher: { '@id': 'https://www.domis.cl/#business' },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': meta.url },
+        image,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://www.domis.cl' },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.domis.cl/blog' },
+          { '@type': 'ListItem', position: 3, name: headline, item: meta.url },
+        ],
+      },
+    ],
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans">
+      <Helmet>
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <link rel="canonical" href={meta.url} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={headline} />
+        <meta property="og:description" content={meta.description} />
+        <meta property="og:url" content={meta.url} />
+        <meta property="og:image" content={image} />
+        <meta property="og:locale" content="es_CL" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={headline} />
+        <meta name="twitter:description" content={meta.description} />
+        <meta name="twitter:image" content={image} />
+        <script type="application/ld+json">{JSON.stringify(schema)}</script>
+      </Helmet>
       {/* Nav */}
       <nav className="border-b border-white/10 px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">

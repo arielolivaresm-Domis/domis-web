@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { ShieldCheck, TrendingDown, Hammer, CheckCircle, ArrowRight, Globe } from 'lucide-react';
 
 const whatsappUrl = 'https://wa.me/56929901343?text=Hi, I found DOMIS™ online and I am interested in a technical property inspection in Santiago.';
@@ -123,54 +124,56 @@ export default function BuyerAgentLanding() {
   const [lang, setLang] = useState<'en' | 'es'>('en');
   const t = content[lang];
 
-  useEffect(() => {
-    document.title = t.meta.title;
-    const desc = document.querySelector('meta[name="description"]');
-    if (desc) desc.setAttribute('content', t.meta.description);
-    const canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) canonical.setAttribute('href', 'https://www.domis.cl/buyer-agent-chile');
+  const buyerSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': 'https://www.domis.cl/buyer-agent-chile',
+        url: 'https://www.domis.cl/buyer-agent-chile',
+        name: "Buyer's Agent in Santiago Chile | DOMIS™",
+        description: content.en.meta.description,
+        inLanguage: ['es-CL', 'en'],
+        isPartOf: { '@id': 'https://www.domis.cl/#website' },
+        about: { '@id': 'https://www.domis.cl/#business' },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'DOMIS™', item: 'https://www.domis.cl' },
+          { '@type': 'ListItem', position: 2, name: "Buyer's Agent Chile", item: 'https://www.domis.cl/buyer-agent-chile' },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: [...content.es.faq.items, ...content.en.faq.items].map(f => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+    ],
+  };
 
-    const prev = document.getElementById('buyer-agent-schema');
-    if (prev) prev.remove();
-    const script = document.createElement('script');
-    script.id = 'buyer-agent-schema';
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@graph': [
-        {
-          '@type': 'WebPage',
-          '@id': 'https://www.domis.cl/buyer-agent-chile',
-          url: 'https://www.domis.cl/buyer-agent-chile',
-          name: "Buyer's Agent in Santiago Chile | DOMIS™",
-          description: content.en.meta.description,
-          inLanguage: ['es-CL', 'en'],
-          isPartOf: { '@id': 'https://www.domis.cl/#website' },
-          about: { '@id': 'https://www.domis.cl/#business' },
-        },
-        {
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'DOMIS™', item: 'https://www.domis.cl' },
-            { '@type': 'ListItem', position: 2, name: "Buyer's Agent Chile", item: 'https://www.domis.cl/buyer-agent-chile' },
-          ],
-        },
-        {
-          '@type': 'FAQPage',
-          mainEntity: [...content.es.faq.items, ...content.en.faq.items].map(f => ({
-            '@type': 'Question',
-            name: f.q,
-            acceptedAnswer: { '@type': 'Answer', text: f.a },
-          })),
-        },
-      ],
-    });
-    document.head.appendChild(script);
-    return () => { document.getElementById('buyer-agent-schema')?.remove(); };
-  }, [t]);
+  const image = 'https://www.domis.cl/og-image.jpg';
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans">
+      <Helmet>
+        <title>{t.meta.title}</title>
+        <meta name="description" content={t.meta.description} />
+        <link rel="canonical" href="https://www.domis.cl/buyer-agent-chile" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={t.meta.title} />
+        <meta property="og:description" content={t.meta.description} />
+        <meta property="og:url" content="https://www.domis.cl/buyer-agent-chile" />
+        <meta property="og:image" content={image} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={t.meta.title} />
+        <meta name="twitter:description" content={t.meta.description} />
+        <meta name="twitter:image" content={image} />
+        <script type="application/ld+json">{JSON.stringify(buyerSchema)}</script>
+      </Helmet>
 
       {/* Nav */}
       <nav className="border-b border-white/10 px-6 py-4 sticky top-0 bg-slate-950/95 backdrop-blur-md z-50">

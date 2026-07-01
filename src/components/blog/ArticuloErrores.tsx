@@ -1,7 +1,7 @@
 import { XCircle, CheckCircle, ArrowRight, AlertTriangle } from 'lucide-react';
 import BlogLayout from './BlogLayout';
 
-const meta = {
+export const meta = {
   title: 'Errores al comprar propiedad usada en Santiago: los 7 más comunes y cómo evitarlos | DOMIS™',
   description: 'Los errores más comunes al comprar una propiedad usada en Santiago cuestan millones. Guía completa: qué revisar antes de firmar la promesa, los riesgos más frecuentes y cómo protegerte.',
   url: 'https://www.domis.cl/blog/errores-comprar-propiedad-usada-santiago',

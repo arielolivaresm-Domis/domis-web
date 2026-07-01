@@ -1,6 +1,6 @@
 import CasePage, { CaseData } from './CasePage';
 
-const data: CaseData = {
+export const data: CaseData = {
   slug: 'carolina-la-reina',
   cliente: 'Carolina & Roberto',
   comuna: 'La Reina',
