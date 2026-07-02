@@ -1,6 +1,19 @@
+import { useState } from 'react';
 import Section from './layout/Section';
 
 export default function Footer() {
+  const [pharosAnim, setPharosAnim] = useState(false);
+
+  const handlePharosClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (pharosAnim) return;
+    setPharosAnim(true);
+    setTimeout(() => {
+      window.open('https://pharoslab.cl/', '_blank');
+      setTimeout(() => setPharosAnim(false), 500);
+    }, 2000);
+  };
+
   return (
     // CAMBIO CLAVE: relative z-20 y bg-slate-950 sólido para cortar el wireframe
     <footer className="relative z-20 bg-slate-950 border-t border-white/5 pt-8 md:pt-12 pb-8 md:pb-10 font-sans overflow-hidden">
@@ -72,9 +85,19 @@ export default function Footer() {
             Powered by PCF-15™ Engine
           </p>
         </div>
-        <p className="text-slate-700 text-[9px] md:text-[10px] font-mono uppercase font-black tracking-[0.3em] hover:text-slate-500 transition-colors cursor-default">
-          Developed by OlvaiD™ Tech
-        </p>
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] md:text-[11px] text-slate-700 font-mono uppercase font-bold tracking-[0.2em]">Diseñado y creado por</span>
+          <a
+            href="https://pharoslab.cl/"
+            rel="noopener noreferrer"
+            className={`pharos-link text-base md:text-lg font-bold ${pharosAnim ? 'pharos-spin' : ''}`}
+            onClick={handlePharosClick}
+          >
+            <span className={pharosAnim ? '' : 'pharos-glow'}>
+              {pharosAnim ? '🏢❤️' : 'PharosLab'}
+            </span>
+          </a>
+        </div>
       </Section>
     </footer>
   );

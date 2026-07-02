@@ -48,3 +48,39 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #22d3ee;
 }
+
+/* 🏢 Efecto Logo PharosLab */
+.pharos-link {
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+}
+.pharos-glow {
+  font-weight: 800;
+  color: #cbd5e1;
+  display: inline-block;
+  animation: pharosGlow 1.2s infinite ease-in-out;
+  transition: all 0.2s;
+}
+.pharos-glow:hover {
+  color: #16a34a; /* Verde intenso al pasar el mouse */
+}
+.pharos-spin {
+  animation: pharosSpin 2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+}
+@keyframes pharosGlow {
+  0%, 100% { 
+    color: #cbd5e1;
+    text-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+  }
+  50% { 
+    color: #4ade80; 
+    text-shadow: 0 0 15px rgba(34, 197, 94, 1), 0 0 25px rgba(34, 197, 94, 0.9), 0 0 40px rgba(34, 197, 94, 0.7);
+  }
+}
+@keyframes pharosSpin {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(540deg) scale(1.8); }
+  100% { transform: rotate(1080deg) scale(1); }
+}
