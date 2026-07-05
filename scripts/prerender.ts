@@ -38,7 +38,13 @@ interface CaseMeta {
   schemaJson: object;
 }
 
-function buildArticleHeadTags(meta: BlogMeta): string {
+interface HowToSchema {
+  name: string;
+  description: string;
+  step: { '@type': 'HowToStep'; position: number; name: string; text: string }[];
+}
+
+function buildArticleHeadTags(meta: BlogMeta, howTo?: HowToSchema): string {
   const headline = meta.title.split('|')[0].trim();
   const image = 'https://www.domis.cl/og-image.jpg';
   const dateStr = meta.datePublished ?? '2026-06-17';
@@ -68,6 +74,7 @@ function buildArticleHeadTags(meta: BlogMeta): string {
           { '@type': 'ListItem', position: 3, name: headline, item: meta.url },
         ],
       },
+      ...(howTo ? [{ '@type': 'HowTo', '@id': `${meta.url}#howto`, ...howTo }] : []),
     ],
   };
 
@@ -172,6 +179,30 @@ function buildBuyerAgentHeadTags(): string {
     <script type="application/ld+json">${JSON.stringify(buyerSchema)}</script>`;
 }
 
+const howToDepartamento: HowToSchema = {
+  name: 'Cómo inspeccionar un departamento antes de comprarlo en Santiago',
+  description: 'Proceso técnico paso a paso para inspeccionar un departamento usado en Santiago antes de firmar la promesa.',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Solicita documentación legal antes de la visita', text: 'Pide escritura, certificado de dominio CBR, planos DOM aprobados, certificado de recepción final, certificado de no deuda de gastos comunes y avalúo fiscal SII.' },
+    { '@type': 'HowToStep', position: 2, name: 'Mide la superficie real con medidor láser', text: 'Compara los metros medidos físicamente contra lo declarado en escritura y avalúo SII. Logias o terrazas cerradas sin permiso inflan la superficie declarada sin existir legalmente.' },
+    { '@type': 'HowToStep', position: 3, name: 'Inspecciona con cámara térmica FLIR', text: 'La cámara térmica detecta humedad oculta en muros y techo aunque la superficie parezca seca. Imprescindible para filtración desde el piso superior.' },
+    { '@type': 'HowToStep', position: 4, name: 'Revisa instalaciones eléctricas y tablero del edificio', text: 'Verifica el tablero interior del departamento y el tablero del edificio. Un departamento con instalación correcta puede tener problemas si el tablero del edificio está subdimensionado.' },
+    { '@type': 'HowToStep', position: 5, name: 'Verifica niveles y fisuras con nivelador láser Bosch', text: 'Detecta hundimientos, desplomes o fisuras estructurales no visibles a simple vista. El nivelador Bosch confirma si hay movimiento diferencial en la losa.' },
+  ],
+};
+
+const howToNegociacion: HowToSchema = {
+  name: 'Cómo negociar el precio de una propiedad usada en Santiago',
+  description: 'Proceso paso a paso para negociar con evidencia técnica documentada antes de firmar la promesa.',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Auditoría técnica antes de cualquier oferta', text: 'Contrata una inspección técnica PCF-15™ antes de negociar. Sin evidencia técnica, cualquier rebaja es especulación.' },
+    { '@type': 'HowToStep', position: 2, name: 'Valoriza cada hallazgo en UF', text: 'Cada falla detectada se valoriza según costo real de reparación. Convierte problemas en argumentos con cifras concretas que el vendedor no puede refutar.' },
+    { '@type': 'HowToStep', position: 3, name: 'Cruza con tasación de mercado', text: 'Compara el precio publicado contra avalúo fiscal, datos catastrales y operaciones cerradas reales en la zona. Identifica la brecha entre precio pedido y valor de mercado.' },
+    { '@type': 'HowToStep', position: 4, name: 'Define 3 escenarios de negociación', text: 'Prepara oferta agresiva, moderada y conservadora. Nunca entres con una sola cifra — la contraparte siempre tiene margen de respuesta.' },
+    { '@type': 'HowToStep', position: 5, name: 'Presenta el informe antes de la promesa', text: 'Entrega el informe técnico firmado por Constructor Civil antes de firmar. Tiene peso legal y comercial que una opinión verbal no puede refutar.' },
+  ],
+};
+
 function esc(str: string): string {
   return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
@@ -185,13 +216,13 @@ const ROUTES: RouteEntry[] = [
   { path: '/blog', headTags: buildBlogIndexHeadTags() },
   { path: '/blog/inspector-de-propiedades-santiago', headTags: buildArticleHeadTags(metaInspector) },
   { path: '/blog/vicios-ocultos-propiedad-chile', headTags: buildArticleHeadTags(metaViciosOcultos) },
-  { path: '/blog/como-inspeccionar-departamento-antes-de-comprar-santiago', headTags: buildArticleHeadTags(metaDepartamento) },
+  { path: '/blog/como-inspeccionar-departamento-antes-de-comprar-santiago', headTags: buildArticleHeadTags(metaDepartamento, howToDepartamento) },
   { path: '/blog/errores-comprar-propiedad-usada-santiago', headTags: buildArticleHeadTags(metaErrores) },
   { path: '/blog/fallas-ocultas-casas-usadas-santiago', headTags: buildArticleHeadTags(metaFallasOcultas) },
   { path: '/blog/camara-termica-inspeccion-inmobiliaria', headTags: buildArticleHeadTags(metaCamaraTermica) },
   { path: '/blog/ampliaciones-sin-permiso-chile', headTags: buildArticleHeadTags(metaAmpliacione) },
   { path: '/blog/cuanto-cuesta-auditoria-tecnica-propiedad-santiago', headTags: buildArticleHeadTags(metaCuantoCuesta) },
-  { path: '/blog/como-negociar-precio-propiedad-usada-santiago', headTags: buildArticleHeadTags(metaNegociacion) },
+  { path: '/blog/como-negociar-precio-propiedad-usada-santiago', headTags: buildArticleHeadTags(metaNegociacion, howToNegociacion) },
   { path: '/blog/buyer-agent-chile', headTags: buildArticleHeadTags(metaBuyerAgent) },
   { path: '/blog/garantia-propiedades-nuevas-chile', headTags: buildArticleHeadTags(metaGarantias) },
   { path: '/blog/que-revisar-al-comprar-propiedad-usada-santiago', headTags: buildArticleHeadTags(metaChecklist) },
