@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { X, Send } from 'lucide-react';
 
 export default function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [formData, setFormData] = useState({ nombre: '', telefono: '', email: '' });
+  const [formData, setFormData] = useState({ nombre: '', telefono: '', email: '', website: '' });
   const [isSending, setIsSending] = useState(false);
 
   if (!isOpen) return null;
@@ -11,23 +11,20 @@ export default function ContactModal({ isOpen, onClose }: { isOpen: boolean; onC
     e.preventDefault();
     setIsSending(true);
 
-    // 🔗 URL de Google Apps Script
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_pfwUzZ0KKIUC7r7zvJPQWb6OPzKqc_WAl2U_LphBgxi1uh1jdLd9eUf4Q1HPXRjm/exec";
-
     try {
-      // 📡 Registro silencioso en Google (arielom@domis.cl)
-      await fetch(GOOGLE_SCRIPT_URL, { 
+      // 📡 Registro vía función serverless propia (valida y reenvía a Google Sheets)
+      await fetch("/api/contact", {
         method: "POST",
-        mode: "no-cors", 
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          Asunto: "CONSULTA SISTEMA DOMIS",
-          Nombre: formData.nombre,
-          Telefono: formData.telefono,
-          Email: formData.email,
+          nombre: formData.nombre,
+          telefono: formData.telefono,
+          email: formData.email,
+          website: formData.website,
         }),
       });
-    } catch (error) { 
-      console.error("Error Google Script:", error); 
+    } catch (error) {
+      console.error("Error enviando consulta:", error);
     }
 
     // 📱 Apertura de WhatsApp con mensaje estructurado
@@ -57,6 +54,15 @@ export default function ContactModal({ isOpen, onClose }: { isOpen: boolean; onC
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-5 text-left">
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            className="hidden"
+            value={formData.website}
+            onChange={e => setFormData({ ...formData, website: e.target.value })}
+          />
           <div className="space-y-1">
             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block ml-1 text-left">Nombre y Apellido</label>
             <input required className="w-full bg-slate-950 border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-cyan-500 transition-all" placeholder="Juan Pérez" onChange={e => setFormData({...formData, nombre: e.target.value})} />

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import JSZip from 'jszip';
 import {
-  DOMIS_SYSTEM_PROMPT,
   GRUPOS_SC_COMPLETO, GRUPOS_EXTERIOR_COMPLETO, ITEM_NORM_MAP,
   getGruposByRecinto, GrupoCosto, ItemCosto, TipoRecinto,
   getClpByEscala, Escala,
@@ -229,9 +228,19 @@ export const App: React.FC = () => {
       window.open(`https://www.sii.cl/valores_y_fechas/uf/uf${year}.htm`, '_blank');
   };
 
-  const handleLogin = () => {
-    if (password === import.meta.env.VITE_ACCESS_PASSWORD) setIsAuthenticated(true);
-    else setLoginError('CLAVE INCORRECTA');
+  const handleLogin = async () => {
+    try {
+      const res = await fetch('/api/pcf-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      const data = await res.json();
+      if (data.ok) setIsAuthenticated(true);
+      else setLoginError('CLAVE INCORRECTA');
+    } catch {
+      setLoginError('ERROR DE CONEXIÓN');
+    }
   };
 
   const updateOrientTip = useCallback(() => {
@@ -437,38 +446,41 @@ export const App: React.FC = () => {
     if (!property.address) { alert("Ingresa dirección."); return; }
     setIsGeneratingId(true);
     try {
-      const { GoogleGenAI } = await import("@google/genai");
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const prompt = `${DOMIS_SYSTEM_PROMPT}\nGenera un ID único (Máx 6 chars, mayúsculas/números) para auditoría en: "${property.address}". Formato: LC1024. SOLO EL CÓDIGO.`;
-      const response = await ai.models.generateContent({ model: 'gemini-2.0-flash', contents: prompt });
-      const code = response.text?.trim().replace(/[^A-Z0-9]/g, '').substring(0, 6) || 'ERR00';
-      setAuditId(code);
+      const res = await fetch('/api/pcf-ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'generate-id', address: property.address }),
+      });
+      if (!res.ok) throw new Error((await res.json().catch(() => ({})))?.error || `HTTP ${res.status}`);
+      const { code } = await res.json();
+      setAuditId(code || 'ERR00');
     } catch (e: any) {
       console.error(e);
-      if (e.message?.includes('403') || e.toString().toLowerCase().includes('permission')) {
-        alert("⛔ ERROR PERMISOS GEMINI AI:\n\nTu API Key no tiene permisos para usar la IA (Generative Language API).\n\nSOLUCIÓN:\n1. Ve a Google Cloud Console\n2. Edita tu API Key\n3. En 'Restricciones de API', asegúrate de incluir 'Generative Language API'\n4. O selecciona 'No restringir clave' temporalmente.");
-      } else {
-        alert(`Error IA: ${e.message || 'Desconocido'}`);
-      }
+      alert(`Error IA: ${e.message || 'Desconocido'}`);
     } finally { setIsGeneratingId(false); }
   };
 
   const generateDescription = async () => {
     setAiGenerating(true);
     try {
-        const { GoogleGenAI } = await import("@google/genai");
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
         const amenities = Object.keys(portalToggles).filter(k => portalToggles[k]).join(", ");
-        const prompt = `${DOMIS_SYSTEM_PROMPT}\nEscribe una descripción inmobiliaria profesional y vendedora para: ${property.address}. Tipo: ${property.type}. ${property.m2Useful}m2 útiles. Amenities: ${amenities}.`;
-        const response = await ai.models.generateContent({ model: 'gemini-2.0-flash', contents: prompt });
-        setPortalDesc(response.text || '');
+        const res = await fetch('/api/pcf-ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'generate-description',
+            address: property.address,
+            type: property.type,
+            m2Useful: property.m2Useful,
+            amenities,
+          }),
+        });
+        if (!res.ok) throw new Error((await res.json().catch(() => ({})))?.error || `HTTP ${res.status}`);
+        const { text } = await res.json();
+        setPortalDesc(text || '');
     } catch (e: any) {
       console.error(e);
-      if (e.message?.includes('403') || e.toString().toLowerCase().includes('permission')) {
-        alert("⛔ ERROR PERMISOS GEMINI AI:\n\nTu API Key no tiene permisos para usar la IA (Generative Language API).\n\nSOLUCIÓN:\n1. Ve a Google Cloud Console\n2. Edita tu API Key\n3. En 'Restricciones de API', asegúrate de incluir 'Generative Language API'\n4. O selecciona 'No restringir clave' temporalmente.");
-      } else {
-        alert(`Error IA: ${e.message || 'Desconocido'}`);
-      }
+      alert(`Error IA: ${e.message || 'Desconocido'}`);
     } finally { setAiGenerating(false); }
   };
 
