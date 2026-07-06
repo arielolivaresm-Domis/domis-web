@@ -1,239 +1,127 @@
+import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-
-// Article meta imports — these are plain TS objects, no JSX, no DOM needed
-import { meta as metaInspector } from '../src/components/blog/ArticuloInspector';
-import { meta as metaViciosOcultos } from '../src/components/blog/ArticuloViciosOcultos';
-import { meta as metaDepartamento } from '../src/components/blog/ArticuloDepartamento';
-import { meta as metaErrores } from '../src/components/blog/ArticuloErrores';
-import { meta as metaFallasOcultas } from '../src/components/blog/ArticuloFallasOcultas';
-import { meta as metaCamaraTermica } from '../src/components/blog/ArticuloCamaraTermica';
-import { meta as metaAmpliacione } from '../src/components/blog/ArticuloAmpliacione';
-import { meta as metaCuantoCuesta } from '../src/components/blog/ArticuloCuantoCuesta';
-import { meta as metaNegociacion } from '../src/components/blog/ArticuloNegociacion';
-import { meta as metaBuyerAgent } from '../src/components/blog/ArticuloBuyerAgent';
-import { meta as metaGarantias } from '../src/components/blog/ArticuloGarantias';
-import { meta as metaChecklist } from '../src/components/blog/ArticuloChecklistUsada';
-import { data as dataCarolina } from '../src/components/casos/CasoCarolinaLaReina';
-import { data as dataAndrea } from '../src/components/casos/CasoAndreaProvidencia';
-import { data as dataFelipe } from '../src/components/casos/CasoFelipeLasCondes';
+import type { AddressInfo } from 'node:net';
+import type { Browser } from 'puppeteer';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const distDir = path.resolve(__dirname, '../dist');
+const distDir = path.resolve(__dirname, '..', 'dist');
+const shellPath = path.join(distDir, 'index.html');
 
-// Blog article meta shape
-interface BlogMeta {
-  title: string;
-  description: string;
-  url: string;
-  datePublished?: string;
+if (!fs.existsSync(shellPath)) {
+  console.error('[prerender] dist/index.html not found — run `vite build` first.');
+  process.exit(1);
 }
 
-// Case page data shape (subset we need)
-interface CaseMeta {
-  metaTitle: string;
-  metaDescription: string;
-  slug: string;
-  schemaJson: object;
-}
+// Routes to prerender, mapped to their output file relative to dist/.
+// `/pcf-15tm` (client portal) is intentionally excluded — disallowed in
+// robots.txt, not meant to be indexed or cited.
+const ROUTES: { route: string; out: string }[] = [
+  { route: '/', out: 'index.html' },
+  { route: '/buyer-agent-chile', out: 'buyer-agent-chile/index.html' },
+  { route: '/casos/carolina-la-reina', out: 'casos/carolina-la-reina/index.html' },
+  { route: '/casos/andrea-providencia', out: 'casos/andrea-providencia/index.html' },
+  { route: '/casos/felipe-las-condes', out: 'casos/felipe-las-condes/index.html' },
+  { route: '/blog', out: 'blog/index.html' },
+  { route: '/blog/que-revisar-al-comprar-propiedad-usada-santiago', out: 'blog/que-revisar-al-comprar-propiedad-usada-santiago/index.html' },
+  { route: '/blog/garantia-propiedades-nuevas-chile', out: 'blog/garantia-propiedades-nuevas-chile/index.html' },
+  { route: '/blog/buyer-agent-chile', out: 'blog/buyer-agent-chile/index.html' },
+  { route: '/blog/como-negociar-precio-propiedad-usada-santiago', out: 'blog/como-negociar-precio-propiedad-usada-santiago/index.html' },
+  { route: '/blog/cuanto-cuesta-auditoria-tecnica-propiedad-santiago', out: 'blog/cuanto-cuesta-auditoria-tecnica-propiedad-santiago/index.html' },
+  { route: '/blog/fallas-ocultas-casas-usadas-santiago', out: 'blog/fallas-ocultas-casas-usadas-santiago/index.html' },
+  { route: '/blog/ampliaciones-sin-permiso-chile', out: 'blog/ampliaciones-sin-permiso-chile/index.html' },
+  { route: '/blog/camara-termica-inspeccion-inmobiliaria', out: 'blog/camara-termica-inspeccion-inmobiliaria/index.html' },
+  { route: '/blog/errores-comprar-propiedad-usada-santiago', out: 'blog/errores-comprar-propiedad-usada-santiago/index.html' },
+  { route: '/blog/inspector-de-propiedades-santiago', out: 'blog/inspector-de-propiedades-santiago/index.html' },
+  { route: '/blog/vicios-ocultos-propiedad-chile', out: 'blog/vicios-ocultos-propiedad-chile/index.html' },
+  { route: '/blog/como-inspeccionar-departamento-antes-de-comprar-santiago', out: 'blog/como-inspeccionar-departamento-antes-de-comprar-santiago/index.html' },
+];
 
+// HowTo schema for these two articles has no client-side source (no Helmet,
+// no useEffect) — ArticuloNegociacion.tsx and ArticuloDepartamento.tsx say so
+// explicitly in their own header comments. It only ever existed as a static
+// injection in this script, so a real-browser capture alone would silently
+// drop it. Injected into the captured HTML below, keyed by route.
 interface HowToSchema {
   name: string;
   description: string;
   step: { '@type': 'HowToStep'; position: number; name: string; text: string }[];
 }
 
-function buildArticleHeadTags(meta: BlogMeta, howTo?: HowToSchema): string {
-  const headline = meta.title.split('|')[0].trim();
-  const image = 'https://www.domis.cl/og-image.jpg';
-  const dateStr = meta.datePublished ?? '2026-06-17';
+const HOWTO_BY_ROUTE: Record<string, { url: string; howTo: HowToSchema }> = {
+  '/blog/como-inspeccionar-departamento-antes-de-comprar-santiago': {
+    url: 'https://www.domis.cl/blog/como-inspeccionar-departamento-antes-de-comprar-santiago',
+    howTo: {
+      name: 'Cómo inspeccionar un departamento antes de comprarlo en Santiago',
+      description: 'Proceso técnico paso a paso para inspeccionar un departamento usado en Santiago antes de firmar la promesa.',
+      step: [
+        { '@type': 'HowToStep', position: 1, name: 'Solicita documentación legal antes de la visita', text: 'Pide escritura, certificado de dominio CBR, planos DOM aprobados, certificado de recepción final, certificado de no deuda de gastos comunes y avalúo fiscal SII.' },
+        { '@type': 'HowToStep', position: 2, name: 'Mide la superficie real con medidor láser', text: 'Compara los metros medidos físicamente contra lo declarado en escritura y avalúo SII. Logias o terrazas cerradas sin permiso inflan la superficie declarada sin existir legalmente.' },
+        { '@type': 'HowToStep', position: 3, name: 'Inspecciona con cámara térmica FLIR', text: 'La cámara térmica detecta humedad oculta en muros y techo aunque la superficie parezca seca. Imprescindible para filtración desde el piso superior.' },
+        { '@type': 'HowToStep', position: 4, name: 'Revisa instalaciones eléctricas y tablero del edificio', text: 'Verifica el tablero interior del departamento y el tablero del edificio. Un departamento con instalación correcta puede tener problemas si el tablero del edificio está subdimensionado.' },
+        { '@type': 'HowToStep', position: 5, name: 'Verifica niveles y fisuras con nivelador láser Bosch', text: 'Detecta hundimientos, desplomes o fisuras estructurales no visibles a simple vista. El nivelador Bosch confirma si hay movimiento diferencial en la losa.' },
+      ],
+    },
+  },
+  '/blog/como-negociar-precio-propiedad-usada-santiago': {
+    url: 'https://www.domis.cl/blog/como-negociar-precio-propiedad-usada-santiago',
+    howTo: {
+      name: 'Cómo negociar el precio de una propiedad usada en Santiago',
+      description: 'Proceso paso a paso para negociar con evidencia técnica documentada antes de firmar la promesa.',
+      step: [
+        { '@type': 'HowToStep', position: 1, name: 'Auditoría técnica antes de cualquier oferta', text: 'Contrata una inspección técnica PCF-15™ antes de negociar. Sin evidencia técnica, cualquier rebaja es especulación.' },
+        { '@type': 'HowToStep', position: 2, name: 'Valoriza cada hallazgo en UF', text: 'Cada falla detectada se valoriza según costo real de reparación. Convierte problemas en argumentos con cifras concretas que el vendedor no puede refutar.' },
+        { '@type': 'HowToStep', position: 3, name: 'Cruza con tasación de mercado', text: 'Compara el precio publicado contra avalúo fiscal, datos catastrales y operaciones cerradas reales en la zona. Identifica la brecha entre precio pedido y valor de mercado.' },
+        { '@type': 'HowToStep', position: 4, name: 'Define 3 escenarios de negociación', text: 'Prepara oferta agresiva, moderada y conservadora. Nunca entres con una sola cifra — la contraparte siempre tiene margen de respuesta.' },
+        { '@type': 'HowToStep', position: 5, name: 'Presenta el informe antes de la promesa', text: 'Entrega el informe técnico firmado por Constructor Civil antes de firmar. Tiene peso legal y comercial que una opinión verbal no puede refutar.' },
+      ],
+    },
+  },
+};
 
+function injectHowTo(html: string, route: string): string {
+  const entry = HOWTO_BY_ROUTE[route];
+  if (!entry) return html;
   const schema = {
     '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'Article',
-        '@id': `${meta.url}#article`,
-        headline,
-        description: meta.description,
-        url: meta.url,
-        datePublished: dateStr,
-        dateModified: dateStr,
-        inLanguage: 'es-CL',
-        author: { '@id': 'https://www.domis.cl/#founder' },
-        publisher: { '@id': 'https://www.domis.cl/#business' },
-        mainEntityOfPage: { '@type': 'WebPage', '@id': meta.url },
-        image,
-      },
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://www.domis.cl' },
-          { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.domis.cl/blog' },
-          { '@type': 'ListItem', position: 3, name: headline, item: meta.url },
-        ],
-      },
-      ...(howTo ? [{ '@type': 'HowTo', '@id': `${meta.url}#howto`, ...howTo }] : []),
-    ],
+    '@type': 'HowTo',
+    '@id': `${entry.url}#howto`,
+    ...entry.howTo,
   };
-
-  return `<title>${meta.title}</title>
-    <meta name="description" content="${esc(meta.description)}" />
-    <link rel="canonical" href="${meta.url}" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="${esc(headline)}" />
-    <meta property="og:description" content="${esc(meta.description)}" />
-    <meta property="og:url" content="${meta.url}" />
-    <meta property="og:image" content="${image}" />
-    <meta property="og:locale" content="es_CL" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${esc(headline)}" />
-    <meta name="twitter:description" content="${esc(meta.description)}" />
-    <meta name="twitter:image" content="${image}" />
-    <script type="application/ld+json">${JSON.stringify(schema)}</script>`;
+  const tag = `<script type="application/ld+json">${JSON.stringify(schema)}</script>`;
+  return html.replace('</head>', `${tag}</head>`);
 }
 
-function buildCaseHeadTags(data: CaseMeta): string {
-  const caseUrl = `https://www.domis.cl/casos/${data.slug}`;
-  const image = 'https://www.domis.cl/og-image.jpg';
-
-  return `<title>${data.metaTitle}</title>
-    <meta name="description" content="${esc(data.metaDescription)}" />
-    <link rel="canonical" href="${caseUrl}" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="${esc(data.metaTitle)}" />
-    <meta property="og:description" content="${esc(data.metaDescription)}" />
-    <meta property="og:url" content="${caseUrl}" />
-    <meta property="og:image" content="${image}" />
-    <meta property="og:locale" content="es_CL" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${esc(data.metaTitle)}" />
-    <meta name="twitter:description" content="${esc(data.metaDescription)}" />
-    <meta name="twitter:image" content="${image}" />
-    <script type="application/ld+json">${JSON.stringify(data.schemaJson)}</script>`;
-}
-
-const BLOG_TITLE = 'Blog DOMIS™ — Guías técnicas para comprar propiedades en Santiago';
-const BLOG_DESC = 'Guías técnicas de DOMIS™ para comprar propiedades usadas en Santiago con certeza: checklist de inspección, negociación, vicios ocultos y más.';
-const BLOG_URL = 'https://www.domis.cl/blog';
-const BLOG_IMAGE = 'https://www.domis.cl/og-image.jpg';
-
-function buildBlogIndexHeadTags(): string {
-  return `<title>${BLOG_TITLE}</title>
-    <meta name="description" content="${esc(BLOG_DESC)}" />
-    <link rel="canonical" href="${BLOG_URL}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="${esc(BLOG_TITLE)}" />
-    <meta property="og:description" content="${esc(BLOG_DESC)}" />
-    <meta property="og:url" content="${BLOG_URL}" />
-    <meta property="og:image" content="${BLOG_IMAGE}" />
-    <meta property="og:locale" content="es_CL" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${esc(BLOG_TITLE)}" />
-    <meta name="twitter:description" content="${esc(BLOG_DESC)}" />
-    <meta name="twitter:image" content="${BLOG_IMAGE}" />`;
-}
-
-const BUYER_TITLE_EN = "Buyer's Agent in Santiago Chile | Technical Property Inspection | DOMIS™";
-const BUYER_DESC_EN = "DOMIS™ is Chile's first Technical Buyer's Agent. We inspect properties with FLIR thermal camera, DJI drone and professional tools, then negotiate the best price exclusively for you.";
-const BUYER_URL = 'https://www.domis.cl/buyer-agent-chile';
-const BUYER_IMAGE = 'https://www.domis.cl/og-image.jpg';
-
-function buildBuyerAgentHeadTags(): string {
-  const buyerSchema = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'WebPage',
-        '@id': BUYER_URL,
-        url: BUYER_URL,
-        name: "Buyer's Agent in Santiago Chile | DOMIS™",
-        description: BUYER_DESC_EN,
-        inLanguage: ['es-CL', 'en'],
-        isPartOf: { '@id': 'https://www.domis.cl/#website' },
-        about: { '@id': 'https://www.domis.cl/#business' },
-      },
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'DOMIS™', item: 'https://www.domis.cl' },
-          { '@type': 'ListItem', position: 2, name: "Buyer's Agent Chile", item: BUYER_URL },
-        ],
-      },
-    ],
-  };
-
-  return `<title>${BUYER_TITLE_EN}</title>
-    <meta name="description" content="${esc(BUYER_DESC_EN)}" />
-    <link rel="canonical" href="${BUYER_URL}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="${esc(BUYER_TITLE_EN)}" />
-    <meta property="og:description" content="${esc(BUYER_DESC_EN)}" />
-    <meta property="og:url" content="${BUYER_URL}" />
-    <meta property="og:image" content="${BUYER_IMAGE}" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${esc(BUYER_TITLE_EN)}" />
-    <meta name="twitter:description" content="${esc(BUYER_DESC_EN)}" />
-    <meta name="twitter:image" content="${BUYER_IMAGE}" />
-    <script type="application/ld+json">${JSON.stringify(buyerSchema)}</script>`;
-}
-
-const howToDepartamento: HowToSchema = {
-  name: 'Cómo inspeccionar un departamento antes de comprarlo en Santiago',
-  description: 'Proceso técnico paso a paso para inspeccionar un departamento usado en Santiago antes de firmar la promesa.',
-  step: [
-    { '@type': 'HowToStep', position: 1, name: 'Solicita documentación legal antes de la visita', text: 'Pide escritura, certificado de dominio CBR, planos DOM aprobados, certificado de recepción final, certificado de no deuda de gastos comunes y avalúo fiscal SII.' },
-    { '@type': 'HowToStep', position: 2, name: 'Mide la superficie real con medidor láser', text: 'Compara los metros medidos físicamente contra lo declarado en escritura y avalúo SII. Logias o terrazas cerradas sin permiso inflan la superficie declarada sin existir legalmente.' },
-    { '@type': 'HowToStep', position: 3, name: 'Inspecciona con cámara térmica FLIR', text: 'La cámara térmica detecta humedad oculta en muros y techo aunque la superficie parezca seca. Imprescindible para filtración desde el piso superior.' },
-    { '@type': 'HowToStep', position: 4, name: 'Revisa instalaciones eléctricas y tablero del edificio', text: 'Verifica el tablero interior del departamento y el tablero del edificio. Un departamento con instalación correcta puede tener problemas si el tablero del edificio está subdimensionado.' },
-    { '@type': 'HowToStep', position: 5, name: 'Verifica niveles y fisuras con nivelador láser Bosch', text: 'Detecta hundimientos, desplomes o fisuras estructurales no visibles a simple vista. El nivelador Bosch confirma si hay movimiento diferencial en la losa.' },
-  ],
+const MIME_TYPES: Record<string, string> = {
+  '.html': 'text/html; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.mjs': 'text/javascript; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.ico': 'image/x-icon',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+  '.mp4': 'video/mp4',
+  '.mov': 'video/quicktime',
 };
 
-const howToNegociacion: HowToSchema = {
-  name: 'Cómo negociar el precio de una propiedad usada en Santiago',
-  description: 'Proceso paso a paso para negociar con evidencia técnica documentada antes de firmar la promesa.',
-  step: [
-    { '@type': 'HowToStep', position: 1, name: 'Auditoría técnica antes de cualquier oferta', text: 'Contrata una inspección técnica PCF-15™ antes de negociar. Sin evidencia técnica, cualquier rebaja es especulación.' },
-    { '@type': 'HowToStep', position: 2, name: 'Valoriza cada hallazgo en UF', text: 'Cada falla detectada se valoriza según costo real de reparación. Convierte problemas en argumentos con cifras concretas que el vendedor no puede refutar.' },
-    { '@type': 'HowToStep', position: 3, name: 'Cruza con tasación de mercado', text: 'Compara el precio publicado contra avalúo fiscal, datos catastrales y operaciones cerradas reales en la zona. Identifica la brecha entre precio pedido y valor de mercado.' },
-    { '@type': 'HowToStep', position: 4, name: 'Define 3 escenarios de negociación', text: 'Prepara oferta agresiva, moderada y conservadora. Nunca entres con una sola cifra — la contraparte siempre tiene margen de respuesta.' },
-    { '@type': 'HowToStep', position: 5, name: 'Presenta el informe antes de la promesa', text: 'Entrega el informe técnico firmado por Constructor Civil antes de firmar. Tiene peso legal y comercial que una opinión verbal no puede refutar.' },
-  ],
-};
-
-function esc(str: string): string {
-  return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-interface RouteEntry {
-  path: string;
-  headTags: string;
-}
-
-const ROUTES: RouteEntry[] = [
-  { path: '/blog', headTags: buildBlogIndexHeadTags() },
-  { path: '/blog/inspector-de-propiedades-santiago', headTags: buildArticleHeadTags(metaInspector) },
-  { path: '/blog/vicios-ocultos-propiedad-chile', headTags: buildArticleHeadTags(metaViciosOcultos) },
-  { path: '/blog/como-inspeccionar-departamento-antes-de-comprar-santiago', headTags: buildArticleHeadTags(metaDepartamento, howToDepartamento) },
-  { path: '/blog/errores-comprar-propiedad-usada-santiago', headTags: buildArticleHeadTags(metaErrores) },
-  { path: '/blog/fallas-ocultas-casas-usadas-santiago', headTags: buildArticleHeadTags(metaFallasOcultas) },
-  { path: '/blog/camara-termica-inspeccion-inmobiliaria', headTags: buildArticleHeadTags(metaCamaraTermica) },
-  { path: '/blog/ampliaciones-sin-permiso-chile', headTags: buildArticleHeadTags(metaAmpliacione) },
-  { path: '/blog/cuanto-cuesta-auditoria-tecnica-propiedad-santiago', headTags: buildArticleHeadTags(metaCuantoCuesta) },
-  { path: '/blog/como-negociar-precio-propiedad-usada-santiago', headTags: buildArticleHeadTags(metaNegociacion, howToNegociacion) },
-  { path: '/blog/buyer-agent-chile', headTags: buildArticleHeadTags(metaBuyerAgent) },
-  { path: '/blog/garantia-propiedades-nuevas-chile', headTags: buildArticleHeadTags(metaGarantias) },
-  { path: '/blog/que-revisar-al-comprar-propiedad-usada-santiago', headTags: buildArticleHeadTags(metaChecklist) },
-  { path: '/buyer-agent-chile', headTags: buildBuyerAgentHeadTags() },
-  { path: '/casos/carolina-la-reina', headTags: buildCaseHeadTags(dataCarolina) },
-  { path: '/casos/andrea-providencia', headTags: buildCaseHeadTags(dataAndrea) },
-  { path: '/casos/felipe-las-condes', headTags: buildCaseHeadTags(dataFelipe) },
-];
-
-// Strip the static title/meta/canonical/og/twitter from index.html template
-// (Helmet handles them client-side; static HTML injects correct ones per route)
+// Home ('/') has no <Helmet> (LandingPage in App.tsx sets nothing dynamic) —
+// its title/meta/canonical/OG/Twitter are hardcoded in the source index.html
+// and must be served as-is. Every other route (blog articles, blog index,
+// casos, buyer-agent) DOES render a <Helmet> with its own title/meta/OG/
+// Twitter tags client-side — serving them the raw shell would leave the
+// static home tags in place *alongside* Helmet's, producing duplicate
+// <title>/<meta> elements in the captured HTML. So non-home routes get the
+// shell with those static tags stripped first, letting Helmet be the only
+// source. The site-wide JSON-LD graph (LocalBusiness/FAQ/Reviews/Person) is
+// intentionally left in place on every route — Helmet only adds an
+// additional Article/BreadcrumbList script, it doesn't conflict with it.
 function stripStaticHeadMeta(html: string): string {
   return html
     .replace(/<title>[^<]*<\/title>\n?/g, '')
@@ -243,26 +131,109 @@ function stripStaticHeadMeta(html: string): string {
     .replace(/<meta name="twitter:[^>]*>\n?/g, '');
 }
 
-function main() {
-  const templateRaw = fs.readFileSync(path.join(distDir, 'index.html'), 'utf-8');
-  const template = stripStaticHeadMeta(templateRaw);
+// The pristine build shell, served for every route so the SPA can boot and
+// render client-side before we capture and persist its output. Cached up
+// front so overwriting dist/index.html mid-run doesn't affect later routes.
+const shellHtml = fs.readFileSync(shellPath, 'utf-8');
+const strippedShellHtml = stripStaticHeadMeta(shellHtml);
 
-  let ok = 0;
-  for (const { path: route, headTags } of ROUTES) {
-    try {
-      const html = template.replace('</head>', `    ${headTags}\n  </head>`);
-      const outDir = path.join(distDir, route);
-      fs.mkdirSync(outDir, { recursive: true });
-      fs.writeFileSync(path.join(outDir, 'index.html'), html);
-      console.log(`✓ ${route}`);
-      ok++;
-    } catch (err: unknown) {
-      console.error(`✗ ${route}:`, (err as Error).message);
+function startServer(): Promise<http.Server> {
+  const server = http.createServer((req, res) => {
+    const pathname = decodeURIComponent((req.url || '/').split('?')[0]);
+    const ext = path.extname(pathname);
+    const filePath = path.join(distDir, pathname);
+
+    if (ext && fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      res.writeHead(200, { 'Content-Type': MIME_TYPES[ext] || 'application/octet-stream' });
+      fs.createReadStream(filePath).pipe(res);
+      return;
     }
-  }
 
-  console.log(`\nPrerender: ${ok}/${ROUTES.length} routes`);
-  if (ok < ROUTES.length) process.exit(1);
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end(pathname === '/' ? shellHtml : strippedShellHtml);
+  });
+
+  return new Promise((resolve) => {
+    server.listen(0, '127.0.0.1', () => resolve(server));
+  });
 }
 
-main();
+async function prerenderRoute(browser: Browser, baseUrl: string, route: string): Promise<string> {
+  const page = await browser.newPage();
+  await page.setRequestInterception(true);
+  page.on('request', (req) => {
+    if (req.url().startsWith(baseUrl)) {
+      req.continue();
+    } else {
+      req.abort();
+    }
+  });
+
+  await page.goto(`${baseUrl}${route}`, { waitUntil: 'networkidle0', timeout: 30000 });
+  await page.waitForSelector('h1', { timeout: 10000 });
+  // Let mount-triggered animations settle so we capture final content
+  // instead of a mid-transition frame.
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const html = await page.content();
+  await page.close();
+  return html;
+}
+
+// Vercel's build environment (Amazon Linux) is missing shared libraries
+// (libnspr4.so etc.) that full `puppeteer`'s bundled Chrome needs — it only
+// works there via `puppeteer-core` + `@sparticuz/chromium`, a Chromium build
+// packaged with those libraries for serverless/Lambda-style environments.
+// Locally (macOS/dev), plain `puppeteer` still works fine, so branch on
+// `process.env.VERCEL`, which Vercel sets automatically during builds.
+async function getBrowser(): Promise<Browser> {
+  if (process.env.VERCEL) {
+    const chromium = (await import('@sparticuz/chromium')).default;
+    const puppeteerCore = (await import('puppeteer-core')).default;
+    return puppeteerCore.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: true,
+    }) as unknown as Browser;
+  }
+  const puppeteer = (await import('puppeteer')).default;
+  return puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+}
+
+async function main() {
+  const server = await startServer();
+  const { port } = server.address() as AddressInfo;
+  const baseUrl = `http://127.0.0.1:${port}`;
+
+  const browser = await getBrowser();
+
+  const results: { out: string; html: string }[] = [];
+  try {
+    for (const { route, out } of ROUTES) {
+      process.stdout.write(`[prerender] rendering ${route} ... `);
+      const html = injectHowTo(await prerenderRoute(browser, baseUrl, route), route);
+      results.push({ out, html });
+      console.log(`${html.length} bytes`);
+    }
+  } finally {
+    await browser.close();
+    server.close();
+  }
+
+  for (const { out, html } of results) {
+    const outPath = path.join(distDir, out);
+    fs.mkdirSync(path.dirname(outPath), { recursive: true });
+    fs.writeFileSync(outPath, html);
+  }
+
+  console.log(`[prerender] wrote ${results.length} prerendered pages to dist/.`);
+  if (results.length < ROUTES.length) process.exit(1);
+}
+
+main().catch((err) => {
+  console.error('[prerender] failed:', err);
+  process.exit(1);
+});
