@@ -73,7 +73,7 @@ export default function ContactModal({ isOpen, onClose }: { isOpen: boolean; onC
           </div>
           <div className="space-y-1">
             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block ml-1 text-left">Email</label>
-            <input required type="email" className="w-full bg-slate-950 border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-cyan-500 transition-all" placeholder="ariel@domis.cl" onChange={e => setFormData({...formData, email: e.target.value})} />
+            <input required type="email" className="w-full bg-slate-950 border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-cyan-500 transition-all" placeholder="arielom@domis.cl" onChange={e => setFormData({...formData, email: e.target.value})} />
           </div>
           <button disabled={isSending} className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-xs transition-all flex items-center justify-center gap-3 active:scale-95 disabled:opacity-50">
             {isSending ? "Conectando..." : <><Send size={16} /> Enviar Consulta</>}

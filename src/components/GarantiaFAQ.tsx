@@ -99,7 +99,7 @@ export default function GarantiaFAQ() {
             Revisar antes de firmar →
           </a>
           <p className="text-slate-400 text-[11px] mt-4 uppercase tracking-widest">
-            Cotiza tu caso en ariel@domis.cl o @domis.chile
+            Cotiza tu caso en arielom@domis.cl o @domis.chile
           </p>
         </div>
 

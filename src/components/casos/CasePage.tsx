@@ -123,7 +123,7 @@ export default function CasePage({ data }: { data: CaseData }) {
             Escribir a @domis.chile
           </a>
           <p className="text-slate-600 text-sm mt-4">
-            O por email a <a href="mailto:ariel@domis.cl" className="text-slate-400 hover:text-white">ariel@domis.cl</a>
+            O por email a <a href="mailto:arielom@domis.cl" className="text-slate-400 hover:text-white">arielom@domis.cl</a>
           </p>
         </section>
 
