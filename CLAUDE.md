@@ -1,36 +1,24 @@
 # DOMIS™ — Contexto del Proyecto
 
-## Identidad
-- **Nombre:** DOMIS™
-- **Posicionamiento:** El primer Buyer's Agent Técnico de Chile
-- **Fundador:** Ariel
-- **Servicio principal:** Auditoría PCF-15™ + negociación exclusiva para compradores
+## Protocolos y reglas de la agencia
+@/Users/mac/Agencia-PharosLab/informes/CLAUDE.md
 
-## Casos Reales (Prueba Social)
-| Cliente | Ahorro Negociado |
-|---------|-----------------|
-| Carolina | $141.000.000 CLP |
-| Andrea | $68.000.000 CLP |
-| Felipe | $39.000.000 CLP |
+## Este proyecto
 
-## Regla Narrativa (StoryBrand)
-- **Cliente = el héroe** de la historia
-- **Ariel = el guía** que entrega el método
-- Nunca posicionar a Ariel como protagonista
-- El cliente tiene el problema; DOMIS™ tiene el método
+**Cliente:** Ariel Olivares (propietario — proyecto propio)
+**Marca:** DOMIS™ Property Audit
+**Tipo de negocio:** Buyer's Agent Técnico — auditoría inmobiliaria + negociación
+**Sitio:** https://www.domis.cl
+**Keywords principales:** auditoría inmobiliaria Chile, buyer's agent Chile, auditoría de propiedades Santiago, comprar departamento Santiago, perito inmobiliario Chile
+**Tech stack:** ver stack actual en el proyecto
+**Deploy:** commit main → Vercel auto-deploy (NUNCA `vercel --prod` manual)
+**Repo:** github.com/arielolivaresm-Domis/domis-web
+**GBP:** no encontrado — CRÍTICO pendiente
 
-## Reglas de Comunicación
-- NUNCA mencionar tramos de precio ni fees internos en contenido público
-- NUNCA revelar estructura de honorarios en redes sociales o ads
-- Toda comunicación debe reforzar autoridad técnica y resultados reales
-- Lenguaje: directo, sin jerga inmobiliaria genérica, orientado a la acción
+## Estado actual
+Ver: `/Users/mac/Agencia-PharosLab/proyectos/domis.md`
 
-## Stack de Agentes
-- `Copy_DOMIS.md` — Redacción Instagram + Meta Ads
-- `Contenido_DOMIS.md` — Prompts visuales Gemini + Canva
-- `CRM_DOMIS.md` — Calificación y filtro de leads
-
-## Paleta DOMIS™
-- Negro: `#0A0A0A`
-- Cyan: `#00FFFF`
-- Blanco: `#FFFFFF`
+## Reglas específicas
+- Proyecto también es laboratorio de referencia de la agencia
+- Plan Growth activo
+- Errores técnicos graves pendientes — revisar auditoria antes de nuevos cambios

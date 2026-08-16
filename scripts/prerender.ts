@@ -36,6 +36,13 @@ const ROUTES: { route: string; out: string }[] = [
   { route: '/blog/inspector-de-propiedades-santiago', out: 'blog/inspector-de-propiedades-santiago/index.html' },
   { route: '/blog/vicios-ocultos-propiedad-chile', out: 'blog/vicios-ocultos-propiedad-chile/index.html' },
   { route: '/blog/como-inspeccionar-departamento-antes-de-comprar-santiago', out: 'blog/como-inspeccionar-departamento-antes-de-comprar-santiago/index.html' },
+  // Legacy dead URL still indexed by Google (GSC: "No se ha encontrado
+  // (404)"). No SPA route matches it, so without a dedicated prerendered
+  // file it fell back to the raw homepage shell — static "index, follow"
+  // plus NotFound's client Helmet tags both present, duplicate/conflicting
+  // meta. Prerendering it here gives it one clean noindex page like every
+  // other route.
+  { route: '/calculator', out: 'calculator/index.html' },
 ];
 
 // HowTo schema for these two articles has no client-side source (no Helmet,
@@ -126,6 +133,7 @@ function stripStaticHeadMeta(html: string): string {
   return html
     .replace(/<title>[^<]*<\/title>\n?/g, '')
     .replace(/<meta name="description"[^>]*>\n?/g, '')
+    .replace(/<meta name="robots"[^>]*>\n?/g, '')
     .replace(/<link rel="canonical"[^>]*>\n?/g, '')
     .replace(/<meta property="og:[^>]*>\n?/g, '')
     .replace(/<meta name="twitter:[^>]*>\n?/g, '');

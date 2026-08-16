@@ -36,6 +36,7 @@ const ArticuloErrores = lazy(() => import('./components/blog/ArticuloErrores'));
 const ArticuloInspector = lazy(() => import('./components/blog/ArticuloInspector'));
 const ArticuloViciosOcultos = lazy(() => import('./components/blog/ArticuloViciosOcultos'));
 const ArticuloDepartamento = lazy(() => import('./components/blog/ArticuloDepartamento'));
+const NotFound = lazy(() => import('./components/NotFound'));
 
 const LandingPage = () => (
   <div className="min-h-screen bg-slate-950 relative font-sans scroll-smooth">
@@ -108,6 +109,7 @@ function App() {
         <Route path="/blog/inspector-de-propiedades-santiago" element={<ArticuloInspector />} />
         <Route path="/blog/vicios-ocultos-propiedad-chile" element={<ArticuloViciosOcultos />} />
         <Route path="/blog/como-inspeccionar-departamento-antes-de-comprar-santiago" element={<ArticuloDepartamento />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );
