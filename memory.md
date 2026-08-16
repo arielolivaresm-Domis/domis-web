@@ -1,12 +1,63 @@
 # DOMIS™ — MEMORY.MD
-## Estado actual del proyecto · Actualizado: 3 julio 2026
+## Estado actual del proyecto · Actualizado: 16 agosto 2026
 
 ---
 
 ## ESTADO WEB (domis.cl) — AHORA MISMO
 
-**Producción (domis.cl):** deploy del 27-jun (commit `637a35b`), promovido manualmente vía `vercel promote`. Funciona bien, verificado visualmente contra local.
-**`main` local:** commit `3af72fd` — incluye todo el trabajo SEO/prerender del 1-jul (`b35aa8b`) + fix crítico de Tailwind. **Verificado con build+tsc+visual, pero AÚN NO pusheado a GitHub/producción.**
+**Producción (domis.cl):** verificado con curl hoy — 200 OK, email de contacto correcto (`arielom@domis.cl`). Online incluye al menos hasta commit `9c927ab`.
+
+**`main` local está 2 commits adelante de `origin/main`, sin pushear:**
+- `f062418` — docs: instructivo marketing conectando skills genéricos con agentes DOMIS™
+- `d3d079c` — fix: página 404 real (`NotFound.tsx` + ruta wildcard) + prerender noindex dedicado para `/calculator` (URL fantasma indexada 404 en GSC, sin ruta SPA ni prerender propio — caía al shell home con meta duplicada). `tsc -b` limpio. CLAUDE.md migrado al formato estándar de agencia (import de protocolos PharosLab).
+
+**Pendiente:** `git push` para disparar auto-deploy Vercel de ambos commits. No incluye cambio visual/UX — solo afecta crawlers sin JS y la URL fantasma `/calculator`.
+
+### Sesión 30-jul
+Email de contacto corregido `ariel@domis.cl` → `arielom@domis.cl` en 5 archivos (index.html, GarantiaFAQ, CasePage, ArticuloBuyerAgent, ContactModal). Commit `9c927ab`, pusheado y verificado en producción.
+
+### Sesión 6-jul — bug real de fondo en el prerender, arreglado
+
+Se instaló el skill `geo` (repo público `geo-seo-claude`, `~/.claude/skills/geo/`) como
+capa de auditoría GEO/AEO adicional al checklist propio de PharosLab. Primera
+corrida real contra domis.cl (no contra un cliente de prueba) encontró que el
+prerender de 1-jul (`b35aa8b`, dado por CERRADO en su momento) tenía un bug de
+fondo nunca detectado: `scripts/prerender.ts` clonaba `dist/index.html` completo
+a cada ruta e inyectaba solo `<title>/<meta>/schema` por string — el body real
+(`<div id="root">`) quedaba VACÍO en todas las rutas, con un mismo bloque
+genérico oculto (`aria-hidden`, 378 palabras, contenido de home) como único
+texto visible a un crawler sin JS (GPTBot, ClaudeBot, PerplexityBot no
+ejecutan JS). O sea: cada artículo de blog tenía meta/schema correctos pero
+CERO palabras propias citables por una IA — el fix de junio solo había
+resuelto la mitad del problema.
+
+**Fix real (no parche):** `scripts/prerender.ts` reescrito completo, mismo
+patrón que `hogar-senior-web/scripts/prerender.js` — levanta un server
+estático local + Chrome headless (`puppeteer` local / `puppeteer-core` +
+`@sparticuz/chromium` en Vercel), visita cada ruta, espera a que
+React+Helmet terminen de renderizar, y captura el HTML real resultante en
+vez de clonar el shell. Contenido de artículos pasa de 378 palabras
+genéricas a 1400+ palabras propias por ruta. HowTo schema de
+`ArticuloNegociacion`/`ArticuloDepartamento` (nunca existió client-side, era
+inyección estática pura) preservado via función `injectHowTo()` aplicada
+después de la captura, para no perderlo con el cambio de mecanismo.
+Verificado local: 18/18 rutas, 1 solo `<title>` por ruta (sin duplicados),
+`tsc -b` y `eslint scripts/prerender.ts` limpios. Commit `82ccf1a`.
+
+Reporte completo del hallazgo: `GEO-AUDIT-REPORT.md` (raíz del proyecto).
+
+**Diseño/UX: sin cambios.** El cliente monta con `ReactDOM.createRoot`
+(no `hydrateRoot`) — el HTML prerenderizado solo lo ve un crawler sin JS,
+un usuario real con navegador siempre ve el render de React normal, JS
+pisa el HTML estático al montar.
+
+### Sesión 5-jul — qué se hizo
+1. **Pusheados los 3 commits que quedaron colgados desde 3-jul** (`3af72fd` fix Tailwind, `b0e88dd` docs, `90db01e` fix seguridad — keys/password del PCF-15 movidas a serverless, npm audit fix 1 vulnerabilidad crítica). Estaban verificados hace 2 días pero nunca se pusharon — el fix de seguridad estuvo sin deployar todo ese tiempo.
+2. **HowTo schema (`ArticuloNegociacion`, `ArticuloDepartamento`) — bug de raíz arreglado.** Estaba implementado como `useEffect` que inyecta el `<script>` en el DOM client-side — nunca llegaba al HTML que recibe un crawler antes de ejecutar JS (mismo patrón de bug que el blog invisible de junio). Movido a `scripts/prerender.ts` (`buildArticleHeadTags` ahora acepta `howTo` opcional, mismo mecanismo que Article/Breadcrumb). Verificado con curl en producción: HowTo presente en el HTML servido.
+3. Commit `4214a73` — build + prerender corridos, 17/17 rutas OK, deploy confirmado Ready en Vercel.
+
+### Pendiente real (no falso positivo)
+- **`ArticuloChecklistUsada` — HowTo nunca se implementó**, ni siquiera client-side. El memory viejo lo daba por hecho junto a los otros 2, pero el código nunca lo tuvo. Si se quiere HowTo ahí, hay que escribir los steps desde cero (no es solo mover código existente).
 
 ### Bug real encontrado y arreglado (3 jul) — `3af72fd`
 Desde el commit `b35aa8b` (1 jul) se eliminó el script `cdn.tailwindcss.com` de `index.html` asumiendo que el build vía PostCSS ya generaba las clases utilitarias (Tailwind v4). **Era falso**: faltaba `postcss.config.js` y el paquete `@tailwindcss/postcss`. El CSS compilado solo traía variables de tema (~20KB, cero `.flex`, `.hidden`, `.bg-*`) — toda la web quedaba sin estilo (texto plano apilado).
@@ -28,10 +79,10 @@ Desde el commit `b35aa8b` (1 jul) se eliminó el script `cdn.tailwindcss.com` de
 
 | Tag | Commit | Qué es | Cómo restaurar |
 |-----|--------|--------|----------------|
-| `punto-0-live-27jun` | `637a35b` | Lo que está online AHORA en domis.cl | `vercel promote mi-proyecto-web-v2-gwg3m2c4j-ariel-oms-projects.vercel.app --scope ariel-oms-projects` |
-| `punto-1-fix-tailwind-2jul` | `3af72fd` | Fix Tailwind + todo el trabajo SEO 1-jul. Verificado local, sin pushear | `git reset --hard punto-1-fix-tailwind-2jul` + `git push` |
+| `punto-0-live-27jun` | `637a35b` | Viejo — ya no es lo que está online, quedó como referencia histórica | `vercel promote mi-proyecto-web-v2-gwg3m2c4j-ariel-oms-projects.vercel.app --scope ariel-oms-projects` |
+| `punto-1-fix-tailwind-2jul` | `3af72fd` | Fix Tailwind + SEO 1-jul. **Ya pusheado y deployado (5-jul)**, dejó de ser recovery point futuro | `git reset --hard punto-1-fix-tailwind-2jul` + `git push` |
 
-(El tag viejo `punto-0-git-2jul` se borró — quedaba redundante/con protocolo desactualizado.)
+**Estado online ahora:** `4214a73` (5-jul) — security fix + HowTo fix incluidos. Si hace falta rollback, ese es el commit de referencia "bueno conocido", no `637a35b`.
 
 **Protocolo de emergencia:** ver `AGENTS.md` en la raíz del proyecto. Regla de oro: **nunca `vercel --prod` manual**, publicar solo con `git push` a `main` (Vercel git-connect activo).
 
@@ -40,14 +91,13 @@ Desde el commit `b35aa8b` (1 jul) se eliminó el script `cdn.tailwindcss.com` de
 
 ---
 
-## DECISIÓN PENDIENTE — PRÓXIMA SESIÓN
+## DECISIÓN — RESUELTA (5-jul)
 
-**¿Pushear `3af72fd` a `main`?** Esto dispara auto-deploy en Vercel y CAMBIA domis.cl (pasa del 27-jun al estado con SEO/prerender + fix). Ya está todo verificado (build, tsc, visual idéntico). Es decisión de Ariel, no técnica — falta solo el "dale, sube".
+~~¿Pushear `3af72fd` a `main`?~~ Ya se pusheó, deployado y verificado con curl. Ver sección arriba.
 
-Si se pushea, después:
-1. Verificar con curl que domis.cl sirve el prerender correcto por ruta
-2. Confirmar GSC indexación post-deploy
-3. HowTo schema en 3 artículos (ArticuloNegociacion, ArticuloDepartamento, ArticuloChecklistUsada) — sigue pendiente, nunca se hizo
+**Pendiente real que queda:**
+1. Confirmar indexación GSC post-deploy (bloqueado — no hay verificación GSC en el código, ver PENDIENTE ARIEL abajo)
+2. HowTo schema en `ArticuloChecklistUsada` — nunca se implementó (ver nota arriba)
 
 ---
 
@@ -67,6 +117,7 @@ Si se pushea, después:
 ---
 
 ## PENDIENTE — ARIEL (no es código)
+0. **`/calculator` en GSC** — tras el próximo `git push` (deploy del fix noindex), validar la corrección en Search Console (URL Inspection → Validate Fix) para que GSC deje de reportarla como 404.
 1. **Google Business Profile** 🔴 CRÍTICO — no encontrado en búsqueda web. Crear en business.google.com, categoría "Agente inmobiliario"
 2. **Reviews Google** 🔴 CRÍTICO — pedir a Carolina, Andrea, Felipe, Javier, Alejandro
 3. **Confirmar GSC** — sin verificación visible en código, confirmar acceso
