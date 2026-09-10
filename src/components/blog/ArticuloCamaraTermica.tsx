@@ -56,7 +56,7 @@ const faqs = [
 
 export default function ArticuloCamaraTermica() {
   return (
-    <BlogLayout meta={meta}>
+    <BlogLayout meta={meta} faqs={faqs}>
 
       <div className="flex items-center gap-3 mb-6">
         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 text-[10px] font-black uppercase tracking-widest">

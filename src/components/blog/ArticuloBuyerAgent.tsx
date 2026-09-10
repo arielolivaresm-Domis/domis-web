@@ -65,7 +65,7 @@ const faqs = [
 
 export default function ArticuloBuyerAgent() {
   return (
-    <BlogLayout meta={meta}>
+    <BlogLayout meta={meta} faqs={faqs}>
 
       {/* Badge + fecha */}
       <div className="flex items-center gap-3 mb-6">

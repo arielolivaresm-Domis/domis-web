@@ -9,12 +9,18 @@ interface BlogMeta {
   datePublished?: string;
 }
 
+interface BlogFaq {
+  q: string;
+  a: string;
+}
+
 interface BlogLayoutProps {
   children: React.ReactNode;
   meta: BlogMeta;
+  faqs?: BlogFaq[];
 }
 
-export default function BlogLayout({ children, meta }: BlogLayoutProps) {
+export default function BlogLayout({ children, meta, faqs }: BlogLayoutProps) {
   const headline = meta.title.split('|')[0].trim();
   const image = 'https://www.domis.cl/og-image.jpg';
 
@@ -54,6 +60,19 @@ export default function BlogLayout({ children, meta }: BlogLayoutProps) {
           { '@type': 'ListItem', position: 3, name: headline, item: meta.url },
         ],
       },
+      ...(faqs && faqs.length > 0
+        ? [
+            {
+              '@type': 'FAQPage',
+              '@id': `${meta.url}#faq`,
+              mainEntity: faqs.map((faq) => ({
+                '@type': 'Question',
+                name: faq.q,
+                acceptedAnswer: { '@type': 'Answer', text: faq.a },
+              })),
+            },
+          ]
+        : []),
     ],
   };
 

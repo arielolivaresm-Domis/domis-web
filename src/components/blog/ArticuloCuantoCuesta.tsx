@@ -56,7 +56,7 @@ const faqs = [
 
 export default function ArticuloCuantoCuesta() {
   return (
-    <BlogLayout meta={meta}>
+    <BlogLayout meta={meta} faqs={faqs}>
 
       {/* Badge + fecha */}
       <div className="flex items-center gap-3 mb-6">
