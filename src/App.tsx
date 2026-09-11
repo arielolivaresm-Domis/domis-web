@@ -103,6 +103,11 @@ const homeFaqSchema = {
         },
         {
           '@type': 'Question',
+          name: '¿DOMIS™ tiene conflicto de interés entre la auditoría y la remodelación?',
+          acceptedAnswer: { '@type': 'Answer', text: 'No. El informe PCF-15™ de Fase 1 (auditoría) es idéntico se contrate o no la Fase 3 (remodelación) — los hallazgos y su valorización en UF no cambian según quién ejecute las reparaciones. La auditoría existe para informar tu decisión de compra y tu negociación, no para generar obra: puedes tomar el informe y contratar a cualquier contratista independiente.' },
+        },
+        {
+          '@type': 'Question',
           name: '¿DOMIS™ trabaja en Las Condes, Providencia, Vitacura, Lo Barnechea, La Reina y Ñuñoa?',
           acceptedAnswer: { '@type': 'Answer', text: 'Sí. DOMIS™ opera en todas las comunas del sector oriente de Santiago: Las Condes, Providencia, La Reina, Vitacura, Lo Barnechea, Ñuñoa, Macul, La Florida y Peñalolén. Los tres casos documentados corresponden a propiedades en Las Condes ($39.550.715 ahorrados, 9%), Providencia ($68.218.952 ahorrados, 11%) y La Reina ($141.710.795 ahorrados, 18%). Para agendar una auditoría escribir a arielom@domis.cl o por Instagram @domis.chile.' },
         },

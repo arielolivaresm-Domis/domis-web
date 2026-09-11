@@ -55,6 +55,9 @@ export default function Phase3() {
             <p className="text-slate-200 font-bold text-sm md:text-lg leading-relaxed max-w-3xl mx-auto italic drop-shadow-md">
               Corregimos cada vicio oculto detectado y ejecutamos un plan de renovación estratégica para maximizar el valor de tu activo desde el día uno.
             </p>
+            <p className="text-slate-400 text-[11px] md:text-xs font-bold uppercase tracking-widest mt-4 max-w-2xl mx-auto">
+              100% opcional — tu informe PCF-15™ es el mismo lo contrates o no. Puedes ejecutar las reparaciones con el proveedor que prefieras.
+            </p>
           </div>
 
           {/* GRILLA DE SERVICIOS UPGRADE */}
