@@ -39,7 +39,7 @@ const diferencias = [
 const faqs = [
   {
     q: '¿Cuánto cobra un buyer\'s agent en Chile?',
-    a: 'DOMIS™ tiene una estructura de honorarios diferenciada por fase. La Fase 1 (auditoría técnica) se cotiza por metro cuadrado según tipo de propiedad, con mínimo de 100m². La Fase 2 (negociación) se estructura sobre el resultado. Para cotizar tu caso escribe a arielom@domis.cl.',
+    a: 'DOMIS™ tiene una estructura de honorarios diferenciada por fase. La Fase 1 (auditoría técnica) se cotiza por metro cuadrado según tipo de propiedad, con mínimo facturable de $70.000 + IVA (35m²). La Fase 2 (negociación) se estructura sobre el resultado. Para cotizar tu caso escribe a arielom@domis.cl.',
   },
   {
     q: '¿En qué se diferencia un buyer\'s agent de un corredor de propiedades?',

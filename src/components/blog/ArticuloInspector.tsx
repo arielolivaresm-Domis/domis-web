@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     q: '¿Cuánto cuesta una inspección de propiedades en Santiago?',
-    a: 'Depende del tipo de propiedad y el alcance del servicio. La auditoría técnica PCF-15™ de DOMIS™ cuesta $1.900/m² + IVA para propiedades usadas y $1.800/m² + IVA para propiedades nuevas, con un mínimo de 100m². Incluye informe completo con fotos, descripción técnica y valorización de cada hallazgo en UF.',
+    a: 'Depende del tipo de propiedad y el alcance del servicio. La auditoría técnica PCF-15™ de DOMIS™ cuesta $1.600/m² + IVA para propiedades usadas y $1.500/m² + IVA para propiedades nuevas, con un mínimo facturable de $70.000 + IVA (35m²). Incluye informe completo con fotos, descripción técnica y valorización de cada hallazgo en UF.',
   },
   {
     q: '¿Cuál es la diferencia entre inspector de propiedades y auditor técnico?',
@@ -122,8 +122,8 @@ export default function ArticuloInspector() {
       <div className="space-y-3 mb-4">
         {[
           { tipo: 'Inspección visual básica (sin instrumental)', precio: '$50.000–$120.000 + IVA', nota: 'Solo detecta lo visible. No detecta humedad oculta ni gas.' },
-          { tipo: 'Auditoría técnica PCF-15™ — propiedad usada', precio: '$1.900/m² + IVA (mín. 100m²)', nota: 'Incluye FLIR, dron, RIDGID, láser e informe de negociación.' },
-          { tipo: 'Auditoría técnica PCF-15™ — propiedad nueva', precio: '$1.800/m² + IVA (mín. 100m²)', nota: 'Verifica recepciones, documentación y estado al momento de entrega.' },
+          { tipo: 'Auditoría técnica PCF-15™ — propiedad usada', precio: '$1.600/m² + IVA (mín. $70.000)', nota: 'Incluye FLIR, dron, RIDGID, láser e informe de negociación.' },
+          { tipo: 'Auditoría técnica PCF-15™ — propiedad nueva', precio: '$1.500/m² + IVA (mín. $70.000)', nota: 'Verifica recepciones, documentación y estado al momento de entrega.' },
         ].map((tier, i) => (
           <div key={i} className="p-4 bg-slate-900 border border-white/10 rounded-xl">
             <div className="flex items-start justify-between gap-4 mb-1">

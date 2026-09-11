@@ -47,7 +47,7 @@ const documentos = [
 const faqs = [
   {
     q: '¿Existen servicios de inspección técnica para departamentos usados en Santiago?',
-    a: 'Sí. DOMIS™ realiza la auditoría técnica PCF-15™ para departamentos usados en Santiago Oriente (Las Condes, Providencia, La Reina, Vitacura, Ñuñoa). La inspección incluye cámara térmica FLIR para humedad, nivelador láser para fisuras y niveles, revisión eléctrica y verificación de superficie real vs escritura. Precio: $1.900/m² + IVA, mínimo 100m².',
+    a: 'Sí. DOMIS™ realiza la auditoría técnica PCF-15™ para departamentos usados en Santiago Oriente (Las Condes, Providencia, La Reina, Vitacura, Ñuñoa). La inspección incluye cámara térmica FLIR para humedad, nivelador láser para fisuras y niveles, revisión eléctrica y verificación de superficie real vs escritura. Precio: $1.600/m² + IVA, mínimo $70.000 + IVA (35m²).',
   },
   {
     q: '¿Cómo verificar la legalidad de un departamento usado antes de comprarlo en Santiago?',
@@ -146,7 +146,7 @@ export default function ArticuloDepartamento() {
       <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-2xl p-6 mb-10 text-center">
         <Building size={28} className="text-cyan-400 mx-auto mb-3" />
         <p className="text-white font-black uppercase tracking-tight mb-2">¿Evaluando un departamento en Santiago?</p>
-        <p className="text-slate-400 text-sm mb-4">Auditoría técnica PCF-15™ antes de la promesa. Desde $1.800/m² + IVA.</p>
+        <p className="text-slate-400 text-sm mb-4">Auditoría técnica PCF-15™ antes de la promesa. Desde $1.500/m² + IVA.</p>
         <a
           href="https://wa.me/56929901343?text=Hola, quiero una inspección técnica para un departamento usado en Santiago antes de comprarlo."
           target="_blank"

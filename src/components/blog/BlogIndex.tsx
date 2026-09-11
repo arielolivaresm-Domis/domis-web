@@ -6,7 +6,7 @@ const articulos = [
     slug: '/blog/inspector-de-propiedades-santiago',
     badge: 'Inspector de propiedades · Santiago',
     titulo: 'Inspector de propiedades en Santiago: qué hace, cuánto cuesta y cómo elegir uno confiable',
-    resumen: 'Inspector de propiedades, auditor técnico, inspección técnica inmobiliaria — mismo servicio, distinto alcance. PCF-15™ incluye FLIR, dron y detector gas. Desde $1.800/m² + IVA.',
+    resumen: 'Inspector de propiedades, auditor técnico, inspección técnica inmobiliaria — mismo servicio, distinto alcance. PCF-15™ incluye FLIR, dron y detector gas. Desde $1.500/m² + IVA.',
     tiempo: '6 min lectura',
   },
   {
@@ -55,7 +55,7 @@ const articulos = [
     slug: '/blog/cuanto-cuesta-auditoria-tecnica-propiedad-santiago',
     badge: 'Precios · Auditoría técnica',
     titulo: 'Cuánto cuesta una auditoría técnica de propiedad en Santiago: precios, qué incluye y si vale la pena',
-    resumen: 'Respuesta directa: $1.900/m² + IVA propiedad usada, $1.800/m² + IVA propiedad nueva. Mínimo 100m². Y por qué la matemática dice que siempre vale la pena.',
+    resumen: 'Respuesta directa: $1.600/m² + IVA propiedad usada, $1.500/m² + IVA propiedad nueva. Mínimo $70.000 + IVA. Y por qué la matemática dice que siempre vale la pena.',
     tiempo: '5 min lectura',
   },
   {

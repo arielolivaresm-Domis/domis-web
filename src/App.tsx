@@ -74,7 +74,7 @@ const homeFaqSchema = {
         {
           '@type': 'Question',
           name: '¿Cuánto cuesta una auditoría técnica de propiedad en Santiago?',
-          acceptedAnswer: { '@type': 'Answer', text: 'La auditoría PCF-15™ de DOMIS™ cuesta $1.900/m² + IVA para propiedades usadas y $1.800/m² + IVA para propiedades nuevas. El mínimo facturable es 100m² (desde $190.000 + IVA). Para propiedad con sourcing incluido: $2.200/m² + IVA. Región Metropolitana, Santiago.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'La auditoría PCF-15™ de DOMIS™ cuesta $1.600/m² + IVA para propiedades usadas y $1.500/m² + IVA para propiedades nuevas. El mínimo facturable es $70.000 + IVA, aplicable desde 35m². Para propiedad con sourcing incluido: $2.200/m² + IVA. Región Metropolitana, Santiago.' },
         },
         {
           '@type': 'Question',

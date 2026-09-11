@@ -5,17 +5,20 @@ import Section from './layout/Section';
 type Modalidad = 'nueva' | 'usada';
 
 const MODALIDADES = [
-  { key: 'nueva' as Modalidad, label: 'Propiedad Nueva', desc: 'Pre-recepción / garantía', price: 1800 },
-  { key: 'usada' as Modalidad, label: 'Propiedad Usada', desc: 'Compra / venta',           price: 1900 },
+  { key: 'nueva' as Modalidad, label: 'Propiedad Nueva', desc: 'Pre-recepción / garantía', price: 1500 },
+  { key: 'usada' as Modalidad, label: 'Propiedad Usada', desc: 'Compra / venta',           price: 1600 },
 ];
+
+const MIN_M2  = 35;
+const MIN_FEE = 70000;
 
 export default function AuditPacks({ onNext }: { onNext?: () => void }) {
   const [modalidad, setModalidad] = useState<Modalidad>('usada');
-  const [meters, setMeters]       = useState(100);
+  const [meters, setMeters]       = useState(50);
 
-  const effectiveMeters = Math.max(100, meters);
+  const effectiveMeters = Math.max(MIN_M2, meters);
   const currentMod      = MODALIDADES.find(m => m.key === modalidad)!;
-  const totalCost       = effectiveMeters * currentMod.price;
+  const totalCost       = Math.max(effectiveMeters * currentMod.price, MIN_FEE);
 
   const whatsappMessage = `Hola, equipo DOMIS™. Tengo una propiedad ${modalidad === 'nueva' ? 'nueva (pre-recepción/garantía)' : 'usada'} de ~${effectiveMeters}m² y quiero cotizar la auditoría técnica. Total estimado: $${totalCost.toLocaleString()} + IVA`;
   const whatsappUrl = `https://wa.me/56929901343?text=${encodeURIComponent(whatsappMessage)}`;
@@ -115,7 +118,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                     />
                   </div>
                   <div className="px-1 flex flex-col justify-end pb-1 gap-1">
-                    <p className="text-amber-400/80 text-[10px] uppercase tracking-wide">⚠️ Mínimo facturable: 100m²</p>
+                    <p className="text-amber-400/80 text-[10px] uppercase tracking-wide">⚠️ Mínimo facturable: $70.000 + IVA</p>
                     <p className="text-slate-500 text-[10px]">${currentMod.price.toLocaleString()}/m² + IVA — {currentMod.desc}</p>
                   </div>
                 </div>
@@ -144,7 +147,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
             </div>
 
             <p className="mt-8 text-center text-white/30 text-[10px] uppercase font-bold tracking-widest px-4">
-              * Valores para Región Metropolitana. Mínimo 100m².
+              * Valores para Región Metropolitana. Mínimo facturable $70.000 + IVA (35m²).
             </p>
           </div>
         </div>

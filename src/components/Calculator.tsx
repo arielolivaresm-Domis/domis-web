@@ -3,10 +3,14 @@ import { useState, useMemo } from 'react';
 type Modalidad = 'nueva' | 'usada' | 'sourcing';
 
 const MODALIDADES = [
-  { key: 'nueva'    as Modalidad, label: 'Prop. Nueva',      sub: 'Pre-recepción / garantía', price: 1800 },
-  { key: 'usada'    as Modalidad, label: 'Prop. Usada',      sub: 'Compra / venta',           price: 1900 },
+  { key: 'nueva'    as Modalidad, label: 'Prop. Nueva',      sub: 'Pre-recepción / garantía', price: 1500 },
+  { key: 'usada'    as Modalidad, label: 'Prop. Usada',      sub: 'Compra / venta',           price: 1600 },
   { key: 'sourcing' as Modalidad, label: 'Buscar + Auditar', sub: 'Sourcing incluido',         price: 2200 },
 ];
+
+const MIN_M2_AUDIT  = 35;
+const MIN_M2_SOURCE = 100;
+const MIN_FEE_AUDIT = 70000;
 
 const SOURCING_RATIO: Record<number, { busca: string }> = {
   1: { busca: '2' },
@@ -16,19 +20,21 @@ const SOURCING_RATIO: Record<number, { busca: string }> = {
 
 const Calculator = () => {
   const [modalidad, setModalidad] = useState<Modalidad>('usada');
-  const [meters, setMeters]       = useState(100);
+  const [meters, setMeters]       = useState(50);
   const [quiero, setQuiero]       = useState(1);
 
-  const effectiveMeters = Math.max(100, meters);
+  const minM2          = modalidad === 'sourcing' ? MIN_M2_SOURCE : MIN_M2_AUDIT;
+  const effectiveMeters = Math.max(minM2, meters);
   const currentMod      = MODALIDADES.find(m => m.key === modalidad)!;
   const ratio           = SOURCING_RATIO[quiero];
 
   const calculations = useMemo(() => {
-    const totalAuditNet = currentMod.price * effectiveMeters;
-    const iva           = totalAuditNet * 0.19;
-    const totalConIva   = totalAuditNet + iva;
-    const discountF1    = totalAuditNet * 0.60;
-    const realCostF1    = totalConIva - discountF1;
+    const rawTotal       = currentMod.price * effectiveMeters;
+    const totalAuditNet  = modalidad === 'sourcing' ? rawTotal : Math.max(rawTotal, MIN_FEE_AUDIT);
+    const iva            = totalAuditNet * 0.19;
+    const totalConIva    = totalAuditNet + iva;
+    const discountF1     = totalAuditNet * 0.60;
+    const realCostF1     = totalConIva - discountF1;
     return { totalAuditNet, totalConIva, discountF1, realCostF1 };
   }, [modalidad, effectiveMeters]);
 
@@ -111,14 +117,14 @@ const Calculator = () => {
           {/* M² */}
           <div>
             <label className="block text-xs uppercase text-cyan-500 mb-2 font-bold tracking-widest">
-              {modalidad === 'sourcing' ? '3.' : '2.'} Metros Cuadrados (mín. 100 m²)
+              {modalidad === 'sourcing' ? '3.' : '2.'} Metros Cuadrados (mín. {minM2} m²)
             </label>
             <div className="relative">
               <input
                 type="number"
                 value={meters === 0 ? '' : meters}
                 onChange={(e) => setMeters(Number(e.target.value))}
-                onBlur={() => setMeters((v) => Math.max(100, v))}
+                onBlur={() => setMeters((v) => Math.max(minM2, v))}
                 className="w-full bg-slate-800 border border-slate-700 p-4 rounded-lg text-xl font-mono focus:border-cyan-400 outline-none pr-12 text-white"
               />
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-mono">m²</span>

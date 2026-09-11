@@ -3,7 +3,7 @@ import BlogLayout from './BlogLayout';
 
 export const meta = {
   title: 'Cuánto cuesta una auditoría técnica de propiedad en Santiago | DOMIS™',
-  description: 'Precio de la auditoría técnica PCF-15™ de DOMIS™: $1.900/m² + IVA propiedad usada, $1.800/m² + IVA propiedad nueva. Mínimo 100m². ¿Vale la pena? Los números hablan solos.',
+  description: 'Precio de la auditoría técnica PCF-15™ de DOMIS™: $1.600/m² + IVA propiedad usada, $1.500/m² + IVA propiedad nueva. Mínimo $70.000 + IVA (35m²). ¿Vale la pena? Los números hablan solos.',
   url: 'https://www.domis.cl/blog/cuanto-cuesta-auditoria-tecnica-propiedad-santiago',
   datePublished: '2026-06-26',
 };
@@ -20,9 +20,9 @@ const incluye = [
 ];
 
 const comparacion = [
-  { item: 'Auditoría técnica DOMIS™ (100m²)', precio: '$190.000 + IVA', nota: 'Precio base mínimo' },
-  { item: 'Auditoría técnica DOMIS™ (130m²)', precio: '$247.000 + IVA', nota: 'Depto típico Providencia' },
-  { item: 'Auditoría técnica DOMIS™ (160m²)', precio: '$304.000 + IVA', nota: 'Casa o depto grande' },
+  { item: 'Auditoría técnica DOMIS™ (35m², mínimo)', precio: '$70.000 + IVA', nota: 'Precio base mínimo' },
+  { item: 'Auditoría técnica DOMIS™ (50m²)', precio: '$80.000 + IVA', nota: 'Depto típico Santiago/Ñuñoa' },
+  { item: 'Auditoría técnica DOMIS™ (130m²)', precio: '$208.000 + IVA', nota: 'Casa o depto grande' },
   { item: 'Notaría promesa de compraventa', precio: '~$150.000', nota: 'No detecta fallas' },
   { item: 'Corredor (comisión 2% vendedor)', precio: '$2.000.000+', nota: 'Representa al vendedor' },
 ];
@@ -30,7 +30,7 @@ const comparacion = [
 const faqs = [
   {
     q: '¿Cuánto cuesta una auditoría técnica inmobiliaria en Santiago?',
-    a: 'La auditoría PCF-15™ de DOMIS™ tiene un precio de $1.900/m² + IVA para propiedades usadas y $1.800/m² + IVA para propiedades nuevas. El mínimo facturable es 100m², lo que equivale a $190.000 o $180.000 + IVA respectivamente. Si incluyes el servicio de sourcing (búsqueda), el precio es $2.200/m² + IVA.',
+    a: 'La auditoría PCF-15™ de DOMIS™ tiene un precio de $1.600/m² + IVA para propiedades usadas y $1.500/m² + IVA para propiedades nuevas. El mínimo facturable es $70.000 + IVA, aplicable desde 35m². Si incluyes el servicio de sourcing (búsqueda), el precio es $2.200/m² + IVA.',
   },
   {
     q: '¿Vale la pena pagar una auditoría técnica antes de comprar una propiedad?',
@@ -42,11 +42,11 @@ const faqs = [
   },
   {
     q: '¿Cuánto cuesta la inspección de una propiedad nueva?',
-    a: 'Para propiedades nuevas (pre-recepción o bajo garantía legal), el precio es $1.800/m² + IVA, mínimo 100m² ($180.000 + IVA). La inspección antes de firmar el acta de entrega de la constructora documenta todos los defectos existentes, lo que activa la garantía legal de 3, 5 y 10 años sobre lo específicamente detectado.',
+    a: 'Para propiedades nuevas (pre-recepción o bajo garantía legal), el precio es $1.500/m² + IVA, mínimo $70.000 + IVA (35m²). La inspección antes de firmar el acta de entrega de la constructora documenta todos los defectos existentes, lo que activa la garantía legal de 3, 5 y 10 años sobre lo específicamente detectado.',
   },
   {
     q: '¿Cuánto cobra un inspector de propiedades en Chile?',
-    a: 'Depende del servicio. Servicios de inspección básica en Chile oscilan entre $80.000 y $200.000 sin valorización técnica de hallazgos ni estrategia de negociación. La auditoría PCF-15™ de DOMIS™ parte desde $190.000 + IVA e incluye además el informe con hallazgos valorizados en UF y el respaldo para negociar el precio con evidencia técnica documentada.',
+    a: 'Depende del servicio. Servicios de inspección básica en Chile oscilan entre $80.000 y $200.000 sin valorización técnica de hallazgos ni estrategia de negociación. La auditoría PCF-15™ de DOMIS™ parte desde $70.000 + IVA e incluye además el informe con hallazgos valorizados en UF y el respaldo para negociar el precio con evidencia técnica documentada.',
   },
   {
     q: '¿El costo de la auditoría se descuenta si contrato la negociación después?',
@@ -87,8 +87,8 @@ export default function ArticuloCuantoCuesta() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         {[
-          { tipo: 'Propiedad Usada', precio: '$1.900', unit: '/m² + IVA', desc: 'Compra o venta', highlight: true },
-          { tipo: 'Propiedad Nueva', precio: '$1.800', unit: '/m² + IVA', desc: 'Pre-recepción / garantía', highlight: false },
+          { tipo: 'Propiedad Usada', precio: '$1.600', unit: '/m² + IVA', desc: 'Compra o venta', highlight: true },
+          { tipo: 'Propiedad Nueva', precio: '$1.500', unit: '/m² + IVA', desc: 'Pre-recepción / garantía', highlight: false },
           { tipo: 'Sourcing + Auditoría', precio: '$2.200', unit: '/m² + IVA', desc: 'Búsqueda incluida', highlight: false },
         ].map((p, i) => (
           <div key={i} className={`p-5 rounded-2xl border text-center ${p.highlight ? 'bg-cyan-500/10 border-cyan-500/40' : 'bg-slate-900 border-white/10'}`}>
@@ -99,7 +99,7 @@ export default function ArticuloCuantoCuesta() {
           </div>
         ))}
       </div>
-      <p className="text-slate-500 text-xs uppercase tracking-widest text-center mb-10">Mínimo facturable: 100m² · Región Metropolitana · Valores en CLP</p>
+      <p className="text-slate-500 text-xs uppercase tracking-widest text-center mb-10">Mínimo facturable: $70.000 + IVA (35m²) · Región Metropolitana · Valores en CLP</p>
 
       {/* Ejemplos */}
       <h2 className="text-2xl font-black text-white uppercase tracking-tighter mb-4">
@@ -167,7 +167,7 @@ export default function ArticuloCuantoCuesta() {
         <TrendingDown size={24} className="text-cyan-400 mb-3" />
         <p className="text-white font-black mb-2">La auditoría cuesta menos del 1% del valor de la propiedad.</p>
         <p className="text-slate-400 text-sm leading-relaxed">
-          Para una propiedad de $150M, la auditoría de 120m² cuesta ~$228.000 + IVA — el 0.15% del valor. Si la auditoría detecta fallas que permiten negociar un 9% de descuento, eso son $13.5M. La pregunta real no es si vale la pena pagar la auditoría. Es si vale la pena no pagarla.
+          Para una propiedad de $150M, la auditoría de 120m² cuesta ~$192.000 + IVA — el 0.13% del valor. Si la auditoría detecta fallas que permiten negociar un 9% de descuento, eso son $13.5M. La pregunta real no es si vale la pena pagar la auditoría. Es si vale la pena no pagarla.
         </p>
       </div>
 
