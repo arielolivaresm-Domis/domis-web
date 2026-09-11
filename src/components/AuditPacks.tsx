@@ -77,7 +77,7 @@ export default function AuditPacks({ onNext }: { onNext?: () => void }) {
                 </div>
                 <div className="flex items-start gap-3 text-white/90 text-sm">
                   <FileText size={18} className="text-cyan-400 flex-shrink-0 mt-0.5" />
-                  <span>Entrega en 72 horas hábiles</span>
+                  <span>Entrega en 20 horas hábiles</span>
                 </div>
               </div>
 

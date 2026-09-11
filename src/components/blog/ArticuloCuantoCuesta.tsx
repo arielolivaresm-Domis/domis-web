@@ -16,7 +16,7 @@ const incluye = [
   'Informe técnico PCF-15™ con los 15 puntos del protocolo',
   'Valorización de cada hallazgo en UF',
   'Análisis de entorno radio 3km (metro, colegios PAES, seguridad, comercio)',
-  'Entrega en 72 horas hábiles',
+  'Entrega en 20 horas hábiles',
 ];
 
 const comparacion = [

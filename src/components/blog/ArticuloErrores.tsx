@@ -56,7 +56,7 @@ const errores = [
 const timeline = [
   { paso: 'Visita la propiedad', accion: 'Si te interesa, no firmes nada todavía' },
   { paso: 'Agenda la auditoría PCF-15™', accion: 'Antes de cualquier oferta escrita' },
-  { paso: 'Recibe el informe técnico', accion: '72 horas hábiles después de la auditoría' },
+  { paso: 'Recibe el informe técnico', accion: '20 horas hábiles después de la auditoría' },
   { paso: 'Presenta la oferta con respaldo', accion: 'El informe es tu argumento de negociación' },
   { paso: 'Firma la promesa con precio negociado', accion: 'Con precio que refleja el estado real' },
   { paso: 'Escritura', accion: 'Con certeza técnica documentada' },

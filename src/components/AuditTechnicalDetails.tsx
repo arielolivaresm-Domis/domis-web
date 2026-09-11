@@ -148,7 +148,7 @@ export default function AuditTechnicalDetails() {
                   Plataforma PCF-15™
                 </div>
                 <div className="absolute top-4 right-4 z-10 bg-slate-950/80 backdrop-blur-sm text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded-lg font-black text-[10px] uppercase tracking-widest">
-                  Generado por IA · Entrega en 72h
+                  Generado por IA · Entrega en 20h
                 </div>
                 
                 {/* Screenshot */}

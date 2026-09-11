@@ -36,7 +36,7 @@ const faqs = [
   },
   {
     q: '¿Cómo contratar un inspector de propiedades en Santiago?',
-    a: 'Contacta a DOMIS™ vía WhatsApp con la dirección de la propiedad y la fecha tentativa de visita. Se agenda la inspección, se realiza con instrumental completo (FLIR, dron, RIDGID, láser), y el informe PCF-15™ se entrega en 72 horas hábiles. El proceso completo desde contacto hasta informe toma 4-5 días hábiles.',
+    a: 'Contacta a DOMIS™ vía WhatsApp con la dirección de la propiedad y la fecha tentativa de visita. Se agenda la inspección, se realiza con instrumental completo (FLIR, dron, RIDGID, láser), y el informe PCF-15™ se entrega en 20 horas hábiles. El proceso completo desde contacto hasta informe toma 2-3 días hábiles.',
   },
   {
     q: '¿Es necesario un inspector de propiedades para departamentos en Santiago?',
@@ -44,7 +44,7 @@ const faqs = [
   },
   {
     q: '¿Qué incluye el informe de un inspector de propiedades profesional?',
-    a: 'El informe PCF-15™ de DOMIS™ incluye: foto visible y foto termográfica de cada hallazgo, descripción técnica del problema, valorización en UF del costo estimado de reparación, y resumen ejecutivo para usar en negociación. Se entrega en PDF dentro de 72 horas hábiles desde la visita.',
+    a: 'El informe PCF-15™ de DOMIS™ incluye: foto visible y foto termográfica de cada hallazgo, descripción técnica del problema, valorización en UF del costo estimado de reparación, y resumen ejecutivo para usar en negociación. Se entrega en PDF dentro de 20 horas hábiles desde la visita.',
   },
 ];
 
@@ -148,7 +148,7 @@ export default function ArticuloInspector() {
           { paso: 'Contacto', desc: 'WhatsApp con dirección de la propiedad y fecha tentativa de visita' },
           { paso: 'Coordinación', desc: 'DOMIS™ coordina directamente con el vendedor o corredor para el acceso' },
           { paso: 'Visita técnica', desc: 'Inspección completa con FLIR, dron, RIDGID y láser — dura 2–3 horas' },
-          { paso: 'Informe PCF-15™', desc: 'Entrega en 72 horas hábiles — PDF con fotos, descripción técnica y valuación UF' },
+          { paso: 'Informe PCF-15™', desc: 'Entrega en 20 horas hábiles — PDF con fotos, descripción técnica y valuación UF' },
           { paso: 'Uso del informe', desc: 'Presentar al vendedor como argumento antes de firmar la promesa' },
         ].map((s, i) => (
           <div key={i} className="flex items-start gap-4">

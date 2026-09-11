@@ -121,7 +121,7 @@ export default function ArticuloCamaraTermica() {
           { paso: 'FLIR detecta', resultado: 'Mapa térmico con anomalías identificadas y georeferenciadas en plano de la propiedad' },
           { paso: 'Se documenta', resultado: 'Foto termográfica + foto visible del mismo punto + descripción técnica' },
           { paso: 'Se valoriza', resultado: 'Cada hallazgo se valoriza en UF según costo real de reparación confirmado' },
-          { paso: 'Se reporta', resultado: 'Informe PCF-15™ con todos los hallazgos, fotos y valorizaciones en 72 horas hábiles' },
+          { paso: 'Se reporta', resultado: 'Informe PCF-15™ con todos los hallazgos, fotos y valorizaciones en 20 horas hábiles' },
         ].map((p, i) => (
           <div key={i} className="p-4 bg-slate-900 border border-white/10 rounded-xl">
             <div className="text-cyan-400 font-black text-xs uppercase tracking-widest mb-1">{p.paso}</div>
