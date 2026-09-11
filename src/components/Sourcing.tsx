@@ -9,7 +9,6 @@ declare global {
 }
 
 const PRICE_PER_M2 = 2200;
-const MIN_M2  = 35;
 const MIN_FEE = 70000;
 
 const RATIO: Record<number, { busca: string }> = {
@@ -22,7 +21,7 @@ export default function Sourcing() {
   const [quiero, setQuiero] = useState(1);
   const [meters, setMeters] = useState(50);
 
-  const effectiveMeters = Math.max(MIN_M2, meters);
+  const effectiveMeters = Math.max(0, meters);
   const total            = Math.max(effectiveMeters * PRICE_PER_M2, MIN_FEE);
   const ratio            = RATIO[quiero];
 
@@ -114,13 +113,13 @@ export default function Sourcing() {
 
             {/* Metraje */}
             <div>
-              <label className="text-[12px] font-black uppercase text-cyan-500 mb-3 block tracking-widest">Metraje m² (mín. facturable $70.000):</label>
+              <label className="text-[12px] font-black uppercase text-cyan-500 mb-3 block tracking-widest">Metraje m²:</label>
               <div className="relative">
                 <input
                   type="number"
                   value={meters}
                   onChange={e => setMeters(Number(e.target.value))}
-                  onBlur={() => setMeters(v => Math.max(MIN_M2, v))}
+                  onBlur={() => setMeters(v => Math.max(0, v))}
                   className="w-full bg-slate-900 border-2 border-slate-800 rounded-xl px-4 py-3 text-white font-mono text-base outline-none focus:border-cyan-500 transition-all"
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 font-mono text-xs font-bold">M²</span>
@@ -132,6 +131,7 @@ export default function Sourcing() {
               <span className="text-[10px] text-cyan-500 uppercase font-black tracking-widest">Total Est.:</span>
               <span className="text-white font-mono font-black text-xl">${total.toLocaleString()} <span className="text-slate-500 text-xs">+ IVA</span></span>
             </div>
+            <p className="text-slate-600 text-[10px] text-right -mt-2">Mínimo facturable: $70.000 + IVA</p>
           </div>
 
           <button
