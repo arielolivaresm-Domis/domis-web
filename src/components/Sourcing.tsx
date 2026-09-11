@@ -9,6 +9,8 @@ declare global {
 }
 
 const PRICE_PER_M2 = 2200;
+const MIN_M2  = 35;
+const MIN_FEE = 70000;
 
 const RATIO: Record<number, { busca: string }> = {
   1: { busca: '2' },
@@ -18,10 +20,10 @@ const RATIO: Record<number, { busca: string }> = {
 
 export default function Sourcing() {
   const [quiero, setQuiero] = useState(1);
-  const [meters, setMeters] = useState(100);
+  const [meters, setMeters] = useState(50);
 
-  const effectiveMeters = Math.max(100, meters);
-  const total            = effectiveMeters * PRICE_PER_M2;
+  const effectiveMeters = Math.max(MIN_M2, meters);
+  const total            = Math.max(effectiveMeters * PRICE_PER_M2, MIN_FEE);
   const ratio            = RATIO[quiero];
 
   const handleWhatsApp = () => {
@@ -112,13 +114,13 @@ export default function Sourcing() {
 
             {/* Metraje */}
             <div>
-              <label className="text-[12px] font-black uppercase text-cyan-500 mb-3 block tracking-widest">Metraje m² (mín. 100m²):</label>
+              <label className="text-[12px] font-black uppercase text-cyan-500 mb-3 block tracking-widest">Metraje m² (mín. facturable $70.000):</label>
               <div className="relative">
                 <input
                   type="number"
                   value={meters}
                   onChange={e => setMeters(Number(e.target.value))}
-                  onBlur={() => setMeters(v => Math.max(100, v))}
+                  onBlur={() => setMeters(v => Math.max(MIN_M2, v))}
                   className="w-full bg-slate-900 border-2 border-slate-800 rounded-xl px-4 py-3 text-white font-mono text-base outline-none focus:border-cyan-500 transition-all"
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 font-mono text-xs font-bold">M²</span>
