@@ -40,6 +40,9 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
     >
       <div className="text-left relative z-10 max-w-3xl mt-4 md:mt-10">
         <h1 className="text-4xl md:text-7xl font-black text-white leading-[0.85] mb-1 md:mb-4 uppercase tracking-tighter">
+          <span className="block text-base md:text-xl font-bold text-cyan-400/90 normal-case tracking-normal mb-2 md:mb-3">
+            Auditoría Técnica de Propiedades en Santiago
+          </span>
           NO COMPRES <br />
           <span className="text-white">PROMESAS.</span> <br />
           <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]">COMPRA DATOS.</span>
@@ -69,7 +72,7 @@ export function HeroHook({ scrollYProgress }: { scrollYProgress: MotionValue<num
           style={{ opacity: cardOpacity, pointerEvents: cardPointerEvents }} 
           className="bg-slate-950/90 backdrop-blur-xl p-8 border border-white/10 rounded-2xl shadow-2xl max-w-sm w-full md:w-auto relative z-20"
         >
-          <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">COTIZA TU ESTRATEGIA</h3>
+          <h2 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">COTIZA TU ESTRATEGIA</h2>
           <div className="space-y-4 my-6">
             <input 
               type="text" 
