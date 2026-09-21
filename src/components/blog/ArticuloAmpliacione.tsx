@@ -33,6 +33,10 @@ const riesgos = [
 
 const faqs = [
   {
+    q: '¿Qué pasa si amplío mi casa sin permiso en Chile?',
+    a: 'La DOM puede fiscalizar, multar y exigir que se regularice la obra o, si no cumple la norma vigente, que se demuela. La ampliación tampoco figura en la superficie legal: el banco tasa sobre escritura y planos, lo que afecta créditos y ventas futuras. Existe un procedimiento simplificado de regularización (Ley 20.898), cuyos plazos y requisitos cambian, por lo que hay que confirmar su vigencia con la DOM o un arquitecto.',
+  },
+  {
     q: '¿Qué pasa si compro una casa con ampliación sin permiso en Chile?',
     a: 'Al comprar asumes todos los problemas legales: multas municipales pendientes, obligación de regularizar o demoler si no es regularizable, tasación reducida en futuros créditos y dificultad para vender. La ley chilena no protege al comprador que adquirió sabiendo (o pudiendo saber) la situación irregular.',
   },
@@ -130,6 +134,32 @@ export default function ArticuloAmpliacione() {
           'Consulta con un arquitecto si la ampliación es regularizable según norma actual de la comuna',
           'Si es regularizable: negociar el precio incluyendo el costo de regularización a cargo del vendedor o como descuento',
           'Si no es regularizable: negociar fuerte o descartar la propiedad',
+        ].map((step, i) => (
+          <div key={i} className="flex items-start gap-3">
+            <div className="w-5 h-5 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center shrink-0 mt-0.5">
+              <span className="text-cyan-400 font-black text-[10px]">{i + 1}</span>
+            </div>
+            <p className="text-slate-300 text-sm leading-relaxed">{step}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2 className="text-2xl font-black text-white uppercase tracking-tighter mb-4">
+        ¿Y si eres el dueño? Qué pasa si amplías tu casa sin permiso
+      </h2>
+      <p className="text-slate-400 leading-relaxed mb-6">
+        Si ampliaste tu casa sin permiso de edificación, la Dirección de Obras Municipales (DOM) puede fiscalizar la obra, cursar multas y exigir que se regularice o, si no cumple la norma, que se demuela. Además, la ampliación no figura en la superficie legal: el banco tasa sobre lo que dice la escritura y los planos, no sobre lo que existe físicamente.
+      </p>
+      <p className="text-slate-400 leading-relaxed mb-6">
+        Existe un procedimiento simplificado para regularizar viviendas y ampliaciones, la Ley 20.898 ("Ley del Mono"). Sus plazos y requisitos han sido prorrogados y modificados varias veces, y en 2026 hay cambios en tramitación, por lo que conviene confirmar la vigencia con la DOM de tu comuna o con un arquitecto antes de iniciar el trámite.
+      </p>
+      <div className="space-y-3 mb-10">
+        {[
+          'Mide la superficie real y compárala con la escritura y los planos aprobados en la DOM',
+          'Pide en la DOM el expediente y los planos aprobados de tu propiedad',
+          'Haz que un arquitecto revise si la ampliación cumple la norma actual de tu comuna (rasante, distanciamientos, altura, constructibilidad)',
+          'Si cumple, regulariza antes de vender o pedir un crédito hipotecario',
+          'Si no cumple, evalúa con el arquitecto las alternativas antes de que llegue una fiscalización',
         ].map((step, i) => (
           <div key={i} className="flex items-start gap-3">
             <div className="w-5 h-5 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center shrink-0 mt-0.5">

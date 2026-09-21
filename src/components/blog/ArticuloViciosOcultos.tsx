@@ -2,8 +2,8 @@ import { Scale, CheckCircle, ArrowRight, AlertTriangle, Clock } from 'lucide-rea
 import BlogLayout from './BlogLayout';
 
 export const meta = {
-  title: 'Vicios ocultos en propiedad Chile: qué son, plazo legal para reclamar y cómo detectarlos antes de comprar | DOMIS™',
-  description: 'Vicios ocultos en propiedades en Chile: qué dice el Código Civil (art. 1860), cuánto tiempo tienes para reclamar, quién paga y cómo detectarlos con inspección técnica antes de firmar.',
+  title: 'Vicios redhibitorios (ocultos) en propiedad Chile: plazo legal para reclamar y cómo detectarlos antes de comprar | DOMIS™',
+  description: 'Vicios redhibitorios (vicios ocultos) en propiedades en Chile: qué dice el Código Civil (arts. 1857-1860), cuánto tiempo tienes para reclamar, quién paga y cómo detectarlos con inspección técnica antes de firmar.',
   url: 'https://www.domis.cl/blog/vicios-ocultos-propiedad-chile',
   datePublished: '2026-06-27',
 };
@@ -29,7 +29,7 @@ const requisitos = [
 
 const faqs = [
   {
-    q: '¿Qué son los vicios ocultos en una propiedad en Chile?',
+    q: '¿Qué son los vicios redhibitorios (vicios ocultos) en una propiedad en Chile?',
     a: 'Los vicios ocultos (o vicios redhibitorios) son defectos que existían en la propiedad al momento de la compra, que no eran visibles en una inspección normal y que afectan el uso o valor del inmueble. En Chile están regulados por el Código Civil (artículos 1857–1870). El vendedor responde por ellos aunque no los haya conocido.',
   },
   {
@@ -66,7 +66,7 @@ export default function ArticuloViciosOcultos() {
       </div>
 
       <h1 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter leading-tight mb-6">
-        Vicios ocultos en propiedad Chile:<br />
+        Vicios redhibitorios (vicios ocultos) en propiedad Chile:<br />
         <span className="text-cyan-400 italic">plazo legal, quién paga y cómo detectarlos antes de comprar</span>
       </h1>
 
@@ -78,7 +78,7 @@ export default function ArticuloViciosOcultos() {
       </p>
 
       <h2 className="text-2xl font-black text-white uppercase tracking-tighter mb-4">
-        Qué son los vicios ocultos según la ley chilena
+        Qué son los vicios redhibitorios (vicios ocultos) según la ley chilena
       </h2>
       <p className="text-slate-400 leading-relaxed mb-6">
         El Código Civil los llama <strong className="text-white">vicios redhibitorios</strong>. Son defectos que existían en la propiedad al momento de la compra, que no eran visibles en una inspección ordinaria, y que afectan el uso normal del inmueble o reducen su valor.
