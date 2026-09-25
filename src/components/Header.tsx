@@ -109,18 +109,21 @@ export default function Header() {
           </a>
          
           {/* --- MENÚ DE FASES --- */}
-          <div className="hidden lg:flex items-center gap-6 text-sm font-bold text-slate-400 uppercase tracking-wide relative z-10">
+          <div className="hidden xl:flex items-center gap-6 text-sm font-bold text-slate-400 uppercase tracking-wide relative z-10">
             <a href="#problema" className="hover:text-white transition-colors">El Problema</a>
             <a href="#auditoria-directa" className="hover:text-cyan-400 transition-colors flex items-center gap-1">
-              Auditoría <span className="text-[10px] text-slate-500 font-medium normal-case border border-slate-800 px-1.5 rounded">(Fase 1)</span>
+              Auditoría <span className="hidden 2xl:inline text-[10px] text-slate-500 font-medium normal-case border border-slate-800 px-1.5 rounded">(Fase 1)</span>
             </a>
             <a href="#beneficio-fase2" className="hover:text-cyan-400 transition-colors flex items-center gap-1">
-              Negociación <span className="text-[10px] text-slate-500 font-medium normal-case border border-slate-800 px-1.5 rounded">(Fase 2)</span>
+              Negociación <span className="hidden 2xl:inline text-[10px] text-slate-500 font-medium normal-case border border-slate-800 px-1.5 rounded">(Fase 2)</span>
             </a>
             <a href="#fase3" className="hover:text-cyan-400 transition-colors flex items-center gap-1">
-              Remodelación <span className="text-[10px] text-slate-500 font-medium normal-case border border-slate-800 px-1.5 rounded">(Fase 3)</span>
+              Remodelación <span className="hidden 2xl:inline text-[10px] text-slate-500 font-medium normal-case border border-slate-800 px-1.5 rounded">(Fase 3)</span>
             </a>
             <a href="/blog" className="hover:text-cyan-400 transition-colors">Blog</a>
+            <a href="/clientes/tasas-subsidio" className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 whitespace-nowrap" title="Área clientes (requiere clave)">
+              <LockIcon /> Clientes
+            </a>
           </div>
 
           {/* --- ACCIONES PRIMARIAS --- */}
@@ -129,12 +132,24 @@ export default function Header() {
               href="/pcf-15tm"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 md:gap-2 px-2 md:px-3 py-2 rounded-lg border border-slate-800 bg-slate-900/50 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-slate-900 transition-all group"
+              className="hidden xl:flex items-center gap-1.5 md:gap-2 px-2 md:px-3 py-2 rounded-lg border border-slate-800 bg-slate-900/50 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-slate-900 transition-all group whitespace-nowrap"
               title="Acceso Privado PCF-15™"
             >
               <LockIcon />
               <span className="text-[9px] md:text-[10px] font-bold tracking-wider">PCF-15™</span>
             </a>
+
+            {/* Bajo 1280px: accesos privados agrupados (el menú completo no cabe) */}
+            <details className="relative xl:hidden group">
+              <summary className="list-none [&::-webkit-details-marker]:hidden flex items-center gap-1.5 px-2 py-2 rounded-lg border border-slate-800 bg-slate-900/50 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 cursor-pointer transition-all">
+                <LockIcon />
+                <span className="text-[9px] md:text-[10px] font-bold tracking-wider uppercase">Acceso</span>
+              </summary>
+              <div className="absolute right-0 mt-2 w-44 rounded-lg border border-slate-800 bg-slate-950 shadow-xl py-1 z-50">
+                <a href="/clientes/tasas-subsidio" className="block px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-cyan-400 hover:bg-slate-900">Clientes</a>
+                <a href="/pcf-15tm" target="_blank" rel="noopener noreferrer" className="block px-4 py-2.5 text-xs font-bold tracking-wider text-slate-300 hover:text-cyan-400 hover:bg-slate-900">PCF-15™</a>
+              </div>
+            </details>
 
             {/* CTA Principal con sensor de WhatsApp */}
             <a
