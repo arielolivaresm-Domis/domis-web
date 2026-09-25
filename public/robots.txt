@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /pcf-15tm
+Disallow: /clientes
 
 User-agent: GPTBot
 Allow: /

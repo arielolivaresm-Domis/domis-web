@@ -38,6 +38,7 @@ const ArticuloInspector = lazy(() => import('./components/blog/ArticuloInspector
 const ArticuloViciosOcultos = lazy(() => import('./components/blog/ArticuloViciosOcultos'));
 const ArticuloDepartamento = lazy(() => import('./components/blog/ArticuloDepartamento'));
 const NotFound = lazy(() => import('./components/NotFound'));
+const TasasPage = lazy(() => import('./tasas/TasasPage'));
 
 const homeFaqSchema = {
   '@context': 'https://schema.org',
@@ -172,6 +173,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/pcf-15tm" element={<PortalApp />} />
+        <Route path="/clientes/tasas-subsidio" element={<TasasPage />} />
         <Route path="/casos/carolina-la-reina" element={<CasoCarolinaLaReina />} />
         <Route path="/casos/andrea-providencia" element={<CasoAndreaProvidencia />} />
         <Route path="/casos/felipe-las-condes" element={<CasoFelipeLasCondes />} />
