@@ -75,6 +75,12 @@ export default function Footer() {
         <p className="text-slate-700 text-[9px] md:text-[10px] font-mono uppercase font-black tracking-[0.3em] hover:text-slate-500 transition-colors cursor-default">
           Developed by OlvaiD™ Tech
         </p>
+        <p className="text-slate-600 text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em]">
+          Posicionamiento web por{' '}
+          <a href="https://pharoslab.cl/" rel="noopener" className="hover:text-slate-400 transition-colors">
+            PharosLab
+          </a>
+        </p>
       </Section>
     </footer>
   );
