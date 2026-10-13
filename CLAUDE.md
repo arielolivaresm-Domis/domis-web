@@ -1,7 +1,7 @@
 # DOMIS™ — Contexto del Proyecto
 
 ## Protocolos y reglas de la agencia
-@/Users/mac/Agencia-PharosLab/informes/CLAUDE.md
+@../Agencia-PharosLab/informes/CLAUDE.md
 
 ## Este proyecto
 
