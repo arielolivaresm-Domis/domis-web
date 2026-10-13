@@ -109,7 +109,7 @@ export default function BenefitFlyer() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                 <div>
                   <h4 className="text-cyan-500 font-black text-[10px] md:text-xs uppercase tracking-widest mb-4">Anticipo — se descuenta del 10%</h4>
-                  <div className="text-4xl md:text-5xl font-mono text-white font-black mb-4">$400.000</div>
+                  <div className="text-4xl md:text-5xl font-mono text-white font-black mb-4">$400.000 <span className="text-base md:text-lg text-slate-400 font-bold">+ IVA</span></div>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-[10px] md:text-[11px] text-slate-200 font-bold uppercase tracking-widest">
                       <Check size={14} className="text-cyan-500 shrink-0"/> No reembolsable
@@ -122,7 +122,7 @@ export default function BenefitFlyer() {
                 <div className="border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 md:pl-8">
                   <h4 className="text-cyan-500 font-black text-[10px] md:text-xs uppercase tracking-widest mb-4">Comisión Éxito</h4>
                   <div className="text-4xl md:text-5xl font-mono text-white font-black mb-2">10%</div>
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-6 italic">Del ahorro total logrado</p>
+                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-6 italic">Del ahorro total logrado + IVA</p>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-[10px] md:text-[11px] text-slate-200 font-bold uppercase tracking-widest leading-tight">
                       <Check size={14} className="text-cyan-500 shrink-0"/> 20% al firmar Promesa

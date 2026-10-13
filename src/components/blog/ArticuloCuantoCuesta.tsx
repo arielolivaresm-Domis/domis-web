@@ -148,9 +148,9 @@ export default function ArticuloCuantoCuesta() {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {[
-          { zona: 'La Reina', ahorro: '$141.7M', costo_aprox: '~$250k', ratio: '566x', pct: '18%' },
-          { zona: 'Providencia', ahorro: '$68.2M', costo_aprox: '~$230k', ratio: '296x', pct: '11%' },
-          { zona: 'Las Condes', ahorro: '$39.6M', costo_aprox: '~$210k', ratio: '188x', pct: '9%' },
+          { zona: 'La Reina', ahorro: '$141.7M', costo_aprox: '~$250k + IVA', ratio: '566x', pct: '18%' },
+          { zona: 'Providencia', ahorro: '$68.2M', costo_aprox: '~$230k + IVA', ratio: '296x', pct: '11%' },
+          { zona: 'Las Condes', ahorro: '$39.6M', costo_aprox: '~$210k + IVA', ratio: '188x', pct: '9%' },
         ].map((c, i) => (
           <div key={i} className="p-5 bg-slate-900 border border-white/10 rounded-2xl">
             <div className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">{c.zona}</div>
